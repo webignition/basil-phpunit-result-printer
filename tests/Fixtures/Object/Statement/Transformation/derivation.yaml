@@ -1,0 +1,2 @@
+type: derivation
+source: click $".selector"

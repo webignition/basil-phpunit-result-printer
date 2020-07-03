@@ -1,0 +1,18 @@
+type: assertion
+source: $".selector" exists
+status: failed
+summary:
+  operator: exists
+  source:
+    type: node
+    node: element
+    identifier:
+      source: $".selector"
+      properties:
+        type: css
+        locator: .selector
+        position: 1
+transformations:
+  -
+    type: resolution
+    source: $page_import_name.elements.element_name exists
