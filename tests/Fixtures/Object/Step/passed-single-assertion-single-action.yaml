@@ -1,0 +1,12 @@
+type: step
+name: step one
+status: passed
+statements:
+  -
+    type: action
+    source: click $".selector"
+    status: passed
+  -
+    type: assertion
+    source: $page.url is "http://example.com/"
+    status: passed
