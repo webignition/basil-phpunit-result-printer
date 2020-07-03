@@ -1,0 +1,3 @@
+type: action
+source: click $".selector"
+status: passed
