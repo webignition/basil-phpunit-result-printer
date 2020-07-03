@@ -1,0 +1,14 @@
+operator: exists
+source:
+  type: node
+  node: element
+  identifier:
+    source: $".parent" >> $".child"
+    properties:
+      type: CSS
+      locator: .selector
+      position: 1
+      parent:
+        type: CSS
+        locator: .parent
+        position: 1

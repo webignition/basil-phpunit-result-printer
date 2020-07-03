@@ -1,0 +1,28 @@
+operator: is
+expected:
+  value: expected
+  source:
+    type: node
+    node: element
+    identifier:
+      source: $".expected_parent" >> $".expected_child"
+      properties:
+        type: CSS
+        locator: .expected_child
+        position: 1
+        parent:
+          type: CSS
+          locator: .expected_parent
+          position: 1
+actual:
+  value: actual
+  source:
+    type: node
+    node: element
+    identifier:
+      source: $".actual"
+      properties:
+        type: CSS
+        locator: .selector
+        position: 1
+

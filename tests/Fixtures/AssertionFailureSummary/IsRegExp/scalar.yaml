@@ -1,0 +1,4 @@
+operator: is-regexp
+value: not-a-regexp
+source:
+  type: scalar
