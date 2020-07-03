@@ -1,7 +1,0 @@
-operator: is-regexp
-value: not-a-regexp
-source:
-  type: scalar
-  scalar:
-    type: literal
-    value: not-a-regexp

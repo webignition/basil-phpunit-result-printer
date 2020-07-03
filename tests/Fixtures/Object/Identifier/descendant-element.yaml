@@ -1,9 +1,0 @@
-source: $".parent":3 >> $".child"
-properties:
-  type: css
-  locator: .child
-  position: 1
-  parent:
-    type: css
-    locator: .parent
-    position: 3
