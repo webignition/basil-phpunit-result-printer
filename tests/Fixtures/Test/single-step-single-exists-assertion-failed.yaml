@@ -6,7 +6,7 @@ type: step
 name: step one
 status: failed
 statements:
-  -
+  - # statement object
     type: assertion
     source: $".selector" exists
     status: failed

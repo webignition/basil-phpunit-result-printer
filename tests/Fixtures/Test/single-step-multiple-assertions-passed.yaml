@@ -6,11 +6,11 @@ type: step
 name: step one
 status: passed
 statements:
-  -
+  - # statement object
     type: assertion
     source: $page.url is "http://example.com/"
     status: passed
-  -
+  - # statement object
     type: assertion
     source: $page.title is "Page Title"
     status: passed
