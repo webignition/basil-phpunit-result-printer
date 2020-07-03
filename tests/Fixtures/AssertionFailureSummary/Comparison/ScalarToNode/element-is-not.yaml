@@ -1,0 +1,20 @@
+operator: is-not
+expected:
+  value: expected
+  source:
+    type: scalar
+    scalar:
+      type: literal
+      value: expected
+actual:
+  value: expected
+  source:
+    type: node
+    node:
+      type: element
+      identifier:
+        source: $".selector"
+        properties:
+          type: css
+          locator: .selector
+          position: 1

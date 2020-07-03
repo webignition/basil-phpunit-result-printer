@@ -1,0 +1,25 @@
+operator: matches
+expected:
+  value: /expected/
+  source:
+    type: node
+    node:
+      type: element
+      identifier:
+        source: $".expected"
+        properties:
+          type: css
+          locator: .selector
+          position: 1
+actual:
+  value: actual
+  source:
+    type: node
+    node:
+      type: element
+      identifier:
+        source: $".actual"
+        properties:
+          type: css
+          locator: .selector
+          position: 1

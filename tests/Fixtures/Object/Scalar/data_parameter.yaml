@@ -1,0 +1,2 @@
+type: data_parameter
+value: $data.key

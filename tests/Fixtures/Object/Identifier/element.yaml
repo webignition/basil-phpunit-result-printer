@@ -1,0 +1,5 @@
+source: $".selector"
+properties:
+  type: css
+  locator: .selector
+  position: 1
