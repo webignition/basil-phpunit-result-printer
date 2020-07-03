@@ -1,20 +1,22 @@
 operator: is
 expected:
+  # value object
   value: expected
-  source:
+  source: # source object (value.source)
     type: node
-    node:
+    node: # node object (value.source.node)
       type: element
-      identifier:
+      identifier: # identifier object (value.source.node.identifier)
         source: $".selector"
-        properties:
+        properties: # identifier properties object (value.source.node.identifier.properties)
           type: CSS
           locator: .selector
           position: 1
 actual:
+  # value object
   value: actual
-  source:
+  source: # source object
     type: scalar
-    scalar:
+    scalar: # scalar object
       type: literal
       value: actual
