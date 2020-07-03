@@ -8,7 +8,7 @@ expected:
       identifier:
         source: $".selector".attribute
         properties:
-          type: CSS
+          type: css
           locator: .selector
           position: 1
           attribute: attribute_name

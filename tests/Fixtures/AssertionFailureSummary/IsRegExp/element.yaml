@@ -7,6 +7,6 @@ source:
     identifier:
       source: $".selector"
       properties:
-        type: CSS
+        type: css
         locator: .selector
         position: 1

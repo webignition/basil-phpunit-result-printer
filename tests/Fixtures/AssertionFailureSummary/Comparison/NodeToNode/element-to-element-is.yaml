@@ -9,7 +9,7 @@ expected:
       identifier: # identifier object (value.source.node.identifier)
         source: $".expected"
         properties: # identifier properties object (value.source.node.identifier.properties)
-          type: CSS
+          type: css
           locator: .selector
           position: 1
 actual:
@@ -21,6 +21,6 @@ actual:
       identifier:
         source: $".actual"
         properties:
-          type: CSS
+          type: css
           locator: .selector
           position: 1

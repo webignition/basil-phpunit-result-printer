@@ -8,7 +8,7 @@ expected:
       identifier:
         source: $".expected"
         properties:
-          type: CSS
+          type: css
           locator: .selector
           position: 1
 actual:
@@ -20,6 +20,6 @@ actual:
       identifier:
         source: $".actual"
         properties:
-          type: CSS
+          type: css
           locator: .selector
           position: 1

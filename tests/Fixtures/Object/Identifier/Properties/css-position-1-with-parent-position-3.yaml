@@ -1,0 +1,7 @@
+type: css
+locator: .selector
+position: 1
+parent:
+  type: css
+  locator: .parent
+  position: 3

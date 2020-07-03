@@ -6,6 +6,6 @@ source:
     identifier:
       source: $".expected"
       properties:
-        type: CSS
+        type: css
         locator: .selector
         position: 1

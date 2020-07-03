@@ -8,7 +8,7 @@ expected:
       identifier:
         source: $".expected"
         properties:
-          type: CSS
+          type: css
           locator: .selector
           position: 1
 actual:
@@ -20,11 +20,11 @@ actual:
       identifier:
         source: $".actual_parent" >> $".actual_child"
         properties:
-          type: CSS
+          type: css
           locator: .actual_child
           position: 1
           parent:
-            type: CSS
+            type: css
             locator: .actual_parent
             position: 1
 
