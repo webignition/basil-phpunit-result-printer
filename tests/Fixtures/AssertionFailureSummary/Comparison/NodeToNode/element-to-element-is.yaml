@@ -1,23 +1,30 @@
 operator: is
+# value object
 expected:
   value: expected
+  # source object (value.source)
   source:
     type: node
-    node: element
-    identifier:
-      source: $".expected"
-      properties:
-        type: CSS
-        locator: .selector
-        position: 1
+    # node object (value.source.node)
+    node:
+      type: element
+      # identifier object (value.source.node.identifier)
+      identifier:
+        source: $".expected"
+        # identifier properties object (value.source.node.identifier.properties)
+        properties:
+          type: CSS
+          locator: .selector
+          position: 1
 actual:
   value: actual
   source:
     type: node
-    node: element
-    identifier:
-      source: $".actual"
-      properties:
-        type: CSS
-        locator: .selector
-        position: 1
+    node:
+      type: element
+      identifier:
+        source: $".actual"
+        properties:
+          type: CSS
+          locator: .selector
+          position: 1

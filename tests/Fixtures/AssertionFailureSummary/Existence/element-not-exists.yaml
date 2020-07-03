@@ -1,10 +1,11 @@
 operator: not-exists
 source:
   type: node
-  node: element
-  identifier:
-    source: $".expected"
-    properties:
-      type: CSS
-      locator: .selector
-      position: 1
+  node:
+    type: element
+    identifier:
+      source: $".expected"
+      properties:
+        type: CSS
+        locator: .selector
+        position: 1

@@ -1,10 +1,11 @@
 operator: exists
 source:
   type: node
-  node: element
-  identifier:
-    source: $".selector"
-    properties:
-      type: CSS
-      locator: .selector
-      position: 1
+  node:
+    type: element
+    identifier:
+      source: $".selector"
+      properties:
+        type: CSS
+        locator: .selector
+        position: 1

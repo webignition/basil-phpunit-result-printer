@@ -7,11 +7,12 @@ actual:
   value: expected
   source:
     type: node
-    node: attribute
-    identifier:
-      source: $".selector".attribute
-      properties:
-        type: CSS
-        locator: .selector
-        position: 1
-        attribute: attribute_name
+    node:
+      type: attribute
+      identifier:
+        source: $".selector".attribute
+        properties:
+          type: CSS
+          locator: .selector
+          position: 1
+          attribute: attribute_name

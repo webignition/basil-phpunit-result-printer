@@ -1,14 +1,15 @@
 operator: exists
 source:
   type: node
-  node: element
-  identifier:
-    source: $".parent" >> $".child"
-    properties:
-      type: CSS
-      locator: .selector
-      position: 1
-      parent:
+  node:
+    type: element
+    identifier:
+      source: $".parent" >> $".child"
+      properties:
         type: CSS
-        locator: .parent
+        locator: .selector
         position: 1
+        parent:
+          type: CSS
+          locator: .parent
+          position: 1

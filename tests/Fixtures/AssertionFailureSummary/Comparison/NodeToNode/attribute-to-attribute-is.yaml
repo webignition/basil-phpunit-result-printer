@@ -3,23 +3,25 @@ expected:
   value: expected
   source:
     type: node
-    node: attribute
-    identifier:
-      source: $".expected".attribute_name
-      properties:
-        type: CSS
-        locator: .selector
-        position: 1
-        attribute: attribute_name
+    node:
+      type: attribute
+      identifier:
+        source: $".expected".attribute_name
+        properties:
+          type: CSS
+          locator: .selector
+          position: 1
+          attribute: attribute_name
 actual:
   value: actual
   source:
     type: node
-    node: attribute
-    identifier:
-      source: $".actual".attribute_name
-      properties:
-        type: CSS
-        locator: .selector
-        position: 1
-        attribute: attribute_name
+    node:
+      type: attribute
+      identifier:
+        source: $".actual".attribute_name
+        properties:
+          type: CSS
+          locator: .selector
+          position: 1
+          attribute: attribute_name
