@@ -1,0 +1,6 @@
+source: $".selector".attribute_name
+properties:
+  type: css
+  locator: .selector
+  position: 1
+  attribute: attribute_name

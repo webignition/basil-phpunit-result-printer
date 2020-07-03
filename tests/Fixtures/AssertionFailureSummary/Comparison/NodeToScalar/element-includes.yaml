@@ -1,0 +1,20 @@
+operator: includes
+expected:
+  value: expected
+  source:
+    type: node
+    node:
+      type: element
+      identifier:
+        source: $".selector"
+        properties:
+          type: css
+          locator: .selector
+          position: 1
+actual:
+  value: actual
+  source:
+    type: scalar
+    scalar:
+      type: literal
+      value: actual

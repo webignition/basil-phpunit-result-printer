@@ -1,0 +1,10 @@
+source: $".parent" >> $".child".attribute_name
+properties:
+  type: css
+  locator: .child
+  position: 1
+  attribute: attribute_name
+  parent:
+    type: css
+    locator: .parent
+    position: 1

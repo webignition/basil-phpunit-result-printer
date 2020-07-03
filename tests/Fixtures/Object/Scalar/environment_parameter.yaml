@@ -1,0 +1,2 @@
+type: environment_parameter
+value: $env.KEY

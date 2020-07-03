@@ -1,0 +1,12 @@
+operator: exists
+source:
+  type: node
+  node:
+    type: element
+    identifier:
+      source: $".selector".attribute_name
+      properties:
+        type: css
+        locator: .selector
+        position: 1
+        attribute: attribute_name

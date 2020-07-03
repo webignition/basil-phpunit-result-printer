@@ -1,0 +1,2 @@
+type: browser_property
+value: $browser.size

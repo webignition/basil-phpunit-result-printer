@@ -1,0 +1,15 @@
+operator: excludes
+expected:
+  value: expected
+  source:
+    type: scalar
+    scalar:
+      type: literal
+      value: expected
+actual:
+  value: expected
+  source:
+    type: scalar
+    scalar:
+      type: literal
+      value: expected
