@@ -132,83 +132,77 @@ class ElementalToScalarComparisonSummaryTest extends AbstractBaseTest
                     'actual'
                 ),
             ],
-//            'is with descendant identifier' => [
-//                'elementIdentifier' =>
-//                    (new ElementIdentifier('.child'))
-//                        ->withParentIdentifier(new ElementIdentifier('.parent'))
-//                ,
-//                'operator' => 'is',
-//                'expectedValue' => 'expected',
-//                'actualValue' => 'actual',
-//                'expectedSummary' =>
-//                    '* Element <comment>$".parent" >> $".child"</comment> identified by:' . "\n" .
-//                    '    - CSS selector: <comment>.child</comment>' . "\n" .
-//                    '    - ordinal position: <comment>1</comment>' . "\n" .
-//                    '  with parent:' . "\n" .
-//                    '    - CSS selector: <comment>.parent</comment>' . "\n" .
-//                    '    - ordinal position: <comment>1</comment>' . "\n" .
-//                    '  with value <comment>actual</comment> is not equal to <comment>expected</comment>' . "\n" .
-//                    "\n" .
-//                    '* <comment>actual</comment> is not equal to <comment>expected</comment>'
-//                ,
-//            ],
-//            'is-not' => [
-//                'elementIdentifier' => new ElementIdentifier('.selector'),
-//                'operator' => 'is-not',
-//                'expectedValue' => 'expected',
-//                'actualValue' => 'expected',
-//                'expectedSummary' =>
-//                    '* Element <comment>$".selector"</comment> identified by:' . "\n" .
-//                    '    - CSS selector: <comment>.selector</comment>' . "\n" .
-//                    '    - ordinal position: <comment>1</comment>' . "\n" .
-//                    '  with value <comment>expected</comment> is equal to <comment>expected</comment>' . "\n" .
-//                    "\n" .
-//                    '* <comment>expected</comment> is equal to <comment>expected</comment>'
-//                ,
-//            ],
-//            'includes' => [
-//                'elementIdentifier' => new ElementIdentifier('.selector'),
-//                'operator' => 'includes',
-//                'expectedValue' => 'expected',
-//                'actualValue' => 'actual',
-//                'expectedSummary' =>
-//                    '* Element <comment>$".selector"</comment> identified by:' . "\n" .
-//                    '    - CSS selector: <comment>.selector</comment>' . "\n" .
-//                    '    - ordinal position: <comment>1</comment>' . "\n" .
-//                    '  with value <comment>actual</comment> does not include <comment>expected</comment>' . "\n" .
-//                    "\n" .
-//                    '* <comment>actual</comment> does not include <comment>expected</comment>'
-//                ,
-//            ],
-//            'excludes' => [
-//                'elementIdentifier' => new ElementIdentifier('.selector'),
-//                'operator' => 'excludes',
-//                'expectedValue' => 'expected',
-//                'actualValue' => 'expected',
-//                'expectedSummary' =>
-//                    '* Element <comment>$".selector"</comment> identified by:' . "\n" .
-//                    '    - CSS selector: <comment>.selector</comment>' . "\n" .
-//                    '    - ordinal position: <comment>1</comment>' . "\n" .
-//                    '  with value <comment>expected</comment> does not exclude <comment>expected</comment>' . "\n" .
-//                    "\n" .
-//                    '* <comment>expected</comment> does not exclude <comment>expected</comment>'
-//                ,
-//            ],
-//            'matches' => [
-//                'elementIdentifier' => new ElementIdentifier('.selector'),
-//                'operator' => 'matches',
-//                'expectedValue' => '/expected/',
-//                'actualValue' => 'actual',
-//                'expectedSummary' =>
-//                    '* Element <comment>$".selector"</comment> identified by:' . "\n" .
-//                    '    - CSS selector: <comment>.selector</comment>' . "\n" .
-//                    '    - ordinal position: <comment>1</comment>' . "\n" .
-//                    '  with value <comment>actual</comment> does not match regular expression '
-//                    . '<comment>/expected/</comment>' . "\n" .
-//                    "\n" .
-//                    '* <comment>actual</comment> does not match regular expression <comment>/expected/</comment>'
-//                ,
-//            ],
+            'is with descendant identifier' => [
+                'elementIdentifier' =>
+                    (new ElementIdentifier('.child'))
+                        ->withParentIdentifier(new ElementIdentifier('.parent')),
+                'operator' => 'is',
+                'expectedValue' => 'expected',
+                'actualValue' => 'actual',
+                'expectedSummary' =>
+                    '* Element <comment>$".parent" >> $".child"</comment> identified by:' . "\n" .
+                    '    - CSS selector: <comment>.child</comment>' . "\n" .
+                    '    - ordinal position: <comment>1</comment>' . "\n" .
+                    '  with parent:' . "\n" .
+                    '    - CSS selector: <comment>.parent</comment>' . "\n" .
+                    '    - ordinal position: <comment>1</comment>' . "\n" .
+                    '  with value <comment>actual</comment> is not equal to <comment>expected</comment>' . "\n" .
+                    "\n" .
+                    '* <comment>actual</comment> is not equal to <comment>expected</comment>',
+            ],
+            'is-not' => [
+                'elementIdentifier' => new ElementIdentifier('.selector'),
+                'operator' => 'is-not',
+                'expectedValue' => 'expected',
+                'actualValue' => 'expected',
+                'expectedSummary' =>
+                    '* Element <comment>$".selector"</comment> identified by:' . "\n" .
+                    '    - CSS selector: <comment>.selector</comment>' . "\n" .
+                    '    - ordinal position: <comment>1</comment>' . "\n" .
+                    '  with value <comment>expected</comment> is equal to <comment>expected</comment>' . "\n" .
+                    "\n" .
+                    '* <comment>expected</comment> is equal to <comment>expected</comment>',
+            ],
+            'includes' => [
+                'elementIdentifier' => new ElementIdentifier('.selector'),
+                'operator' => 'includes',
+                'expectedValue' => 'expected',
+                'actualValue' => 'actual',
+                'expectedSummary' =>
+                    '* Element <comment>$".selector"</comment> identified by:' . "\n" .
+                    '    - CSS selector: <comment>.selector</comment>' . "\n" .
+                    '    - ordinal position: <comment>1</comment>' . "\n" .
+                    '  with value <comment>actual</comment> does not include <comment>expected</comment>' . "\n" .
+                    "\n" .
+                    '* <comment>actual</comment> does not include <comment>expected</comment>',
+            ],
+            'excludes' => [
+                'elementIdentifier' => new ElementIdentifier('.selector'),
+                'operator' => 'excludes',
+                'expectedValue' => 'expected',
+                'actualValue' => 'expected',
+                'expectedSummary' =>
+                    '* Element <comment>$".selector"</comment> identified by:' . "\n" .
+                    '    - CSS selector: <comment>.selector</comment>' . "\n" .
+                    '    - ordinal position: <comment>1</comment>' . "\n" .
+                    '  with value <comment>expected</comment> does not exclude <comment>expected</comment>' . "\n" .
+                    "\n" .
+                    '* <comment>expected</comment> does not exclude <comment>expected</comment>',
+            ],
+            'matches' => [
+                'elementIdentifier' => new ElementIdentifier('.selector'),
+                'operator' => 'matches',
+                'expectedValue' => '/expected/',
+                'actualValue' => 'actual',
+                'expectedSummary' =>
+                    '* Element <comment>$".selector"</comment> identified by:' . "\n" .
+                    '    - CSS selector: <comment>.selector</comment>' . "\n" .
+                    '    - ordinal position: <comment>1</comment>' . "\n" .
+                    '  with value <comment>actual</comment> does not match regular expression '
+                    . '<comment>/expected/</comment>' . "\n" .
+                    "\n" .
+                    '* <comment>actual</comment> does not match regular expression <comment>/expected/</comment>',
+            ],
         ];
     }
 }
