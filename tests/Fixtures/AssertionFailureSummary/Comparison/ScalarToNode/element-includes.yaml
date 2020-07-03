@@ -1,10 +1,13 @@
 operator: includes
 expected:
-  value: actual
+  value: expected
   source:
     type: scalar
+    scalar:
+      type: literal
+      value: expected
 actual:
-  value: expected
+  value: actual
   source:
     type: node
     node:

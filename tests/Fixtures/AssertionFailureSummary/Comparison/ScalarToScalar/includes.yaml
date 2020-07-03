@@ -3,7 +3,13 @@ expected:
   value: expected
   source:
     type: scalar
+    scalar:
+      type: literal
+      value: expected
 actual:
   value: actual
   source:
     type: scalar
+    scalar:
+      type: literal
+      value: actual

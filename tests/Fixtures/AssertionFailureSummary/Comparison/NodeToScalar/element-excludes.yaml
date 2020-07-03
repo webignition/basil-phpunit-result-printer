@@ -15,3 +15,7 @@ actual:
   value: expected
   source:
     type: scalar
+    scalar:
+      type: literal
+      value: expected
+
