@@ -1,6 +1,6 @@
 ---
 type: test
-name: test.yml
+path: test.yml
 ---
 type: step
 name: step one

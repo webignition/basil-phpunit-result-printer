@@ -1,7 +1,7 @@
 ---
 # test object
 type: test
-name: test.yml
+path: test.yml
 ---
 # step object
 type: step
