@@ -6,7 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary
 
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 
-class Existence
+class Existence implements AssertionFailureSummaryInterface
 {
     private string $operator;
     private NodeSource $source;
@@ -17,9 +17,6 @@ class Existence
         $this->source = $source;
     }
 
-    /**
-     * @return array<mixed>
-     */
     public function getData(): array
     {
         return [

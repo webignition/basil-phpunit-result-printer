@@ -6,7 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary
 
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\SourceInterface;
 
-class IsRegExp
+class IsRegExp implements AssertionFailureSummaryInterface
 {
     private const OPERATOR = 'is-regexp';
 
@@ -19,9 +19,6 @@ class IsRegExp
         $this->source = $source;
     }
 
-    /**
-     * @return array<mixed>
-     */
     public function getData(): array
     {
         return [

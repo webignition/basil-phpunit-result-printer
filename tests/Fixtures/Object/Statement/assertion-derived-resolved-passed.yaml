@@ -1,17 +1,6 @@
 type: assertion
 source: $".selector" exists
-status: failed
-summary:
-  operator: exists
-  source:
-    type: node
-    node: element
-    identifier:
-      source: $".selector"
-      properties:
-        type: css
-        locator: .selector
-        position: 1
+status: passed
 transformations:
   - # statement transformation object (statement.transformations[0])
     type: derivation

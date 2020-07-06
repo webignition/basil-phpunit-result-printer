@@ -1,0 +1,7 @@
+type: action
+source: click $".selector"
+status: passed
+transformations:
+  -
+    type: resolution
+    source: click $page_import_name.elements.element_name

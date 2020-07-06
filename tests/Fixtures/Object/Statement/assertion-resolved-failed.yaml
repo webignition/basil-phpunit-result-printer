@@ -1,6 +1,10 @@
 type: assertion
 source: $".selector" exists
 status: failed
+transformations:
+  -
+    type: resolution
+    source: $page_import_name.elements.element_name exists
 summary:
   operator: exists
   source:
@@ -12,7 +16,3 @@ summary:
         type: css
         locator: .selector
         position: 1
-transformations:
-  -
-    type: resolution
-    source: $page_import_name.elements.element_name exists

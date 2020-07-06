@@ -1,0 +1,7 @@
+type: assertion
+source: $".selector" exists
+status: passed
+transformations:
+  -
+    type: resolution
+    source: $page_import_name.elements.element_name exists
