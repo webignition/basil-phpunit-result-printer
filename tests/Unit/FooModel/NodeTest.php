@@ -17,8 +17,6 @@ class NodeTest extends AbstractBaseTest
      */
     public function testCreate(string $type, Identifier $identifier)
     {
-        self::assertTrue(true);
-
         $node = new Node($type, $identifier);
 
         self::assertSame($type, ObjectReflector::getProperty($node, 'type'));

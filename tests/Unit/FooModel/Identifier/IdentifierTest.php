@@ -16,8 +16,6 @@ class IdentifierTest extends AbstractBaseTest
      */
     public function testCreate(string $source, Properties $properties)
     {
-        self::assertTrue(true);
-
         $identifier = new Identifier($source, $properties);
 
         $this->assertSame($source, ObjectReflector::getProperty($identifier, 'source'));
