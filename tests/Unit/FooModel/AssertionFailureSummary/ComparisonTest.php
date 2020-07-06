@@ -9,7 +9,8 @@ use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Source\ScalarSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Value;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 use webignition\ObjectReflector\ObjectReflector;
@@ -35,8 +36,7 @@ class ComparisonTest extends AbstractBaseTest
                 'operator' => 'is',
                 'expected' => new Value(
                     'expected value',
-                    new Source(
-                        Source::TYPE_SCALAR,
+                    new ScalarSource(
                         new Scalar(
                             Scalar::TYPE_LITERAL,
                             'expected value'
@@ -45,8 +45,7 @@ class ComparisonTest extends AbstractBaseTest
                 ),
                 'actual' => new Value(
                     'actual value',
-                    new Source(
-                        Source::TYPE_NODE,
+                    new NodeSource(
                         new Node(
                             Node::TYPE_ELEMENT,
                             new Identifier(
@@ -79,8 +78,7 @@ class ComparisonTest extends AbstractBaseTest
                     'is',
                     new Value(
                         'expected value',
-                        new Source(
-                            Source::TYPE_SCALAR,
+                        new ScalarSource(
                             new Scalar(
                                 Scalar::TYPE_LITERAL,
                                 'expected value'
@@ -89,8 +87,7 @@ class ComparisonTest extends AbstractBaseTest
                     ),
                     new Value(
                         'actual value',
-                        new Source(
-                            Source::TYPE_NODE,
+                        new NodeSource(
                             new Node(
                                 Node::TYPE_ELEMENT,
                                 new Identifier(
@@ -106,7 +103,7 @@ class ComparisonTest extends AbstractBaseTest
                     'expected' => [
                         'value' => 'expected value',
                         'source' => [
-                            'type' => Source::TYPE_SCALAR,
+                            'type' => 'scalar',
                             'body' => [
                                 'type' => Scalar::TYPE_LITERAL,
                                 'value' => 'expected value',
@@ -116,7 +113,7 @@ class ComparisonTest extends AbstractBaseTest
                     'actual' => [
                         'value' => 'actual value',
                         'source' => [
-                            'type' => Source::TYPE_NODE,
+                            'type' => 'node',
                             'body' => [
                                 'type' => Node::TYPE_ELEMENT,
                                 'identifier' => [
