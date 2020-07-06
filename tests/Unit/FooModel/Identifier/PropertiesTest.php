@@ -15,8 +15,6 @@ class PropertiesTest extends AbstractBaseTest
      */
     public function testCreate(string $type, string $locator, int $position)
     {
-        self::assertTrue(true);
-
         $properties = new Properties($type, $locator, $position);
 
         self::assertSame($type, ObjectReflector::getProperty($properties, 'type'));

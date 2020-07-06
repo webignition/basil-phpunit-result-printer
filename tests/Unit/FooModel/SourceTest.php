@@ -20,8 +20,6 @@ class SourceTest extends AbstractBaseTest
      */
     public function testCreate(string $type, SourceBodyInterface $body)
     {
-        self::assertTrue(true);
-
         $node = new Source($type, $body);
 
         self::assertSame($type, ObjectReflector::getProperty($node, 'type'));
