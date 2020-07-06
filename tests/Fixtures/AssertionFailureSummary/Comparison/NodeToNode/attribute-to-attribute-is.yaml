@@ -3,7 +3,7 @@ expected:
   value: expected
   source:
     type: node
-    node:
+    body:
       type: attribute
       identifier:
         source: $".expected".attribute_name
@@ -16,7 +16,7 @@ actual:
   value: actual
   source:
     type: node
-    node:
+    body:
       type: attribute
       identifier:
         source: $".actual".attribute_name

@@ -1,7 +1,7 @@
 operator: exists
 source:
   type: node
-  node:
+  body:
     type: element
     identifier:
       source: $".parent" >> $".child"
