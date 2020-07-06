@@ -12,14 +12,30 @@ class Properties
     private string $type;
     private string $locator;
     private int $position;
-    private ?self $parent;
+    private ?string $attribute = null;
+    private ?self $parent = null;
 
-    public function __construct(string $type, string $locator, int $position, ?self $parent = null)
+    public function __construct(string $type, string $locator, int $position)
     {
         $this->type = $type;
         $this->locator = $locator;
         $this->position = $position;
-        $this->parent = $parent;
+    }
+
+    public function withAttribute(string $attribute): self
+    {
+        $new = clone $this;
+        $new->attribute = $attribute;
+
+        return $new;
+    }
+
+    public function withParent(self $parent): self
+    {
+        $new = clone $this;
+        $new->parent = $parent;
+
+        return $new;
     }
 
     /**
@@ -32,6 +48,10 @@ class Properties
             'locator' => $this->locator,
             'position' => $this->position,
         ];
+
+        if (null !== $this->attribute) {
+            $data['attribute'] = $this->attribute;
+        }
 
         if ($this->parent instanceof self) {
             $data['parent'] = $this->parent->getData();
