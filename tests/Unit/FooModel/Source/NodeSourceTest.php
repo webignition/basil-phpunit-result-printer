@@ -2,35 +2,31 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel;
+namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Source;
 
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source;
-use webignition\BasilPhpUnitResultPrinter\FooModel\SourceBodyInterface;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 use webignition\ObjectReflector\ObjectReflector;
 
-class SourceTest extends AbstractBaseTest
+class NodeSourceTest extends AbstractBaseTest
 {
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $type, SourceBodyInterface $body)
+    public function testCreate(Node $body)
     {
-        $node = new Source($type, $body);
+        $node = new NodeSource($body);
 
-        self::assertSame($type, ObjectReflector::getProperty($node, 'type'));
         self::assertSame($body, ObjectReflector::getProperty($node, 'body'));
     }
 
     public function createDataProvider(): array
     {
         return [
-            'node' => [
-                'type' => Source::TYPE_NODE,
+            'default' => [
                 'body' => new Node(
                     Node::TYPE_ELEMENT,
                     new Identifier(
@@ -39,23 +35,16 @@ class SourceTest extends AbstractBaseTest
                     )
                 ),
             ],
-            'scalar' => [
-                'type' => Source::TYPE_SCALAR,
-                'body' => new Scalar(
-                    Scalar::TYPE_LITERAL,
-                    'literal'
-                ),
-            ],
         ];
     }
 
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Source $source
+     * @param NodeSource $source
      * @param array<mixed> $expectedData
      */
-    public function testGetData(Source $source, array $expectedData)
+    public function testGetData(NodeSource $source, array $expectedData)
     {
         self::assertSame($expectedData, $source->getData());
     }
@@ -63,9 +52,8 @@ class SourceTest extends AbstractBaseTest
     public function getDataDataProvider(): array
     {
         return [
-            'node' => [
-                'source' => new Source(
-                    Source::TYPE_NODE,
+            'default' => [
+                'source' => new NodeSource(
                     new Node(
                         Node::TYPE_ELEMENT,
                         new Identifier(
@@ -75,7 +63,7 @@ class SourceTest extends AbstractBaseTest
                     )
                 ),
                 'expectedData' => [
-                    'type' => Source::TYPE_NODE,
+                    'type' => 'node',
                     'body' => [
                         'type' => Node::TYPE_ELEMENT,
                         'identifier' => [
@@ -86,22 +74,6 @@ class SourceTest extends AbstractBaseTest
                                 'position' => 1,
                             ],
                         ],
-                    ],
-                ],
-            ],
-            'scalar' => [
-                'source' => new Source(
-                    Source::TYPE_SCALAR,
-                    new Scalar(
-                        Scalar::TYPE_LITERAL,
-                        'literal'
-                    )
-                ),
-                'expectedData' => [
-                    'type' => Source::TYPE_SCALAR,
-                    'body' => [
-                        'type' => Scalar::TYPE_LITERAL,
-                        'value' => 'literal',
                     ],
                 ],
             ],

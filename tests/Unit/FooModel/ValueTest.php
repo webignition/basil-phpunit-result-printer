@@ -8,7 +8,9 @@ use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Source\ScalarSource;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Source\SourceInterface;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Value;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 use webignition\ObjectReflector\ObjectReflector;
@@ -18,7 +20,7 @@ class ValueTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $value, Source $source)
+    public function testCreate(string $value, SourceInterface $source)
     {
         $node = new Value($value, $source);
 
@@ -31,8 +33,7 @@ class ValueTest extends AbstractBaseTest
         return [
             'node' => [
                 'value' => 'expected',
-                'source' => new Source(
-                    Source::TYPE_NODE,
+                'source' => new NodeSource(
                     new Node(
                         Node::TYPE_ELEMENT,
                         new Identifier(
@@ -44,8 +45,7 @@ class ValueTest extends AbstractBaseTest
             ],
             'scalar' => [
                 'value' => 'actual',
-                'source' => new Source(
-                    Source::TYPE_SCALAR,
+                'source' => new ScalarSource(
                     new Scalar(
                         Scalar::TYPE_LITERAL,
                         'literal'
@@ -72,8 +72,7 @@ class ValueTest extends AbstractBaseTest
             'node' => [
                 'value' => new Value(
                     'expected',
-                    new Source(
-                        Source::TYPE_NODE,
+                    new NodeSource(
                         new Node(
                             Node::TYPE_ELEMENT,
                             new Identifier(
@@ -86,7 +85,7 @@ class ValueTest extends AbstractBaseTest
                 'expectedData' => [
                     'value' => 'expected',
                     'source' => [
-                        'type' => Source::TYPE_NODE,
+                        'type' => 'node',
                         'body' => [
                             'type' => Node::TYPE_ELEMENT,
                             'identifier' => [
@@ -104,8 +103,7 @@ class ValueTest extends AbstractBaseTest
             'scalar' => [
                 'value' => new Value(
                     'actual',
-                    new Source(
-                        Source::TYPE_SCALAR,
+                    new ScalarSource(
                         new Scalar(
                             Scalar::TYPE_LITERAL,
                             'literal'
@@ -115,7 +113,7 @@ class ValueTest extends AbstractBaseTest
                 'expectedData' => [
                     'value' => 'actual',
                     'source' => [
-                        'type' => Source::TYPE_SCALAR,
+                        'type' => 'scalar',
                         'body' => [
                             'type' => Scalar::TYPE_LITERAL,
                             'value' => 'literal',
