@@ -6,7 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary
 
 use webignition\BasilPhpUnitResultPrinter\FooModel\Value;
 
-class Comparison
+class Comparison implements AssertionFailureSummaryInterface
 {
     private string $operator;
     private Value $expected;
@@ -19,9 +19,6 @@ class Comparison
         $this->actual = $actual;
     }
 
-    /**
-     * @return array<mixed>
-     */
     public function getData(): array
     {
         return [
