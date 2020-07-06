@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\FooModel\Statement;
 
-abstract class AbstractStatement
+abstract class AbstractStatement implements StatementInterface
 {
     private string $type;
     private string $source;
