@@ -1,7 +1,7 @@
 value: expected
 source:
   type: node
-  node:
+  body:
     type: element
     identifier:
       source: $".selector"

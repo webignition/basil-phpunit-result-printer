@@ -3,7 +3,7 @@ expected:
   value: expected
   source:
     type: node
-    node:
+    body:
       type: attribute
       identifier:
         source: $".selector".attribute
@@ -16,6 +16,6 @@ actual:
   value: actual
   source:
     type: scalar
-    scalar:
+    body:
       type: literal
       value: actual

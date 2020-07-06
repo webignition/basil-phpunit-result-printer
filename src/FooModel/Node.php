@@ -6,7 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\FooModel;
 
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
 
-class Node
+class Node implements SourceBodyInterface
 {
     public const TYPE_ELEMENT = 'element';
     public const TYPE_ATTRIBUTE = 'attribute';

@@ -1,7 +1,7 @@
 operator: not-exists
 source:
   type: node
-  node:
+  body:
     type: element
     identifier:
       source: $".selector".attribute_name

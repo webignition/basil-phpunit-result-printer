@@ -2,6 +2,6 @@ operator: is-regexp
 value: not-a-regexp
 source:
   type: scalar
-  scalar:
+  body:
     type: literal
     value: not-a-regexp

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\FooModel;
 
-class Scalar
+class Scalar implements SourceBodyInterface
 {
     public const TYPE_BROWSER_PROPERTY = 'browser_property';
     public const TYPE_DATA_PARAMETER = 'data_parameter';

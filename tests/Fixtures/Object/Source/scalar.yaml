@@ -1,4 +1,4 @@
 type: scalar
-scalar:
+body:
   type: literal
   value: actual

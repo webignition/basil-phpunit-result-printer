@@ -2,7 +2,7 @@ operator: is-regexp
 value: not-a-regexp
 source:
   type: node
-  node:
+  body:
     type: element
     identifier:
       source: $".selector"

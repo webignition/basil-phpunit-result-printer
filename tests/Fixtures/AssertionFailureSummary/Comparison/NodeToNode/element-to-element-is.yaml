@@ -16,7 +16,7 @@ actual:
   value: actual
   source:
     type: node
-    node:
+    body:
       type: element
       identifier:
         source: $".actual"
