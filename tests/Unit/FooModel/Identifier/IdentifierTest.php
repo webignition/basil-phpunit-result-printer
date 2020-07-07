@@ -63,4 +63,40 @@ class IdentifierTest extends AbstractBaseTest
             ],
         ];
     }
+
+    /**
+     * @dataProvider isAttributeDataProvider
+     */
+    public function testIsAttribute(Identifier $identifier, bool $expectedIsAttribute)
+    {
+        self::assertSame($expectedIsAttribute, $identifier->isAttribute());
+    }
+
+    public function isAttributeDataProvider(): array
+    {
+        return [
+            'not attribute' => [
+                'identifier' => new Identifier(
+                    '$".selector"',
+                    new Properties(
+                        Properties::TYPE_CSS,
+                        '.selector',
+                        1
+                    )
+                ),
+                'expectedHasAttribute' => false,
+            ],
+            'is attribute' => [
+                'identifier' => new Identifier(
+                    '$".selector".attribute_name',
+                    (new Properties(
+                        Properties::TYPE_CSS,
+                        '.selector',
+                        1
+                    ))->withAttribute('attribute_name')
+                ),
+                'expectedHasAttribute' => true,
+            ],
+        ];
+    }
 }

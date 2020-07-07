@@ -22,6 +22,11 @@ class Properties
         $this->position = $position;
     }
 
+    public function hasAttribute(): bool
+    {
+        return null !== $this->attribute;
+    }
+
     public function withAttribute(string $attribute): self
     {
         $new = clone $this;

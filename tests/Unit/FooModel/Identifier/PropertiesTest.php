@@ -144,4 +144,35 @@ class PropertiesTest extends AbstractBaseTest
             ],
         ];
     }
+
+    /**
+     * @dataProvider hasAttributeDataProvider
+     */
+    public function testHasAttribute(Properties $properties, bool $expectedHasAttribute)
+    {
+        self::assertSame($expectedHasAttribute, $properties->hasAttribute());
+    }
+
+    public function hasAttributeDataProvider(): array
+    {
+        return [
+            'not has attribute' => [
+                'properties' => new Properties(
+                    Properties::TYPE_CSS,
+                    '.selector',
+                    1
+                ),
+                'expectedHasAttribute' => false,
+            ],
+            'has attribute' => [
+                'properties' =>
+                    (new Properties(
+                        Properties::TYPE_CSS,
+                        '.selector',
+                        1
+                    ))->withAttribute('attribute'),
+                'expectedHasAttribute' => true,
+            ],
+        ];
+    }
 }
