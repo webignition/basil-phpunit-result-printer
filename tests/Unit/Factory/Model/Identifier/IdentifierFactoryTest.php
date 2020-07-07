@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
+namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Identifier;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\IdentifierFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
@@ -23,9 +23,9 @@ class IdentifierFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $source, ?Identifier $expectedProperties)
+    public function testCreate(string $source, ?Identifier $expectedIdentifier)
     {
-        self::assertEquals($expectedProperties, $this->factory->create($source));
+        self::assertEquals($expectedIdentifier, $this->factory->create($source));
     }
 
     public function createDataProvider(): array
