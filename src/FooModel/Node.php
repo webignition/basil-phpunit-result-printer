@@ -20,6 +20,14 @@ class Node implements SourceBodyInterface
         $this->identifier = $identifier;
     }
 
+    public static function fromIdentifier(Identifier $identifier): self
+    {
+        return new Node(
+            $identifier->isAttribute() ? self::TYPE_ATTRIBUTE : self::TYPE_ELEMENT,
+            $identifier
+        );
+    }
+
     /**
      * @return array<mixed>
      */
