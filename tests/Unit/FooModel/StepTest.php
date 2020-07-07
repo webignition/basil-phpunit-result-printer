@@ -13,6 +13,7 @@ use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\ActionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\PassedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\StatementInterface;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Step;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 use webignition\ObjectReflector\ObjectReflector;
@@ -37,10 +38,13 @@ class StepTest extends AbstractBaseTest
 
     public function createDataProvider(): array
     {
+        $statusPassed = (string) new Status(Status::STATUS_PASSED);
+        $statusFailed = (string) new Status(Status::STATUS_FAILED);
+
         return [
             'passed, single assertion' => [
                 'name' => 'passed, single assertion',
-                'status' => Step::STATUS_PASSED,
+                'status' => $statusPassed,
                 'statements' => [
                     new PassedAssertionStatement(
                         '$".selector" exists'
@@ -49,11 +53,11 @@ class StepTest extends AbstractBaseTest
             ],
             'passed, single action, single assertion' => [
                 'name' => 'passed, single action, single assertion',
-                'status' => Step::STATUS_PASSED,
+                'status' => $statusPassed,
                 'statements' => [
                     new ActionStatement(
                         'click $".button"',
-                        'passed'
+                        $statusPassed
                     ),
                     new PassedAssertionStatement(
                         '$".selector" exists'
@@ -62,7 +66,7 @@ class StepTest extends AbstractBaseTest
             ],
             'failed, single assertion' => [
                 'name' => 'failed, single assertion',
-                'status' => Step::STATUS_FAILED,
+                'status' => $statusFailed,
                 'statements' => [
                     new FailedAssertionStatement(
                         '$".selector" exists',
@@ -101,11 +105,14 @@ class StepTest extends AbstractBaseTest
 
     public function getDataDataProvider(): array
     {
+        $statusPassed = (string) new Status(Status::STATUS_PASSED);
+        $statusFailed = (string) new Status(Status::STATUS_FAILED);
+
         return [
             'passed, single assertion' => [
                 'step' => new Step(
                     'passed, single assertion',
-                    Step::STATUS_PASSED,
+                    $statusPassed,
                     [
                         new PassedAssertionStatement(
                             '$".selector" exists'
@@ -114,12 +121,12 @@ class StepTest extends AbstractBaseTest
                 ),
                 'expectedData' => [
                     'name' => 'passed, single assertion',
-                    'status' => 'passed',
+                    'status' => $statusPassed,
                     'statements' => [
                         [
                             'type' => 'assertion',
                             'source' => '$".selector" exists',
-                            'status' => 'passed',
+                            'status' => $statusPassed,
                         ],
                     ],
                 ],
@@ -127,11 +134,11 @@ class StepTest extends AbstractBaseTest
             'passed, single action, single assertion' => [
                 'step' => new Step(
                     'passed, single action, single assertion',
-                    Step::STATUS_PASSED,
+                    $statusPassed,
                     [
                         new ActionStatement(
                             'click $".button"',
-                            'passed'
+                            $statusPassed
                         ),
                         new PassedAssertionStatement(
                             '$".selector" exists'
@@ -140,17 +147,17 @@ class StepTest extends AbstractBaseTest
                 ),
                 'expectedData' => [
                     'name' => 'passed, single action, single assertion',
-                    'status' => 'passed',
+                    'status' => $statusPassed,
                     'statements' => [
                         [
                             'type' => 'action',
                             'source' => 'click $".button"',
-                            'status' => 'passed',
+                            'status' => $statusPassed,
                         ],
                         [
                             'type' => 'assertion',
                             'source' => '$".selector" exists',
-                            'status' => 'passed',
+                            'status' => $statusPassed,
                         ],
                     ],
                 ],
@@ -158,7 +165,7 @@ class StepTest extends AbstractBaseTest
             'failed, single assertion' => [
                 'step' => new Step(
                     'failed, single assertion',
-                    Step::STATUS_FAILED,
+                    $statusFailed,
                     [
                         new FailedAssertionStatement(
                             '$".selector" exists',
@@ -183,12 +190,12 @@ class StepTest extends AbstractBaseTest
                 ),
                 'expectedData' => [
                     'name' => 'failed, single assertion',
-                    'status' => 'failed',
+                    'status' => $statusFailed,
                     'statements' => [
                         [
                             'type' => 'assertion',
                             'source' => '$".selector" exists',
-                            'status' => 'failed',
+                            'status' => $statusFailed,
                             'summary' => [
                                 'operator' => 'exists',
                                 'source' => [

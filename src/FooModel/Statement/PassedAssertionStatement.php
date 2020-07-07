@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\FooModel\Statement;
 
+use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
+
 class PassedAssertionStatement extends AbstractAssertionStatement
 {
-    private const STATUS = 'passed';
-
     public function __construct(string $source, array $transformations = [])
     {
-        parent::__construct($source, self::STATUS, $transformations);
+        $status = (string) new Status(Status::STATUS_PASSED);
+
+        parent::__construct($source, $status, $transformations);
     }
 }
