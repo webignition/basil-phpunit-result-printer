@@ -98,4 +98,45 @@ class NodeTest extends AbstractBaseTest
             ],
         ];
     }
+
+    /**
+     * @dataProvider fromIdentifierDataProvider
+     */
+    public function testFromIdentifier(Identifier $identifier, Node $expectedNode)
+    {
+        self::assertEquals($expectedNode, Node::fromIdentifier($identifier));
+    }
+
+    public function fromIdentifierDataProvider(): array
+    {
+        $elementProperties = new Properties(
+            Properties::TYPE_CSS,
+            '.selector',
+            1
+        );
+
+        $elementIdentifier = new Identifier('$".selector"', $elementProperties);
+
+        $attributeIdentifier = new Identifier(
+            '$".selector".attribute_name',
+            $elementProperties->withAttribute('attribute_name')
+        );
+
+        return [
+            'element' => [
+                'identifier' => $elementIdentifier,
+                'expectedNode' => new Node(
+                    Node::TYPE_ELEMENT,
+                    $elementIdentifier
+                ),
+            ],
+            'attribute' => [
+                'identifier' => $attributeIdentifier,
+                'expectedNode' => new Node(
+                    Node::TYPE_ATTRIBUTE,
+                    $attributeIdentifier
+                ),
+            ],
+        ];
+    }
 }
