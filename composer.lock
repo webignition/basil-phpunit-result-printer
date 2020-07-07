@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7339b7f27022fc68e48c388ec721f83b",
+    "content-hash": "bb19f779b262d6f480b93aa9f3f2e0bc",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -2947,6 +2947,48 @@
             ],
             "homepage": "https://github.com/webignition/basil-dom-identifier-factory",
             "time": "2020-05-27T16:24:15+00:00"
+        },
+        {
+            "name": "webignition/basil-identifier-analyser",
+            "version": "0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/basil-identifier-analyser.git",
+                "reference": "c2fd675db1adf9262cb6a98ca34ebd4f5e1e7f1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webignition/basil-identifier-analyser/zipball/c2fd675db1adf9262cb6a98ca34ebd4f5e1e7f1c",
+                "reference": "c2fd675db1adf9262cb6a98ca34ebd4f5e1e7f1c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "webignition/basil-value-extractor": ">=0.4,<1"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "~9",
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "webignition\\BasilIdentifierAnalyser\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "webignition@gmail.com"
+                }
+            ],
+            "homepage": "https://github.com/webignition/basil-identifier-analyser",
+            "time": "2020-05-28T09:12:22+00:00"
         },
         {
             "name": "webignition/basil-models",
