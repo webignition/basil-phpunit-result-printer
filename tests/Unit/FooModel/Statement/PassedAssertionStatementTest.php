@@ -6,6 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Statement;
 
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\PassedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class PassedAssertionStatementTest extends AbstractBaseTest
@@ -76,13 +77,15 @@ class PassedAssertionStatementTest extends AbstractBaseTest
 
     public function getDataDataProvider(): array
     {
+        $statusPassed = (string) new Status(Status::STATUS_PASSED);
+
         return [
             'no transformations' => [
                 'statement' => new PassedAssertionStatement('$page.url is "http://example.com/"'),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$page.url is "http://example.com/"',
-                    'status' => 'passed',
+                    'status' => $statusPassed,
                 ],
             ],
             'invalid transformations' => [
@@ -90,7 +93,7 @@ class PassedAssertionStatementTest extends AbstractBaseTest
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$page.url is "http://example.com/"',
-                    'status' => 'passed',
+                    'status' => $statusPassed,
                 ],
             ],
             'valid transformations' => [
@@ -106,7 +109,7 @@ class PassedAssertionStatementTest extends AbstractBaseTest
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',
-                    'status' => 'passed',
+                    'status' => $statusPassed,
                     'transformations' => [
                         [
                             'type' => Transformation::TYPE_RESOLUTION,

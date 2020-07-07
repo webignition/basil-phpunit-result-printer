@@ -12,6 +12,7 @@ use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class FailedAssertionStatementTest extends AbstractBaseTest
@@ -192,6 +193,8 @@ class FailedAssertionStatementTest extends AbstractBaseTest
 
     public function getDataDataProvider(): array
     {
+        $statusFailed = (string) new Status(Status::STATUS_FAILED);
+
         return [
             'no transformations' => [
                 'statement' => new FailedAssertionStatement(
@@ -216,7 +219,7 @@ class FailedAssertionStatementTest extends AbstractBaseTest
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',
-                    'status' => 'failed',
+                    'status' => $statusFailed,
                     'summary' => [
                         'operator' => 'exists',
                         'source' => [
@@ -259,7 +262,7 @@ class FailedAssertionStatementTest extends AbstractBaseTest
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',
-                    'status' => 'failed',
+                    'status' => $statusFailed,
                     'summary' => [
                         'operator' => 'exists',
                         'source' => [
@@ -312,7 +315,7 @@ class FailedAssertionStatementTest extends AbstractBaseTest
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',
-                    'status' => 'failed',
+                    'status' => $statusFailed,
                     'transformations' => [
                         [
                             'type' => Transformation::TYPE_DERIVATION,

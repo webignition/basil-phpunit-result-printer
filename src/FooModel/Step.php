@@ -8,9 +8,6 @@ use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\StatementInterface;
 
 class Step implements DocumentSourceInterface
 {
-    public const STATUS_PASSED = 'passed';
-    public const STATUS_FAILED = 'failed';
-
     private string $name;
     private string $status;
 

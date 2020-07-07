@@ -6,6 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Statement;
 
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\ActionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class ActionStatementTest extends AbstractBaseTest
@@ -31,30 +32,33 @@ class ActionStatementTest extends AbstractBaseTest
 
     public function createDataProvider(): array
     {
+        $statusPassed = (string) new Status(Status::STATUS_PASSED);
+        $statusFailed = (string) new Status(Status::STATUS_FAILED);
+
         return [
             'passed, no transformations' => [
                 'source' => 'click $".selector"',
-                'status' => 'passed',
+                'status' => $statusPassed,
                 'transformations' => [],
                 'expectedStatement' => new ActionStatement(
                     'click $".selector"',
-                    'passed'
+                    $statusPassed
                 ),
             ],
             'passed, has invalid transformations' => [
                 'source' => 'click $".selector"',
-                'status' => 'passed',
+                'status' => $statusPassed,
                 'transformations' => [
                     new \stdClass(),
                 ],
                 'expectedStatement' => new ActionStatement(
                     'click $".selector"',
-                    'passed'
+                    $statusPassed
                 ),
             ],
             'passed, has transformations' => [
                 'source' => 'click $".selector"',
-                'status' => 'passed',
+                'status' => $statusPassed,
                 'transformations' => [
                     new Transformation(
                         Transformation::TYPE_RESOLUTION,
@@ -63,7 +67,7 @@ class ActionStatementTest extends AbstractBaseTest
                 ],
                 'expectedStatement' => new ActionStatement(
                     'click $".selector"',
-                    'passed',
+                    $statusPassed,
                     [
                         new Transformation(
                             Transformation::TYPE_RESOLUTION,
@@ -74,11 +78,11 @@ class ActionStatementTest extends AbstractBaseTest
             ],
             'failed' => [
                 'source' => 'click $".selector"',
-                'status' => 'failed',
+                'status' => $statusFailed,
                 'transformations' => [],
                 'expectedStatement' => new ActionStatement(
                     'click $".selector"',
-                    'failed'
+                    $statusFailed
                 ),
             ],
         ];
@@ -97,22 +101,25 @@ class ActionStatementTest extends AbstractBaseTest
 
     public function getDataDataProvider(): array
     {
+        $statusPassed = (string) new Status(Status::STATUS_PASSED);
+        $statusFailed = (string) new Status(Status::STATUS_FAILED);
+
         return [
             'passed, no transformations' => [
                 'statement' => new ActionStatement(
                     'click $".selector"',
-                    'passed',
+                    $statusPassed,
                 ),
                 'expectedData' => [
                     'type' => 'action',
                     'source' => 'click $".selector"',
-                    'status' => 'passed',
+                    'status' => $statusPassed,
                 ],
             ],
             'passed, has invalid transformations' => [
                 'statement' => new ActionStatement(
                     'click $".selector"',
-                    'passed',
+                    $statusPassed,
                     [
                         new \stdClass(),
                     ]
@@ -120,13 +127,13 @@ class ActionStatementTest extends AbstractBaseTest
                 'expectedData' => [
                     'type' => 'action',
                     'source' => 'click $".selector"',
-                    'status' => 'passed',
+                    'status' => $statusPassed,
                 ],
             ],
             'passed, has transformations' => [
                 'statement' => new ActionStatement(
                     'click $".selector"',
-                    'passed',
+                    $statusPassed,
                     [
                         new Transformation(
                             Transformation::TYPE_RESOLUTION,
@@ -137,7 +144,7 @@ class ActionStatementTest extends AbstractBaseTest
                 'expectedData' => [
                     'type' => 'action',
                     'source' => 'click $".selector"',
-                    'status' => 'passed',
+                    'status' => $statusPassed,
                     'transformations' => [
                         [
                             'type' => Transformation::TYPE_RESOLUTION,
@@ -149,12 +156,12 @@ class ActionStatementTest extends AbstractBaseTest
             'failed' => [
                 'statement' => new ActionStatement(
                     'click $".selector"',
-                    'failed',
+                    $statusFailed,
                 ),
                 'expectedData' => [
                     'type' => 'action',
                     'source' => 'click $".selector"',
-                    'status' => 'failed',
+                    'status' => $statusFailed,
                 ],
             ],
         ];
