@@ -6,7 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\FooModel;
 
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\StatementInterface;
 
-class Step
+class Step implements DocumentSourceInterface
 {
     public const STATUS_PASSED = 'passed';
     public const STATUS_FAILED = 'failed';
@@ -33,9 +33,6 @@ class Step
         });
     }
 
-    /**
-     * @return array<mixed>
-     */
     public function getData(): array
     {
         $statementData = [];

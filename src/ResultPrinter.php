@@ -11,20 +11,23 @@ use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Util\Printer;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Test as TestOutput;
+use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
+use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
 use webignition\BasilPhpUnitResultPrinter\Model\IndentedContent;
-use webignition\BasilPhpUnitResultPrinter\Model\TestName;
-use webignition\BasilPhpUnitResultPrinter\Model\TestOutput;
 
 class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 {
     private ?TestOutput $currentTestOutput = null;
     private StepFactory $stepFactory;
+    private GeneratorInterface $generator;
 
     public function __construct($out = null)
     {
         parent::__construct($out);
 
         $this->stepFactory = StepFactory::createFactory();
+        $this->generator = new YamlGenerator();
     }
 
     /**
@@ -105,9 +108,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 
             if ($isNewTest) {
                 $currentTestOutput = new TestOutput($testPath);
-                $this->write((new TestName($currentTestOutput->getPath()))->render());
-                $this->writeEmptyLine();
-
+                $this->write($this->generator->generate($currentTestOutput));
                 $this->currentTestOutput = $currentTestOutput;
             }
         }
