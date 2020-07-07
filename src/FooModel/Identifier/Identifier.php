@@ -15,6 +15,11 @@ class Identifier
         $this->properties = $properties;
     }
 
+    public function isAttribute(): bool
+    {
+        return $this->properties->hasAttribute();
+    }
+
     /**
      * @return array<mixed>
      */
