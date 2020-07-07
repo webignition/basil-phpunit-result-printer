@@ -87,7 +87,9 @@ class ResultPrinterTest extends AbstractBaseTest
                     null,
                 ],
                 'expectedOutput' =>
-                '<test-name>test.yml</test-name>' . "\n" .
+                '---' . "\n" .
+                'path: test.yml' . "\n" .
+                '...' . "\n" .
                     '  <icon-success /> <success>step one</success>' . "\n" .
                     '    <icon-success /> $page.url is "http://example.com/"' . "\n" .
                     "\n",
@@ -142,12 +144,16 @@ class ResultPrinterTest extends AbstractBaseTest
                     'http://example.com/',
                 ],
                 'expectedOutput' =>
-                    '<test-name>test1.yml</test-name>' . "\n" .
+                    '---' . "\n" .
+                    'path: test1.yml' . "\n" .
+                    '...' . "\n" .
                     '  <icon-success /> <success>test one step one</success>' . "\n" .
                     '    <icon-success /> $page.url is "http://example.com/"' . "\n" .
                     '    <icon-success /> $page.title is "Hello, World!"' . "\n" .
                     "\n" .
-                    '<test-name>test2.yml</test-name>' . "\n" .
+                    '---' . "\n" .
+                    'path: test2.yml' . "\n" .
+                    '...' . "\n" .
                     '  <icon-success /> <success>test two step one</success>' . "\n" .
                     '    <icon-success /> click $".successful"' . "\n" .
                     '    <icon-success /> $page.url is "http://example.com/successful/"' . "\n" .
@@ -156,7 +162,9 @@ class ResultPrinterTest extends AbstractBaseTest
                     '    <icon-success /> click $".back"' . "\n" .
                     '    <icon-success /> $page.url is "http://example.com/"' . "\n" .
                     "\n" .
-                    '<test-name>test3.yml</test-name>' . "\n" .
+                    '---' . "\n" .
+                    'path: test3.yml' . "\n" .
+                    '...' . "\n" .
                     '  <icon-failure /> <failure>test three step one</failure>' . "\n" .
                     '    <icon-success /> click $".new"' . "\n" .
                     '    <icon-failure /> '

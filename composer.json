@@ -34,6 +34,7 @@
     "require": {
         "php": ">=7.4",
         "phpunit/phpunit": "~9",
+        "symfony/yaml": "^5.1",
         "webignition/base-basil-test-case": ">=0.27,<1",
         "webignition/basil-dom-identifier-factory": ">=0.13,<1",
         "webignition/basil-models": ">=0.56,<1",
