@@ -87,7 +87,7 @@ class ResultPrinterTest extends AbstractBaseTest
                     null,
                 ],
                 'expectedOutput' =>
-                '---'  . "\n" .
+                '---' . "\n" .
                 'path: test.yml' . "\n" .
                 '...' . "\n" .
                     '  <icon-success /> <success>step one</success>' . "\n" .
@@ -144,14 +144,14 @@ class ResultPrinterTest extends AbstractBaseTest
                     'http://example.com/',
                 ],
                 'expectedOutput' =>
-                    '---'  . "\n" .
+                    '---' . "\n" .
                     'path: test1.yml' . "\n" .
                     '...' . "\n" .
                     '  <icon-success /> <success>test one step one</success>' . "\n" .
                     '    <icon-success /> $page.url is "http://example.com/"' . "\n" .
                     '    <icon-success /> $page.title is "Hello, World!"' . "\n" .
                     "\n" .
-                    '---'  . "\n" .
+                    '---' . "\n" .
                     'path: test2.yml' . "\n" .
                     '...' . "\n" .
                     '  <icon-success /> <success>test two step one</success>' . "\n" .
@@ -162,7 +162,7 @@ class ResultPrinterTest extends AbstractBaseTest
                     '    <icon-success /> click $".back"' . "\n" .
                     '    <icon-success /> $page.url is "http://example.com/"' . "\n" .
                     "\n" .
-                    '---'  . "\n" .
+                    '---' . "\n" .
                     'path: test3.yml' . "\n" .
                     '...' . "\n" .
                     '  <icon-failure /> <failure>test three step one</failure>' . "\n" .

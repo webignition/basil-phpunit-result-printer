@@ -28,8 +28,7 @@ class YamlGeneratorTest extends AbstractBaseTest
                 'expectedString' =>
                     '---' . "\n" .
                     '{  }' . "\n" .
-                    '...' . "\n"
-                ,
+                    '...' . "\n",
             ],
             'single-level document' => [
                 'documentSource' => $this->createDocumentSource([
@@ -38,8 +37,7 @@ class YamlGeneratorTest extends AbstractBaseTest
                 'expectedString' =>
                     '---' . "\n" .
                     'level1key1: level1value1' . "\n" .
-                    '...' . "\n"
-                ,
+                    '...' . "\n",
             ],
             'two-level document' => [
                 'documentSource' => $this->createDocumentSource([
@@ -54,8 +52,7 @@ class YamlGeneratorTest extends AbstractBaseTest
                     'level1key1: level1value1' . "\n" .
                     'level1key2:' . "\n" .
                     '    level2key1: level2value1' . "\n" .
-                    '...' . "\n"
-                ,
+                    '...' . "\n",
             ],
             'three-level document' => [
                 'documentSource' => $this->createDocumentSource([
@@ -75,12 +72,16 @@ class YamlGeneratorTest extends AbstractBaseTest
                     '    level2key1: level2value1' . "\n" .
                     '    level2key2:' . "\n" .
                     '        level3key1: level3value1' . "\n" .
-                    '...' . "\n"
-                ,
+                    '...' . "\n",
             ],
         ];
     }
 
+    /**
+     * @param array<mixed> $data
+     *
+     * @return DocumentSourceInterface
+     */
     private function createDocumentSource(array $data): DocumentSourceInterface
     {
         $documentSource = \Mockery::mock(DocumentSourceInterface::class);
