@@ -8,14 +8,13 @@ use webignition\BasilModels\Assertion\Assertion;
 use webignition\BasilModels\Assertion\AssertionInterface;
 use webignition\BasilParser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\ScalarSourceFactory;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\ValueFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\AssertionFailureSummaryInterface;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Comparison;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Existence;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\IsRegExp;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\ScalarSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Value;
@@ -48,87 +47,37 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
     {
         $assertionParser = AssertionParser::create();
 
-        $cssIdentifierElementProperties = new Properties(Properties::TYPE_CSS, '.identifier', 1);
-        $cssIdentifierAttributeProperties = $cssIdentifierElementProperties->withAttribute('attribute_name');
-
-        $cssIdentifierElementNode = new Node(
-            Node::TYPE_ELEMENT,
-            new Identifier('$".identifier"', $cssIdentifierElementProperties)
-        );
-
-        $cssIdentifierAttributeNode = new Node(
-            Node::TYPE_ATTRIBUTE,
-            new Identifier('$".identifier".attribute_name', $cssIdentifierAttributeProperties)
-        );
-
-        $cssValueElementProperties = new Properties(Properties::TYPE_CSS, '.value', 1);
-        $cssValueAttributeProperties = $cssValueElementProperties->withAttribute('attribute_name');
-
-        $cssValueElementNode = new Node(
-            Node::TYPE_ELEMENT,
-            new Identifier('$".value"', $cssValueElementProperties)
-        );
-
-        $cssValueAttributeNode = new Node(
-            Node::TYPE_ATTRIBUTE,
-            new Identifier('$".value".attribute_name', $cssValueAttributeProperties)
-        );
+        $nodeSourceFactory = NodeSourceFactory::createFactory();
+        $scalarSourceFactory = ScalarSourceFactory::createFactory();
+        $valueFactory = ValueFactory::createFactory();
 
         return [
-            'exists, element node' => [
+            'exists, node' => [
                 'assertion' => $assertionParser->parse('$".identifier" exists'),
-                'expectedValue' => '',
-                'actualValue' => '',
-                'expectedSummary' => new Existence('exists', new NodeSource($cssIdentifierElementNode)),
-            ],
-            'exists, attribute node' => [
-                'assertion' => $assertionParser->parse('$".identifier".attribute_name exists'),
-                'expectedValue' => '',
-                'actualValue' => '',
-                'expectedSummary' => new Existence('exists', new NodeSource($cssIdentifierAttributeNode)),
-            ],
-            'exists, descendant element node' => [
-                'assertion' => $assertionParser->parse('$".parent" >> $".child" exists'),
                 'expectedValue' => '',
                 'actualValue' => '',
                 'expectedSummary' => new Existence(
                     'exists',
-                    new NodeSource(
-                        new Node(
-                            Node::TYPE_ELEMENT,
-                            new Identifier(
-                                '$".parent" >> $".child"',
-                                (new Properties(
-                                    Properties::TYPE_CSS,
-                                    '.child',
-                                    1
-                                ))->withParent(new Properties(
-                                    Properties::TYPE_CSS,
-                                    '.parent',
-                                    1
-                                ))
-                            )
-                        )
-                    )
+                    $nodeSourceFactory->create('$".identifier"') ?? \Mockery::mock(NodeSource::class)
                 ),
             ],
-            'not-exists, element node' => [
+            'not-exists, node' => [
                 'assertion' => $assertionParser->parse('$".identifier" not-exists'),
                 'expectedValue' => '',
                 'actualValue' => '',
-                'expectedSummary' => new Existence('not-exists', new NodeSource($cssIdentifierElementNode)),
+                'expectedSummary' => new Existence(
+                    'not-exists',
+                    $nodeSourceFactory->create('$".identifier"') ?? \Mockery::mock(NodeSource::class)
+                ),
             ],
-            'is-regexp, element node' => [
+            'is-regexp, node' => [
                 'assertion' => $assertionParser->parse('$".identifier" is-regexp'),
                 'expectedValue' => '',
                 'actualValue' => 'invalid regexp',
-                'expectedSummary' => new IsRegExp('invalid regexp', new NodeSource($cssIdentifierElementNode)),
-            ],
-            'is-regexp, attribute node' => [
-                'assertion' => $assertionParser->parse('$".identifier".attribute_name is-regexp'),
-                'expectedValue' => '',
-                'actualValue' => 'invalid regexp',
-                'expectedSummary' => new IsRegExp('invalid regexp', new NodeSource($cssIdentifierAttributeNode)),
+                'expectedSummary' => new IsRegExp(
+                    'invalid regexp',
+                    $nodeSourceFactory->create('$".identifier"') ?? \Mockery::mock(NodeSource::class)
+                ),
             ],
             'is-regexp, scalar' => [
                 'assertion' => $assertionParser->parse('$page.title is-regexp'),
@@ -136,12 +85,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
                 'actualValue' => 'invalid regexp',
                 'expectedSummary' => new IsRegExp(
                     'invalid regexp',
-                    new ScalarSource(
-                        new Scalar(
-                            Scalar::TYPE_PAGE_PROPERTY,
-                            '$page.title'
-                        )
-                    )
+                    $scalarSourceFactory->create('$page.title') ?? \Mockery::mock(ScalarSource::class)
                 ),
             ],
             'is, element node identifier, scalar value' => [
@@ -150,19 +94,14 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
                 'actualValue' => 'identifier element node value',
                 'expectedSummary' => new Comparison(
                     'is',
-                    new Value(
+                    $valueFactory->create(
                         'expected',
-                        new ScalarSource(
-                            new Scalar(
-                                Scalar::TYPE_LITERAL,
-                                '"expected"'
-                            )
-                        )
-                    ),
-                    new Value(
+                        '"expected"'
+                    ) ?? \Mockery::mock(Value::class),
+                    $valueFactory->create(
                         'identifier element node value',
-                        new NodeSource($cssIdentifierElementNode)
-                    )
+                        '$".identifier"'
+                    ) ?? \Mockery::mock(Value::class)
                 ),
             ],
             'is, element node identifier, element node value' => [
@@ -171,14 +110,14 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
                 'actualValue' => 'identifier element node value',
                 'expectedSummary' => new Comparison(
                     'is',
-                    new Value(
+                    $valueFactory->create(
                         'value element node value',
-                        new NodeSource($cssValueElementNode)
-                    ),
-                    new Value(
+                        '$".value"'
+                    ) ?? \Mockery::mock(Value::class),
+                    $valueFactory->create(
                         'identifier element node value',
-                        new NodeSource($cssIdentifierElementNode)
-                    )
+                        '$".identifier"'
+                    ) ?? \Mockery::mock(Value::class)
                 ),
             ],
             'is, scalar identifier, element node value' => [
@@ -187,19 +126,14 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
                 'actualValue' => 'expected',
                 'expectedSummary' => new Comparison(
                     'is',
-                    new Value(
+                    $valueFactory->create(
                         'value element node value',
-                        new NodeSource($cssValueElementNode)
-                    ),
-                    new Value(
+                        '$".value"'
+                    ) ?? \Mockery::mock(Value::class),
+                    $valueFactory->create(
                         'expected',
-                        new ScalarSource(
-                            new Scalar(
-                                Scalar::TYPE_LITERAL,
-                                '"expected"'
-                            )
-                        )
-                    )
+                        '"expected"'
+                    ) ?? \Mockery::mock(Value::class)
                 ),
             ],
             'is, scalar identifier, scalar value' => [
@@ -208,24 +142,14 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
                 'actualValue' => 'actual',
                 'expectedSummary' => new Comparison(
                     'is',
-                    new Value(
+                    $valueFactory->create(
                         'expected',
-                        new ScalarSource(
-                            new Scalar(
-                                Scalar::TYPE_LITERAL,
-                                '"expected"'
-                            )
-                        )
-                    ),
-                    new Value(
+                        '"expected"'
+                    ) ?? \Mockery::mock(Value::class),
+                    $valueFactory->create(
                         'actual',
-                        new ScalarSource(
-                            new Scalar(
-                                Scalar::TYPE_LITERAL,
-                                '"actual"'
-                            )
-                        )
-                    )
+                        '"actual"'
+                    ) ?? \Mockery::mock(Value::class)
                 ),
             ],
             'is, attribute node identifier, scalar value' => [
@@ -234,19 +158,14 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
                 'actualValue' => 'identifier attribute node value',
                 'expectedSummary' => new Comparison(
                     'is',
-                    new Value(
+                    $valueFactory->create(
                         'expected',
-                        new ScalarSource(
-                            new Scalar(
-                                Scalar::TYPE_LITERAL,
-                                '"expected"'
-                            )
-                        )
-                    ),
-                    new Value(
+                        '"expected"'
+                    ) ?? \Mockery::mock(Value::class),
+                    $valueFactory->create(
                         'identifier attribute node value',
-                        new NodeSource($cssIdentifierAttributeNode)
-                    )
+                        '$".identifier".attribute_name'
+                    ) ?? \Mockery::mock(Value::class)
                 ),
             ],
             'is, element node identifier, attribute node value' => [
@@ -255,14 +174,14 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
                 'actualValue' => 'identifier element node value',
                 'expectedSummary' => new Comparison(
                     'is',
-                    new Value(
+                    $valueFactory->create(
                         'value attribute node value',
-                        new NodeSource($cssValueAttributeNode)
-                    ),
-                    new Value(
+                        '$".value".attribute_name'
+                    ) ?? \Mockery::mock(Value::class),
+                    $valueFactory->create(
                         'identifier element node value',
-                        new NodeSource($cssIdentifierElementNode)
-                    )
+                        '$".identifier"'
+                    ) ?? \Mockery::mock(Value::class)
                 ),
             ],
         ];

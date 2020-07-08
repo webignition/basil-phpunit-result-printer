@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Identifier;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\IdentifierFactory;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\PropertiesFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
@@ -30,6 +31,8 @@ class IdentifierFactoryTest extends AbstractBaseTest
 
     public function createDataProvider(): array
     {
+        $propertiesFactory = PropertiesFactory::createFactory();
+
         return [
             'empty' => [
                 'source' => '',
@@ -39,11 +42,7 @@ class IdentifierFactoryTest extends AbstractBaseTest
                 'source' => '$".selector"',
                 'expectedIdentifier' => new Identifier(
                     '$".selector"',
-                    new Properties(
-                        Properties::TYPE_CSS,
-                        '.selector',
-                        1
-                    )
+                    $propertiesFactory->create('$".selector"') ?? \Mockery::mock(Properties::class)
                 ),
             ],
         ];

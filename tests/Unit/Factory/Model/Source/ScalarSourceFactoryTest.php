@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Source;
 
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\ScalarFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\ScalarSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\ScalarSource;
@@ -30,39 +31,17 @@ class ScalarSourceFactoryTest extends AbstractBaseTest
 
     public function createDataProvider(): array
     {
+        $scalarFactory = ScalarFactory::createFactory();
+
         return [
             'empty' => [
                 'source' => '',
                 'expectedScalarSource' => null,
             ],
-            'browser property' => [
-                'source' => '$browser.size',
-                'expectedScalarSource' => new ScalarSource(
-                    new Scalar(Scalar::TYPE_BROWSER_PROPERTY, '$browser.size')
-                ),
-            ],
-            'data parameter' => [
-                'source' => '$data.key',
-                'expectedScalarSource' => new ScalarSource(
-                    new Scalar(Scalar::TYPE_DATA_PARAMETER, '$data.key')
-                ),
-            ],
-            'environment parameter' => [
-                'source' => '$env.key',
-                'expectedScalarSource' => new ScalarSource(
-                    new Scalar(Scalar::TYPE_ENVIRONMENT_PARAMETER, '$env.key')
-                ),
-            ],
-            'literal' => [
+            'non-empty' => [
                 'source' => '"literal"',
                 'expectedScalarSource' => new ScalarSource(
-                    new Scalar(Scalar::TYPE_LITERAL, '"literal"')
-                ),
-            ],
-            'page property' => [
-                'source' => '$page.url',
-                'expectedScalarSource' => new ScalarSource(
-                    new Scalar(Scalar::TYPE_PAGE_PROPERTY, '$page.url')
+                    $scalarFactory->create('"literal"') ?? \Mockery::mock(Scalar::class)
                 ),
             ],
         ];

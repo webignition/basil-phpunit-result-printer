@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Source;
 
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\IdentifierFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
@@ -32,6 +32,8 @@ class NodeSourceFactoryTest extends AbstractBaseTest
 
     public function createDataProvider(): array
     {
+        $identifierFactory = IdentifierFactory::createFactory();
+
         return [
             'empty' => [
                 'source' => '',
@@ -41,14 +43,7 @@ class NodeSourceFactoryTest extends AbstractBaseTest
                 'source' => '$".selector"',
                 'expectedNodeSource' => new NodeSource(
                     Node::fromIdentifier(
-                        new Identifier(
-                            '$".selector"',
-                            new Properties(
-                                Properties::TYPE_CSS,
-                                '.selector',
-                                1
-                            )
-                        )
+                        $identifierFactory->create('$".selector"') ?? \Mockery::mock(Identifier::class)
                     )
                 ),
             ],
