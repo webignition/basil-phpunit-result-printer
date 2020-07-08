@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit;
+namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Statement;
 
 use webignition\BasilModels\Action\Action;
 use webignition\BasilModels\Action\ResolvedAction;
@@ -10,8 +10,9 @@ use webignition\BasilModels\Assertion\Assertion;
 use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
 use webignition\BasilModels\Assertion\ResolvedAssertion;
 use webignition\BasilModels\StatementInterface;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\TransformationFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
-use webignition\BasilPhpUnitResultPrinter\TransformationFactory;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class TransformationFactoryTest extends AbstractBaseTest
 {

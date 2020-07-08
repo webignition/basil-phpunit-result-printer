@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter;
+namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement;
 
 use webignition\BasilModels\Action\ResolvedAction;
 use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
