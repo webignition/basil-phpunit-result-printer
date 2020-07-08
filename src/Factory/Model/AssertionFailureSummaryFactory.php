@@ -17,16 +17,19 @@ use webignition\BasilPhpUnitResultPrinter\FooModel\Value;
 class AssertionFailureSummaryFactory
 {
     private SourceFactory $sourceFactory;
+    private ValueFactory $valueFactory;
 
-    public function __construct(SourceFactory $sourceFactory)
+    public function __construct(SourceFactory $sourceFactory, ValueFactory $valueFactory)
     {
         $this->sourceFactory = $sourceFactory;
+        $this->valueFactory = $valueFactory;
     }
 
     public static function createFactory(): self
     {
         return new AssertionFailureSummaryFactory(
-            SourceFactory::createFactory()
+            SourceFactory::createFactory(),
+            ValueFactory::createFactory()
         );
     }
 
@@ -59,15 +62,11 @@ class AssertionFailureSummaryFactory
             return null;
         }
 
-        $expected = $this->sourceFactory->create((string) $assertion->getValue());
-        $actual = $this->sourceFactory->create($assertion->getIdentifier());
+        $expectedValueObject = $this->valueFactory->create($expectedValue, (string) $assertion->getValue());
+        $actualValueObject = $this->valueFactory->create($actualValue, $assertion->getIdentifier());
 
-        if ($expected instanceof SourceInterface && $actual instanceof SourceInterface) {
-            return new Comparison(
-                $operator,
-                new Value($expectedValue, $expected),
-                new Value($actualValue, $actual)
-            );
+        if ($expectedValueObject instanceof Value && $actualValueObject instanceof Value) {
+            return new Comparison($operator, $expectedValueObject, $actualValueObject);
         }
 
         return null;
