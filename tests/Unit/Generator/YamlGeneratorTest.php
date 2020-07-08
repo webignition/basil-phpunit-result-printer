@@ -51,7 +51,7 @@ class YamlGeneratorTest extends AbstractBaseTest
                     '---' . "\n" .
                     'level1key1: level1value1' . "\n" .
                     'level1key2:' . "\n" .
-                    '    level2key1: level2value1' . "\n" .
+                    '  level2key1: level2value1' . "\n" .
                     '...' . "\n",
             ],
             'three-level document' => [
@@ -69,9 +69,9 @@ class YamlGeneratorTest extends AbstractBaseTest
                     '---' . "\n" .
                     'level1key1: level1value1' . "\n" .
                     'level1key2:' . "\n" .
-                    '    level2key1: level2value1' . "\n" .
-                    '    level2key2:' . "\n" .
-                    '        level3key1: level3value1' . "\n" .
+                    '  level2key1: level2value1' . "\n" .
+                    '  level2key2:' . "\n" .
+                    '    level3key1: level3value1' . "\n" .
                     '...' . "\n",
             ],
         ];
