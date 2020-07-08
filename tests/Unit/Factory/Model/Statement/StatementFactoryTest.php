@@ -11,23 +11,20 @@ use webignition\BasilModels\Assertion\AssertionInterface;
 use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
 use webignition\BasilParser\ActionParser;
 use webignition\BasilParser\AssertionParser;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Comparison;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\TransformationFactory;
+use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\AssertionFailureSummaryInterface;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Existence;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\IsRegExp;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\ScalarSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\ActionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\PassedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\StatementInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Value;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class StatementFactoryTest extends AbstractBaseTest
@@ -51,6 +48,8 @@ class StatementFactoryTest extends AbstractBaseTest
 
     public function createForPassedActionDataProvider(): array
     {
+        $transformationFactory = new TransformationFactory();
+
         $actionParser = ActionParser::create();
 
         $clickAction = $actionParser->parse('click $".selector"');
@@ -62,6 +61,11 @@ class StatementFactoryTest extends AbstractBaseTest
             '$page_import_name.elements.selector'
         );
 
+        $resolvedClickAction = new ResolvedAction(
+            $unresolvedClickAction,
+            '$".selector"'
+        );
+
         return [
             'click action' => [
                 'action' => $clickAction,
@@ -71,19 +75,11 @@ class StatementFactoryTest extends AbstractBaseTest
                 ),
             ],
             'resolved click action' => [
-                'action' => new ResolvedAction(
-                    $unresolvedClickAction,
-                    '$".selector"'
-                ),
+                'action' => $resolvedClickAction,
                 'expectedStatement' => new ActionStatement(
                     'click $".selector"',
                     (string) new Status(Status::STATUS_PASSED),
-                    [
-                        new Transformation(
-                            Transformation::TYPE_RESOLUTION,
-                            'click $page_import_name.elements.selector'
-                        )
-                    ]
+                    $transformationFactory->createTransformations($resolvedClickAction),
                 ),
             ],
         ];
@@ -99,6 +95,8 @@ class StatementFactoryTest extends AbstractBaseTest
 
     public function createForFailedActionDataProvider(): array
     {
+        $transformationFactory = new TransformationFactory();
+
         $actionParser = ActionParser::create();
 
         $clickAction = $actionParser->parse('click $".selector"');
@@ -110,6 +108,11 @@ class StatementFactoryTest extends AbstractBaseTest
             '$page_import_name.elements.selector'
         );
 
+        $resolvedClickAction = new ResolvedAction(
+            $unresolvedClickAction,
+            '$".selector"'
+        );
+
         return [
             'click action' => [
                 'action' => $clickAction,
@@ -119,19 +122,11 @@ class StatementFactoryTest extends AbstractBaseTest
                 ),
             ],
             'resolved click action' => [
-                'action' => new ResolvedAction(
-                    $unresolvedClickAction,
-                    '$".selector"'
-                ),
+                'action' => $resolvedClickAction,
                 'expectedStatement' => new ActionStatement(
                     'click $".selector"',
                     (string) new Status(Status::STATUS_FAILED),
-                    [
-                        new Transformation(
-                            Transformation::TYPE_RESOLUTION,
-                            'click $page_import_name.elements.selector'
-                        )
-                    ]
+                    $transformationFactory->createTransformations($resolvedClickAction)
                 ),
             ],
         ];
@@ -147,6 +142,8 @@ class StatementFactoryTest extends AbstractBaseTest
 
     public function createForPassedAssertionDataProvider(): array
     {
+        $transformationFactory = new TransformationFactory();
+
         $actionParser = ActionParser::create();
         $assertionParser = AssertionParser::create();
 
@@ -155,6 +152,12 @@ class StatementFactoryTest extends AbstractBaseTest
         $resolvedClickAction = new ResolvedAction($unresolvedClickAction, '$".selector"');
 
         $existsAssertion = $assertionParser->parse('$".selector" exists');
+        $derivedExistsAssertion = new DerivedValueOperationAssertion($clickAction, '$".selector"', 'exists');
+        $derivedResolvedExistsAssertion = new DerivedValueOperationAssertion(
+            $resolvedClickAction,
+            '$".selector"',
+            'exists'
+        );
 
         return [
             'exists assertion' => [
@@ -162,31 +165,17 @@ class StatementFactoryTest extends AbstractBaseTest
                 'expectedStatement' => new PassedAssertionStatement('$".selector" exists'),
             ],
             'derived exists assertion' => [
-                'assertion' => new DerivedValueOperationAssertion($clickAction, '$".selector"', 'exists'),
+                'assertion' => $derivedExistsAssertion,
                 'expectedStatement' => new PassedAssertionStatement(
                     '$".selector" exists',
-                    [
-                        new Transformation(
-                            Transformation::TYPE_DERIVATION,
-                            'click $".selector"'
-                        ),
-                    ]
+                    $transformationFactory->createTransformations($derivedExistsAssertion)
                 ),
             ],
             'derived, resolved exists assertion' => [
-                'assertion' => new DerivedValueOperationAssertion($resolvedClickAction, '$".selector"', 'exists'),
+                'assertion' => $derivedResolvedExistsAssertion,
                 'expectedStatement' => new PassedAssertionStatement(
                     '$".selector" exists',
-                    [
-                        new Transformation(
-                            Transformation::TYPE_DERIVATION,
-                            'click $".selector"'
-                        ),
-                        new Transformation(
-                            Transformation::TYPE_RESOLUTION,
-                            'click $page_import_name.elements.selector'
-                        ),
-                    ]
+                    $transformationFactory->createTransformations($derivedResolvedExistsAssertion)
                 ),
             ],
             'is assertion' => [
@@ -213,6 +202,9 @@ class StatementFactoryTest extends AbstractBaseTest
 
     public function createForFailedAssertionDataProvider(): array
     {
+        $transformationFactory = new TransformationFactory();
+        $assertionFailureSummaryFactory = AssertionFailureSummaryFactory::createFactory();
+
         $actionParser = ActionParser::create();
         $assertionParser = AssertionParser::create();
 
@@ -221,6 +213,15 @@ class StatementFactoryTest extends AbstractBaseTest
         $resolvedClickAction = new ResolvedAction($unresolvedClickAction, '$".selector"');
 
         $existsAssertion = $assertionParser->parse('$".selector" exists');
+        $derivedExistsAssertion = new DerivedValueOperationAssertion($clickAction, '$".selector"', 'exists');
+        $derivedResolvedExistsAssertion = new DerivedValueOperationAssertion(
+            $resolvedClickAction,
+            '$".selector"',
+            'exists'
+        );
+
+        $isAssertion = $assertionParser->parse('$".selector" is "value"');
+        $isRegExpAssertion = $assertionParser->parse('"literal" is-regexp');
 
         $elementNodeSource = new NodeSource(
             new Node(
@@ -246,75 +247,49 @@ class StatementFactoryTest extends AbstractBaseTest
                 'expectedStatement' => new FailedAssertionStatement('$".selector" exists', $existenceFailureSummary),
             ],
             'derived exists assertion' => [
-                'assertion' => new DerivedValueOperationAssertion($clickAction, '$".selector"', 'exists'),
+                'assertion' => $derivedExistsAssertion,
                 'expectedValue' => '',
                 'actualValue' => '',
                 'expectedStatement' => new FailedAssertionStatement(
                     '$".selector" exists',
                     $existenceFailureSummary,
-                    [
-                        new Transformation(
-                            Transformation::TYPE_DERIVATION,
-                            'click $".selector"'
-                        ),
-                    ]
+                    $transformationFactory->createTransformations($derivedExistsAssertion)
                 ),
             ],
             'derived, resolved exists assertion' => [
-                'assertion' => new DerivedValueOperationAssertion($resolvedClickAction, '$".selector"', 'exists'),
+                'assertion' => $derivedResolvedExistsAssertion,
                 'expectedValue' => '',
                 'actualValue' => '',
                 'expectedStatement' => new FailedAssertionStatement(
                     '$".selector" exists',
                     $existenceFailureSummary,
-                    [
-                        new Transformation(
-                            Transformation::TYPE_DERIVATION,
-                            'click $".selector"'
-                        ),
-                        new Transformation(
-                            Transformation::TYPE_RESOLUTION,
-                            'click $page_import_name.elements.selector'
-                        ),
-                    ]
+                    $transformationFactory->createTransformations($derivedResolvedExistsAssertion)
                 ),
             ],
             'is assertion' => [
-                'assertion' => $assertionParser->parse('$".selector" is "value"'),
+                'assertion' => $isAssertion,
                 'expectedValue' => 'value',
                 'actualValue' => 'selector value',
                 'expectedStatement' => new FailedAssertionStatement(
                     '$".selector" is "value"',
-                    new Comparison(
-                        'is',
-                        new Value(
-                            'value',
-                            new ScalarSource(
-                                new Scalar(
-                                    Scalar::TYPE_LITERAL,
-                                    '"value"'
-                                )
-                            )
-                        ),
-                        new Value('selector value', $elementNodeSource)
-                    )
+                    $assertionFailureSummaryFactory->create(
+                        $isAssertion,
+                        'value',
+                        'selector value'
+                    ) ?? \Mockery::mock(AssertionFailureSummaryInterface::class)
                 ),
             ],
             'is-regexp assertion' => [
-                'assertion' => $assertionParser->parse('"literal" is-regexp'),
+                'assertion' => $isRegExpAssertion,
                 'expectedValue' => '',
                 'actualValue' => 'literal',
                 'expectedStatement' => new FailedAssertionStatement(
                     '"literal" is-regexp',
-                    new IsRegExp(
-                        'literal',
-                        new ScalarSource(
-                            new Scalar(
-                                Scalar::TYPE_LITERAL,
-                                '"literal"'
-                            )
-                        )
-                    )
+                    $assertionFailureSummaryFactory->create(
+                        $isRegExpAssertion,
+                        '',
+                        'literal'
+                    ) ?? \Mockery::mock(AssertionFailureSummaryInterface::class)
                 ),
             ],
         ];
