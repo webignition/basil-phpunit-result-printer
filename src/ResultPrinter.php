@@ -11,23 +11,23 @@ use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Util\Printer;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory as FooStepFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Test as TestOutput;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
-use webignition\BasilPhpUnitResultPrinter\Model\IndentedContent;
 
 class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 {
     private ?TestOutput $currentTestOutput = null;
-    private StepFactory $stepFactory;
     private GeneratorInterface $generator;
+    private FooStepFactory $stepFactory;
 
     public function __construct($out = null)
     {
         parent::__construct($out);
 
-        $this->stepFactory = StepFactory::createFactory();
         $this->generator = new YamlGenerator();
+        $this->stepFactory = FooStepFactory::createFactory();
     }
 
     /**
@@ -120,19 +120,9 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     public function endTest(Test $test, float $time): void
     {
         if ($test instanceof BasilTestCaseInterface) {
-            $indentedRenderedStep = new IndentedContent(
-                $this->stepFactory->create($test)
-            );
-
-            $this->write($indentedRenderedStep->render());
-            $this->writeEmptyLine();
-            $this->writeEmptyLine();
+            $step = $this->stepFactory->create($test);
+            $this->write($this->generator->generate($step));
         }
-    }
-
-    private function writeEmptyLine(): void
-    {
-        $this->write("\n");
     }
 
     public function printResult(TestResult $result): void
