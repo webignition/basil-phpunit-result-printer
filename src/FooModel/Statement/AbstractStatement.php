@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\FooModel\Statement;
 
-use webignition\BasilPhpUnitResultPrinter\FooModel\Exception\ExceptionDataInterface;
+use webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData\ExceptionDataInterface;
 
 abstract class AbstractStatement implements StatementInterface
 {

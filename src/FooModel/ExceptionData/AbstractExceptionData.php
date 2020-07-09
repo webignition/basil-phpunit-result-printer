@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter\FooModel\Exception;
+namespace webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData;
 
 abstract class AbstractExceptionData implements ExceptionDataInterface
 {

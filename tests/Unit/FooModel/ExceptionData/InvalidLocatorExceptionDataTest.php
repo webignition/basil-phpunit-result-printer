@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Exception;
+namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\ExceptionData;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Exception\InvalidLocatorExceptionData;
+use webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 use webignition\ObjectReflector\ObjectReflector;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Statement;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Exception\InvalidLocatorExceptionData;
+use webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\ActionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;

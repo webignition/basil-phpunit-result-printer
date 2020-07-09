@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Exception;
+namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\ExceptionData;
 
-use webignition\BasilPhpUnitResultPrinter\FooModel\Exception\UnknownExceptionData;
+use webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData\UnknownExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 use webignition\ObjectReflector\ObjectReflector;
 
