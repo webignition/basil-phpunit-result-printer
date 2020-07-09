@@ -4,18 +4,25 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
 
+use Facebook\WebDriver\Exception\InvalidSelectorException;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BasilModels\Action\ResolvedAction;
 use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
 use webignition\BasilModels\StatementInterface as SourceStatementInterface;
 use webignition\BasilParser\ActionParser;
 use webignition\BasilParser\AssertionParser;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
+use webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData\InvalidLocatorExceptionData;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Step;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\DomElementIdentifier\ElementIdentifier;
+use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class StepFactoryTest extends AbstractBaseTest
 {
@@ -60,6 +67,17 @@ class StepFactoryTest extends AbstractBaseTest
 
         $statusPassedLabel = (string) new Status(Status::STATUS_PASSED);
         $statusFailedLabel = (string) new Status(Status::STATUS_FAILED);
+
+        $invalidLocatorElementIdentifier = new ElementIdentifier('a[href=https://example.com]');
+
+        $invalidLocatorException = new InvalidLocatorException(
+            $invalidLocatorElementIdentifier,
+            \Mockery::mock(InvalidSelectorException::class)
+        );
+
+        $nodeSourceFactory = NodeSourceFactory::createFactory();
+        $invalidLocatorNodeSource =
+            $nodeSourceFactory->create('$"a[href=https://example.com]"') ?? \Mockery::mock(NodeSource::class);
 
         return [
             'no statements, passed' => [
@@ -142,6 +160,35 @@ class StepFactoryTest extends AbstractBaseTest
                     ])
                 ),
             ],
+            'single exists assertion, failed with invalid locator exception' => [
+                'testCase' => $this->createBasilTestCase(
+                    'step name',
+                    Status::STATUS_FAILED,
+                    [
+                        $existsAssertion,
+                    ],
+                    '',
+                    '',
+                    $invalidLocatorException
+                ),
+                'expectedStep' => new Step(
+                    'step name',
+                    $statusFailedLabel,
+                    $this->filterStatements([
+                        ($statementFactory->createForFailedAssertion(
+                            $existsAssertion,
+                            '',
+                            ''
+                        ) ?? \Mockery::mock(FailedAssertionStatement::class))->withExceptionData(
+                            new InvalidLocatorExceptionData(
+                                'css',
+                                'a[href=https://example.com]',
+                                $invalidLocatorNodeSource
+                            )
+                        ),
+                    ])
+                ),
+            ],
             'three assertions, third failed' => [
                 'testCase' => $this->createBasilTestCase(
                     'step name',
@@ -219,7 +266,8 @@ class StepFactoryTest extends AbstractBaseTest
         int $status,
         array $handledStatements,
         string $expectedValue = '',
-        string $examinedValue = ''
+        string $examinedValue = '',
+        ?\Throwable $lastException = null
     ): BasilTestCaseInterface {
         $testCase = \Mockery::mock(BasilTestCaseInterface::class);
 
@@ -242,6 +290,10 @@ class StepFactoryTest extends AbstractBaseTest
         $testCase
             ->shouldReceive('getExaminedValue')
             ->andReturn($examinedValue);
+
+        $testCase
+            ->shouldReceive('getLastException')
+            ->andReturn($lastException);
 
         return $testCase;
     }

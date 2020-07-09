@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\FooModel\Statement;
 
+use webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData\ExceptionDataInterface;
+
 abstract class AbstractStatement implements StatementInterface
 {
     private string $type;
@@ -13,7 +15,9 @@ abstract class AbstractStatement implements StatementInterface
     /**
      * @var Transformation[]
      */
-    private array $transformations = [];
+    private array $transformations;
+
+    private ?ExceptionDataInterface $exceptionData = null;
 
     /**
      * @param string $type
@@ -29,6 +33,14 @@ abstract class AbstractStatement implements StatementInterface
         $this->transformations = array_filter($transformations, function ($item) {
             return $item instanceof Transformation;
         });
+    }
+
+    public function withExceptionData(ExceptionDataInterface $exceptionData): self
+    {
+        $new = clone $this;
+        $new->exceptionData = $exceptionData;
+
+        return $new;
     }
 
     /**
@@ -50,6 +62,10 @@ abstract class AbstractStatement implements StatementInterface
             }
 
             $data['transformations'] = $transformationsData;
+        }
+
+        if (null !== $this->exceptionData) {
+            $data['exception'] = $this->exceptionData->getData();
         }
 
         return $data;

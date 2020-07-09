@@ -6,8 +6,11 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Statement;
 
 use webignition\BasilParser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\AssertionFailureSummaryInterface;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Existence;
+use webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData\InvalidLocatorExceptionData;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
@@ -127,6 +130,14 @@ class FailedAssertionStatementTest extends AbstractBaseTest
             $resolutionTransformation,
         ];
 
+        $nodeSource = NodeSourceFactory::createFactory()->create('$"a[href=https://example.com]"');
+
+        $invalidLocatorExceptionData = new InvalidLocatorExceptionData(
+            'css',
+            'a[href=https://example.com]',
+            $nodeSource ?? \Mockery::mock(NodeSource::class)
+        );
+
         return [
             'no transformations' => [
                 'statement' => new FailedAssertionStatement('$".selector" exists', $existenceSummary),
@@ -160,6 +171,18 @@ class FailedAssertionStatementTest extends AbstractBaseTest
                         $derivationTransformation->getData(),
                         $resolutionTransformation->getData(),
                     ],
+                    'summary' => $existenceSummary->getData(),
+                ],
+            ],
+            'no transformations, has invalid locator exception' => [
+                'statement' => (
+                    new FailedAssertionStatement('$"a[href=https://example.com]" exists', $existenceSummary)
+                )->withExceptionData($invalidLocatorExceptionData),
+                'expectedData' => [
+                    'type' => 'assertion',
+                    'source' => '$"a[href=https://example.com]" exists',
+                    'status' => $statusFailed,
+                    'exception' => $invalidLocatorExceptionData->getData(),
                     'summary' => $existenceSummary->getData(),
                 ],
             ],

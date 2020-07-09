@@ -1,0 +1,29 @@
+type: assertion
+source: $"a[href=https://example.com]" exists
+status: failed
+exception:
+  type: invalid-locator
+  body:
+    type: css
+    locator: a[href=https://example.com]
+    source:
+      type: node
+      body:
+        type: element
+        identifier:
+          source: $"a[href=https://example.com]"
+          properties:
+            type: css
+            locator: a[href=https://example.com]
+            position: 1
+summary:
+  operator: exists
+  source:
+    type: node
+    node: element
+    identifier:
+      source: $"a[href=https://example.com]"
+      properties:
+        type: css
+        locator: a[href=https://example.com]
+        position: 1
