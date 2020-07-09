@@ -15,16 +15,19 @@ use webignition\BasilPhpUnitResultPrinter\FooModel\Step;
 class StepFactory
 {
     private StatementFactory $statementFactory;
+    private ExceptionDataFactory $exceptionDataFactory;
 
-    public function __construct(StatementFactory $statementFactory)
+    public function __construct(StatementFactory $statementFactory, ExceptionDataFactory $exceptionDataFactory)
     {
         $this->statementFactory = $statementFactory;
+        $this->exceptionDataFactory = $exceptionDataFactory;
     }
 
     public static function createFactory(): self
     {
         return new StepFactory(
-            StatementFactory::createFactory()
+            StatementFactory::createFactory(),
+            ExceptionDataFactory::createFactory()
         );
     }
 
@@ -44,6 +47,7 @@ class StepFactory
      */
     private function createStatements(BasilTestCaseInterface $testCase): array
     {
+        /** @var StatementInterface[] $statements */
         $statements = [];
 
         $failedStatement = null;
@@ -78,6 +82,19 @@ class StepFactory
 
             if ($statement instanceof StatementInterface) {
                 $statements[] = $statement;
+            }
+        }
+
+        $lastException = $testCase->getLastException();
+        if ($lastException instanceof \Throwable) {
+            if (count($statements) > 0) {
+                $finalStatement = array_pop($statements);
+
+                if ($finalStatement instanceof StatementInterface) {
+                    $exceptionData = $this->exceptionDataFactory->create($lastException);
+                    $finalStatement = $finalStatement->withExceptionData($exceptionData);
+                    $statements[] = $finalStatement;
+                }
             }
         }
 
