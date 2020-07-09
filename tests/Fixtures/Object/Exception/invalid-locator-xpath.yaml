@@ -1,0 +1,14 @@
+type: invalid-locator
+body:
+  type: xpath
+  locator: /??
+  source:
+    type: node
+    body:
+      type: element
+      identifier:
+        source: $"/??"
+        properties:
+          type: xpath
+          locator: /??
+          position: 1
