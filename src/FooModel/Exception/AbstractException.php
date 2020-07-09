@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\FooModel\Exception;
 
-abstract class AbstractException
+abstract class AbstractException implements ExceptionDataInterface
 {
     abstract protected function getType(): string;
 

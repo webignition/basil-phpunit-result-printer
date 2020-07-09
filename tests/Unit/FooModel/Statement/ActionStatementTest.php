@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Statement;
 
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Exception\InvalidLocator;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\ActionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
@@ -109,6 +112,14 @@ class ActionStatementTest extends AbstractBaseTest
             'click $page_import_name.elements.element_name'
         );
 
+        $nodeSource = NodeSourceFactory::createFactory()->create('$"a[href=https://example.com]"');
+
+        $invalidLocatorExceptionData = new InvalidLocator(
+            'css',
+            'a[href=https://example.com]',
+            $nodeSource ?? \Mockery::mock(NodeSource::class)
+        );
+
         return [
             'passed, no transformations' => [
                 'statement' => new ActionStatement(
@@ -161,6 +172,18 @@ class ActionStatementTest extends AbstractBaseTest
                     'type' => 'action',
                     'source' => 'click $".selector"',
                     'status' => $statusFailed,
+                ],
+            ],
+            'failed, has invalid locator exception' => [
+                'statement' => (new ActionStatement(
+                    'click $"a[href=https://example.com]"',
+                    $statusFailed,
+                ))->withExceptionData($invalidLocatorExceptionData),
+                'expectedData' => [
+                    'type' => 'action',
+                    'source' => 'click $"a[href=https://example.com]"',
+                    'status' => $statusFailed,
+                    'exception' => $invalidLocatorExceptionData->getData(),
                 ],
             ],
         ];
