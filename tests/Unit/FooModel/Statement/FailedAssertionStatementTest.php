@@ -9,7 +9,7 @@ use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryF
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\AssertionFailureSummaryInterface;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Existence;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Exception\InvalidLocator;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Exception\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
@@ -132,7 +132,7 @@ class FailedAssertionStatementTest extends AbstractBaseTest
 
         $nodeSource = NodeSourceFactory::createFactory()->create('$"a[href=https://example.com]"');
 
-        $invalidLocatorExceptionData = new InvalidLocator(
+        $invalidLocatorExceptionData = new InvalidLocatorExceptionData(
             'css',
             'a[href=https://example.com]',
             $nodeSource ?? \Mockery::mock(NodeSource::class)

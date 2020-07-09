@@ -6,7 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\FooModel\Exception;
 
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 
-class InvalidLocator extends AbstractException
+class InvalidLocatorExceptionData extends AbstractExceptionData
 {
     private const TYPE = 'invalid-locator';
 

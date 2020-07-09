@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Statement;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Exception\InvalidLocator;
+use webignition\BasilPhpUnitResultPrinter\FooModel\Exception\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\ActionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
@@ -114,7 +114,7 @@ class ActionStatementTest extends AbstractBaseTest
 
         $nodeSource = NodeSourceFactory::createFactory()->create('$"a[href=https://example.com]"');
 
-        $invalidLocatorExceptionData = new InvalidLocator(
+        $invalidLocatorExceptionData = new InvalidLocatorExceptionData(
             'css',
             'a[href=https://example.com]',
             $nodeSource ?? \Mockery::mock(NodeSource::class)

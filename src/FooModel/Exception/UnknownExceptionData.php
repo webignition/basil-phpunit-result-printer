@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\FooModel\Exception;
 
-class Unknown extends AbstractException
+class UnknownExceptionData extends AbstractExceptionData
 {
     private const TYPE = 'unknown';
 
