@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel;
 
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Existence;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
+use webignition\BasilParser\ActionParser;
+use webignition\BasilParser\AssertionParser;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\ActionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\PassedAssertionStatement;
@@ -42,51 +40,18 @@ class StepTest extends AbstractBaseTest
         $statusFailed = (string) new Status(Status::STATUS_FAILED);
 
         return [
-            'passed, single assertion' => [
+            'passed' => [
                 'name' => 'passed, single assertion',
                 'status' => $statusPassed,
                 'statements' => [
-                    new PassedAssertionStatement(
-                        '$".selector" exists'
-                    ),
+                    \Mockery::mock(PassedAssertionStatement::class),
                 ],
             ],
-            'passed, single action, single assertion' => [
-                'name' => 'passed, single action, single assertion',
-                'status' => $statusPassed,
-                'statements' => [
-                    new ActionStatement(
-                        'click $".button"',
-                        $statusPassed
-                    ),
-                    new PassedAssertionStatement(
-                        '$".selector" exists'
-                    ),
-                ],
-            ],
-            'failed, single assertion' => [
+            'failed' => [
                 'name' => 'failed, single assertion',
                 'status' => $statusFailed,
                 'statements' => [
-                    new FailedAssertionStatement(
-                        '$".selector" exists',
-                        new Existence(
-                            'exists',
-                            new NodeSource(
-                                new Node(
-                                    Node::TYPE_ELEMENT,
-                                    new Identifier(
-                                        '$".selector"',
-                                        new Properties(
-                                            Properties::TYPE_CSS,
-                                            '.selector',
-                                            1
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    ),
+                    \Mockery::mock(FailedAssertionStatement::class),
                 ],
             ],
         ];
@@ -105,6 +70,27 @@ class StepTest extends AbstractBaseTest
 
     public function getDataDataProvider(): array
     {
+        $actionParser = ActionParser::create();
+        $assertionParser = AssertionParser::create();
+        $statementFactory = StatementFactory::createFactory();
+
+        $clickAction = $actionParser->parse('click $".selector"');
+        $existsAssertion = $assertionParser->parse('$".selector" exists');
+
+        $passedActionStatement = $statementFactory->createForPassedAction(
+            $clickAction
+        ) ?? \Mockery::mock(ActionStatement::class);
+
+        $passedAssertionStatement = $statementFactory->createForPassedAssertion(
+            $existsAssertion
+        ) ?? \Mockery::mock(PassedAssertionStatement::class);
+
+        $failedAssertionStatement = $statementFactory->createForFailedAssertion(
+            $existsAssertion,
+            '',
+            ''
+        ) ?? \Mockery::mock(FailedAssertionStatement::class);
+
         $statusPassed = (string) new Status(Status::STATUS_PASSED);
         $statusFailed = (string) new Status(Status::STATUS_FAILED);
 
@@ -114,20 +100,14 @@ class StepTest extends AbstractBaseTest
                     'passed, single assertion',
                     $statusPassed,
                     [
-                        new PassedAssertionStatement(
-                            '$".selector" exists'
-                        ),
+                        $passedAssertionStatement,
                     ]
                 ),
                 'expectedData' => [
                     'name' => 'passed, single assertion',
                     'status' => $statusPassed,
                     'statements' => [
-                        [
-                            'type' => 'assertion',
-                            'source' => '$".selector" exists',
-                            'status' => $statusPassed,
-                        ],
+                        $passedAssertionStatement->getData(),
                     ],
                 ],
             ],
@@ -136,29 +116,16 @@ class StepTest extends AbstractBaseTest
                     'passed, single action, single assertion',
                     $statusPassed,
                     [
-                        new ActionStatement(
-                            'click $".button"',
-                            $statusPassed
-                        ),
-                        new PassedAssertionStatement(
-                            '$".selector" exists'
-                        ),
+                        $passedActionStatement,
+                        $passedAssertionStatement,
                     ]
                 ),
                 'expectedData' => [
                     'name' => 'passed, single action, single assertion',
                     'status' => $statusPassed,
                     'statements' => [
-                        [
-                            'type' => 'action',
-                            'source' => 'click $".button"',
-                            'status' => $statusPassed,
-                        ],
-                        [
-                            'type' => 'assertion',
-                            'source' => '$".selector" exists',
-                            'status' => $statusPassed,
-                        ],
+                        $passedActionStatement->getData(),
+                        $passedAssertionStatement->getData(),
                     ],
                 ],
             ],
@@ -167,75 +134,15 @@ class StepTest extends AbstractBaseTest
                     'failed, single assertion',
                     $statusFailed,
                     [
-                        new FailedAssertionStatement(
-                            '$".selector" exists',
-                            new Existence(
-                                'exists',
-                                new NodeSource(
-                                    new Node(
-                                        Node::TYPE_ELEMENT,
-                                        new Identifier(
-                                            '$".selector"',
-                                            new Properties(
-                                                Properties::TYPE_CSS,
-                                                '.selector',
-                                                1
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        ),
+                        $failedAssertionStatement,
                     ]
                 ),
                 'expectedData' => [
                     'name' => 'failed, single assertion',
                     'status' => $statusFailed,
                     'statements' => [
-                        [
-                            'type' => 'assertion',
-                            'source' => '$".selector" exists',
-                            'status' => $statusFailed,
-                            'summary' => [
-                                'operator' => 'exists',
-                                'source' => [
-                                    'type' => 'node',
-                                    'body' => [
-                                        'type' => Node::TYPE_ELEMENT,
-                                        'identifier' => [
-                                            'source' => '$".selector"',
-                                            'properties' => [
-                                                'type' => Properties::TYPE_CSS,
-                                                'locator' => '.selector',
-                                                'position' => 1,
-                                            ],
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
+                        $failedAssertionStatement->getData(),
                     ],
-                ],
-                'statements' => [
-                    new FailedAssertionStatement(
-                        '$".selector" exists',
-                        new Existence(
-                            'exists',
-                            new NodeSource(
-                                new Node(
-                                    Node::TYPE_ELEMENT,
-                                    new Identifier(
-                                        '$".selector"',
-                                        new Properties(
-                                            Properties::TYPE_CSS,
-                                            '.selector',
-                                            1
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    ),
                 ],
             ],
         ];
