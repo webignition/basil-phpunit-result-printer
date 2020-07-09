@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\AssertionFailureSummary;
 
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\ScalarSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\IsRegExp;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\ScalarSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\SourceInterface;
@@ -33,24 +31,11 @@ class IsRegExpTest extends AbstractBaseTest
         return [
             'node' => [
                 'value' => 'not a regexp from node',
-                'source' => new NodeSource(
-                    new Node(
-                        Node::TYPE_ELEMENT,
-                        new Identifier(
-                            '$".selector"',
-                            new Properties(Properties::TYPE_CSS, '.selector', 1),
-                        )
-                    )
-                ),
+                'source' => \Mockery::mock(NodeSource::class),
             ],
             'scalar' => [
                 'value' => 'not a regexp from scalar',
-                'source' => new ScalarSource(
-                    new Scalar(
-                        Scalar::TYPE_LITERAL,
-                        'literal'
-                    )
-                ),
+                'source' => \Mockery::mock(ScalarSource::class),
             ],
         ];
     }
@@ -68,59 +53,27 @@ class IsRegExpTest extends AbstractBaseTest
 
     public function getDataDataProvider(): array
     {
+        $nodeSourceFactory = NodeSourceFactory::createFactory();
+        $scalarSourceFactory = ScalarSourceFactory::createFactory();
+
+        $nodeSource = $nodeSourceFactory->create('$".selector"') ?? \Mockery::mock(NodeSource::class);
+        $scalarSource = $scalarSourceFactory->create('"not regexp scalar"') ?? \Mockery::mock(ScalarSource::class);
+
         return [
             'node' => [
-                'summary' => new IsRegExp(
-                    'not a regexp from node',
-                    new NodeSource(
-                        new Node(
-                            Node::TYPE_ELEMENT,
-                            new Identifier(
-                                '$".selector"',
-                                new Properties(Properties::TYPE_CSS, '.selector', 1),
-                            )
-                        )
-                    )
-                ),
+                'summary' => new IsRegExp('not regexp node', $nodeSource),
                 'expectedData' => [
                     'operator' => 'is-regexp',
-                    'value' => 'not a regexp from node',
-                    'source' => [
-                        'type' => 'node',
-                        'body' => [
-                            'type' => Node::TYPE_ELEMENT,
-                            'identifier' => [
-                                'source' => '$".selector"',
-                                'properties' => [
-                                    'type' => Properties::TYPE_CSS,
-                                    'locator' => '.selector',
-                                    'position' => 1,
-                                ],
-                            ],
-                        ],
-                    ],
+                    'value' => 'not regexp node',
+                    'source' => $nodeSource->getData(),
                 ],
             ],
             'scalar' => [
-                'summary' => new IsRegExp(
-                    'not a regexp from scalar',
-                    new ScalarSource(
-                        new Scalar(
-                            Scalar::TYPE_LITERAL,
-                            'not a regexp from scalar'
-                        )
-                    )
-                ),
+                'summary' => new IsRegExp('not regexp scalar', $scalarSource),
                 'expectedData' => [
                     'operator' => 'is-regexp',
-                    'value' => 'not a regexp from scalar',
-                    'source' => [
-                        'type' => 'scalar',
-                        'body' => [
-                            'type' => Scalar::TYPE_LITERAL,
-                            'value' => 'not a regexp from scalar',
-                        ],
-                    ],
+                    'value' => 'not regexp scalar',
+                    'source' => $scalarSource->getData(),
                 ],
             ],
         ];
