@@ -30,6 +30,13 @@ class PassedAssertionStatementTest extends AbstractBaseTest
 
     public function createDataProvider(): array
     {
+        $transformations = [
+            new Transformation(
+                Transformation::TYPE_RESOLUTION,
+                '$page_import_name.elements.element_name exists'
+            ),
+        ];
+
         return [
             'no transformations' => [
                 'source' => '$page.url is "http://example.com/"',
@@ -45,21 +52,8 @@ class PassedAssertionStatementTest extends AbstractBaseTest
             ],
             'valid transformations' => [
                 'source' => '$".selector" exists',
-                'transformations' => [
-                    new Transformation(
-                        Transformation::TYPE_RESOLUTION,
-                        '$page_import_name.elements.element_name exists'
-                    ),
-                ],
-                'expectedStatement' => new PassedAssertionStatement(
-                    '$".selector" exists',
-                    [
-                        new Transformation(
-                            Transformation::TYPE_RESOLUTION,
-                            '$page_import_name.elements.element_name exists'
-                        ),
-                    ]
-                ),
+                'transformations' => $transformations,
+                'expectedStatement' => new PassedAssertionStatement('$".selector" exists', $transformations),
             ],
         ];
     }
@@ -78,6 +72,11 @@ class PassedAssertionStatementTest extends AbstractBaseTest
     public function getDataDataProvider(): array
     {
         $statusPassed = (string) new Status(Status::STATUS_PASSED);
+
+        $resolutionTransformation = new Transformation(
+            Transformation::TYPE_RESOLUTION,
+            '$page_import_name.elements.element_name exists'
+        );
 
         return [
             'no transformations' => [
@@ -100,10 +99,7 @@ class PassedAssertionStatementTest extends AbstractBaseTest
                 'statement' => new PassedAssertionStatement(
                     '$".selector" exists',
                     [
-                        new Transformation(
-                            Transformation::TYPE_RESOLUTION,
-                            '$page_import_name.elements.element_name exists'
-                        ),
+                        $resolutionTransformation,
                     ]
                 ),
                 'expectedData' => [
@@ -111,10 +107,7 @@ class PassedAssertionStatementTest extends AbstractBaseTest
                     'source' => '$".selector" exists',
                     'status' => $statusPassed,
                     'transformations' => [
-                        [
-                            'type' => Transformation::TYPE_RESOLUTION,
-                            'source' => '$page_import_name.elements.element_name exists',
-                        ],
+                        $resolutionTransformation->getData(),
                     ],
                 ],
             ],

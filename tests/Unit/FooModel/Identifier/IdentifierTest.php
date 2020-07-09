@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Identifier;
 
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\PropertiesFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
@@ -27,7 +28,7 @@ class IdentifierTest extends AbstractBaseTest
         return [
             'default' => [
                 'source' => '$".selector"',
-                'identifier' => new Properties(Properties::TYPE_CSS, '.selector', 1),
+                'identifier' => \Mockery::mock(Properties::class),
             ],
         ];
     }
@@ -45,19 +46,15 @@ class IdentifierTest extends AbstractBaseTest
 
     public function getDataDataProvider(): array
     {
+        $propertiesFactory = PropertiesFactory::createFactory();
+        $properties = $propertiesFactory->create('$".selector"') ?? \Mockery::mock(Properties::class);
+
         return [
             'default' => [
-                'identifier' => new Identifier(
-                    '$".selector"',
-                    new Properties(Properties::TYPE_CSS, '.selector', 1)
-                ),
+                'identifier' => new Identifier('$".selector"', $properties),
                 'expectedData' => [
                     'source' => '$".selector"',
-                    'properties' => [
-                        'type' => Properties::TYPE_CSS,
-                        'locator' => '.selector',
-                        'position' => 1,
-                    ],
+                    'properties' => $properties->getData(),
                 ],
 
             ],
@@ -74,27 +71,23 @@ class IdentifierTest extends AbstractBaseTest
 
     public function isAttributeDataProvider(): array
     {
+        $elementProperties = \Mockery::mock(Properties::class);
+        $elementProperties
+            ->shouldReceive('hasAttribute')
+            ->andReturnFalse();
+
+        $attributeProperties = \Mockery::mock(Properties::class);
+        $attributeProperties
+            ->shouldReceive('hasAttribute')
+            ->andReturnTrue();
+
         return [
             'not attribute' => [
-                'identifier' => new Identifier(
-                    '$".selector"',
-                    new Properties(
-                        Properties::TYPE_CSS,
-                        '.selector',
-                        1
-                    )
-                ),
+                'identifier' => new Identifier('$".selector"', $elementProperties),
                 'expectedHasAttribute' => false,
             ],
             'is attribute' => [
-                'identifier' => new Identifier(
-                    '$".selector".attribute_name',
-                    (new Properties(
-                        Properties::TYPE_CSS,
-                        '.selector',
-                        1
-                    ))->withAttribute('attribute_name')
-                ),
+                'identifier' => new Identifier('$".selector".attribute_name', $attributeProperties),
                 'expectedHasAttribute' => true,
             ],
         ];

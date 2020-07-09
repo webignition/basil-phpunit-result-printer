@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Source;
 
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\IdentifierFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
@@ -29,10 +29,7 @@ class NodeSourceTest extends AbstractBaseTest
             'default' => [
                 'body' => new Node(
                     Node::TYPE_ELEMENT,
-                    new Identifier(
-                        '$".selector"',
-                        new Properties(Properties::TYPE_CSS, '.selector', 1),
-                    )
+                    \Mockery::mock(Identifier::class)
                 ),
             ],
         ];
@@ -51,30 +48,17 @@ class NodeSourceTest extends AbstractBaseTest
 
     public function getDataDataProvider(): array
     {
+        $identifierFactory = IdentifierFactory::createFactory();
+
+        $identifier = $identifierFactory->create('$".selector"') ?? \Mockery::mock(Identifier::class);
+        $node = Node::fromIdentifier($identifier);
+
         return [
             'default' => [
-                'source' => new NodeSource(
-                    new Node(
-                        Node::TYPE_ELEMENT,
-                        new Identifier(
-                            '$".selector"',
-                            new Properties(Properties::TYPE_CSS, '.selector', 1),
-                        )
-                    )
-                ),
+                'source' => new NodeSource($node),
                 'expectedData' => [
                     'type' => 'node',
-                    'body' => [
-                        'type' => Node::TYPE_ELEMENT,
-                        'identifier' => [
-                            'source' => '$".selector"',
-                            'properties' => [
-                                'type' => Properties::TYPE_CSS,
-                                'locator' => '.selector',
-                                'position' => 1,
-                            ],
-                        ],
-                    ],
+                    'body' => $node->getData(),
                 ],
             ],
         ];

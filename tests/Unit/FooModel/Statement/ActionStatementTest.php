@@ -104,6 +104,11 @@ class ActionStatementTest extends AbstractBaseTest
         $statusPassed = (string) new Status(Status::STATUS_PASSED);
         $statusFailed = (string) new Status(Status::STATUS_FAILED);
 
+        $resolutionTransformation = new Transformation(
+            Transformation::TYPE_RESOLUTION,
+            'click $page_import_name.elements.element_name'
+        );
+
         return [
             'passed, no transformations' => [
                 'statement' => new ActionStatement(
@@ -135,10 +140,7 @@ class ActionStatementTest extends AbstractBaseTest
                     'click $".selector"',
                     $statusPassed,
                     [
-                        new Transformation(
-                            Transformation::TYPE_RESOLUTION,
-                            'click $page_import_name.elements.element_name'
-                        ),
+                        $resolutionTransformation,
                     ]
                 ),
                 'expectedData' => [
@@ -146,10 +148,7 @@ class ActionStatementTest extends AbstractBaseTest
                     'source' => 'click $".selector"',
                     'status' => $statusPassed,
                     'transformations' => [
-                        [
-                            'type' => Transformation::TYPE_RESOLUTION,
-                            'source' => 'click $page_import_name.elements.element_name',
-                        ],
+                        $resolutionTransformation->getData(),
                     ],
                 ],
             ],

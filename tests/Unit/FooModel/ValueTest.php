@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel;
 
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\SourceFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\ScalarSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Source\SourceInterface;
@@ -33,24 +30,11 @@ class ValueTest extends AbstractBaseTest
         return [
             'node' => [
                 'value' => 'expected',
-                'source' => new NodeSource(
-                    new Node(
-                        Node::TYPE_ELEMENT,
-                        new Identifier(
-                            '$".selector"',
-                            new Properties(Properties::TYPE_CSS, '.selector', 1),
-                        )
-                    )
-                ),
+                'source' => \Mockery::mock(NodeSource::class),
             ],
             'scalar' => [
                 'value' => 'actual',
-                'source' => new ScalarSource(
-                    new Scalar(
-                        Scalar::TYPE_LITERAL,
-                        'literal'
-                    )
-                ),
+                'source' => \Mockery::mock(ScalarSource::class),
             ],
         ];
     }
@@ -68,57 +52,24 @@ class ValueTest extends AbstractBaseTest
 
     public function getDataDataProvider(): array
     {
+        $sourceFactory = SourceFactory::createFactory();
+
+        $nodeSource = $sourceFactory->create('$".selector"') ?? \Mockery::mock(NodeSource::class);
+        $scalarSource = $sourceFactory->create('"literal"') ?? \Mockery::mock(ScalarSource::class);
+
         return [
             'node' => [
-                'value' => new Value(
-                    'expected',
-                    new NodeSource(
-                        new Node(
-                            Node::TYPE_ELEMENT,
-                            new Identifier(
-                                '$".selector"',
-                                new Properties(Properties::TYPE_CSS, '.selector', 1),
-                            )
-                        )
-                    )
-                ),
+                'value' => new Value('expected', $nodeSource),
                 'expectedData' => [
                     'value' => 'expected',
-                    'source' => [
-                        'type' => 'node',
-                        'body' => [
-                            'type' => Node::TYPE_ELEMENT,
-                            'identifier' => [
-                                'source' => '$".selector"',
-                                'properties' => [
-                                    'type' => Properties::TYPE_CSS,
-                                    'locator' => '.selector',
-                                    'position' => 1,
-                                ],
-                            ],
-                        ],
-                    ],
+                    'source' => $nodeSource->getData(),
                 ],
             ],
             'scalar' => [
-                'value' => new Value(
-                    'actual',
-                    new ScalarSource(
-                        new Scalar(
-                            Scalar::TYPE_LITERAL,
-                            'literal'
-                        )
-                    )
-                ),
+                'value' => new Value('actual', $scalarSource),
                 'expectedData' => [
                     'value' => 'actual',
-                    'source' => [
-                        'type' => 'scalar',
-                        'body' => [
-                            'type' => Scalar::TYPE_LITERAL,
-                            'value' => 'literal',
-                        ],
-                    ],
+                    'source' => $scalarSource->getData(),
                 ],
             ],
         ];
