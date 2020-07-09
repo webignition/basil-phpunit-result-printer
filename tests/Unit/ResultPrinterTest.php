@@ -90,9 +90,15 @@ class ResultPrinterTest extends AbstractBaseTest
                 '---' . "\n" .
                 'path: test.yml' . "\n" .
                 '...' . "\n" .
-                    '  <icon-success /> <success>step one</success>' . "\n" .
-                    '    <icon-success /> $page.url is "http://example.com/"' . "\n" .
-                    "\n",
+                '---' . "\n" .
+                'name: \'step one\'' . "\n" .
+                'status: passed' . "\n" .
+                'statements:' . "\n" .
+                '  -' . "\n" .
+                '    type: assertion' . "\n" .
+                '    source: \'$page.url is "http://example.com/"\'' . "\n" .
+                '    status: passed' . "\n" .
+                '...' . "\n",
             ],
             'multiple tests' => [
                 'testPaths' => [
@@ -147,31 +153,80 @@ class ResultPrinterTest extends AbstractBaseTest
                     '---' . "\n" .
                     'path: test1.yml' . "\n" .
                     '...' . "\n" .
-                    '  <icon-success /> <success>test one step one</success>' . "\n" .
-                    '    <icon-success /> $page.url is "http://example.com/"' . "\n" .
-                    '    <icon-success /> $page.title is "Hello, World!"' . "\n" .
-                    "\n" .
+                    '---' . "\n" .
+                    'name: \'test one step one\'' . "\n" .
+                    'status: passed' . "\n" .
+                    'statements:' . "\n" .
+                    '  -' . "\n" .
+                    '    type: assertion' . "\n" .
+                    '    source: \'$page.url is "http://example.com/"\'' . "\n" .
+                    '    status: passed' . "\n" .
+                    '  -' . "\n" .
+                    '    type: assertion' . "\n" .
+                    '    source: \'$page.title is "Hello, World!"\'' . "\n" .
+                    '    status: passed' . "\n" .
+                    '...' . "\n" .
                     '---' . "\n" .
                     'path: test2.yml' . "\n" .
                     '...' . "\n" .
-                    '  <icon-success /> <success>test two step one</success>' . "\n" .
-                    '    <icon-success /> click $".successful"' . "\n" .
-                    '    <icon-success /> $page.url is "http://example.com/successful/"' . "\n" .
-                    "\n" .
-                    '  <icon-success /> <success>test two step two</success>' . "\n" .
-                    '    <icon-success /> click $".back"' . "\n" .
-                    '    <icon-success /> $page.url is "http://example.com/"' . "\n" .
-                    "\n" .
+                    '---' . "\n" .
+                    'name: \'test two step one\'' . "\n" .
+                    'status: passed' . "\n" .
+                    'statements:' . "\n" .
+                    '  -' . "\n" .
+                    '    type: action' . "\n" .
+                    '    source: \'click $".successful"\'' . "\n" .
+                    '    status: passed' . "\n" .
+                    '  -' . "\n" .
+                    '    type: assertion' . "\n" .
+                    '    source: \'$page.url is "http://example.com/successful/"\'' . "\n" .
+                    '    status: passed' . "\n" .
+                    '...' . "\n" .
+                    '---' . "\n" .
+                    'name: \'test two step two\'' . "\n" .
+                    'status: passed' . "\n" .
+                    'statements:' . "\n" .
+                    '  -' . "\n" .
+                    '    type: action' . "\n" .
+                    '    source: \'click $".back"\'' . "\n" .
+                    '    status: passed' . "\n" .
+                    '  -' . "\n" .
+                    '    type: assertion' . "\n" .
+                    '    source: \'$page.url is "http://example.com/"\'' . "\n" .
+                    '    status: passed' . "\n" .
+                    '...' . "\n" .
                     '---' . "\n" .
                     'path: test3.yml' . "\n" .
                     '...' . "\n" .
-                    '  <icon-failure /> <failure>test three step one</failure>' . "\n" .
-                    '    <icon-success /> click $".new"' . "\n" .
-                    '    <icon-failure /> '
-                    . '<highlighted-failure>$page.url is "http://example.com/new/"</highlighted-failure>' . "\n" .
-                    '    * <comment>http://example.com/</comment> is not equal to '
-                    . '<comment>http://example.com/new/</comment>' . "\n" .
-                    "\n",
+                    '---' . "\n" .
+                    'name: \'test three step one\'' . "\n" .
+                    'status: failed' . "\n" .
+                    'statements:' . "\n" .
+                    '  -' . "\n" .
+                    '    type: action' . "\n" .
+                    '    source: \'click $".new"\'' . "\n" .
+                    '    status: passed' . "\n" .
+                    '  -' . "\n" .
+                    '    type: assertion' . "\n" .
+                    '    source: \'$page.url is "http://example.com/new/"\'' . "\n" .
+                    '    status: failed' . "\n" .
+                    '    summary:' . "\n" .
+                    '      operator: is' . "\n" .
+                    '      expected:' . "\n" .
+                    '        value: \'http://example.com/new/\'' . "\n" .
+                    '        source:' . "\n" .
+                    '          type: scalar' . "\n" .
+                    '          body:' . "\n" .
+                    '            type: literal' . "\n" .
+                    '            value: \'"http://example.com/new/"\'' . "\n" .
+                    '      actual:' . "\n" .
+                    '        value: \'http://example.com/\'' . "\n" .
+                    '        source:' . "\n" .
+                    '          type: scalar' . "\n" .
+                    '          body:' . "\n" .
+                    '            type: page_property' . "\n" .
+                    '            value: $page.url' . "\n" .
+                    '...' . "\n",
             ],
         ];
     }
