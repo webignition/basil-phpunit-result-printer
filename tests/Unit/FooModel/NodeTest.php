@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel;
 
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\IdentifierFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
@@ -28,14 +29,7 @@ class NodeTest extends AbstractBaseTest
         return [
             'default' => [
                 'type' => Node::TYPE_ELEMENT,
-                'identifier' => new Identifier(
-                    '$".selector',
-                    new Properties(
-                        Properties::TYPE_CSS,
-                        '.selector',
-                        1
-                    )
-                ),
+                'identifier' => \Mockery::mock(Identifier::class),
             ],
         ];
     }
@@ -53,47 +47,29 @@ class NodeTest extends AbstractBaseTest
 
     public function getDataDataProvider(): array
     {
+        $identifierFactory = IdentifierFactory::createFactory();
+
+        $elementIdentifier = $identifierFactory->create('$".selector"') ?? \Mockery::mock(Identifier::class);
+        $attributeIdentifier = $identifierFactory->create(
+            '$".selector".attribute_name'
+        ) ?? \Mockery::mock(Identifier::class);
+
         return [
             'element' => [
-                'node' => new Node(
-                    Node::TYPE_ELEMENT,
-                    new Identifier(
-                        '$".selector"',
-                        new Properties(Properties::TYPE_CSS, '.selector', 1),
-                    )
-                ),
+                'node' => new Node(Node::TYPE_ELEMENT, $elementIdentifier),
                 'expectedData' => [
                     'type' => Node::TYPE_ELEMENT,
-                    'identifier' => [
-                        'source' => '$".selector"',
-                        'properties' => [
-                            'type' => Properties::TYPE_CSS,
-                            'locator' => '.selector',
-                            'position' => 1,
-                        ],
-                    ],
+                    'identifier' => $elementIdentifier->getData(),
                 ],
             ],
             'attribute' => [
                 'node' => new Node(
                     Node:: TYPE_ATTRIBUTE,
-                    new Identifier(
-                        '$".selector".attribute_name',
-                        (new Properties(Properties::TYPE_CSS, '.selector', 1))
-                            ->withAttribute('attribute_name'),
-                    )
+                    $attributeIdentifier
                 ),
                 'expectedData' => [
                     'type' => Node::TYPE_ATTRIBUTE,
-                    'identifier' => [
-                        'source' => '$".selector".attribute_name',
-                        'properties' => [
-                            'type' => Properties::TYPE_CSS,
-                            'locator' => '.selector',
-                            'position' => 1,
-                            'attribute' => 'attribute_name',
-                        ],
-                    ],
+                    'identifier' => $attributeIdentifier->getData(),
                 ],
             ],
         ];
