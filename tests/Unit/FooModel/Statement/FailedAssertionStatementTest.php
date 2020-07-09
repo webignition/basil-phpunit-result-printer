@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\FooModel\Statement;
 
+use webignition\BasilParser\AssertionParser;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\AssertionFailureSummaryInterface;
 use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Existence;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
@@ -38,143 +36,51 @@ class FailedAssertionStatementTest extends AbstractBaseTest
 
     public function createDataProvider(): array
     {
+        $assertionParser = AssertionParser::create();
+        $existsAssertion = $assertionParser->parse('$".selector" exists');
+
+        $assertionFailureSummaryFactory = AssertionFailureSummaryFactory::createFactory();
+
+        $existenceSummary = $assertionFailureSummaryFactory->create(
+            $existsAssertion,
+            '',
+            ''
+        ) ?? \Mockery::mock(Existence::class);
+
+        $transformations = [
+            new Transformation(
+                Transformation::TYPE_DERIVATION,
+                'click $".selector"'
+            ),
+            new Transformation(
+                Transformation::TYPE_RESOLUTION,
+                'click $page_import_name.elements.element_name'
+            ),
+        ];
+
         return [
             'no transformations' => [
                 'source' => '$".selector" exists',
-                'summary' => new Existence(
-                    'exists',
-                    new NodeSource(
-                        new Node(
-                            Node::TYPE_ELEMENT,
-                            new Identifier(
-                                '$".selector"',
-                                new Properties(
-                                    Properties::TYPE_CSS,
-                                    '.selector',
-                                    1
-                                )
-                            )
-                        )
-                    )
-                ),
+                'summary' => $existenceSummary,
                 'transformations' => [],
-                'expectedStatement' => new FailedAssertionStatement(
-                    '$".selector" exists',
-                    new Existence(
-                        'exists',
-                        new NodeSource(
-                            new Node(
-                                Node::TYPE_ELEMENT,
-                                new Identifier(
-                                    '$".selector"',
-                                    new Properties(
-                                        Properties::TYPE_CSS,
-                                        '.selector',
-                                        1
-                                    )
-                                )
-                            )
-                        )
-                    )
-                ),
+                'expectedStatement' => new FailedAssertionStatement('$".selector" exists', $existenceSummary),
             ],
             'invalid transformations' => [
                 'source' => '$".selector" exists',
-                'summary' => new Existence(
-                    'exists',
-                    new NodeSource(
-                        new Node(
-                            Node::TYPE_ELEMENT,
-                            new Identifier(
-                                '$".selector"',
-                                new Properties(
-                                    Properties::TYPE_CSS,
-                                    '.selector',
-                                    1
-                                )
-                            )
-                        )
-                    )
-                ),
+                'summary' => $existenceSummary,
                 'transformations' => [
                     new \stdClass(),
                 ],
-                'expectedStatement' => new FailedAssertionStatement(
-                    '$".selector" exists',
-                    new Existence(
-                        'exists',
-                        new NodeSource(
-                            new Node(
-                                Node::TYPE_ELEMENT,
-                                new Identifier(
-                                    '$".selector"',
-                                    new Properties(
-                                        Properties::TYPE_CSS,
-                                        '.selector',
-                                        1
-                                    )
-                                )
-                            )
-                        )
-                    )
-                ),
+                'expectedStatement' => new FailedAssertionStatement('$".selector" exists', $existenceSummary),
             ],
             'valid transformations' => [
                 'source' => '$".selector" exists',
-                'summary' => new Existence(
-                    'exists',
-                    new NodeSource(
-                        new Node(
-                            Node::TYPE_ELEMENT,
-                            new Identifier(
-                                '$".selector"',
-                                new Properties(
-                                    Properties::TYPE_CSS,
-                                    '.selector',
-                                    1
-                                )
-                            )
-                        )
-                    )
-                ),
-                'transformations' => [
-                    new Transformation(
-                        Transformation::TYPE_DERIVATION,
-                        'click $".selector"'
-                    ),
-                    new Transformation(
-                        Transformation::TYPE_RESOLUTION,
-                        'click $page_import_name.elements.element_name'
-                    ),
-                ],
+                'summary' => $existenceSummary,
+                'transformations' => $transformations,
                 'expectedStatement' => new FailedAssertionStatement(
                     '$".selector" exists',
-                    new Existence(
-                        'exists',
-                        new NodeSource(
-                            new Node(
-                                Node::TYPE_ELEMENT,
-                                new Identifier(
-                                    '$".selector"',
-                                    new Properties(
-                                        Properties::TYPE_CSS,
-                                        '.selector',
-                                        1
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    [
-                        new Transformation(
-                            Transformation::TYPE_DERIVATION,
-                            'click $".selector"'
-                        ),
-                        new Transformation(
-                            Transformation::TYPE_RESOLUTION,
-                            'click $page_import_name.elements.element_name'
-                        ),
-                    ]
+                    $existenceSummary,
+                    $transformations
                 ),
             ],
         ];
@@ -193,156 +99,68 @@ class FailedAssertionStatementTest extends AbstractBaseTest
 
     public function getDataDataProvider(): array
     {
+        $assertionParser = AssertionParser::create();
+        $existsAssertion = $assertionParser->parse('$".selector" exists');
+
+        $assertionFailureSummaryFactory = AssertionFailureSummaryFactory::createFactory();
+
+        $existenceSummary = $assertionFailureSummaryFactory->create(
+            $existsAssertion,
+            '',
+            ''
+        ) ?? \Mockery::mock(Existence::class);
+
         $statusFailed = (string) new Status(Status::STATUS_FAILED);
+
+        $derivationTransformation = new Transformation(
+            Transformation::TYPE_DERIVATION,
+            'click $".selector"'
+        );
+
+        $resolutionTransformation = new Transformation(
+            Transformation::TYPE_RESOLUTION,
+            'click $page_import_name.elements.element_name'
+        );
+
+        $transformations = [
+            $derivationTransformation,
+            $resolutionTransformation,
+        ];
 
         return [
             'no transformations' => [
-                'statement' => new FailedAssertionStatement(
-                    '$".selector" exists',
-                    new Existence(
-                        'exists',
-                        new NodeSource(
-                            new Node(
-                                Node::TYPE_ELEMENT,
-                                new Identifier(
-                                    '$".selector"',
-                                    new Properties(
-                                        Properties::TYPE_CSS,
-                                        '.selector',
-                                        1
-                                    )
-                                )
-                            )
-                        )
-                    )
-                ),
+                'statement' => new FailedAssertionStatement('$".selector" exists', $existenceSummary),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',
                     'status' => $statusFailed,
-                    'summary' => [
-                        'operator' => 'exists',
-                        'source' => [
-                            'type' => 'node',
-                            'body' => [
-                                'type' => 'element',
-                                'identifier' => [
-                                    'source' => '$".selector"',
-                                    'properties' => [
-                                        'type' => 'css',
-                                        'locator' => '.selector',
-                                        'position' => 1,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
+                    'summary' => $existenceSummary->getData(),
                 ],
             ],
             'invalid transformations' => [
-                'statement' => new FailedAssertionStatement(
-                    '$".selector" exists',
-                    new Existence(
-                        'exists',
-                        new NodeSource(
-                            new Node(
-                                Node::TYPE_ELEMENT,
-                                new Identifier(
-                                    '$".selector"',
-                                    new Properties(
-                                        Properties::TYPE_CSS,
-                                        '.selector',
-                                        1
-                                    )
-                                )
-                            )
-                        )
-                    )
-                ),
+                'statement' => new FailedAssertionStatement('$".selector" exists', $existenceSummary),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',
                     'status' => $statusFailed,
-                    'summary' => [
-                        'operator' => 'exists',
-                        'source' => [
-                            'type' => 'node',
-                            'body' => [
-                                'type' => 'element',
-                                'identifier' => [
-                                    'source' => '$".selector"',
-                                    'properties' => [
-                                        'type' => 'css',
-                                        'locator' => '.selector',
-                                        'position' => 1,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
+                    'summary' => $existenceSummary->getData(),
                 ],
             ],
             'valid transformations' => [
                 'statement' => new FailedAssertionStatement(
                     '$".selector" exists',
-                    new Existence(
-                        'exists',
-                        new NodeSource(
-                            new Node(
-                                Node::TYPE_ELEMENT,
-                                new Identifier(
-                                    '$".selector"',
-                                    new Properties(
-                                        Properties::TYPE_CSS,
-                                        '.selector',
-                                        1
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    [
-                        new Transformation(
-                            Transformation::TYPE_DERIVATION,
-                            'click $".selector"'
-                        ),
-                        new Transformation(
-                            Transformation::TYPE_RESOLUTION,
-                            'click $page_import_name.elements.element_name'
-                        ),
-                    ]
+                    $existenceSummary,
+                    $transformations
                 ),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',
                     'status' => $statusFailed,
                     'transformations' => [
-                        [
-                            'type' => Transformation::TYPE_DERIVATION,
-                            'source' => 'click $".selector"',
-                        ],
-                        [
-                            'type' => Transformation::TYPE_RESOLUTION,
-                            'source' => 'click $page_import_name.elements.element_name',
-                        ],
+                        $derivationTransformation->getData(),
+                        $resolutionTransformation->getData(),
                     ],
-                    'summary' => [
-                        'operator' => 'exists',
-                        'source' => [
-                            'type' => 'node',
-                            'body' => [
-                                'type' => 'element',
-                                'identifier' => [
-                                    'source' => '$".selector"',
-                                    'properties' => [
-                                        'type' => 'css',
-                                        'locator' => '.selector',
-                                        'position' => 1,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
+                    'summary' => $existenceSummary->getData(),
                 ],
             ],
         ];
