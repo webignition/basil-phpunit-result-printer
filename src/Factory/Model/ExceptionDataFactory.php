@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData\ExceptionDataInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData\InvalidLocatorExceptionData;
-use webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData\UnknownExceptionData;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
+use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\InvalidLocatorExceptionData;
+use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\UnknownExceptionData;
+use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class ExceptionDataFactory

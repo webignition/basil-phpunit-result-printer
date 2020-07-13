@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ScalarFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
+use webignition\BasilPhpUnitResultPrinter\Model\Scalar;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class ScalarFactoryTest extends AbstractBaseTest

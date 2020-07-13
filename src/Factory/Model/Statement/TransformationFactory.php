@@ -9,7 +9,7 @@ use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
 use webignition\BasilModels\Assertion\ResolvedAssertion;
 use webignition\BasilModels\EncapsulatingStatementInterface;
 use webignition\BasilModels\StatementInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 
 class TransformationFactory
 {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Identifier;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\PropertiesFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
+use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class PropertiesFactoryTest extends AbstractBaseTest

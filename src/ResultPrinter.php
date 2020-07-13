@@ -11,23 +11,23 @@ use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Util\Printer;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
-use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory as FooStepFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Test as TestOutput;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
+use webignition\BasilPhpUnitResultPrinter\Model\Test as TestOutput;
 
 class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 {
     private ?TestOutput $currentTestOutput = null;
     private GeneratorInterface $generator;
-    private FooStepFactory $stepFactory;
+    private StepFactory $stepFactory;
 
     public function __construct($out = null)
     {
         parent::__construct($out);
 
         $this->generator = new YamlGenerator();
-        $this->stepFactory = FooStepFactory::createFactory();
+        $this->stepFactory = StepFactory::createFactory();
     }
 
     /**

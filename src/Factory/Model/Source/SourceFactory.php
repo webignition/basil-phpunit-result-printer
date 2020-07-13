@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Source;
 
 use webignition\BasilIdentifierAnalyser\IdentifierTypeAnalyser;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\SourceInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\SourceInterface;
 
 class SourceFactory
 {

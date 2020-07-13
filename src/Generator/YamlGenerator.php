@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Generator;
 
 use Symfony\Component\Yaml\Yaml;
-use webignition\BasilPhpUnitResultPrinter\FooModel\DocumentSourceInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\DocumentSourceInterface;
 
 class YamlGenerator implements GeneratorInterface
 {

@@ -9,9 +9,9 @@ use webignition\BasilModels\Action\ActionInterface;
 use webignition\BasilModels\Assertion\AssertionInterface;
 use webignition\BasilModels\DataSet\DataSetInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\StatementInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Step;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\Status;
+use webignition\BasilPhpUnitResultPrinter\Model\Step;
 
 class StepFactory
 {

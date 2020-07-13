@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Generator;
 
-use webignition\BasilPhpUnitResultPrinter\FooModel\DocumentSourceInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\DocumentSourceInterface;
 
 interface GeneratorInterface
 {

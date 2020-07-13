@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Source;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ScalarFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\ScalarSource;
+use webignition\BasilPhpUnitResultPrinter\Model\Scalar;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\ScalarSource;
 
 class ScalarSourceFactory
 {

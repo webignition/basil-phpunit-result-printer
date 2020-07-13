@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier;
 
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
+use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Identifier;
+use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
 
 class IdentifierFactory
 {

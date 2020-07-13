@@ -6,9 +6,9 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Source;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\IdentifierFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
+use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Identifier;
+use webignition\BasilPhpUnitResultPrinter\Model\Node;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class NodeSourceFactoryTest extends AbstractBaseTest

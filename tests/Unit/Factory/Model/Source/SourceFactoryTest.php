@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Source;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\ScalarSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\SourceFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\SourceInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\SourceInterface;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class SourceFactoryTest extends AbstractBaseTest

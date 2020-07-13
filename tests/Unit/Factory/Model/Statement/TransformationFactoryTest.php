@@ -11,7 +11,7 @@ use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
 use webignition\BasilModels\Assertion\ResolvedAssertion;
 use webignition\BasilModels\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\TransformationFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\Transformation;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class TransformationFactoryTest extends AbstractBaseTest

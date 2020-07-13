@@ -11,13 +11,13 @@ use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryF
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\ScalarSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ValueFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\AssertionFailureSummaryInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Comparison;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Existence;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\IsRegExp;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\ScalarSource;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Value;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\Comparison;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\Existence;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\IsRegExp;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\ScalarSource;
+use webignition\BasilPhpUnitResultPrinter\Model\Value;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
