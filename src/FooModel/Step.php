@@ -17,17 +17,24 @@ class Step implements DocumentSourceInterface
     private array $statements;
 
     /**
+     * @var array<mixed>|null
+     */
+    private ?array $data;
+
+    /**
      * @param string $name
      * @param string $status
      * @param StatementInterface[] $statements
+     * @param array<mixed> $data
      */
-    public function __construct(string $name, string $status, array $statements)
+    public function __construct(string $name, string $status, array $statements, array $data = null)
     {
         $this->name = $name;
         $this->status = $status;
         $this->statements = array_filter($statements, function ($item) {
             return $item instanceof StatementInterface;
         });
+        $this->data = $data;
     }
 
     public function getData(): array
@@ -38,10 +45,16 @@ class Step implements DocumentSourceInterface
             $statementData[] = $statement->getData();
         }
 
-        return [
+        $data = [
             'name' => $this->name,
             'status' => $this->status,
             'statements' => $statementData,
         ];
+
+        if (null !== $this->data) {
+            $data['data'] = $this->data;
+        }
+
+        return $data;
     }
 }
