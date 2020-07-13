@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit;
 
-use PHPUnit\Runner\BaseTestRunner;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BasilModels\StatementInterface;
 use webignition\BasilParser\ActionParser;
 use webignition\BasilParser\AssertionParser;
+use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\ResultPrinter;
+use webignition\BasilPhpUnitResultPrinter\Tests\Services\BasilTestCaseFactory;
 
 class ResultPrinterTest extends AbstractBaseTest
 {
@@ -26,21 +27,10 @@ class ResultPrinterTest extends AbstractBaseTest
      */
     public function testPrinterOutput(
         array $testPaths,
-        array $stepNames,
-        array $endStatuses,
-        array $handledStatements,
-        array $expectedValues,
-        array $examinedValues,
+        array $testPropertiesCollection,
         string $expectedOutput
     ) {
-        $tests = $this->createBasilTestCases(
-            $testPaths,
-            $stepNames,
-            $endStatuses,
-            $handledStatements,
-            $expectedValues,
-            $examinedValues
-        );
+        $tests = BasilTestCaseFactory::createCollection($testPaths, $testPropertiesCollection);
 
         $outResource = fopen('php://memory', 'w+');
 
@@ -67,38 +57,30 @@ class ResultPrinterTest extends AbstractBaseTest
         return [
             'single test' => [
                 'testPaths' => [
-                    'test.yml',
+                    'test.yml'
                 ],
-                'stepNames' => [
-                    'step one',
-                ],
-                'endStatuses' => [
-                    BaseTestRunner::STATUS_PASSED,
-                ],
-                'handledStatements' => [
+                'testPropertiesCollection' => [
                     [
-                        $assertionParser->parse('$page.url is "http://example.com/"'),
+                        'basilStepName' => 'step one',
+                        'status' => Status::STATUS_PASSED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$page.url is "http://example.com/"'),
+                        ],
                     ],
                 ],
-                'expectedValues' => [
-                    null,
-                ],
-                'examinedValues' => [
-                    null,
-                ],
                 'expectedOutput' =>
-                '---' . "\n" .
-                'path: test.yml' . "\n" .
-                '...' . "\n" .
-                '---' . "\n" .
-                'name: \'step one\'' . "\n" .
-                'status: passed' . "\n" .
-                'statements:' . "\n" .
-                '  -' . "\n" .
-                '    type: assertion' . "\n" .
-                '    source: \'$page.url is "http://example.com/"\'' . "\n" .
-                '    status: passed' . "\n" .
-                '...' . "\n",
+                    '---' . "\n" .
+                    'path: test.yml' . "\n" .
+                    '...' . "\n" .
+                    '---' . "\n" .
+                    'name: \'step one\'' . "\n" .
+                    'status: passed' . "\n" .
+                    'statements:' . "\n" .
+                    '  -' . "\n" .
+                    '    type: assertion' . "\n" .
+                    '    source: \'$page.url is "http://example.com/"\'' . "\n" .
+                    '    status: passed' . "\n" .
+                    '...' . "\n",
             ],
             'multiple tests' => [
                 'testPaths' => [
@@ -107,47 +89,41 @@ class ResultPrinterTest extends AbstractBaseTest
                     'test2.yml',
                     'test3.yml',
                 ],
-                'stepNames' => [
-                    'test one step one',
-                    'test two step one',
-                    'test two step two',
-                    'test three step one',
-                ],
-                'endStatuses' => [
-                    BaseTestRunner::STATUS_PASSED,
-                    BaseTestRunner::STATUS_PASSED,
-                    BaseTestRunner::STATUS_PASSED,
-                    BaseTestRunner::STATUS_FAILURE,
-                ],
-                'handledStatements' => [
+                'testPropertiesCollection' => [
                     [
-                        $assertionParser->parse('$page.url is "http://example.com/"'),
-                        $assertionParser->parse('$page.title is "Hello, World!"'),
+                        'basilStepName' => 'test one step one',
+                        'status' => Status::STATUS_PASSED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$page.url is "http://example.com/"'),
+                            $assertionParser->parse('$page.title is "Hello, World!"'),
+                        ],
                     ],
                     [
-                        $actionParser->parse('click $".successful"'),
-                        $assertionParser->parse('$page.url is "http://example.com/successful/"')
+                        'basilStepName' => 'test two step one',
+                        'status' => Status::STATUS_PASSED,
+                        'handledStatements' => [
+                            $actionParser->parse('click $".successful"'),
+                            $assertionParser->parse('$page.url is "http://example.com/successful/"')
+                        ],
                     ],
                     [
-                        $actionParser->parse('click $".back"'),
-                        $assertionParser->parse('$page.url is "http://example.com/"'),
+                        'basilStepName' => 'test two step two',
+                        'status' => Status::STATUS_PASSED,
+                        'handledStatements' => [
+                            $actionParser->parse('click $".back"'),
+                            $assertionParser->parse('$page.url is "http://example.com/"'),
+                        ],
                     ],
                     [
-                        $actionParser->parse('click $".new"'),
-                        $assertionParser->parse('$page.url is "http://example.com/new/"'),
+                        'basilStepName' => 'test three step one',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $actionParser->parse('click $".new"'),
+                            $assertionParser->parse('$page.url is "http://example.com/new/"'),
+                        ],
+                        'expectedValue' => 'http://example.com/new/',
+                        'examinedValue' => 'http://example.com/',
                     ],
-                ],
-                'expectedValues' => [
-                    null,
-                    null,
-                    null,
-                    'http://example.com/new/',
-                ],
-                'examinedValues' => [
-                    null,
-                    null,
-                    null,
-                    'http://example.com/',
                 ],
                 'expectedOutput' =>
                     '---' . "\n" .
@@ -241,66 +217,5 @@ class ResultPrinterTest extends AbstractBaseTest
             $printer->startTest($test);
             $printer->endTest($test, 0.1);
         }
-    }
-
-    /**
-     * @param string[] $testPaths
-     * @param string[] $stepNames
-     * @param int[] $endStatuses
-     * @param array<int, StatementInterface[]> $handledStatements
-     * @param array<mixed> $expectedValues
-     * @param array<mixed> $examinedValues
-     *
-     * @return BasilTestCaseInterface[]
-     */
-    private function createBasilTestCases(
-        array $testPaths,
-        array $stepNames,
-        array $endStatuses,
-        array $handledStatements,
-        array $expectedValues,
-        array $examinedValues
-    ): array {
-        $testCases = [];
-
-        foreach (array_keys($testPaths) as $testIndex) {
-            $basilTestCase = \Mockery::mock(BasilTestCaseInterface::class);
-
-            $basilTestCase
-                ->shouldReceive('getBasilTestPath')
-                ->andReturnValues($testPaths);
-
-            $basilTestCase
-                ->shouldReceive('getBasilStepName')
-                ->andReturn($stepNames[$testIndex]);
-
-            $basilTestCase
-                ->shouldReceive('getStatus')
-                ->andReturn($endStatuses[$testIndex]);
-
-            $basilTestCase
-                ->shouldReceive('getHandledStatements')
-                ->andReturn($handledStatements[$testIndex]);
-
-            $basilTestCase
-                ->shouldReceive('getExpectedValue')
-                ->andReturn($expectedValues[$testIndex]);
-
-            $basilTestCase
-                ->shouldReceive('getExaminedValue')
-                ->andReturn($examinedValues[$testIndex]);
-
-            $basilTestCase
-                ->shouldReceive('getLastException')
-                ->andReturnNull();
-
-            $basilTestCase
-                ->shouldReceive('getCurrentDataSet')
-                ->andReturnNull();
-
-            $testCases[] = $basilTestCase;
-        }
-
-        return $testCases;
     }
 }

@@ -10,6 +10,28 @@ use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 class BasilTestCaseFactory
 {
     /**
+     * @param string[] $testPaths
+     * @param array<array<mixed>> $testPropertiesCollection
+     *
+     * @return BasilTestCaseInterface[]
+     */
+    public static function createCollection(array $testPaths, array $testPropertiesCollection): array
+    {
+        $testCases = [];
+
+        foreach ($testPropertiesCollection as $testProperties) {
+            $testCase = static::create($testProperties);
+            $testCase
+                ->shouldReceive('getBasilTestPath')
+                ->andReturnValues($testPaths);
+
+            $testCases[] = $testCase;
+        }
+
+        return $testCases;
+    }
+
+    /**
      * @param array<mixed> $properties
      *
      * @return BasilTestCaseInterface|MockInterface
