@@ -8,6 +8,7 @@ use Facebook\WebDriver\Exception\InvalidSelectorException;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BasilModels\Action\ResolvedAction;
 use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
+use webignition\BasilModels\DataSet\DataSet;
 use webignition\BasilParser\ActionParser;
 use webignition\BasilParser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
@@ -63,6 +64,7 @@ class StepFactoryTest extends AbstractBaseTest
 
         $isAssertion = $assertionParser->parse('$".selector" is "value"');
         $includesAssertion = $assertionParser->parse('$page.title includes "expected"');
+        $isAssertionWithData = $assertionParser->parse('$".selector" is $data.expected_value');
 
         $statusPassedLabel = (string) new Status(Status::STATUS_PASSED);
         $statusFailedLabel = (string) new Status(Status::STATUS_FAILED);
@@ -241,6 +243,28 @@ class StepFactoryTest extends AbstractBaseTest
                     [
                         $statementFactory->createForPassedAction($clickAction),
                         $statementFactory->createForPassedAssertion($existsAssertion),
+                    ]
+                ),
+            ],
+            'single is assertion with data, passed' => [
+                'testCase' => $this->createBasilTestCaseFoo([
+                    'basilStepName' => 'step name',
+                    'status' =>  Status::STATUS_PASSED,
+                    'handledStatements' => [
+                        $isAssertionWithData,
+                    ],
+                    'currentDataSet' => new DataSet('data set name', [
+                        'expected_value' => 'literal value',
+                    ]),
+                ]),
+                'expectedStep' => new Step(
+                    'step name',
+                    $statusPassedLabel,
+                    [
+                        $statementFactory->createForPassedAssertion($isAssertionWithData),
+                    ],
+                    [
+                        'expected_value' => 'literal value',
                     ]
                 ),
             ],

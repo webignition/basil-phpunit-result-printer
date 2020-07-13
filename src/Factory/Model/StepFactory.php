@@ -7,6 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BasilModels\Action\ActionInterface;
 use webignition\BasilModels\Assertion\AssertionInterface;
+use webignition\BasilModels\DataSet\DataSetInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
@@ -36,7 +37,8 @@ class StepFactory
         return new Step(
             $testCase->getBasilStepName(),
             (string) new Status($testCase->getStatus()),
-            $this->createStatements($testCase)
+            $this->createStatements($testCase),
+            $this->createData($testCase)
         );
     }
 
@@ -99,5 +101,16 @@ class StepFactory
         }
 
         return $statements;
+    }
+
+    private function createData(BasilTestCaseInterface $testCase): ?array
+    {
+        $dataSet = $testCase->getCurrentDataSet();
+
+        if ($dataSet instanceof DataSetInterface) {
+            return $dataSet->getData();
+        }
+
+        return null;
     }
 }
