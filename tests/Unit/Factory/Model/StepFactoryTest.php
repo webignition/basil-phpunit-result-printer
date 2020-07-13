@@ -8,7 +8,6 @@ use Facebook\WebDriver\Exception\InvalidSelectorException;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BasilModels\Action\ResolvedAction;
 use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
-use webignition\BasilModels\StatementInterface as SourceStatementInterface;
 use webignition\BasilParser\ActionParser;
 use webignition\BasilParser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
@@ -81,29 +80,27 @@ class StepFactoryTest extends AbstractBaseTest
 
         return [
             'no statements, passed' => [
-                'testCase' => $this->createBasilTestCase(
-                    'step name',
-                    Status::STATUS_PASSED,
-                    []
-                ),
+                'testCase' => $this->createBasilTestCaseFoo([
+                    'basilStepName' => 'step name',
+                    'status' =>  Status::STATUS_PASSED,
+                ]),
                 'expectedStep' => new Step('step name', $statusPassedLabel, []),
             ],
             'no statements, failed' => [
-                'testCase' => $this->createBasilTestCase(
-                    'step name',
-                    Status::STATUS_FAILED,
-                    []
-                ),
+                'testCase' => $this->createBasilTestCaseFoo([
+                    'basilStepName' => 'step name',
+                    'status' =>  Status::STATUS_FAILED,
+                ]),
                 'expectedStep' => new Step('step name', $statusFailedLabel, []),
             ],
             'single exists assertion, passed' => [
-                'testCase' => $this->createBasilTestCase(
-                    'step name',
-                    Status::STATUS_PASSED,
-                    [
+                'testCase' => $this->createBasilTestCaseFoo([
+                    'basilStepName' => 'step name',
+                    'status' =>  Status::STATUS_PASSED,
+                    'handledStatements' => [
                         $existsAssertion,
-                    ]
-                ),
+                    ],
+                ]),
                 'expectedStep' => new Step(
                     'step name',
                     $statusPassedLabel,
@@ -113,13 +110,13 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single derived exists assertion, passed' => [
-                'testCase' => $this->createBasilTestCase(
-                    'step name',
-                    Status::STATUS_PASSED,
-                    [
+                'testCase' => $this->createBasilTestCaseFoo([
+                    'basilStepName' => 'step name',
+                    'status' =>  Status::STATUS_PASSED,
+                    'handledStatements' => [
                         $derivedExistsAssertion,
-                    ]
-                ),
+                    ],
+                ]),
                 'expectedStep' => new Step(
                     'step name',
                     $statusPassedLabel,
@@ -129,13 +126,13 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single derived resolved exists assertion, passed' => [
-                'testCase' => $this->createBasilTestCase(
-                    'step name',
-                    Status::STATUS_PASSED,
-                    [
+                'testCase' => $this->createBasilTestCaseFoo([
+                    'basilStepName' => 'step name',
+                    'status' =>  Status::STATUS_PASSED,
+                    'handledStatements' => [
                         $derivedResolvedExistsAssertion,
-                    ]
-                ),
+                    ],
+                ]),
                 'expectedStep' => new Step(
                     'step name',
                     $statusPassedLabel,
@@ -145,13 +142,13 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single exists assertion, failed' => [
-                'testCase' => $this->createBasilTestCase(
-                    'step name',
-                    Status::STATUS_FAILED,
-                    [
+                'testCase' => $this->createBasilTestCaseFoo([
+                    'basilStepName' => 'step name',
+                    'status' =>  Status::STATUS_FAILED,
+                    'handledStatements' => [
                         $existsAssertion,
-                    ]
-                ),
+                    ],
+                ]),
                 'expectedStep' => new Step(
                     'step name',
                     $statusFailedLabel,
@@ -161,16 +158,14 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single exists assertion, failed with invalid locator exception' => [
-                'testCase' => $this->createBasilTestCase(
-                    'step name',
-                    Status::STATUS_FAILED,
-                    [
+                'testCase' => $this->createBasilTestCaseFoo([
+                    'basilStepName' => 'step name',
+                    'status' =>  Status::STATUS_FAILED,
+                    'handledStatements' => [
                         $existsAssertion,
                     ],
-                    '',
-                    '',
-                    $invalidLocatorException
-                ),
+                    'lastException' => $invalidLocatorException,
+                ]),
                 'expectedStep' => new Step(
                     'step name',
                     $statusFailedLabel,
@@ -190,17 +185,17 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'three assertions, third failed' => [
-                'testCase' => $this->createBasilTestCase(
-                    'step name',
-                    Status::STATUS_FAILED,
-                    [
+                'testCase' => $this->createBasilTestCaseFoo([
+                    'basilStepName' => 'step name',
+                    'status' =>  Status::STATUS_FAILED,
+                    'handledStatements' => [
                         $existsAssertion,
                         $isAssertion,
                         $includesAssertion,
                     ],
-                    'expected',
-                    'actual'
-                ),
+                    'expectedValue' => 'expected',
+                    'examinedValue' => 'actual',
+                ]),
                 'expectedStep' => new Step(
                     'step name',
                     $statusFailedLabel,
@@ -216,13 +211,13 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single click action, passed' => [
-                'testCase' => $this->createBasilTestCase(
-                    'step name',
-                    Status::STATUS_PASSED,
-                    [
+                'testCase' => $this->createBasilTestCaseFoo([
+                    'basilStepName' => 'step name',
+                    'status' =>  Status::STATUS_PASSED,
+                    'handledStatements' => [
                         $clickAction,
-                    ]
-                ),
+                    ],
+                ]),
                 'expectedStep' => new Step(
                     'step name',
                     $statusPassedLabel,
@@ -232,14 +227,14 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single click action, single exists assertion, passed' => [
-                'testCase' => $this->createBasilTestCase(
-                    'step name',
-                    Status::STATUS_PASSED,
-                    [
+                'testCase' => $this->createBasilTestCaseFoo([
+                    'basilStepName' => 'step name',
+                    'status' =>  Status::STATUS_PASSED,
+                    'handledStatements' => [
                         $clickAction,
                         $existsAssertion,
-                    ]
-                ),
+                    ],
+                ]),
                 'expectedStep' => new Step(
                     'step name',
                     $statusPassedLabel,
@@ -253,22 +248,20 @@ class StepFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @param string $basilStepName
-     * @param int $status
-     * @param SourceStatementInterface[] $handledStatements
-     * @param string $expectedValue
-     * @param string $examinedValue
+     * @param array<mixed> $properties
      *
      * @return BasilTestCaseInterface
      */
-    private function createBasilTestCase(
-        string $basilStepName,
-        int $status,
-        array $handledStatements,
-        string $expectedValue = '',
-        string $examinedValue = '',
-        ?\Throwable $lastException = null
-    ): BasilTestCaseInterface {
+    private function createBasilTestCaseFoo(array $properties): BasilTestCaseInterface
+    {
+        $basilStepName = $properties['basilStepName'] ?? null;
+        $status = $properties['status'] ?? null;
+        $handledStatements = $properties['handledStatements'] ?? [];
+        $expectedValue = $properties['expectedValue'] ?? null;
+        $examinedValue = $properties['examinedValue'] ?? null;
+        $lastException = $properties['lastException'] ?? null;
+        $currentDataSet = $properties['currentDataSet'] ?? null;
+
         $testCase = \Mockery::mock(BasilTestCaseInterface::class);
 
         $testCase
@@ -294,6 +287,10 @@ class StepFactoryTest extends AbstractBaseTest
         $testCase
             ->shouldReceive('getLastException')
             ->andReturn($lastException);
+
+        $testCase
+            ->shouldReceive('getCurrentDataSet')
+            ->andReturn($currentDataSet);
 
         return $testCase;
     }
