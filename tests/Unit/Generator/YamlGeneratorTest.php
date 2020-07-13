@@ -24,49 +24,61 @@ class YamlGeneratorTest extends AbstractBaseTest
     {
         return [
             'empty document' => [
-                'documentSource' => $this->createDocumentSource([]),
+                'documentSource' => $this->createDocumentSource('empty-document', []),
                 'expectedString' =>
                     '---' . "\n" .
-                    '{  }' . "\n" .
+                    'type: empty-document' . "\n" .
                     '...' . "\n",
             ],
             'single-level document' => [
-                'documentSource' => $this->createDocumentSource([
-                    'level1key1' => 'level1value1',
-                ]),
+                'documentSource' => $this->createDocumentSource(
+                    'single-level-document',
+                    [
+                        'level1key1' => 'level1value1',
+                    ]
+                ),
                 'expectedString' =>
                     '---' . "\n" .
+                    'type: single-level-document' . "\n" .
                     'level1key1: level1value1' . "\n" .
                     '...' . "\n",
             ],
             'two-level document' => [
-                'documentSource' => $this->createDocumentSource([
-                    'level1key1' => 'level1value1',
-                    'level1key2' => [
-                        'level2key1' => 'level2value1',
-                    ],
+                'documentSource' => $this->createDocumentSource(
+                    'two-level-document',
+                    [
+                        'level1key1' => 'level1value1',
+                        'level1key2' => [
+                            'level2key1' => 'level2value1',
+                        ],
 
-                ]),
+                    ]
+                ),
                 'expectedString' =>
                     '---' . "\n" .
+                    'type: two-level-document' . "\n" .
                     'level1key1: level1value1' . "\n" .
                     'level1key2:' . "\n" .
                     '  level2key1: level2value1' . "\n" .
                     '...' . "\n",
             ],
             'three-level document' => [
-                'documentSource' => $this->createDocumentSource([
-                    'level1key1' => 'level1value1',
-                    'level1key2' => [
-                        'level2key1' => 'level2value1',
-                        'level2key2' => [
-                            'level3key1' => 'level3value1',
+                'documentSource' => $this->createDocumentSource(
+                    'three-level-document',
+                    [
+                        'level1key1' => 'level1value1',
+                        'level1key2' => [
+                            'level2key1' => 'level2value1',
+                            'level2key2' => [
+                                'level3key1' => 'level3value1',
+                            ],
                         ],
-                    ],
 
-                ]),
+                    ]
+                ),
                 'expectedString' =>
                     '---' . "\n" .
+                    'type: three-level-document' . "\n" .
                     'level1key1: level1value1' . "\n" .
                     'level1key2:' . "\n" .
                     '  level2key1: level2value1' . "\n" .
@@ -82,9 +94,14 @@ class YamlGeneratorTest extends AbstractBaseTest
      *
      * @return DocumentSourceInterface
      */
-    private function createDocumentSource(array $data): DocumentSourceInterface
+    private function createDocumentSource(string $type, array $data): DocumentSourceInterface
     {
         $documentSource = \Mockery::mock(DocumentSourceInterface::class);
+
+        $documentSource
+            ->shouldReceive('getType')
+            ->andReturn($type);
+
         $documentSource
             ->shouldReceive('getData')
             ->andReturn($data);

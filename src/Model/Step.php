@@ -8,6 +8,8 @@ use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 
 class Step implements DocumentSourceInterface
 {
+    private const TYPE = 'step';
+
     private string $name;
     private string $status;
 
@@ -35,6 +37,11 @@ class Step implements DocumentSourceInterface
             return $item instanceof StatementInterface;
         });
         $this->data = $data;
+    }
+
+    public function getType(): string
+    {
+        return self::TYPE;
     }
 
     public function getData(): array

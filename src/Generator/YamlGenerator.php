@@ -20,7 +20,12 @@ class YamlGenerator implements GeneratorInterface
         return
             self::DOCUMENT_START . "\n" .
             trim(Yaml::dump(
-                $documentSource->getData(),
+                array_merge(
+                    [
+                        'type' => $documentSource->getType(),
+                    ],
+                    $documentSource->getData()
+                ),
                 self::YAML_DUMP_INLINE_DEPTH,
                 self::YAML_DUMP_INDENT_SIZE
             )) . "\n" .

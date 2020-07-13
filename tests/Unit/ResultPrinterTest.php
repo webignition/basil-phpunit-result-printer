@@ -65,9 +65,11 @@ class ResultPrinterTest extends AbstractBaseTest
                 ],
                 'expectedOutput' =>
                     '---' . "\n" .
+                    'type: test' . "\n" .
                     'path: test.yml' . "\n" .
                     '...' . "\n" .
                     '---' . "\n" .
+                    'type: step' . "\n" .
                     'name: \'step one\'' . "\n" .
                     'status: passed' . "\n" .
                     'statements:' . "\n" .
@@ -122,9 +124,11 @@ class ResultPrinterTest extends AbstractBaseTest
                 ],
                 'expectedOutput' =>
                     '---' . "\n" .
+                    'type: test' . "\n" .
                     'path: test1.yml' . "\n" .
                     '...' . "\n" .
                     '---' . "\n" .
+                    'type: step' . "\n" .
                     'name: \'test one step one\'' . "\n" .
                     'status: passed' . "\n" .
                     'statements:' . "\n" .
@@ -138,9 +142,11 @@ class ResultPrinterTest extends AbstractBaseTest
                     '    status: passed' . "\n" .
                     '...' . "\n" .
                     '---' . "\n" .
+                    'type: test' . "\n" .
                     'path: test2.yml' . "\n" .
                     '...' . "\n" .
                     '---' . "\n" .
+                    'type: step' . "\n" .
                     'name: \'test two step one\'' . "\n" .
                     'status: passed' . "\n" .
                     'statements:' . "\n" .
@@ -154,6 +160,7 @@ class ResultPrinterTest extends AbstractBaseTest
                     '    status: passed' . "\n" .
                     '...' . "\n" .
                     '---' . "\n" .
+                    'type: step' . "\n" .
                     'name: \'test two step two\'' . "\n" .
                     'status: passed' . "\n" .
                     'statements:' . "\n" .
@@ -167,9 +174,11 @@ class ResultPrinterTest extends AbstractBaseTest
                     '    status: passed' . "\n" .
                     '...' . "\n" .
                     '---' . "\n" .
+                    'type: test' . "\n" .
                     'path: test3.yml' . "\n" .
                     '...' . "\n" .
                     '---' . "\n" .
+                    'type: step' . "\n" .
                     'name: \'test three step one\'' . "\n" .
                     'status: failed' . "\n" .
                     'statements:' . "\n" .

@@ -6,6 +6,8 @@ namespace webignition\BasilPhpUnitResultPrinter\Model;
 
 interface DocumentSourceInterface
 {
+    public function getType(): string;
+
     /**
      * @return array<mixed>
      */
