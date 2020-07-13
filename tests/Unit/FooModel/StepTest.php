@@ -24,14 +24,16 @@ class StepTest extends AbstractBaseTest
      * @param string $name
      * @param string $status
      * @param StatementInterface[] $statements
+     * @param array<mixed>|null $data
      */
-    public function testCreate(string $name, string $status, array $statements)
+    public function testCreate(string $name, string $status, array $statements, ?array $data)
     {
-        $step = new Step($name, $status, $statements);
+        $step = new Step($name, $status, $statements, $data);
 
         self::assertSame($name, ObjectReflector::getProperty($step, 'name'));
         self::assertSame($status, ObjectReflector::getProperty($step, 'status'));
         self::assertSame($statements, ObjectReflector::getProperty($step, 'statements'));
+        self::assertSame($data, ObjectReflector::getProperty($step, 'data'));
     }
 
     public function createDataProvider(): array
@@ -46,12 +48,24 @@ class StepTest extends AbstractBaseTest
                 'statements' => [
                     \Mockery::mock(PassedAssertionStatement::class),
                 ],
+                'data' => null,
             ],
             'failed' => [
                 'name' => 'failed, single assertion',
                 'status' => $statusFailed,
                 'statements' => [
                     \Mockery::mock(FailedAssertionStatement::class),
+                ],
+                'data' => null,
+            ],
+            'passed with data' => [
+                'name' => 'passed, single assertion',
+                'status' => $statusPassed,
+                'statements' => [
+                    \Mockery::mock(PassedAssertionStatement::class),
+                ],
+                'data' => [
+                    'expected_value' => 'literal',
                 ],
             ],
         ];
@@ -76,12 +90,13 @@ class StepTest extends AbstractBaseTest
 
         $clickAction = $actionParser->parse('click $".selector"');
         $existsAssertion = $assertionParser->parse('$".selector" exists');
+        $isAssertionWithData = $assertionParser->parse('$".selector" is $data.expected_value');
 
         $passedActionStatement = $statementFactory->createForPassedAction(
             $clickAction
         ) ?? \Mockery::mock(ActionStatement::class);
 
-        $passedAssertionStatement = $statementFactory->createForPassedAssertion(
+        $passedExistsAssertionStatement = $statementFactory->createForPassedAssertion(
             $existsAssertion
         ) ?? \Mockery::mock(PassedAssertionStatement::class);
 
@@ -90,6 +105,10 @@ class StepTest extends AbstractBaseTest
             '',
             ''
         ) ?? \Mockery::mock(FailedAssertionStatement::class);
+
+        $passedIsAssertionWithDataStatement = $statementFactory->createForPassedAssertion(
+            $isAssertionWithData
+        ) ?? \Mockery::mock(PassedAssertionStatement::class);
 
         $statusPassed = (string) new Status(Status::STATUS_PASSED);
         $statusFailed = (string) new Status(Status::STATUS_FAILED);
@@ -100,14 +119,14 @@ class StepTest extends AbstractBaseTest
                     'passed, single assertion',
                     $statusPassed,
                     [
-                        $passedAssertionStatement,
+                        $passedExistsAssertionStatement,
                     ]
                 ),
                 'expectedData' => [
                     'name' => 'passed, single assertion',
                     'status' => $statusPassed,
                     'statements' => [
-                        $passedAssertionStatement->getData(),
+                        $passedExistsAssertionStatement->getData(),
                     ],
                 ],
             ],
@@ -117,7 +136,7 @@ class StepTest extends AbstractBaseTest
                     $statusPassed,
                     [
                         $passedActionStatement,
-                        $passedAssertionStatement,
+                        $passedExistsAssertionStatement,
                     ]
                 ),
                 'expectedData' => [
@@ -125,7 +144,7 @@ class StepTest extends AbstractBaseTest
                     'status' => $statusPassed,
                     'statements' => [
                         $passedActionStatement->getData(),
-                        $passedAssertionStatement->getData(),
+                        $passedExistsAssertionStatement->getData(),
                     ],
                 ],
             ],
@@ -142,6 +161,28 @@ class StepTest extends AbstractBaseTest
                     'status' => $statusFailed,
                     'statements' => [
                         $failedAssertionStatement->getData(),
+                    ],
+                ],
+            ],
+            'passed, single is assertion with data' => [
+                'step' => new Step(
+                    'passed, single is assertion with data',
+                    $statusPassed,
+                    [
+                        $passedIsAssertionWithDataStatement,
+                    ],
+                    [
+                        'expected_value' => 'literal',
+                    ]
+                ),
+                'expectedData' => [
+                    'name' => 'passed, single is assertion with data',
+                    'status' => $statusPassed,
+                    'statements' => [
+                        $passedIsAssertionWithDataStatement->getData(),
+                    ],
+                    'data' => [
+                        'expected_value' => 'literal',
                     ],
                 ],
             ],
