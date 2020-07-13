@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit;
 
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
-use webignition\BasilModels\StatementInterface;
 use webignition\BasilParser\ActionParser;
 use webignition\BasilParser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
@@ -18,11 +17,7 @@ class ResultPrinterTest extends AbstractBaseTest
      * @dataProvider printerOutputDataProvider
      *
      * @param string[] $testPaths
-     * @param string[] $stepNames
-     * @param int[] $endStatuses
-     * @param array<int, StatementInterface[]> $handledStatements
-     * @param array<mixed> $expectedValues
-     * @param array<mixed> $examinedValues
+     * @param array<array<mixed>> $testPropertiesCollection
      * @param string $expectedOutput
      */
     public function testPrinterOutput(
