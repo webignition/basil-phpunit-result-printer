@@ -6,9 +6,9 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\SourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ValueFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\ScalarSource;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Value;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\ScalarSource;
+use webignition\BasilPhpUnitResultPrinter\Model\Value;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class ValueFactoryTest extends AbstractBaseTest

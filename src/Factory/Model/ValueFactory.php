@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\SourceFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\SourceInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Value;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\SourceInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\Value;
 
 class ValueFactory
 {

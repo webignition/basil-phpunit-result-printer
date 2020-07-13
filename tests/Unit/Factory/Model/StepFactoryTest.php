@@ -14,12 +14,12 @@ use webignition\BasilParser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\ExceptionData\InvalidLocatorExceptionData;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\FailedAssertionStatement;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\StatementInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Step;
+use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\InvalidLocatorExceptionData;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\Status;
+use webignition\BasilPhpUnitResultPrinter\Model\Step;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
@@ -82,21 +82,21 @@ class StepFactoryTest extends AbstractBaseTest
 
         return [
             'no statements, passed' => [
-                'testCase' => $this->createBasilTestCaseFoo([
+                'testCase' => $this->createBasilTestCase([
                     'basilStepName' => 'step name',
                     'status' => Status::STATUS_PASSED,
                 ]),
                 'expectedStep' => new Step('step name', $statusPassedLabel, []),
             ],
             'no statements, failed' => [
-                'testCase' => $this->createBasilTestCaseFoo([
+                'testCase' => $this->createBasilTestCase([
                     'basilStepName' => 'step name',
                     'status' => Status::STATUS_FAILED,
                 ]),
                 'expectedStep' => new Step('step name', $statusFailedLabel, []),
             ],
             'single exists assertion, passed' => [
-                'testCase' => $this->createBasilTestCaseFoo([
+                'testCase' => $this->createBasilTestCase([
                     'basilStepName' => 'step name',
                     'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
@@ -112,7 +112,7 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single derived exists assertion, passed' => [
-                'testCase' => $this->createBasilTestCaseFoo([
+                'testCase' => $this->createBasilTestCase([
                     'basilStepName' => 'step name',
                     'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
@@ -128,7 +128,7 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single derived resolved exists assertion, passed' => [
-                'testCase' => $this->createBasilTestCaseFoo([
+                'testCase' => $this->createBasilTestCase([
                     'basilStepName' => 'step name',
                     'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
@@ -144,7 +144,7 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single exists assertion, failed' => [
-                'testCase' => $this->createBasilTestCaseFoo([
+                'testCase' => $this->createBasilTestCase([
                     'basilStepName' => 'step name',
                     'status' => Status::STATUS_FAILED,
                     'handledStatements' => [
@@ -160,7 +160,7 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single exists assertion, failed with invalid locator exception' => [
-                'testCase' => $this->createBasilTestCaseFoo([
+                'testCase' => $this->createBasilTestCase([
                     'basilStepName' => 'step name',
                     'status' => Status::STATUS_FAILED,
                     'handledStatements' => [
@@ -187,7 +187,7 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'three assertions, third failed' => [
-                'testCase' => $this->createBasilTestCaseFoo([
+                'testCase' => $this->createBasilTestCase([
                     'basilStepName' => 'step name',
                     'status' => Status::STATUS_FAILED,
                     'handledStatements' => [
@@ -213,7 +213,7 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single click action, passed' => [
-                'testCase' => $this->createBasilTestCaseFoo([
+                'testCase' => $this->createBasilTestCase([
                     'basilStepName' => 'step name',
                     'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
@@ -229,7 +229,7 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single click action, single exists assertion, passed' => [
-                'testCase' => $this->createBasilTestCaseFoo([
+                'testCase' => $this->createBasilTestCase([
                     'basilStepName' => 'step name',
                     'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
@@ -247,7 +247,7 @@ class StepFactoryTest extends AbstractBaseTest
                 ),
             ],
             'single is assertion with data, passed' => [
-                'testCase' => $this->createBasilTestCaseFoo([
+                'testCase' => $this->createBasilTestCase([
                     'basilStepName' => 'step name',
                     'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
@@ -276,7 +276,7 @@ class StepFactoryTest extends AbstractBaseTest
      *
      * @return BasilTestCaseInterface
      */
-    private function createBasilTestCaseFoo(array $properties): BasilTestCaseInterface
+    private function createBasilTestCase(array $properties): BasilTestCaseInterface
     {
         $basilStepName = $properties['basilStepName'] ?? null;
         $status = $properties['status'] ?? null;

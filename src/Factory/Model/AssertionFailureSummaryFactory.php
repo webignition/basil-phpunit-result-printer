@@ -6,13 +6,13 @@ namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 
 use webignition\BasilModels\Assertion\AssertionInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\SourceFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\AssertionFailureSummaryInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Comparison;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Existence;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\IsRegExp;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\SourceInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Value;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\Comparison;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\Existence;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\IsRegExp;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\SourceInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\Value;
 
 class AssertionFailureSummaryFactory
 {

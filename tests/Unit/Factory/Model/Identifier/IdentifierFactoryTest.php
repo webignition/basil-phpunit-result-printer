@@ -6,8 +6,8 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Identif
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\IdentifierFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\PropertiesFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
+use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Identifier;
+use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class IdentifierFactoryTest extends AbstractBaseTest

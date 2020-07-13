@@ -7,12 +7,12 @@ namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement;
 use webignition\BasilModels\Action\ActionInterface;
 use webignition\BasilModels\Assertion\AssertionInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\AssertionFailureSummaryInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\ActionStatement;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\FailedAssertionStatement;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\PassedAssertionStatement;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\StatementInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\ActionStatement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\PassedAssertionStatement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\Status;
 
 class StatementFactory
 {

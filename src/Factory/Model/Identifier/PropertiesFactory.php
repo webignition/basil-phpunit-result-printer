@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier;
 
 use webignition\BasilDomIdentifierFactory\Factory as DomIdentifierFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
+use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
 use webignition\DomElementIdentifier\AttributeIdentifierInterface;
 use webignition\DomElementIdentifier\ElementIdentifierInterface;
 

@@ -14,17 +14,17 @@ use webignition\BasilParser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\TransformationFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\AssertionFailureSummaryInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\AssertionFailureSummary\Existence;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Properties;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\ActionStatement;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\FailedAssertionStatement;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\PassedAssertionStatement;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Statement\StatementInterface;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Status;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\Existence;
+use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Identifier;
+use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
+use webignition\BasilPhpUnitResultPrinter\Model\Node;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\ActionStatement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\PassedAssertionStatement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class StatementFactoryTest extends AbstractBaseTest

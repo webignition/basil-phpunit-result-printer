@@ -6,8 +6,8 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Source;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ScalarFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\ScalarSourceFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\ScalarSource;
+use webignition\BasilPhpUnitResultPrinter\Model\Scalar;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\ScalarSource;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class ScalarSourceFactoryTest extends AbstractBaseTest

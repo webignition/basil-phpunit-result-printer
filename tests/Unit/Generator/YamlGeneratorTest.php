@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Generator;
 
-use webignition\BasilPhpUnitResultPrinter\FooModel\DocumentSourceInterface;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
+use webignition\BasilPhpUnitResultPrinter\Model\DocumentSourceInterface;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class YamlGeneratorTest extends AbstractBaseTest

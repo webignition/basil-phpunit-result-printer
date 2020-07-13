@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 
-use webignition\BasilPhpUnitResultPrinter\FooModel\Scalar;
+use webignition\BasilPhpUnitResultPrinter\Model\Scalar;
 use webignition\BasilValueTypeIdentifier\ValueTypeIdentifier;
 
 class ScalarFactory

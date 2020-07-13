@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Source;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\IdentifierFactory;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Identifier\Identifier;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Node;
-use webignition\BasilPhpUnitResultPrinter\FooModel\Source\NodeSource;
+use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Identifier;
+use webignition\BasilPhpUnitResultPrinter\Model\Node;
+use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
 
 class NodeSourceFactory
 {
