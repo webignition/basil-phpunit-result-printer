@@ -84,21 +84,21 @@ class StepFactoryTest extends AbstractBaseTest
             'no statements, passed' => [
                 'testCase' => $this->createBasilTestCaseFoo([
                     'basilStepName' => 'step name',
-                    'status' =>  Status::STATUS_PASSED,
+                    'status' => Status::STATUS_PASSED,
                 ]),
                 'expectedStep' => new Step('step name', $statusPassedLabel, []),
             ],
             'no statements, failed' => [
                 'testCase' => $this->createBasilTestCaseFoo([
                     'basilStepName' => 'step name',
-                    'status' =>  Status::STATUS_FAILED,
+                    'status' => Status::STATUS_FAILED,
                 ]),
                 'expectedStep' => new Step('step name', $statusFailedLabel, []),
             ],
             'single exists assertion, passed' => [
                 'testCase' => $this->createBasilTestCaseFoo([
                     'basilStepName' => 'step name',
-                    'status' =>  Status::STATUS_PASSED,
+                    'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
                         $existsAssertion,
                     ],
@@ -114,7 +114,7 @@ class StepFactoryTest extends AbstractBaseTest
             'single derived exists assertion, passed' => [
                 'testCase' => $this->createBasilTestCaseFoo([
                     'basilStepName' => 'step name',
-                    'status' =>  Status::STATUS_PASSED,
+                    'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
                         $derivedExistsAssertion,
                     ],
@@ -130,7 +130,7 @@ class StepFactoryTest extends AbstractBaseTest
             'single derived resolved exists assertion, passed' => [
                 'testCase' => $this->createBasilTestCaseFoo([
                     'basilStepName' => 'step name',
-                    'status' =>  Status::STATUS_PASSED,
+                    'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
                         $derivedResolvedExistsAssertion,
                     ],
@@ -146,7 +146,7 @@ class StepFactoryTest extends AbstractBaseTest
             'single exists assertion, failed' => [
                 'testCase' => $this->createBasilTestCaseFoo([
                     'basilStepName' => 'step name',
-                    'status' =>  Status::STATUS_FAILED,
+                    'status' => Status::STATUS_FAILED,
                     'handledStatements' => [
                         $existsAssertion,
                     ],
@@ -162,7 +162,7 @@ class StepFactoryTest extends AbstractBaseTest
             'single exists assertion, failed with invalid locator exception' => [
                 'testCase' => $this->createBasilTestCaseFoo([
                     'basilStepName' => 'step name',
-                    'status' =>  Status::STATUS_FAILED,
+                    'status' => Status::STATUS_FAILED,
                     'handledStatements' => [
                         $existsAssertion,
                     ],
@@ -189,7 +189,7 @@ class StepFactoryTest extends AbstractBaseTest
             'three assertions, third failed' => [
                 'testCase' => $this->createBasilTestCaseFoo([
                     'basilStepName' => 'step name',
-                    'status' =>  Status::STATUS_FAILED,
+                    'status' => Status::STATUS_FAILED,
                     'handledStatements' => [
                         $existsAssertion,
                         $isAssertion,
@@ -215,7 +215,7 @@ class StepFactoryTest extends AbstractBaseTest
             'single click action, passed' => [
                 'testCase' => $this->createBasilTestCaseFoo([
                     'basilStepName' => 'step name',
-                    'status' =>  Status::STATUS_PASSED,
+                    'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
                         $clickAction,
                     ],
@@ -231,7 +231,7 @@ class StepFactoryTest extends AbstractBaseTest
             'single click action, single exists assertion, passed' => [
                 'testCase' => $this->createBasilTestCaseFoo([
                     'basilStepName' => 'step name',
-                    'status' =>  Status::STATUS_PASSED,
+                    'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
                         $clickAction,
                         $existsAssertion,
@@ -249,7 +249,7 @@ class StepFactoryTest extends AbstractBaseTest
             'single is assertion with data, passed' => [
                 'testCase' => $this->createBasilTestCaseFoo([
                     'basilStepName' => 'step name',
-                    'status' =>  Status::STATUS_PASSED,
+                    'status' => Status::STATUS_PASSED,
                     'handledStatements' => [
                         $isAssertionWithData,
                     ],

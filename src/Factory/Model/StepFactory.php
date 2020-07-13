@@ -103,6 +103,11 @@ class StepFactory
         return $statements;
     }
 
+    /**
+     * @param BasilTestCaseInterface $testCase
+     *
+     * @return array<mixed>|null
+     */
     private function createData(BasilTestCaseInterface $testCase): ?array
     {
         $dataSet = $testCase->getCurrentDataSet();
