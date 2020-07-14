@@ -1,0 +1,31 @@
+---
+type: test
+path: test.yml
+...
+---
+type: step
+name: 'step name'
+status: failed
+statements:
+  -
+    type: assertion
+    source: '$".selector" is-regexp'
+    status: failed
+    transformations:
+      -
+        type: derivation
+        source: '$page.title matches $".selector"'
+    summary:
+      operator: is-regexp
+      value: 'not a regexp'
+      source:
+        type: node
+        body:
+          type: element
+          identifier:
+            source: '$".selector"'
+            properties:
+              type: css
+              locator: .selector
+              position: 1
+...

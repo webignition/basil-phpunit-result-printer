@@ -11,19 +11,22 @@ use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Util\Printer;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
-use webignition\BasilPhpUnitResultPrinter\Model\IndentedContent;
-use webignition\BasilPhpUnitResultPrinter\Model\TestName;
-use webignition\BasilPhpUnitResultPrinter\Model\TestOutput;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
+use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
+use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
+use webignition\BasilPhpUnitResultPrinter\Model\Test as TestOutput;
 
 class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 {
     private ?TestOutput $currentTestOutput = null;
+    private GeneratorInterface $generator;
     private StepFactory $stepFactory;
 
     public function __construct($out = null)
     {
         parent::__construct($out);
 
+        $this->generator = new YamlGenerator();
         $this->stepFactory = StepFactory::createFactory();
     }
 
@@ -105,9 +108,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 
             if ($isNewTest) {
                 $currentTestOutput = new TestOutput($testPath);
-                $this->write((new TestName($currentTestOutput->getPath()))->render());
-                $this->writeEmptyLine();
-
+                $this->write($this->generator->generate($currentTestOutput));
                 $this->currentTestOutput = $currentTestOutput;
             }
         }
@@ -119,19 +120,9 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     public function endTest(Test $test, float $time): void
     {
         if ($test instanceof BasilTestCaseInterface) {
-            $indentedRenderedStep = new IndentedContent(
-                $this->stepFactory->create($test)
-            );
-
-            $this->write($indentedRenderedStep->render());
-            $this->writeEmptyLine();
-            $this->writeEmptyLine();
+            $step = $this->stepFactory->create($test);
+            $this->write($this->generator->generate($step));
         }
-    }
-
-    private function writeEmptyLine(): void
-    {
-        $this->write("\n");
     }
 
     public function printResult(TestResult $result): void

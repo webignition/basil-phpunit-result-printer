@@ -1,0 +1,30 @@
+---
+type: test
+path: test.yml
+...
+---
+type: step
+name: 'step name'
+status: failed
+statements:
+  -
+    type: assertion
+    source: '$browser.size is "literal value"'
+    status: failed
+    summary:
+      operator: is
+      expected:
+        value: 'literal value'
+        source:
+          type: scalar
+          body:
+            type: literal
+            value: '"literal value"'
+      actual:
+        value: 1024x768
+        source:
+          type: scalar
+          body:
+            type: browser_property
+            value: $browser.size
+...
