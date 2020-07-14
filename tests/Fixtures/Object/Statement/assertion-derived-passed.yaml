@@ -1,7 +1,0 @@
-type: assertion
-source: $".selector" exists
-status: passed
-transformations:
-  -
-    type: derivation
-    source: click $".selector"

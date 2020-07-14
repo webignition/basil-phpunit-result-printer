@@ -1,9 +1,0 @@
-type: node
-body:
-  type: element
-  identifier:
-    source: $".selector"
-    properties:
-      type: css
-      locator: .selector
-      position: 1
