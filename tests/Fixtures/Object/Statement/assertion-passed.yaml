@@ -1,3 +1,0 @@
-type: assertion
-source: $page.url is "http://example.com/"
-status: passed

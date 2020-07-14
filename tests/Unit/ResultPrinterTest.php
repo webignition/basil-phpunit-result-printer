@@ -4,17 +4,26 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit;
 
-use webignition\BaseBasilTestCase\BasilTestCaseInterface;
+use Facebook\WebDriver\Exception\InvalidSelectorException;
+use webignition\BasilModels\Action\ResolvedAction;
+use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
 use webignition\BasilParser\ActionParser;
 use webignition\BasilParser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\ResultPrinter;
 use webignition\BasilPhpUnitResultPrinter\Tests\Services\BasilTestCaseFactory;
+use webignition\BasilPhpUnitResultPrinter\Tests\Services\FixtureLoader;
+use webignition\DomElementIdentifier\ElementIdentifier;
+use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class ResultPrinterTest extends AbstractBaseTest
 {
     /**
-     * @dataProvider printerOutputDataProvider
+     * @dataProvider passedDataProvider
+     * @dataProvider failedExistsAssertionDataProvider
+     * @dataProvider failedExceptionDataProvider
+     * @dataProvider failedIsAssertionDataProvider
+     * @dataProvider failedIsRegExpDataProvider
      *
      * @param string[] $testPaths
      * @param array<array<mixed>> $testPropertiesCollection
@@ -32,7 +41,10 @@ class ResultPrinterTest extends AbstractBaseTest
         if (is_resource($outResource)) {
             $printer = new ResultPrinter($outResource);
 
-            $this->exercisePrinter($printer, $tests);
+            foreach ($tests as $test) {
+                $printer->startTest($test);
+                $printer->endTest($test, 0.1);
+            }
 
             rewind($outResource);
             $outContent = stream_get_contents($outResource);
@@ -44,182 +56,404 @@ class ResultPrinterTest extends AbstractBaseTest
         }
     }
 
-    public function printerOutputDataProvider(): array
+    public function passedDataProvider(): array
     {
         $actionParser = ActionParser::create();
         $assertionParser = AssertionParser::create();
 
         return [
-            'single test' => [
+            'passed, single test containing resolved and derived statements' => [
                 'testPaths' => [
                     'test.yml'
                 ],
                 'testPropertiesCollection' => [
                     [
-                        'basilStepName' => 'step one',
+                        'basilStepName' => 'verify page is open',
                         'status' => Status::STATUS_PASSED,
                         'handledStatements' => [
                             $assertionParser->parse('$page.url is "http://example.com/"'),
+                            $assertionParser->parse('$page.title is "Example Domain"'),
+                        ],
+                    ],
+                    [
+                        'basilStepName' => 'passing actions and assertions',
+                        'status' => Status::STATUS_PASSED,
+                        'handledStatements' => [
+                            new DerivedValueOperationAssertion(
+                                new ResolvedAction(
+                                    $actionParser->parse('click $page_import_name.elements.selector'),
+                                    '$".button"'
+                                ),
+                                '$".button"',
+                                'exists'
+                            ),
+                            new ResolvedAction(
+                                $actionParser->parse('click $page_import_name.elements.selector'),
+                                '$".button"'
+                            ),
+                            $actionParser->parse('set $".form" >> $".input" to "literal value"'),
+                            $assertionParser->parse('$".button".data-clicked is "1"'),
+                            $assertionParser->parse('$".form" >> $".input" is "literal value"'),
                         ],
                     ],
                 ],
-                'expectedOutput' =>
-                    '---' . "\n" .
-                    'type: test' . "\n" .
-                    'path: test.yml' . "\n" .
-                    '...' . "\n" .
-                    '---' . "\n" .
-                    'type: step' . "\n" .
-                    'name: \'step one\'' . "\n" .
-                    'status: passed' . "\n" .
-                    'statements:' . "\n" .
-                    '  -' . "\n" .
-                    '    type: assertion' . "\n" .
-                    '    source: \'$page.url is "http://example.com/"\'' . "\n" .
-                    '    status: passed' . "\n" .
-                    '...' . "\n",
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/passed-single-test.yaml'),
             ],
-            'multiple tests' => [
+            'passed, multiple tests' => [
                 'testPaths' => [
                     'test1.yml',
                     'test2.yml',
-                    'test2.yml',
-                    'test3.yml',
                 ],
                 'testPropertiesCollection' => [
                     [
-                        'basilStepName' => 'test one step one',
+                        'basilStepName' => 'step name',
                         'status' => Status::STATUS_PASSED,
                         'handledStatements' => [
                             $assertionParser->parse('$page.url is "http://example.com/"'),
-                            $assertionParser->parse('$page.title is "Hello, World!"'),
+                            $assertionParser->parse('$page.title is "Example Domain"'),
                         ],
                     ],
                     [
-                        'basilStepName' => 'test two step one',
+                        'basilStepName' => 'step name',
                         'status' => Status::STATUS_PASSED,
                         'handledStatements' => [
-                            $actionParser->parse('click $".successful"'),
-                            $assertionParser->parse('$page.url is "http://example.com/successful/"')
+                            $actionParser->parse('click $".button"'),
+                            $actionParser->parse('set $".form" >> $".input" to "literal value"'),
+                            $assertionParser->parse('$".button".data-clicked is "1"'),
+                            $assertionParser->parse('$".form" >> $".input" is "literal value"'),
                         ],
-                    ],
-                    [
-                        'basilStepName' => 'test two step two',
-                        'status' => Status::STATUS_PASSED,
-                        'handledStatements' => [
-                            $actionParser->parse('click $".back"'),
-                            $assertionParser->parse('$page.url is "http://example.com/"'),
-                        ],
-                    ],
-                    [
-                        'basilStepName' => 'test three step one',
-                        'status' => Status::STATUS_FAILED,
-                        'handledStatements' => [
-                            $actionParser->parse('click $".new"'),
-                            $assertionParser->parse('$page.url is "http://example.com/new/"'),
-                        ],
-                        'expectedValue' => 'http://example.com/new/',
-                        'examinedValue' => 'http://example.com/',
                     ],
                 ],
-                'expectedOutput' =>
-                    '---' . "\n" .
-                    'type: test' . "\n" .
-                    'path: test1.yml' . "\n" .
-                    '...' . "\n" .
-                    '---' . "\n" .
-                    'type: step' . "\n" .
-                    'name: \'test one step one\'' . "\n" .
-                    'status: passed' . "\n" .
-                    'statements:' . "\n" .
-                    '  -' . "\n" .
-                    '    type: assertion' . "\n" .
-                    '    source: \'$page.url is "http://example.com/"\'' . "\n" .
-                    '    status: passed' . "\n" .
-                    '  -' . "\n" .
-                    '    type: assertion' . "\n" .
-                    '    source: \'$page.title is "Hello, World!"\'' . "\n" .
-                    '    status: passed' . "\n" .
-                    '...' . "\n" .
-                    '---' . "\n" .
-                    'type: test' . "\n" .
-                    'path: test2.yml' . "\n" .
-                    '...' . "\n" .
-                    '---' . "\n" .
-                    'type: step' . "\n" .
-                    'name: \'test two step one\'' . "\n" .
-                    'status: passed' . "\n" .
-                    'statements:' . "\n" .
-                    '  -' . "\n" .
-                    '    type: action' . "\n" .
-                    '    source: \'click $".successful"\'' . "\n" .
-                    '    status: passed' . "\n" .
-                    '  -' . "\n" .
-                    '    type: assertion' . "\n" .
-                    '    source: \'$page.url is "http://example.com/successful/"\'' . "\n" .
-                    '    status: passed' . "\n" .
-                    '...' . "\n" .
-                    '---' . "\n" .
-                    'type: step' . "\n" .
-                    'name: \'test two step two\'' . "\n" .
-                    'status: passed' . "\n" .
-                    'statements:' . "\n" .
-                    '  -' . "\n" .
-                    '    type: action' . "\n" .
-                    '    source: \'click $".back"\'' . "\n" .
-                    '    status: passed' . "\n" .
-                    '  -' . "\n" .
-                    '    type: assertion' . "\n" .
-                    '    source: \'$page.url is "http://example.com/"\'' . "\n" .
-                    '    status: passed' . "\n" .
-                    '...' . "\n" .
-                    '---' . "\n" .
-                    'type: test' . "\n" .
-                    'path: test3.yml' . "\n" .
-                    '...' . "\n" .
-                    '---' . "\n" .
-                    'type: step' . "\n" .
-                    'name: \'test three step one\'' . "\n" .
-                    'status: failed' . "\n" .
-                    'statements:' . "\n" .
-                    '  -' . "\n" .
-                    '    type: action' . "\n" .
-                    '    source: \'click $".new"\'' . "\n" .
-                    '    status: passed' . "\n" .
-                    '  -' . "\n" .
-                    '    type: assertion' . "\n" .
-                    '    source: \'$page.url is "http://example.com/new/"\'' . "\n" .
-                    '    status: failed' . "\n" .
-                    '    summary:' . "\n" .
-                    '      operator: is' . "\n" .
-                    '      expected:' . "\n" .
-                    '        value: \'http://example.com/new/\'' . "\n" .
-                    '        source:' . "\n" .
-                    '          type: scalar' . "\n" .
-                    '          body:' . "\n" .
-                    '            type: literal' . "\n" .
-                    '            value: \'"http://example.com/new/"\'' . "\n" .
-                    '      actual:' . "\n" .
-                    '        value: \'http://example.com/\'' . "\n" .
-                    '        source:' . "\n" .
-                    '          type: scalar' . "\n" .
-                    '          body:' . "\n" .
-                    '            type: page_property' . "\n" .
-                    '            value: $page.url' . "\n" .
-                    '...' . "\n",
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/passed-multiple-tests.yaml'),
             ],
         ];
     }
 
-    /**
-     * @param ResultPrinter $printer
-     * @param BasilTestCaseInterface[] $tests
-     */
-    private function exercisePrinter(ResultPrinter $printer, array $tests): void
+    public function failedExistsAssertionDataProvider(): array
     {
-        foreach ($tests as $test) {
-            $printer->startTest($test);
-            $printer->endTest($test, 0.1);
-        }
+        $actionParser = ActionParser::create();
+        $assertionParser = AssertionParser::create();
+
+        return [
+            'failed, element exists assertion' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$".selector" exists'),
+                        ],
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-exists-assertion-element.yaml'),
+            ],
+            'failed, derived element exists assertion' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            new DerivedValueOperationAssertion(
+                                new ResolvedAction(
+                                    $actionParser->parse('click $page_import_name.elements.selector'),
+                                    '$".selector"'
+                                ),
+                                '$".selector"',
+                                'exists'
+                            ),
+                        ],
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-derived-exists-assertion-element.yaml'),
+            ],
+            'failed, descendant element exists assertion' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$"form":3 >> $"input":2 exists'),
+                        ],
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinter/failed-exists-assertion-descendant-element.yaml'
+                ),
+            ],
+            'failed, descendant css/xpath element exists assertion' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$"form" >> $"/input" exists'),
+                        ],
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinter/failed-exists-assertion-descendant-css-xpath-element.yaml'
+                ),
+            ],
+            'failed, attribute exists assertion' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$".selector".attribute_name exists'),
+                        ],
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-exists-assertion-attribute.yaml'),
+            ],
+        ];
+    }
+
+    public function failedExceptionDataProvider(): array
+    {
+        $assertionParser = AssertionParser::create();
+
+        return [
+            'failed, invalid locator exception' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step with invalid locator exception',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$"a[href=https://example.com/]" exists'),
+                        ],
+                        'lastException' => new InvalidLocatorException(
+                            new ElementIdentifier('a[href=https://example.com/]'),
+                            \Mockery::mock(InvalidSelectorException::class)
+                        ),
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinter/failed-exception-invalid-locator-exception.yaml'
+                ),
+            ],
+            'failed, unknown exception' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step with unknown exception',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$"a[href=https://example.com/]" exists'),
+                        ],
+                        'lastException' => new \LogicException('Invalid logic')
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinter/failed-exception-unknown-exception.yaml'
+                ),
+            ],
+        ];
+    }
+
+    public function failedIsAssertionDataProvider(): array
+    {
+        $assertionParser = AssertionParser::create();
+
+        return [
+            'failed, is assertion, scalar is scalar, browser property is literal' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$browser.size is "literal value"'),
+                        ],
+                        'expectedValue' => 'literal value',
+                        'examinedValue' => '1024x768',
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinter/failed-is-assertion-browser-property-is-literal.yaml'
+                ),
+            ],
+            'failed, is assertion, scalar is scalar, page property is data parameter' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$page.title is $data.expected_title'),
+                        ],
+                        'expectedValue' => 'expected title value',
+                        'examinedValue' => 'Example Domain',
+                        'dataSet' => [
+                            'expected_url' => 'expected title value'
+                        ],
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinter/failed-is-assertion-browser-property-is-data-parameter.yaml'
+                ),
+            ],
+            'failed, is assertion, scalar is scalar, page property is environment parameter' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$page.title is $env.PAGE_TITLE'),
+                        ],
+                        'expectedValue' => 'expected title value',
+                        'examinedValue' => 'Example Domain',
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinter/failed-is-assertion-browser-property-is-environment-parameter.yaml'
+                ),
+            ],
+            'failed, is assertion, node is scalar' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$".selector" is "expected value"'),
+                        ],
+                        'expectedValue' => 'expected value',
+                        'examinedValue' => 'actual value',
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinter/failed-is-assertion-node-is-scalar.yaml'
+                ),
+            ],
+            'failed, is assertion, scalar is node' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$page.title is $".selector"'),
+                        ],
+                        'expectedValue' => 'expected value',
+                        'examinedValue' => 'actual value',
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinter/failed-is-assertion-scalar-is-node.yaml'
+                ),
+            ],
+            'failed, is assertion, node is node' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $assertionParser->parse('$".actual" is $".expected"'),
+                        ],
+                        'expectedValue' => 'expected value',
+                        'examinedValue' => 'actual value',
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinter/failed-is-assertion-node-is-node.yaml'
+                ),
+            ],
+        ];
+    }
+
+    public function failedIsRegExpDataProvider(): array
+    {
+        return [
+            'failed, attribute is-regexp assertion' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $this->createDerivedIsRegExpAssertion('$page.title matches $".selector".attribute_name'),
+                        ],
+                        'examinedValue' => 'not a regexp',
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-is-regexp-assertion-attribute.yaml'),
+            ],
+            'failed, element is-regexp assertion' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $this->createDerivedIsRegExpAssertion('$page.title matches $".selector"'),
+                        ],
+                        'examinedValue' => 'not a regexp',
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-is-regexp-assertion-element.yaml'),
+            ],
+            'failed, scalar is-regexp assertion' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [
+                            $this->createDerivedIsRegExpAssertion('$page.title matches "not a regexp"'),
+                        ],
+                        'examinedValue' => 'not a regexp',
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-is-regexp-assertion-scalar.yaml'),
+            ],
+        ];
+    }
+
+    private function createDerivedIsRegExpAssertion(string $assertionSource): DerivedValueOperationAssertion
+    {
+        $assertion = AssertionParser::create()->parse($assertionSource);
+
+        return new DerivedValueOperationAssertion($assertion, (string) $assertion->getValue(), 'is-regexp');
     }
 }

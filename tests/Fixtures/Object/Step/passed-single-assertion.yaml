@@ -1,8 +1,0 @@
-type: step
-name: step one
-status: passed
-statements:
-  -
-    type: assertion
-    source: $page.url is "http://example.com/"
-    status: passed

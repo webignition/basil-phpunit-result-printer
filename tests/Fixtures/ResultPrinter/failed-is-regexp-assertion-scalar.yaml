@@ -1,0 +1,26 @@
+---
+type: test
+path: test.yml
+...
+---
+type: step
+name: 'step name'
+status: failed
+statements:
+  -
+    type: assertion
+    source: '"not a regexp" is-regexp'
+    status: failed
+    transformations:
+      -
+        type: derivation
+        source: '$page.title matches "not a regexp"'
+    summary:
+      operator: is-regexp
+      value: 'not a regexp'
+      source:
+        type: scalar
+        body:
+          type: literal
+          value: '"not a regexp"'
+...
