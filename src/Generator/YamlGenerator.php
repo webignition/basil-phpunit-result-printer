@@ -12,7 +12,7 @@ class YamlGenerator implements GeneratorInterface
     private const DOCUMENT_START = '---';
     private const DOCUMENT_END = '...';
 
-    private const YAML_DUMP_INLINE_DEPTH = 7;
+    private const YAML_DUMP_INLINE_DEPTH = 9;
     private const YAML_DUMP_INDENT_SIZE = 2;
 
     public function generate(DocumentSourceInterface $documentSource): string

@@ -1,0 +1,26 @@
+---
+type: test
+path: test.yml
+...
+---
+type: step
+name: 'step name'
+status: failed
+statements:
+  -
+    type: assertion
+    source: '$".selector" exists'
+    status: failed
+    summary:
+      operator: exists
+      source:
+        type: node
+        body:
+          type: element
+          identifier:
+            source: '$".selector"'
+            properties:
+              type: css
+              locator: .selector
+              position: 1
+...
