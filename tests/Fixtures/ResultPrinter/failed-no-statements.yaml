@@ -1,0 +1,9 @@
+---
+type: test
+path: test.yml
+...
+---
+type: step
+name: 'step name'
+status: failed
+...
