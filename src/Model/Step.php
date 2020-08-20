@@ -46,17 +46,20 @@ class Step implements DocumentSourceInterface
 
     public function getData(): array
     {
-        $statementData = [];
-
-        foreach ($this->statements as $statement) {
-            $statementData[] = $statement->getData();
-        }
-
         $data = [
             'name' => $this->name,
             'status' => $this->status,
-            'statements' => $statementData,
         ];
+
+        if (count($this->statements)) {
+            $statementData = [];
+
+            foreach ($this->statements as $statement) {
+                $statementData[] = $statement->getData();
+            }
+
+            $data['statements'] = $statementData;
+        }
 
         if (null !== $this->data) {
             $data['data'] = $this->data;

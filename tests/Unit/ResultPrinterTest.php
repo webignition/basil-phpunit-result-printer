@@ -24,6 +24,7 @@ class ResultPrinterTest extends AbstractBaseTest
      * @dataProvider failedExceptionDataProvider
      * @dataProvider failedIsAssertionDataProvider
      * @dataProvider failedIsRegExpDataProvider
+     * @dataProvider failedNoStatementsDataProvider
      *
      * @param string[] $testPaths
      * @param array<array<mixed>> $testPropertiesCollection
@@ -446,6 +447,25 @@ class ResultPrinterTest extends AbstractBaseTest
                     ],
                 ],
                 'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-is-regexp-assertion-scalar.yaml'),
+            ],
+        ];
+    }
+
+    public function failedNoStatementsDataProvider(): array
+    {
+        return [
+            'failed, no statements' => [
+                'testPaths' => [
+                    'test.yml'
+                ],
+                'testPropertiesCollection' => [
+                    [
+                        'basilStepName' => 'step name',
+                        'status' => Status::STATUS_FAILED,
+                        'handledStatements' => [],
+                    ],
+                ],
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-no-statements.yaml'),
             ],
         ];
     }
