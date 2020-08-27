@@ -6,7 +6,9 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
 use PHPUnit\Framework\TestCase;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
+use webignition\BaseBasilTestCase\ClientManager;
 use webignition\BasilModels\DataSet\DataSetInterface;
+use webignition\BasilModels\Test\ConfigurationInterface;
 use webignition\DomElementIdentifier\ElementIdentifierInterface;
 
 class BasilTestCase extends TestCase implements BasilTestCaseInterface
@@ -92,5 +94,19 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
     public function getCurrentDataSet(): ?DataSetInterface
     {
         return null;
+    }
+
+    public static function staticGetLastException(): ?\Throwable
+    {
+        return null;
+    }
+
+    public static function getBasilTestConfiguration(): ?ConfigurationInterface
+    {
+        return null;
+    }
+
+    public static function setClientManager(ClientManager $clientManager): void
+    {
     }
 }
