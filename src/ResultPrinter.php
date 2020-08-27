@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter;
 
 use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\ExceptionWrapper;
 use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Framework\TestSuite;
@@ -14,6 +15,7 @@ use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
+use webignition\BasilPhpUnitResultPrinter\Model\Exception;
 use webignition\BasilPhpUnitResultPrinter\Model\Test as TestOutput;
 
 class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
@@ -21,6 +23,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     private ?TestOutput $currentTestOutput = null;
     private GeneratorInterface $generator;
     private StepFactory $stepFactory;
+    private ?Exception $exception = null;
 
     public function __construct($out = null)
     {
@@ -35,7 +38,23 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
      */
     public function addError(Test $test, \Throwable $t, float $time): void
     {
-        // TODO: Implement addError() method.
+        $exception = $t;
+        if ($exception instanceof ExceptionWrapper) {
+            $exception = $exception->getOriginalException();
+        }
+
+        if ($exception instanceof \Exception) {
+            $step = null;
+            if ($test instanceof BasilTestCaseInterface) {
+                $step = $test->getBasilStepName();
+
+                if ('' === $step) {
+                    $step = null;
+                }
+            }
+
+            $this->exception = Exception::createFromThrowable($step, $exception);
+        }
     }
 
     /**
@@ -120,8 +139,12 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     public function endTest(Test $test, float $time): void
     {
         if ($test instanceof BasilTestCaseInterface) {
-            $step = $this->stepFactory->create($test);
-            $this->write($this->generator->generate($step));
+            if ($this->exception instanceof Exception) {
+                $this->write($this->generator->generate($this->exception));
+            } else {
+                $step = $this->stepFactory->create($test);
+                $this->write($this->generator->generate($step));
+            }
         }
     }
 
