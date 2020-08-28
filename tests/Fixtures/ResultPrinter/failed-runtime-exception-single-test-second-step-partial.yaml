@@ -1,0 +1,15 @@
+---
+type: test
+path: /path/to/runtime-exception-on-second-step-test.yml
+...
+---
+type: step
+name: step one
+status: passed
+...
+---
+type: exception
+step: step two
+class: RuntimeException
+message: 'Exception thrown in first step'
+code: 123
