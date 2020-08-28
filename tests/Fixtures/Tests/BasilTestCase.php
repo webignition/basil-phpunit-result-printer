@@ -13,6 +13,8 @@ use webignition\DomElementIdentifier\ElementIdentifierInterface;
 
 class BasilTestCase extends TestCase implements BasilTestCaseInterface
 {
+    private string $basilStepName = '';
+
     public static function setBasilTestPath(string $testPath): void
     {
     }
@@ -24,11 +26,12 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
 
     public function setBasilStepName(string $stepName): void
     {
+        $this->basilStepName = $stepName;
     }
 
     public function getBasilStepName(): string
     {
-        return '';
+        return $this->basilStepName;
     }
 
     public function getHandledStatements(): array

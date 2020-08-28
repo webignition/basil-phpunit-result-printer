@@ -4,7 +4,7 @@ path: /path/to/runtime-exception-on-first-step-test.yml
 ...
 ---
 type: exception
-step: null
+step: step name
 class: RuntimeException
 message: 'Exception message'
 code: 123

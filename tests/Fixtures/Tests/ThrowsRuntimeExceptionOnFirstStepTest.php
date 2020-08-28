@@ -13,6 +13,7 @@ class ThrowsRuntimeExceptionOnFirstStepTest extends BasilTestCase
 
     public function testWhichThrowsAnException()
     {
+        $this->setBasilStepName('step name');
         throw new \RuntimeException('Exception message', 123);
     }
 }
