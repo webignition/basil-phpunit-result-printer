@@ -23,7 +23,9 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     private ?TestOutput $currentTestOutput = null;
     private GeneratorInterface $generator;
     private StepFactory $stepFactory;
-    private ?Exception $exception = null;
+    private ?Exception $uncaughtException = null;
+    private bool $exceptionWritten = false;
+    private ?Test $testWithException = null;
 
     public function __construct($out = null)
     {
@@ -38,22 +40,23 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
      */
     public function addError(Test $test, \Throwable $t, float $time): void
     {
-        $exception = $t;
-        if ($exception instanceof ExceptionWrapper) {
-            $exception = $exception->getOriginalException();
-        }
+        if ($test instanceof BasilTestCaseInterface) {
+            $exception = $t;
+            if ($exception instanceof ExceptionWrapper) {
+                $exception = $exception->getOriginalException();
+            }
 
-        if ($exception instanceof \Exception) {
-            $step = null;
-            if ($test instanceof BasilTestCaseInterface) {
+            $test->setLastException($exception);
+            $this->testWithException = $test;
+
+            if ($exception instanceof \Exception) {
                 $step = $test->getBasilStepName();
-
                 if ('' === $step) {
                     $step = null;
                 }
-            }
 
-            $this->exception = Exception::createFromThrowable($step, $exception);
+                $this->uncaughtException = Exception::createFromThrowable($step, $exception);
+            }
         }
     }
 
@@ -119,6 +122,10 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     public function startTest(Test $test): void
     {
         if ($test instanceof BasilTestCaseInterface) {
+            if (null !== $test->getLastException() && '' === $test->getBasilStepName()) {
+                $this->addError($test, $test->getLastException(), 0);
+            }
+
             $testPath = $test::getBasilTestPath();
 
             $isNewTest = $this->currentTestOutput instanceof TestOutput
@@ -139,8 +146,11 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     public function endTest(Test $test, float $time): void
     {
         if ($test instanceof BasilTestCaseInterface) {
-            if ($this->exception instanceof Exception) {
-                $this->write($this->generator->generate($this->exception));
+            if ($this->uncaughtException instanceof Exception) {
+                if (false === $this->exceptionWritten) {
+                    $this->write($this->generator->generate($this->uncaughtException));
+                    $this->exceptionWritten = true;
+                }
             } else {
                 $step = $this->stepFactory->create($test);
                 $this->write($this->generator->generate($step));
@@ -150,6 +160,12 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 
     public function printResult(TestResult $result): void
     {
-        // @todo: Implement in #361
+        if (true === $this->exceptionWritten && $this->testWithException instanceof BasilTestCaseInterface) {
+            $result->addError(
+                $this->testWithException,
+                $this->testWithException->getLastException(),
+                0
+            );
+        }
     }
 }

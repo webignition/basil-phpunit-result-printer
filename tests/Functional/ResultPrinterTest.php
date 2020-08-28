@@ -23,7 +23,7 @@ class ResultPrinterTest extends TestCase
      * @param string $phpUnitTestPath
      * @param array<mixed> $expectedPartialOutput
      */
-    public function testExecutedTestThrowsAnException(
+    public function testExceptionHandling(
         string $phpUnitTestPath,
         array $expectedPartialOutput
     ) {
@@ -35,20 +35,20 @@ class ResultPrinterTest extends TestCase
         exec($phpunitCommand, $phpunitOutput, $exitCode);
         self::assertSame(TestRunner::EXCEPTION_EXIT, $exitCode);
 
-        $yamlDocumentSetParser = new Parser();
-
         $outputYaml = $this->getYamlOutputBody($phpunitOutput);
-        $outputData = $yamlDocumentSetParser->parse($outputYaml);
-
+        $outputData = (new Parser())->parse($outputYaml);
 
         self::assertIsArray($outputData);
-        self::assertCount(2, $outputData);
+        self::assertCount(count($expectedPartialOutput), $outputData);
 
-        self::assertIsArray($outputData[0]);
-        self::assertSame($expectedPartialOutput[0], $outputData[0]);
+        $exceptionData = array_pop($outputData);
+        $expectedPartialExceptionData = array_pop($expectedPartialOutput);
 
-        self::assertIsArray($outputData[1]);
-        self::assertExceptionData($expectedPartialOutput[1], $outputData[1]);
+        foreach ($expectedPartialOutput as $index => $expectedData) {
+            self::assertSame($expectedData, $outputData[$index]);
+        }
+
+        self::assertExceptionData($expectedPartialExceptionData, $exceptionData);
     }
 
     public function terminatedDataProvider(): array
@@ -57,10 +57,22 @@ class ResultPrinterTest extends TestCase
         $yamlDocumentSetParser = new Parser();
 
         return [
-            'terminated, no steps handled, RuntimeException thrown' => [
-                'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionOnFirstStepTest.php',
+            'terminated, RuntimeException thrown during first step' => [
+                'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInFirstStepTest.php',
                 'expectedPartialOutput' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
                     '/ResultPrinter/failed-runtime-exception-single-test-first-step-partial.yaml'
+                )),
+            ],
+            'terminated, RuntimeException thrown during second step' => [
+                'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSecondStepTest.php',
+                'expectedPartialOutput' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
+                    '/ResultPrinter/failed-runtime-exception-single-test-second-step-partial.yaml'
+                )),
+            ],
+            'terminated, lastException set during setupBeforeClass' => [
+                'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/SetsLastExceptionInSetupBeforeClassTest.php',
+                'expectedPartialOutput' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
+                    '/ResultPrinter/failed-set-last-exception-in-setup-before-class.yaml'
                 )),
             ],
         ];

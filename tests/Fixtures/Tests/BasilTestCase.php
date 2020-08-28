@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Runner\BaseTestRunner;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BaseBasilTestCase\ClientManager;
 use webignition\BasilModels\DataSet\DataSetInterface;
@@ -14,14 +15,17 @@ use webignition\DomElementIdentifier\ElementIdentifierInterface;
 class BasilTestCase extends TestCase implements BasilTestCaseInterface
 {
     private string $basilStepName = '';
+    private static string $basilTestPath = '';
+    protected static ?\Throwable $lastException = null;
 
     public static function setBasilTestPath(string $testPath): void
     {
+        self::$basilTestPath = $testPath;
     }
 
     public static function getBasilTestPath(): string
     {
-        return '';
+        return self::$basilTestPath;
     }
 
     public function setBasilStepName(string $stepName): void
@@ -85,9 +89,19 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
         return null;
     }
 
+    public static function staticSetLastException(\Throwable $exception): void
+    {
+        self::$lastException = $exception;
+    }
+
+    public function setLastException(\Throwable $exception): void
+    {
+        self::$lastException = $exception;
+    }
+
     public function getLastException(): ?\Throwable
     {
-        return null;
+        return self::$lastException;
     }
 
     public function setCurrentDataSet(?DataSetInterface $dataSet): void
@@ -101,7 +115,7 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
 
     public static function staticGetLastException(): ?\Throwable
     {
-        return null;
+        return self::$lastException;
     }
 
     public static function getBasilTestConfiguration(): ?ConfigurationInterface
@@ -111,5 +125,12 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
 
     public static function setClientManager(ClientManager $clientManager): void
     {
+    }
+
+    public function getStatus(): int
+    {
+        return self::$lastException instanceof \Throwable
+            ? BaseTestRunner::STATUS_FAILURE
+            : parent::getStatus();
     }
 }
