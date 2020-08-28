@@ -42,21 +42,23 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     {
         if ($test instanceof BasilTestCaseInterface) {
             $exception = $t;
-            if ($exception instanceof ExceptionWrapper) {
-                $exception = $exception->getOriginalException();
+
+            if (
+                $exception instanceof ExceptionWrapper &&
+                ($originalException = $exception->getOriginalException()) instanceof \Throwable
+            ) {
+                $exception = $originalException;
             }
 
             $test->setLastException($exception);
             $this->testWithException = $test;
 
-            if ($exception instanceof \Exception) {
-                $step = $test->getBasilStepName();
-                if ('' === $step) {
-                    $step = null;
-                }
-
-                $this->uncaughtException = Exception::createFromThrowable($step, $exception);
+            $step = $test->getBasilStepName();
+            if ('' === $step) {
+                $step = null;
             }
+
+            $this->uncaughtException = Exception::createFromThrowable($step, $exception);
         }
     }
 
@@ -160,12 +162,14 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 
     public function printResult(TestResult $result): void
     {
-        if (true === $this->exceptionWritten && $this->testWithException instanceof BasilTestCaseInterface) {
-            $result->addError(
-                $this->testWithException,
-                $this->testWithException->getLastException(),
-                0
-            );
+        if (
+            true === $this->exceptionWritten &&
+            $this->testWithException instanceof BasilTestCaseInterface &&
+            ($lastException = $this->testWithException->getLastException()) instanceof \Throwable
+        ) {
+            if ($lastException instanceof \Throwable) {
+                $result->addError($this->testWithException, $lastException, 0);
+            }
         }
     }
 }
