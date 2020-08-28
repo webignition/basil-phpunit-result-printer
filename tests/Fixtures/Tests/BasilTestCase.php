@@ -17,6 +17,7 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
     private string $basilStepName = '';
     private static string $basilTestPath = '';
     protected static ?\Throwable $lastException = null;
+    protected static ConfigurationInterface $basilTestConfiguration;
 
     public static function setBasilTestPath(string $testPath): void
     {
@@ -118,9 +119,14 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
         return self::$lastException;
     }
 
-    public static function getBasilTestConfiguration(): ?ConfigurationInterface
+    public static function setBasilTestConfiguration(ConfigurationInterface $configuration): void
     {
-        return null;
+        self::$basilTestConfiguration = $configuration;
+    }
+
+    public function getBasilTestConfiguration(): ?ConfigurationInterface
+    {
+        return self::$basilTestConfiguration;
     }
 
     public static function setClientManager(ClientManager $clientManager): void

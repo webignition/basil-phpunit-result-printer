@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model;
 
+use webignition\BasilModels\Test\Configuration;
+use webignition\BasilModels\Test\ConfigurationInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Test;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 use webignition\ObjectReflector\ObjectReflector;
@@ -13,11 +15,12 @@ class TestTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $path)
+    public function testCreate(string $path, ConfigurationInterface $configuration)
     {
-        $test = new Test($path);
+        $test = new Test($path, $configuration);
 
         self::assertSame($path, ObjectReflector::getProperty($test, 'path'));
+        self::assertSame($configuration, ObjectReflector::getProperty($test, 'configuration'));
     }
 
     public function createDataProvider(): array
@@ -25,6 +28,7 @@ class TestTest extends AbstractBaseTest
         return [
             'default' => [
                 'path' => 'test.yml',
+                'configuration' => new Configuration('chrome', 'http://example.com'),
             ],
         ];
     }
@@ -45,10 +49,15 @@ class TestTest extends AbstractBaseTest
         return [
             'default' => [
                 'test' => new Test(
-                    'test.yml'
+                    'test.yml',
+                    new Configuration('chrome', 'http://example.com')
                 ),
                 'expectedData' => [
                     'path' => 'test.yml',
+                    'config' => [
+                        'browser' => 'chrome',
+                        'url' => 'http://example.com'
+                    ],
                 ],
             ],
         ];
