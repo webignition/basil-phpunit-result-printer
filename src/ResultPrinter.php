@@ -132,7 +132,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
             if (null === $this->testOutput) {
                 $testConfiguration = $test->getBasilTestConfiguration() ?? new Configuration('', '');
 
-                $currentTestOutput = new TestOutput($test::getBasilTestPath(), $testConfiguration);
+                $currentTestOutput = new TestOutput($test->getBasilTestPath(), $testConfiguration);
                 $this->write($this->generator->generate($currentTestOutput));
                 $this->testOutput = $currentTestOutput;
             }

@@ -11,34 +11,13 @@ use webignition\BasilModels\Test\ConfigurationInterface;
 class BasilTestCaseFactory
 {
     /**
-     * @param string[] $testPaths
-     * @param array<array<mixed>> $testPropertiesCollection
-     *
-     * @return BasilTestCaseInterface[]
-     */
-    public static function createCollection(array $testPaths, array $testPropertiesCollection): array
-    {
-        $testCases = [];
-
-        foreach ($testPropertiesCollection as $testProperties) {
-            $testCase = static::create($testProperties);
-            $testCase
-                ->shouldReceive('getBasilTestPath')
-                ->andReturnValues($testPaths);
-
-            $testCases[] = $testCase;
-        }
-
-        return $testCases;
-    }
-
-    /**
      * @param array<mixed> $properties
      *
      * @return BasilTestCaseInterface|MockInterface
      */
     public static function create(array $properties): BasilTestCaseInterface
     {
+        $testPath = $properties['basilTestPath'] ?? null;
         $basilStepName = $properties['basilStepName'] ?? null;
         $status = $properties['status'] ?? null;
         $handledStatements = $properties['handledStatements'] ?? [];
@@ -49,6 +28,12 @@ class BasilTestCaseFactory
         $basilTestConfiguration = $properties['basilTestConfiguration'] ?? null;
 
         $testCase = \Mockery::mock(BasilTestCaseInterface::class);
+
+        if (is_string($testPath)) {
+            $testCase
+                ->shouldReceive('getBasilTestPath')
+                ->andReturn($testPath);
+        }
 
         $testCase
             ->shouldReceive('getBasilStepName')
