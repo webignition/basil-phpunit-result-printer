@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Model;
 
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
+use webignition\YamlDocumentGenerator\DocumentSourceInterface;
 
 class Step implements DocumentSourceInterface
 {
