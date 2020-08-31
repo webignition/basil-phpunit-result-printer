@@ -1,6 +1,9 @@
 ---
 type: test
 path: test.yml
+config:
+  browser: chrome
+  url: 'http://example.com'
 ...
 ---
 type: step
