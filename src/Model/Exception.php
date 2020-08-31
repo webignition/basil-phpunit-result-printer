@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Model;
 
+use webignition\YamlDocumentGenerator\DocumentSourceInterface;
+
 class Exception implements DocumentSourceInterface
 {
     private const TYPE = 'exception';

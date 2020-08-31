@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9843b905a957f947dd36e3209fa8a18c",
+    "content-hash": "19fd449c7ba4f2e4cf2c529ee09b1c45",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -3471,6 +3471,59 @@
                 "webdriver-element"
             ],
             "time": "2020-05-27T15:35:50+00:00"
+        },
+        {
+            "name": "webignition/yaml-document-generator",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/yaml-document-generator.git",
+                "reference": "04d77f8e41637e61641319d5cddda0b2fa56f55a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webignition/yaml-document-generator/zipball/04d77f8e41637e61641319d5cddda0b2fa56f55a",
+                "reference": "04d77f8e41637e61641319d5cddda0b2fa56f55a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "symfony/yaml": "^5.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^0.12.40",
+                "phpstan/phpstan-mockery": "^0.12.7",
+                "phpunit/phpunit": "^9.3",
+                "squizlabs/php_codesniffer": "^3.5",
+                "symplify/easy-coding-standard": "^8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "webignition\\YamlDocumentGenerator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "webignition@gmail.com"
+                }
+            ],
+            "description": "Generate a yaml document from an array of data",
+            "homepage": "https://github.com/webignition/yaml-document-generator",
+            "keywords": [
+                "collection",
+                "parser",
+                "set",
+                "yaml"
+            ],
+            "time": "2020-08-31T16:38:39+00:00"
         },
         {
             "name": "webmozart/assert",
