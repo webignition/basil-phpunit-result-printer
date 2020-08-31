@@ -24,7 +24,7 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
         self::$basilTestPath = $testPath;
     }
 
-    public static function getBasilTestPath(): string
+    public function getBasilTestPath(): string
     {
         return self::$basilTestPath;
     }
