@@ -1,13 +1,7 @@
 ---
-type: test
-path: /path/to/set-last-exception-in-setup-before-class.yml
-config:
-  browser: chrome
-  url: 'http://example.com'
-...
----
 type: exception
 step: null
 class: RuntimeException
 message: 'Exception thrown in setUpBeforeClass'
 code: 456
+---

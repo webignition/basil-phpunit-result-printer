@@ -1,11 +1,4 @@
 ---
-type: test
-path: test.yml
-config:
-  browser: chrome
-  url: 'http://example.com'
-...
----
 type: step
 name: 'verify page is open'
 status: passed

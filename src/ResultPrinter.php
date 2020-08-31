@@ -12,16 +12,13 @@ use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Util\Printer;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
-use webignition\BasilModels\Test\Configuration;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
 use webignition\BasilPhpUnitResultPrinter\Model\Exception;
-use webignition\BasilPhpUnitResultPrinter\Model\Test as TestOutput;
 
 class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 {
-    private ?TestOutput $testOutput = null;
     private GeneratorInterface $generator;
     private StepFactory $stepFactory;
     private ?Exception $uncaughtException = null;
@@ -127,14 +124,6 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
         if ($test instanceof BasilTestCaseInterface) {
             if (null !== $test->getLastException() && '' === $test->getBasilStepName()) {
                 $this->addError($test, $test->getLastException(), 0);
-            }
-
-            if (null === $this->testOutput) {
-                $testConfiguration = $test->getBasilTestConfiguration() ?? new Configuration('', '');
-
-                $currentTestOutput = new TestOutput($test->getBasilTestPath(), $testConfiguration);
-                $this->write($this->generator->generate($currentTestOutput));
-                $this->testOutput = $currentTestOutput;
             }
         }
     }
