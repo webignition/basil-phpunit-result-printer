@@ -102,35 +102,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 ],
                 'expectedOutput' => FixtureLoader::load('/ResultPrinter/passed-single-test.yaml'),
             ],
-            'passed, multiple tests' => [
-                'testPaths' => [
-                    'test1.yml',
-                    'test2.yml',
-                ],
-                'testPropertiesCollection' => [
-                    [
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
-                        'basilStepName' => 'step name',
-                        'status' => Status::STATUS_PASSED,
-                        'handledStatements' => [
-                            $assertionParser->parse('$page.url is "http://example.com/"'),
-                            $assertionParser->parse('$page.title is "Example Domain"'),
-                        ],
-                    ],
-                    [
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
-                        'basilStepName' => 'step name',
-                        'status' => Status::STATUS_PASSED,
-                        'handledStatements' => [
-                            $actionParser->parse('click $".button"'),
-                            $actionParser->parse('set $".form" >> $".input" to "literal value"'),
-                            $assertionParser->parse('$".button".data-clicked is "1"'),
-                            $assertionParser->parse('$".form" >> $".input" is "literal value"'),
-                        ],
-                    ],
-                ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/passed-multiple-tests.yaml'),
-            ],
         ];
     }
 

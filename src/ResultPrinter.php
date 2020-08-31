@@ -21,7 +21,7 @@ use webignition\BasilPhpUnitResultPrinter\Model\Test as TestOutput;
 
 class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 {
-    private ?TestOutput $currentTestOutput = null;
+    private ?TestOutput $testOutput = null;
     private GeneratorInterface $generator;
     private StepFactory $stepFactory;
     private ?Exception $uncaughtException = null;
@@ -129,18 +129,12 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
                 $this->addError($test, $test->getLastException(), 0);
             }
 
-            $testPath = $test::getBasilTestPath();
-
-            $isNewTest = $this->currentTestOutput instanceof TestOutput
-                ? false === $this->currentTestOutput->hasPath($testPath)
-                : true;
-
-            if ($isNewTest) {
+            if (null === $this->testOutput) {
                 $testConfiguration = $test->getBasilTestConfiguration() ?? new Configuration('', '');
 
-                $currentTestOutput = new TestOutput($testPath, $testConfiguration);
+                $currentTestOutput = new TestOutput($test::getBasilTestPath(), $testConfiguration);
                 $this->write($this->generator->generate($currentTestOutput));
-                $this->currentTestOutput = $currentTestOutput;
+                $this->testOutput = $currentTestOutput;
             }
         }
     }
