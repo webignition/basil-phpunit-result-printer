@@ -1,11 +1,4 @@
 ---
-type: test
-path: /path/to/runtime-exception-on-first-step-test.yml
-config:
-  browser: chrome
-  url: 'http://example.com'
-...
----
 type: exception
 step: step one
 class: RuntimeException
