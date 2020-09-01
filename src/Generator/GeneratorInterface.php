@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Generator;
 
-use webignition\YamlDocumentGenerator\DocumentSourceInterface;
+use webignition\BasilRunnerDocuments\DocumentInterface;
 
 interface GeneratorInterface
 {
-    public function generate(DocumentSourceInterface $documentSource): string;
+    public function generate(DocumentInterface $documentSource): string;
 }

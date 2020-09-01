@@ -42,10 +42,11 @@
         "webignition/basil-dom-identifier-factory": ">=0.13,<1",
         "webignition/basil-identifier-analyser": ">=0.7,<1",
         "webignition/basil-models": ">=0.56,<1",
+        "webignition/basil-runner-documents": ">=0.1,<1",
         "webignition/basil-value-type-identifier": ">=0.1,<1",
         "webignition/php-dom-element-identifier": ">=0.14,<1",
         "webignition/symfony-panther-dom-crawler-navigator": ">=0.19,<1",
-        "webignition/yaml-document-generator": ">=0.1,<1"
+        "webignition/yaml-document-generator": ">=0.2,<1"
     },
     "require-dev": {
         "mockery/mockery": "^1.2",

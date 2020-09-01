@@ -15,7 +15,7 @@ use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
-use webignition\BasilPhpUnitResultPrinter\Model\Exception;
+use webignition\BasilRunnerDocuments\Exception;
 
 class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 {
@@ -56,7 +56,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
                 $step = null;
             }
 
-            $this->uncaughtException = Exception::createFromThrowable($step, $exception);
+            $this->uncaughtException = Exception::createFromThrowable($exception, $step);
         }
     }
 

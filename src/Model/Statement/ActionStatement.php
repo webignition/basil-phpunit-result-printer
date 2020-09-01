@@ -12,4 +12,9 @@ class ActionStatement extends AbstractStatement
     {
         parent::__construct(self::TYPE, $source, $status, $transformations);
     }
+
+    public function getType(): string
+    {
+        return self::TYPE;
+    }
 }

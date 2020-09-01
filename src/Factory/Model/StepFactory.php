@@ -11,7 +11,7 @@ use webignition\BasilModels\DataSet\DataSetInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
-use webignition\BasilPhpUnitResultPrinter\Model\Step;
+use webignition\BasilRunnerDocuments\Step;
 
 class StepFactory
 {
