@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19fd449c7ba4f2e4cf2c529ee09b1c45",
+    "content-hash": "ec510e0bf783a84232028f007e2a7ed9",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -3052,6 +3052,52 @@
             "time": "2020-06-12T17:04:26+00:00"
         },
         {
+            "name": "webignition/basil-runner-documents",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/basil-runner-documents.git",
+                "reference": "aa578c063ff08bdde8146ab963db9d1a0ba6c3cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webignition/basil-runner-documents/zipball/aa578c063ff08bdde8146ab963db9d1a0ba6c3cd",
+                "reference": "aa578c063ff08bdde8146ab963db9d1a0ba6c3cd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^0.12.40",
+                "phpstan/phpstan-mockery": "^0.12.7",
+                "phpunit/phpunit": "^9.3",
+                "squizlabs/php_codesniffer": "^3.5",
+                "symplify/easy-coding-standard": "^8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "webignition\\BasilRunnerDocuments\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "webignition@gmail.com"
+                }
+            ],
+            "description": "Models for documents that can be output by the runner",
+            "homepage": "https://github.com/webignition/basil-runner-documents",
+            "time": "2020-09-01T13:52:09+00:00"
+        },
+        {
             "name": "webignition/basil-value-extractor",
             "version": "0.4",
             "source": {
@@ -3474,21 +3520,22 @@
         },
         {
             "name": "webignition/yaml-document-generator",
-            "version": "0.1",
+            "version": "0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webignition/yaml-document-generator.git",
-                "reference": "04d77f8e41637e61641319d5cddda0b2fa56f55a"
+                "reference": "a341ec846ef93684d0b5ce5b577491ec83f8faab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webignition/yaml-document-generator/zipball/04d77f8e41637e61641319d5cddda0b2fa56f55a",
-                "reference": "04d77f8e41637e61641319d5cddda0b2fa56f55a",
+                "url": "https://api.github.com/repos/webignition/yaml-document-generator/zipball/a341ec846ef93684d0b5ce5b577491ec83f8faab",
+                "reference": "a341ec846ef93684d0b5ce5b577491ec83f8faab",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4",
-                "symfony/yaml": "^5.1"
+                "symfony/yaml": "^5.1",
+                "webignition/basil-runner-documents": ">=0.1,<1"
             },
             "require-dev": {
                 "mockery/mockery": "^1.4",
@@ -3523,7 +3570,7 @@
                 "set",
                 "yaml"
             ],
-            "time": "2020-08-31T16:38:39+00:00"
+            "time": "2020-09-01T14:03:54+00:00"
         },
         {
             "name": "webmozart/assert",
