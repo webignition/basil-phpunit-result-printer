@@ -50,7 +50,6 @@ class ScalarTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Scalar $scalar
      * @param array<mixed> $expectedData
      */
     public function testGetData(Scalar $scalar, array $expectedData)
