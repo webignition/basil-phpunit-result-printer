@@ -139,4 +139,9 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
             ? BaseTestRunner::STATUS_FAILURE
             : parent::getStatus();
     }
+
+    public static function hasException(): bool
+    {
+        return null !== self::staticGetLastException();
+    }
 }
