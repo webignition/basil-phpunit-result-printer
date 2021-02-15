@@ -12,6 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Investigate versions
+        run: |
+          php -v
+          ./vendor/bin/phpcs --version
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -28,6 +33,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Investigate versions
+        run: |
+          php -v
+          ./vendor/bin/phpcs --version
+
       - name: Checkout code
         uses: actions/checkout@v2
 
