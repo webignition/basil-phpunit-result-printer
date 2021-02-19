@@ -13,7 +13,7 @@ class UnknownExceptionDataTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $class, string $message)
+    public function testCreate(string $class, string $message): void
     {
         $unknownExceptionData = new UnknownExceptionData($class, $message);
 
@@ -21,6 +21,9 @@ class UnknownExceptionDataTest extends AbstractBaseTest
         self::assertSame($message, ObjectReflector::getProperty($unknownExceptionData, 'message'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -37,11 +40,14 @@ class UnknownExceptionDataTest extends AbstractBaseTest
      * @param UnknownExceptionData $unknownExceptionData
      * @param array<mixed> $expectedData
      */
-    public function testGetData(UnknownExceptionData $unknownExceptionData, array $expectedData)
+    public function testGetData(UnknownExceptionData $unknownExceptionData, array $expectedData): void
     {
         self::assertSame($expectedData, $unknownExceptionData->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         return [

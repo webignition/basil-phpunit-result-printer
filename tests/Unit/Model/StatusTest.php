@@ -12,11 +12,14 @@ class StatusTest extends AbstractBaseTest
     /**
      * @dataProvider toStringDataProvider
      */
-    public function testToString(Status $status, string $expectedString)
+    public function testToString(Status $status, string $expectedString): void
     {
         self::assertSame($expectedString, (string) $status);
     }
 
+    /**
+     * @return array[]
+     */
     public function toStringDataProvider(): array
     {
         return [

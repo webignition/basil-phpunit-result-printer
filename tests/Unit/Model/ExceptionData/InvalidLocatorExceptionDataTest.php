@@ -15,7 +15,7 @@ class InvalidLocatorExceptionDataTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $type, string $locator, NodeSource $source)
+    public function testCreate(string $type, string $locator, NodeSource $source): void
     {
         $invalidLocatorExceptionData = new InvalidLocatorExceptionData($type, $locator, $source);
 
@@ -24,6 +24,9 @@ class InvalidLocatorExceptionDataTest extends AbstractBaseTest
         self::assertSame($source, ObjectReflector::getProperty($invalidLocatorExceptionData, 'source'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         $nodeSourceFactory = NodeSourceFactory::createFactory();
@@ -44,11 +47,14 @@ class InvalidLocatorExceptionDataTest extends AbstractBaseTest
      * @param InvalidLocatorExceptionData $invalidLocatorExceptionData
      * @param array<mixed> $expectedData
      */
-    public function testGetData(InvalidLocatorExceptionData $invalidLocatorExceptionData, array $expectedData)
+    public function testGetData(InvalidLocatorExceptionData $invalidLocatorExceptionData, array $expectedData): void
     {
         self::assertSame($expectedData, $invalidLocatorExceptionData->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $nodeSourceFactory = NodeSourceFactory::createFactory();

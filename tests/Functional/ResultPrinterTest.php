@@ -26,7 +26,7 @@ class ResultPrinterTest extends TestCase
     public function testExceptionHandling(
         string $phpUnitTestPath,
         array $expectedPartialOutput
-    ) {
+    ): void {
         $phpunitCommand = './vendor/bin/phpunit --printer="' . ResultPrinter::class . '" ' . $phpUnitTestPath;
 
         $phpunitOutput = [];
@@ -51,6 +51,9 @@ class ResultPrinterTest extends TestCase
         self::assertExceptionData($expectedPartialExceptionData, $exceptionData);
     }
 
+    /**
+     * @return array[]
+     */
     public function terminatedDataProvider(): array
     {
         $root = getcwd();

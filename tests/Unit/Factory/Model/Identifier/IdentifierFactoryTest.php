@@ -24,11 +24,14 @@ class IdentifierFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $source, ?Identifier $expectedIdentifier)
+    public function testCreate(string $source, ?Identifier $expectedIdentifier): void
     {
         self::assertEquals($expectedIdentifier, $this->factory->create($source));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         $propertiesFactory = PropertiesFactory::createFactory();

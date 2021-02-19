@@ -31,11 +31,14 @@ class TransformationFactoryTest extends AbstractBaseTest
      * @param StatementInterface $statement
      * @param Transformation[] $expectedTransformations
      */
-    public function testCreateTransformations(StatementInterface $statement, array $expectedTransformations)
+    public function testCreateTransformations(StatementInterface $statement, array $expectedTransformations): void
     {
         self::assertEquals($expectedTransformations, $this->factory->createTransformations($statement));
     }
 
+    /**
+     * @return array[]
+     */
     public function createTransformationsDataProvider(): array
     {
         $clickAction = new Action(

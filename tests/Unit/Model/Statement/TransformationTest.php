@@ -13,7 +13,7 @@ class TransformationTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $type, string $source)
+    public function testCreate(string $type, string $source): void
     {
         $transformation = new Transformation($type, $source);
 
@@ -21,6 +21,9 @@ class TransformationTest extends AbstractBaseTest
         $this->assertSame($source, ObjectReflector::getProperty($transformation, 'source'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -41,11 +44,14 @@ class TransformationTest extends AbstractBaseTest
      * @param Transformation $transformation
      * @param array<mixed> $expectedData
      */
-    public function testGetData(Transformation $transformation, array $expectedData)
+    public function testGetData(Transformation $transformation, array $expectedData): void
     {
         self::assertSame($expectedData, $transformation->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         return [

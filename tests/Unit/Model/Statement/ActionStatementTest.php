@@ -27,12 +27,15 @@ class ActionStatementTest extends AbstractBaseTest
         string $status,
         array $transformations,
         ActionStatement $expectedStatement
-    ) {
+    ): void {
         $statement = new ActionStatement($source, $status, $transformations);
 
         self::assertEquals($expectedStatement, $statement);
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         $statusPassed = (string) new Status(Status::STATUS_PASSED);
@@ -97,11 +100,14 @@ class ActionStatementTest extends AbstractBaseTest
      * @param ActionStatement $statement
      * @param array<mixed> $expectedData
      */
-    public function testGetData(ActionStatement $statement, array $expectedData)
+    public function testGetData(ActionStatement $statement, array $expectedData): void
     {
         self::assertSame($expectedData, $statement->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $statusPassed = (string) new Status(Status::STATUS_PASSED);

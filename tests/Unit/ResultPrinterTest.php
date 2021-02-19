@@ -31,7 +31,7 @@ class ResultPrinterTest extends AbstractBaseTest
      * @param BasilTestCaseInterface[] $tests
      * @param string $expectedOutput
      */
-    public function testPrinterOutput(array $tests, string $expectedOutput)
+    public function testPrinterOutput(array $tests, string $expectedOutput): void
     {
         $outResource = fopen('php://memory', 'w+');
 
@@ -53,6 +53,9 @@ class ResultPrinterTest extends AbstractBaseTest
         }
     }
 
+    /**
+     * @return array[]
+     */
     public function passedDataProvider(): array
     {
         $actionParser = ActionParser::create();
@@ -98,6 +101,9 @@ class ResultPrinterTest extends AbstractBaseTest
         ];
     }
 
+    /**
+     * @return array[]
+     */
     public function failedExistsAssertionDataProvider(): array
     {
         $actionParser = ActionParser::create();
@@ -188,6 +194,9 @@ class ResultPrinterTest extends AbstractBaseTest
         ];
     }
 
+    /**
+     * @return array[]
+     */
     public function failedExceptionDataProvider(): array
     {
         $assertionParser = AssertionParser::create();
@@ -233,6 +242,9 @@ class ResultPrinterTest extends AbstractBaseTest
         ];
     }
 
+    /**
+     * @return array[]
+     */
     public function failedIsAssertionDataProvider(): array
     {
         $assertionParser = AssertionParser::create();
@@ -352,6 +364,9 @@ class ResultPrinterTest extends AbstractBaseTest
         ];
     }
 
+    /**
+     * @return array[]
+     */
     public function failedIsRegExpDataProvider(): array
     {
         return [
@@ -403,6 +418,9 @@ class ResultPrinterTest extends AbstractBaseTest
         ];
     }
 
+    /**
+     * @return array[]
+     */
     public function failedNoStatementsDataProvider(): array
     {
         return [

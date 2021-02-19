@@ -18,7 +18,7 @@ class IsRegExpTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $value, SourceInterface $source)
+    public function testCreate(string $value, SourceInterface $source): void
     {
         $summary = new IsRegExp($value, $source);
 
@@ -26,6 +26,9 @@ class IsRegExpTest extends AbstractBaseTest
         self::assertSame($source, ObjectReflector::getProperty($summary, 'source'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -46,11 +49,14 @@ class IsRegExpTest extends AbstractBaseTest
      * @param IsRegExp $summary
      * @param array<mixed> $expectedData
      */
-    public function testGetData(IsRegExp $summary, array $expectedData)
+    public function testGetData(IsRegExp $summary, array $expectedData): void
     {
         self::assertSame($expectedData, $summary->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $nodeSourceFactory = NodeSourceFactory::createFactory();

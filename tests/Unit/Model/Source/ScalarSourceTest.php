@@ -15,13 +15,16 @@ class ScalarSourceTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(Scalar $body)
+    public function testCreate(Scalar $body): void
     {
         $node = new ScalarSource($body);
 
         self::assertSame($body, ObjectReflector::getProperty($node, 'body'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -37,11 +40,14 @@ class ScalarSourceTest extends AbstractBaseTest
      * @param ScalarSource $source
      * @param array<mixed> $expectedData
      */
-    public function testGetData(ScalarSource $source, array $expectedData)
+    public function testGetData(ScalarSource $source, array $expectedData): void
     {
         self::assertSame($expectedData, $source->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $scalarFactory = ScalarFactory::createFactory();

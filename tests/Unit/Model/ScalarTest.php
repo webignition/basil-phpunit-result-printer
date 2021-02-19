@@ -13,7 +13,7 @@ class ScalarTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $type, string $value)
+    public function testCreate(string $type, string $value): void
     {
         $scalar = new Scalar($type, $value);
 
@@ -21,6 +21,9 @@ class ScalarTest extends AbstractBaseTest
         $this->assertSame($value, ObjectReflector::getProperty($scalar, 'value'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -52,11 +55,14 @@ class ScalarTest extends AbstractBaseTest
      *
      * @param array<mixed> $expectedData
      */
-    public function testGetData(Scalar $scalar, array $expectedData)
+    public function testGetData(Scalar $scalar, array $expectedData): void
     {
         self::assertSame($expectedData, $scalar->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         return [

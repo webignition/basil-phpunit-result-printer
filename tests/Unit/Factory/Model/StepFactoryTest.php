@@ -39,11 +39,14 @@ class StepFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(BasilTestCaseInterface $testCase, Step $expectedStep)
+    public function testCreate(BasilTestCaseInterface $testCase, Step $expectedStep): void
     {
         self::assertEquals($expectedStep, $this->factory->create($testCase));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         $statementFactory = StatementFactory::createFactory();

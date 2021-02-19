@@ -10,7 +10,7 @@ use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
 
 class YamlGeneratorTest extends AbstractBaseTest
 {
-    public function testImplementsGeneratorInterface()
+    public function testImplementsGeneratorInterface(): void
     {
         $generator = new YamlGenerator();
         self::assertInstanceOf(GeneratorInterface::class, $generator);

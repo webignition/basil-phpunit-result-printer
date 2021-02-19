@@ -22,12 +22,15 @@ class PassedAssertionStatementTest extends AbstractBaseTest
         string $source,
         array $transformations,
         PassedAssertionStatement $expectedStatement
-    ) {
+    ): void {
         $statement = new PassedAssertionStatement($source, $transformations);
 
         self::assertEquals($expectedStatement, $statement);
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         $transformations = [
@@ -64,11 +67,14 @@ class PassedAssertionStatementTest extends AbstractBaseTest
      * @param PassedAssertionStatement $statement
      * @param array<mixed> $expectedData
      */
-    public function testGetData(PassedAssertionStatement $statement, array $expectedData)
+    public function testGetData(PassedAssertionStatement $statement, array $expectedData): void
     {
         self::assertSame($expectedData, $statement->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $statusPassed = (string) new Status(Status::STATUS_PASSED);

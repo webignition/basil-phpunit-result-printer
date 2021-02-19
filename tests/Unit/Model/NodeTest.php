@@ -16,7 +16,7 @@ class NodeTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $type, Identifier $identifier)
+    public function testCreate(string $type, Identifier $identifier): void
     {
         $node = new Node($type, $identifier);
 
@@ -24,6 +24,9 @@ class NodeTest extends AbstractBaseTest
         self::assertSame($identifier, ObjectReflector::getProperty($node, 'identifier'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -40,11 +43,14 @@ class NodeTest extends AbstractBaseTest
      * @param Node $node
      * @param array<mixed> $expectedData
      */
-    public function testGetData(Node $node, array $expectedData)
+    public function testGetData(Node $node, array $expectedData): void
     {
         self::assertSame($expectedData, $node->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $identifierFactory = IdentifierFactory::createFactory();
@@ -78,11 +84,14 @@ class NodeTest extends AbstractBaseTest
     /**
      * @dataProvider fromIdentifierDataProvider
      */
-    public function testFromIdentifier(Identifier $identifier, Node $expectedNode)
+    public function testFromIdentifier(Identifier $identifier, Node $expectedNode): void
     {
         self::assertEquals($expectedNode, Node::fromIdentifier($identifier));
     }
 
+    /**
+     * @return array[]
+     */
     public function fromIdentifierDataProvider(): array
     {
         $elementProperties = new Properties(
