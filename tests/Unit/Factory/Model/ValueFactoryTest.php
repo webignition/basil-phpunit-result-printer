@@ -25,11 +25,14 @@ class ValueFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $value, string $sourceString, ?Value $expectedValue)
+    public function testCreate(string $value, string $sourceString, ?Value $expectedValue): void
     {
         self::assertEquals($expectedValue, $this->factory->create($value, $sourceString));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         $sourceFactory = SourceFactory::createFactory();

@@ -25,11 +25,14 @@ class NodeSourceFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $source, ?NodeSource $expectedNodeSource)
+    public function testCreate(string $source, ?NodeSource $expectedNodeSource): void
     {
         self::assertEquals($expectedNodeSource, $this->factory->create($source));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         $identifierFactory = IdentifierFactory::createFactory();

@@ -24,11 +24,14 @@ class ScalarSourceFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $source, ?ScalarSource $expectedNodeSource)
+    public function testCreate(string $source, ?ScalarSource $expectedNodeSource): void
     {
         self::assertEquals($expectedNodeSource, $this->factory->create($source));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         $scalarFactory = ScalarFactory::createFactory();

@@ -39,10 +39,13 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
         string $expectedValue,
         string $actualValue,
         AssertionFailureSummaryInterface $expectedSummary
-    ) {
+    ): void {
         self::assertEquals($expectedSummary, $this->factory->create($assertion, $expectedValue, $actualValue));
     }
 
+    /**
+     * @return array[]
+     */
     public function createSuccessDataProvider(): array
     {
         $assertionParser = AssertionParser::create();
@@ -190,11 +193,14 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createFailureDataProvider
      */
-    public function testCreateFailure(AssertionInterface $assertion)
+    public function testCreateFailure(AssertionInterface $assertion): void
     {
         self::assertNull($this->factory->create($assertion, '', ''));
     }
 
+    /**
+     * @return array[]
+     */
     public function createFailureDataProvider(): array
     {
         return [

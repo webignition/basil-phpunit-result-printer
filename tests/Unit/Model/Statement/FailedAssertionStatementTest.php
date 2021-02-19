@@ -31,12 +31,15 @@ class FailedAssertionStatementTest extends AbstractBaseTest
         AssertionFailureSummaryInterface $summary,
         array $transformations,
         FailedAssertionStatement $expectedStatement
-    ) {
+    ): void {
         $statement = new FailedAssertionStatement($source, $summary, $transformations);
 
         self::assertEquals($expectedStatement, $statement);
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         $assertionParser = AssertionParser::create();
@@ -95,11 +98,14 @@ class FailedAssertionStatementTest extends AbstractBaseTest
      * @param FailedAssertionStatement $statement
      * @param array<mixed> $expectedData
      */
-    public function testGetData(FailedAssertionStatement $statement, array $expectedData)
+    public function testGetData(FailedAssertionStatement $statement, array $expectedData): void
     {
         self::assertSame($expectedData, $statement->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $assertionParser = AssertionParser::create();

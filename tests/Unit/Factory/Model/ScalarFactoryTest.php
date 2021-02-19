@@ -22,11 +22,14 @@ class ScalarFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $source, ?Scalar $expectedScalar)
+    public function testCreate(string $source, ?Scalar $expectedScalar): void
     {
         self::assertEquals($expectedScalar, $this->factory->create($source));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [

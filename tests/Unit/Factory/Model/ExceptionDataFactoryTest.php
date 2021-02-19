@@ -30,11 +30,14 @@ class ExceptionDataFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(\Throwable $exception, ExceptionDataInterface $expectedExceptionData)
+    public function testCreate(\Throwable $exception, ExceptionDataInterface $expectedExceptionData): void
     {
         self::assertEquals($expectedExceptionData, $this->factory->create($exception));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         $nodeSourceFactory = NodeSourceFactory::createFactory();

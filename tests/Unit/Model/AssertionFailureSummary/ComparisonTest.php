@@ -15,7 +15,7 @@ class ComparisonTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $operator, Value $expected, Value $actual)
+    public function testCreate(string $operator, Value $expected, Value $actual): void
     {
         $summary = new Comparison($operator, $expected, $actual);
 
@@ -24,6 +24,9 @@ class ComparisonTest extends AbstractBaseTest
         self::assertSame($actual, ObjectReflector::getProperty($summary, 'actual'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -41,11 +44,14 @@ class ComparisonTest extends AbstractBaseTest
      * @param Comparison $summary
      * @param array<mixed> $expectedData
      */
-    public function testGetData(Comparison $summary, array $expectedData)
+    public function testGetData(Comparison $summary, array $expectedData): void
     {
         self::assertSame($expectedData, $summary->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $mockValue = \Mockery::mock(Value::class);

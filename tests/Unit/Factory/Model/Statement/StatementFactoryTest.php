@@ -41,11 +41,14 @@ class StatementFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createForPassedActionDataProvider
      */
-    public function testCreateForPassedAction(ActionInterface $action, StatementInterface $expectedStatement)
+    public function testCreateForPassedAction(ActionInterface $action, StatementInterface $expectedStatement): void
     {
         self::assertEquals($expectedStatement, $this->factory->createForPassedAction($action));
     }
 
+    /**
+     * @return array[]
+     */
     public function createForPassedActionDataProvider(): array
     {
         $transformationFactory = new TransformationFactory();
@@ -88,11 +91,14 @@ class StatementFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createForFailedActionDataProvider
      */
-    public function testCreateForFailedAction(ActionInterface $action, StatementInterface $expectedStatement)
+    public function testCreateForFailedAction(ActionInterface $action, StatementInterface $expectedStatement): void
     {
         self::assertEquals($expectedStatement, $this->factory->createForFailedAction($action));
     }
 
+    /**
+     * @return array[]
+     */
     public function createForFailedActionDataProvider(): array
     {
         $transformationFactory = new TransformationFactory();
@@ -135,11 +141,16 @@ class StatementFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createForPassedAssertionDataProvider
      */
-    public function testCreateForPassedAssertion(AssertionInterface $assertion, StatementInterface $expectedStatement)
-    {
+    public function testCreateForPassedAssertion(
+        AssertionInterface $assertion,
+        StatementInterface $expectedStatement
+    ): void {
         self::assertEquals($expectedStatement, $this->factory->createForPassedAssertion($assertion));
     }
 
+    /**
+     * @return array[]
+     */
     public function createForPassedAssertionDataProvider(): array
     {
         $transformationFactory = new TransformationFactory();
@@ -193,13 +204,16 @@ class StatementFactoryTest extends AbstractBaseTest
         string $expectedValue,
         string $actualValue,
         StatementInterface $expectedStatement
-    ) {
+    ): void {
         self::assertEquals(
             $expectedStatement,
             $this->factory->createForFailedAssertion($assertion, $expectedValue, $actualValue)
         );
     }
 
+    /**
+     * @return array[]
+     */
     public function createForFailedAssertionDataProvider(): array
     {
         $transformationFactory = new TransformationFactory();

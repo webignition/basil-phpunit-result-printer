@@ -17,7 +17,7 @@ class ValueTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $value, SourceInterface $source)
+    public function testCreate(string $value, SourceInterface $source): void
     {
         $node = new Value($value, $source);
 
@@ -25,6 +25,9 @@ class ValueTest extends AbstractBaseTest
         self::assertSame($source, ObjectReflector::getProperty($node, 'source'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -45,11 +48,14 @@ class ValueTest extends AbstractBaseTest
      * @param Value $value
      * @param array<mixed> $expectedData
      */
-    public function testGetData(Value $value, array $expectedData)
+    public function testGetData(Value $value, array $expectedData): void
     {
         self::assertSame($expectedData, $value->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $sourceFactory = SourceFactory::createFactory();

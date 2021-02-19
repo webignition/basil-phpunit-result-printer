@@ -15,7 +15,7 @@ class IdentifierTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $source, Properties $properties)
+    public function testCreate(string $source, Properties $properties): void
     {
         $identifier = new Identifier($source, $properties);
 
@@ -23,6 +23,9 @@ class IdentifierTest extends AbstractBaseTest
         $this->assertSame($properties, ObjectReflector::getProperty($identifier, 'properties'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -39,11 +42,14 @@ class IdentifierTest extends AbstractBaseTest
      * @param Identifier $identifier
      * @param array<mixed> $expectedData
      */
-    public function testGetData(Identifier $identifier, array $expectedData)
+    public function testGetData(Identifier $identifier, array $expectedData): void
     {
         self::assertSame($expectedData, $identifier->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $propertiesFactory = PropertiesFactory::createFactory();
@@ -64,11 +70,14 @@ class IdentifierTest extends AbstractBaseTest
     /**
      * @dataProvider isAttributeDataProvider
      */
-    public function testIsAttribute(Identifier $identifier, bool $expectedIsAttribute)
+    public function testIsAttribute(Identifier $identifier, bool $expectedIsAttribute): void
     {
         self::assertSame($expectedIsAttribute, $identifier->isAttribute());
     }
 
+    /**
+     * @return array[]
+     */
     public function isAttributeDataProvider(): array
     {
         $elementProperties = \Mockery::mock(Properties::class);

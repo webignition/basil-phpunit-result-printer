@@ -13,7 +13,7 @@ class PropertiesTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $type, string $locator, int $position)
+    public function testCreate(string $type, string $locator, int $position): void
     {
         $properties = new Properties($type, $locator, $position);
 
@@ -24,6 +24,9 @@ class PropertiesTest extends AbstractBaseTest
         self::assertNull(ObjectReflector::getProperty($properties, 'parent'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -42,7 +45,7 @@ class PropertiesTest extends AbstractBaseTest
         ];
     }
 
-    public function testWithAttribute()
+    public function testWithAttribute(): void
     {
         $properties = new Properties(Properties::TYPE_CSS, '.selector', 1);
         self::assertNull(ObjectReflector::getProperty($properties, 'attribute'));
@@ -58,11 +61,14 @@ class PropertiesTest extends AbstractBaseTest
      * @param Properties $properties
      * @param array<mixed> $expectedData
      */
-    public function testGetData(Properties $properties, array $expectedData)
+    public function testGetData(Properties $properties, array $expectedData): void
     {
         self::assertSame($expectedData, $properties->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         return [
@@ -148,11 +154,14 @@ class PropertiesTest extends AbstractBaseTest
     /**
      * @dataProvider hasAttributeDataProvider
      */
-    public function testHasAttribute(Properties $properties, bool $expectedHasAttribute)
+    public function testHasAttribute(Properties $properties, bool $expectedHasAttribute): void
     {
         self::assertSame($expectedHasAttribute, $properties->hasAttribute());
     }
 
+    /**
+     * @return array[]
+     */
     public function hasAttributeDataProvider(): array
     {
         return [

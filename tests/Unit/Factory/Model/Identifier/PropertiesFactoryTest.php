@@ -22,11 +22,14 @@ class PropertiesFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $source, ?Properties $expectedProperties)
+    public function testCreate(string $source, ?Properties $expectedProperties): void
     {
         self::assertEquals($expectedProperties, $this->factory->create($source));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [

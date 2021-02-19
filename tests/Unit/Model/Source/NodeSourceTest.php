@@ -16,13 +16,16 @@ class NodeSourceTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(Node $body)
+    public function testCreate(Node $body): void
     {
         $node = new NodeSource($body);
 
         self::assertSame($body, ObjectReflector::getProperty($node, 'body'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -41,11 +44,14 @@ class NodeSourceTest extends AbstractBaseTest
      * @param NodeSource $source
      * @param array<mixed> $expectedData
      */
-    public function testGetData(NodeSource $source, array $expectedData)
+    public function testGetData(NodeSource $source, array $expectedData): void
     {
         self::assertSame($expectedData, $source->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $identifierFactory = IdentifierFactory::createFactory();

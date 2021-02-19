@@ -15,7 +15,7 @@ class ExistenceTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $operator, NodeSource $source)
+    public function testCreate(string $operator, NodeSource $source): void
     {
         $summary = new Existence($operator, $source);
 
@@ -23,6 +23,9 @@ class ExistenceTest extends AbstractBaseTest
         self::assertSame($source, ObjectReflector::getProperty($summary, 'source'));
     }
 
+    /**
+     * @return array[]
+     */
     public function createDataProvider(): array
     {
         return [
@@ -39,11 +42,14 @@ class ExistenceTest extends AbstractBaseTest
      * @param Existence $summary
      * @param array<mixed> $expectedData
      */
-    public function testGetData(Existence $summary, array $expectedData)
+    public function testGetData(Existence $summary, array $expectedData): void
     {
         self::assertSame($expectedData, $summary->getData());
     }
 
+    /**
+     * @return array[]
+     */
     public function getDataDataProvider(): array
     {
         $nodeSourceFactory = NodeSourceFactory::createFactory();
