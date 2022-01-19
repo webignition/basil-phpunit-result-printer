@@ -36,34 +36,41 @@ class AssertionFailureSummaryFactory
         string $actualValue
     ): ?AssertionFailureSummaryInterface {
         $operator = $assertion->getOperator();
+        $identifierString = $assertion->getIdentifier();
 
         if (in_array($operator, ['exists', 'not-exists'])) {
-            $identifierString = $assertion->getIdentifier();
-            $source = $this->sourceFactory->create($identifierString);
+            if (is_string($identifierString)) {
+                $source = $this->sourceFactory->create($identifierString);
 
-            if ($source instanceof NodeSource) {
-                return new Existence($operator, $source);
+                if ($source instanceof NodeSource) {
+                    return new Existence($operator, $source);
+                }
             }
 
             return null;
         }
 
         if ('is-regexp' === $operator) {
-            $identifierString = $assertion->getIdentifier();
-            $source = $this->sourceFactory->create($identifierString);
+            if (is_string($identifierString)) {
+                $source = $this->sourceFactory->create($identifierString);
 
-            if ($source instanceof SourceInterface) {
-                return new IsRegExp($actualValue, $source);
+                if ($source instanceof SourceInterface) {
+                    return new IsRegExp($actualValue, $source);
+                }
             }
 
             return null;
         }
 
-        $expectedValueObject = $this->valueFactory->create($expectedValue, (string) $assertion->getValue());
-        $actualValueObject = $this->valueFactory->create($actualValue, $assertion->getIdentifier());
+        $valueString = $assertion->getValue();
 
-        if ($expectedValueObject instanceof Value && $actualValueObject instanceof Value) {
-            return new Comparison($operator, $expectedValueObject, $actualValueObject);
+        if (is_string($valueString) && is_string($identifierString)) {
+            $expectedValueObject = $this->valueFactory->create($expectedValue, $valueString);
+            $actualValueObject = $this->valueFactory->create($actualValue, $identifierString);
+
+            if ($expectedValueObject instanceof Value && $actualValueObject instanceof Value) {
+                return new Comparison($operator, $expectedValueObject, $actualValueObject);
+            }
         }
 
         return null;
