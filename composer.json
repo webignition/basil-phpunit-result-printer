@@ -40,7 +40,7 @@
     "require": {
         "php": ">=7.4|^8",
         "phpunit/phpunit": "^9.5",
-        "symfony/yaml": "^5.2",
+        "symfony/yaml": "5.4.*",
         "webignition/base-basil-test-case": "^0.42.0",
         "webignition/basil-dom-identifier-factory": ">=0.14,<1",
         "webignition/basil-identifier-analyser": ">=0.8,<1",
