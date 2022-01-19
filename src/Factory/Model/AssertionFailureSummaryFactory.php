@@ -36,9 +36,13 @@ class AssertionFailureSummaryFactory
         string $actualValue
     ): ?AssertionFailureSummaryInterface {
         $operator = $assertion->getOperator();
+        $identifierString = $assertion->getIdentifier();
+
+        if (false === is_string($identifierString)) {
+            return null;
+        }
 
         if (in_array($operator, ['exists', 'not-exists'])) {
-            $identifierString = $assertion->getIdentifier();
             $source = $this->sourceFactory->create($identifierString);
 
             if ($source instanceof NodeSource) {
@@ -49,7 +53,6 @@ class AssertionFailureSummaryFactory
         }
 
         if ('is-regexp' === $operator) {
-            $identifierString = $assertion->getIdentifier();
             $source = $this->sourceFactory->create($identifierString);
 
             if ($source instanceof SourceInterface) {
@@ -59,11 +62,14 @@ class AssertionFailureSummaryFactory
             return null;
         }
 
-        $expectedValueObject = $this->valueFactory->create($expectedValue, (string) $assertion->getValue());
-        $actualValueObject = $this->valueFactory->create($actualValue, $assertion->getIdentifier());
+        $valueString = $assertion->getValue();
+        if (is_string($valueString)) {
+            $expectedValueObject = $this->valueFactory->create($expectedValue, $valueString);
+            $actualValueObject = $this->valueFactory->create($actualValue, $identifierString);
 
-        if ($expectedValueObject instanceof Value && $actualValueObject instanceof Value) {
-            return new Comparison($operator, $expectedValueObject, $actualValueObject);
+            if ($expectedValueObject instanceof Value && $actualValueObject instanceof Value) {
+                return new Comparison($operator, $expectedValueObject, $actualValueObject);
+            }
         }
 
         return null;
