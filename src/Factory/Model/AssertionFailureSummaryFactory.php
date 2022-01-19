@@ -16,13 +16,10 @@ use webignition\BasilPhpUnitResultPrinter\Model\Value;
 
 class AssertionFailureSummaryFactory
 {
-    private SourceFactory $sourceFactory;
-    private ValueFactory $valueFactory;
-
-    public function __construct(SourceFactory $sourceFactory, ValueFactory $valueFactory)
-    {
-        $this->sourceFactory = $sourceFactory;
-        $this->valueFactory = $valueFactory;
+    public function __construct(
+        private SourceFactory $sourceFactory,
+        private ValueFactory $valueFactory
+    ) {
     }
 
     public static function createFactory(): self

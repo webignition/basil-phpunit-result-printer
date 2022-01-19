@@ -9,18 +9,11 @@ use webignition\BasilPhpUnitResultPrinter\Model\Source\SourceInterface;
 
 class SourceFactory
 {
-    private NodeSourceFactory $nodeSourceFactory;
-    private ScalarSourceFactory $scalarSourceFactory;
-    private IdentifierTypeAnalyser $identifierTypeAnalyser;
-
     public function __construct(
-        NodeSourceFactory $nodeSourceFactory,
-        ScalarSourceFactory $scalarSourceFactory,
-        IdentifierTypeAnalyser $identifierTypeAnalyser
+        private NodeSourceFactory $nodeSourceFactory,
+        private ScalarSourceFactory $scalarSourceFactory,
+        private IdentifierTypeAnalyser $identifierTypeAnalyser
     ) {
-        $this->nodeSourceFactory = $nodeSourceFactory;
-        $this->scalarSourceFactory = $scalarSourceFactory;
-        $this->identifierTypeAnalyser = $identifierTypeAnalyser;
     }
 
     public static function createFactory(): self

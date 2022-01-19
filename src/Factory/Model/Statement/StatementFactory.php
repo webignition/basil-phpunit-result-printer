@@ -16,15 +16,10 @@ use webignition\BasilPhpUnitResultPrinter\Model\Status;
 
 class StatementFactory
 {
-    private TransformationFactory $transformationFactory;
-    private AssertionFailureSummaryFactory $assertionFailureSummaryFactory;
-
     public function __construct(
-        TransformationFactory $transformationFactory,
-        AssertionFailureSummaryFactory $assertionFailureSummaryFactory
+        private TransformationFactory $transformationFactory,
+        private AssertionFailureSummaryFactory $assertionFailureSummaryFactory
     ) {
-        $this->transformationFactory = $transformationFactory;
-        $this->assertionFailureSummaryFactory = $assertionFailureSummaryFactory;
     }
 
     public static function createFactory(): self

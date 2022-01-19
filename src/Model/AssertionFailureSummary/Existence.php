@@ -8,13 +8,10 @@ use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
 
 class Existence implements AssertionFailureSummaryInterface
 {
-    private string $operator;
-    private NodeSource $source;
-
-    public function __construct(string $operator, NodeSource $source)
-    {
-        $this->operator = $operator;
-        $this->source = $source;
+    public function __construct(
+        private string $operator,
+        private NodeSource $source
+    ) {
     }
 
     public function getData(): array

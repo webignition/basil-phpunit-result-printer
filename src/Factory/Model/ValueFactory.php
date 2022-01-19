@@ -10,11 +10,9 @@ use webignition\BasilPhpUnitResultPrinter\Model\Value;
 
 class ValueFactory
 {
-    private SourceFactory $sourceFactory;
-
-    public function __construct(SourceFactory $sourceFactory)
-    {
-        $this->sourceFactory = $sourceFactory;
+    public function __construct(
+        private SourceFactory $sourceFactory
+    ) {
     }
 
     public static function createFactory(): self

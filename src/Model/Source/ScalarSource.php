@@ -10,11 +10,9 @@ class ScalarSource extends AbstractSource
 {
     private const TYPE = 'scalar';
 
-    private Scalar $body;
-
-    public function __construct(Scalar $body)
-    {
-        $this->body = $body;
+    public function __construct(
+        private Scalar $body
+    ) {
     }
 
     public function getType(): string

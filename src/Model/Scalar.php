@@ -12,13 +12,10 @@ class Scalar implements SourceBodyInterface
     public const TYPE_LITERAL = 'literal';
     public const TYPE_PAGE_PROPERTY = 'page_property';
 
-    private string $type;
-    private string $value;
-
-    public function __construct(string $type, string $value)
-    {
-        $this->type = $type;
-        $this->value = $value;
+    public function __construct(
+        private string $type,
+        private string $value
+    ) {
     }
 
     /**

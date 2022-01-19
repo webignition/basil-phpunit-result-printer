@@ -8,15 +8,11 @@ use webignition\BasilPhpUnitResultPrinter\Model\Value;
 
 class Comparison implements AssertionFailureSummaryInterface
 {
-    private string $operator;
-    private Value $expected;
-    private Value $actual;
-
-    public function __construct(string $operator, Value $expected, Value $actual)
-    {
-        $this->operator = $operator;
-        $this->expected = $expected;
-        $this->actual = $actual;
+    public function __construct(
+        private string $operator,
+        private Value $expected,
+        private Value $actual
+    ) {
     }
 
     public function getData(): array

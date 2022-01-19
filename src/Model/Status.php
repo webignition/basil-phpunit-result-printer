@@ -23,11 +23,9 @@ class Status
         self::STATUS_TERMINATED => self::LABEL_TERMINATED,
     ];
 
-    private int $status;
-
-    public function __construct(int $status)
-    {
-        $this->status = $status;
+    public function __construct(
+        private int $status
+    ) {
     }
 
     public function __toString(): string

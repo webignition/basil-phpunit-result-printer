@@ -9,11 +9,9 @@ use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
 
 class IdentifierFactory
 {
-    private PropertiesFactory $propertiesFactory;
-
-    public function __construct(PropertiesFactory $propertiesFactory)
-    {
-        $this->propertiesFactory = $propertiesFactory;
+    public function __construct(
+        private PropertiesFactory $propertiesFactory
+    ) {
     }
 
     public static function createFactory(): self

@@ -11,11 +11,9 @@ use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
 
 class NodeSourceFactory
 {
-    private IdentifierFactory $identifierFactory;
-
-    public function __construct(IdentifierFactory $identifierFactory)
-    {
-        $this->identifierFactory = $identifierFactory;
+    public function __construct(
+        private IdentifierFactory $identifierFactory
+    ) {
     }
 
     public static function createFactory(): self

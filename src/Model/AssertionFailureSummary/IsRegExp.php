@@ -10,13 +10,10 @@ class IsRegExp implements AssertionFailureSummaryInterface
 {
     private const OPERATOR = 'is-regexp';
 
-    private string $value;
-    private SourceInterface $source;
-
-    public function __construct(string $value, SourceInterface $source)
-    {
-        $this->value = $value;
-        $this->source = $source;
+    public function __construct(
+        private string $value,
+        private SourceInterface $source
+    ) {
     }
 
     public function getData(): array

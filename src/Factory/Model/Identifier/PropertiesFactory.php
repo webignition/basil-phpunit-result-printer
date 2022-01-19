@@ -11,11 +11,9 @@ use webignition\DomElementIdentifier\ElementIdentifierInterface;
 
 class PropertiesFactory
 {
-    private DomIdentifierFactory $domIdentifierFactory;
-
-    public function __construct(DomIdentifierFactory $domIdentifierFactory)
-    {
-        $this->domIdentifierFactory = $domIdentifierFactory;
+    public function __construct(
+        private DomIdentifierFactory $domIdentifierFactory
+    ) {
     }
 
     public static function createFactory(): self

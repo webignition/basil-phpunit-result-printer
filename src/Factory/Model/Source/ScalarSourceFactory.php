@@ -10,11 +10,9 @@ use webignition\BasilPhpUnitResultPrinter\Model\Source\ScalarSource;
 
 class ScalarSourceFactory
 {
-    private ScalarFactory $scalarFactory;
-
-    public function __construct(ScalarFactory $scalarFactory)
-    {
-        $this->scalarFactory = $scalarFactory;
+    public function __construct(
+        private ScalarFactory $scalarFactory
+    ) {
     }
 
     public static function createFactory(): self
