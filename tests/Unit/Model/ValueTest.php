@@ -26,7 +26,7 @@ class ValueTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -45,7 +45,6 @@ class ValueTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Value $value
      * @param array<mixed> $expectedData
      */
     public function testGetData(Value $value, array $expectedData): void
@@ -54,7 +53,7 @@ class ValueTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {

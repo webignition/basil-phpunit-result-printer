@@ -24,7 +24,7 @@ class ExistenceTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -39,7 +39,6 @@ class ExistenceTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Existence $summary
      * @param array<mixed> $expectedData
      */
     public function testGetData(Existence $summary, array $expectedData): void
@@ -48,7 +47,7 @@ class ExistenceTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {

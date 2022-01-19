@@ -47,7 +47,7 @@ class StatementFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createForPassedActionDataProvider(): array
     {
@@ -97,7 +97,7 @@ class StatementFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createForFailedActionDataProvider(): array
     {
@@ -149,7 +149,7 @@ class StatementFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createForPassedAssertionDataProvider(): array
     {
@@ -212,7 +212,7 @@ class StatementFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createForFailedAssertionDataProvider(): array
     {

@@ -32,41 +32,50 @@ class BasilTestCaseFactory
         if (is_string($testPath)) {
             $testCase
                 ->shouldReceive('getBasilTestPath')
-                ->andReturn($testPath);
+                ->andReturn($testPath)
+            ;
         }
 
         $testCase
             ->shouldReceive('getBasilStepName')
-            ->andReturn($basilStepName);
+            ->andReturn($basilStepName)
+        ;
 
         $testCase
             ->shouldReceive('getStatus')
-            ->andReturn($status);
+            ->andReturn($status)
+        ;
 
         $testCase
             ->shouldReceive('getHandledStatements')
-            ->andReturn($handledStatements);
+            ->andReturn($handledStatements)
+        ;
 
         $testCase
             ->shouldReceive('getExpectedValue')
-            ->andReturn($expectedValue);
+            ->andReturn($expectedValue)
+        ;
 
         $testCase
             ->shouldReceive('getExaminedValue')
-            ->andReturn($examinedValue);
+            ->andReturn($examinedValue)
+        ;
 
         $testCase
             ->shouldReceive('getLastException')
-            ->andReturn($lastException);
+            ->andReturn($lastException)
+        ;
 
         $testCase
             ->shouldReceive('getCurrentDataSet')
-            ->andReturn($currentDataSet);
+            ->andReturn($currentDataSet)
+        ;
 
         if ($basilTestConfiguration instanceof ConfigurationInterface) {
             $testCase
                 ->shouldReceive('getBasilTestConfiguration')
-                ->andReturn($basilTestConfiguration);
+                ->andReturn($basilTestConfiguration)
+            ;
         }
 
         return $testCase;

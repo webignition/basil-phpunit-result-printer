@@ -24,7 +24,7 @@ class IdentifierTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -39,7 +39,6 @@ class IdentifierTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Identifier $identifier
      * @param array<mixed> $expectedData
      */
     public function testGetData(Identifier $identifier, array $expectedData): void
@@ -48,7 +47,7 @@ class IdentifierTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {
@@ -62,7 +61,6 @@ class IdentifierTest extends AbstractBaseTest
                     'source' => '$".selector"',
                     'properties' => $properties->getData(),
                 ],
-
             ],
         ];
     }
@@ -76,19 +74,21 @@ class IdentifierTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function isAttributeDataProvider(): array
     {
         $elementProperties = \Mockery::mock(Properties::class);
         $elementProperties
             ->shouldReceive('hasAttribute')
-            ->andReturnFalse();
+            ->andReturnFalse()
+        ;
 
         $attributeProperties = \Mockery::mock(Properties::class);
         $attributeProperties
             ->shouldReceive('hasAttribute')
-            ->andReturnTrue();
+            ->andReturnTrue()
+        ;
 
         return [
             'not attribute' => [

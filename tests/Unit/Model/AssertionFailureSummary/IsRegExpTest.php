@@ -27,7 +27,7 @@ class IsRegExpTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -46,7 +46,6 @@ class IsRegExpTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param IsRegExp $summary
      * @param array<mixed> $expectedData
      */
     public function testGetData(IsRegExp $summary, array $expectedData): void
@@ -55,7 +54,7 @@ class IsRegExpTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {

@@ -25,7 +25,7 @@ class InvalidLocatorExceptionDataTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -35,8 +35,8 @@ class InvalidLocatorExceptionDataTest extends AbstractBaseTest
             'default' => [
                 'type' => 'css',
                 'locator' => 'a[href=https://example.com]',
-                'source' =>
-                    $nodeSourceFactory->create('$"a[href=https://example.com]"') ?? \Mockery::mock(NodeSource::class),
+                'source' => $nodeSourceFactory->create('$"a[href=https://example.com]"')
+                    ?? \Mockery::mock(NodeSource::class),
             ],
         ];
     }
@@ -44,7 +44,6 @@ class InvalidLocatorExceptionDataTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param InvalidLocatorExceptionData $invalidLocatorExceptionData
      * @param array<mixed> $expectedData
      */
     public function testGetData(InvalidLocatorExceptionData $invalidLocatorExceptionData, array $expectedData): void
@@ -53,7 +52,7 @@ class InvalidLocatorExceptionDataTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {

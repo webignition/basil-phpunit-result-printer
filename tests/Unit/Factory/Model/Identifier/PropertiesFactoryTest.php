@@ -28,7 +28,7 @@ class PropertiesFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -55,63 +55,53 @@ class PropertiesFactoryTest extends AbstractBaseTest
             ],
             'css attribute, no parent' => [
                 'source' => '$".selector".attribute_name',
-                'expectedProperties' =>
-                    (new Properties(
-                        Properties::TYPE_CSS,
-                        '.selector',
-                        1
-                    ))->withAttribute('attribute_name'),
+                'expectedProperties' => (new Properties(
+                    Properties::TYPE_CSS,
+                    '.selector',
+                    1
+                ))->withAttribute('attribute_name'),
             ],
             'css element, css parent' => [
                 'source' => '$".parent" >> $".child"',
-                'expectedProperties' =>
-                    (new Properties(
-                        Properties::TYPE_CSS,
-                        '.child',
-                        1
-                    ))->withParent(
-                        new Properties(
-                            Properties::TYPE_CSS,
-                            '.parent',
-                            1
-                        )
-                    ),
+                'expectedProperties' => (new Properties(
+                    Properties::TYPE_CSS,
+                    '.child',
+                    1
+                ))->withParent(new Properties(
+                    Properties::TYPE_CSS,
+                    '.parent',
+                    1
+                )),
             ],
             'css element, xpath parent' => [
                 'source' => '$"//parent" >> $".child"',
-                'expectedProperties' =>
-                    (new Properties(
-                        Properties::TYPE_CSS,
-                        '.child',
-                        1
-                    ))->withParent(
-                        new Properties(
-                            Properties::TYPE_XPATH,
-                            '//parent',
-                            1
-                        )
-                    ),
+                'expectedProperties' => (new Properties(
+                    Properties::TYPE_CSS,
+                    '.child',
+                    1
+                ))->withParent(new Properties(
+                    Properties::TYPE_XPATH,
+                    '//parent',
+                    1
+                )),
             ],
             'css grandparent, parent, child' => [
                 'source' => '$".grandparent":4 >> $".parent":3 >> $".child":2',
-                'expectedProperties' =>
-                    (new Properties(
+                'expectedProperties' => (new Properties(
+                    Properties::TYPE_CSS,
+                    '.child',
+                    2
+                ))->withParent((new Properties(
+                    Properties::TYPE_CSS,
+                    '.parent',
+                    3
+                ))->withParent(
+                    new Properties(
                         Properties::TYPE_CSS,
-                        '.child',
-                        2
-                    ))->withParent(
-                        (new Properties(
-                            Properties::TYPE_CSS,
-                            '.parent',
-                            3
-                        ))->withParent(
-                            new Properties(
-                                Properties::TYPE_CSS,
-                                '.grandparent',
-                                4
-                            )
-                        )
-                    ),
+                        '.grandparent',
+                        4
+                    )
+                )),
             ],
         ];
     }

@@ -22,7 +22,7 @@ class UnknownExceptionDataTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -37,7 +37,6 @@ class UnknownExceptionDataTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param UnknownExceptionData $unknownExceptionData
      * @param array<mixed> $expectedData
      */
     public function testGetData(UnknownExceptionData $unknownExceptionData, array $expectedData): void
@@ -46,7 +45,7 @@ class UnknownExceptionDataTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {

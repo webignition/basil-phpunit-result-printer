@@ -25,7 +25,7 @@ class NodeTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -40,7 +40,6 @@ class NodeTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Node $node
      * @param array<mixed> $expectedData
      */
     public function testGetData(Node $node, array $expectedData): void
@@ -49,7 +48,7 @@ class NodeTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {
@@ -70,7 +69,7 @@ class NodeTest extends AbstractBaseTest
             ],
             'attribute' => [
                 'node' => new Node(
-                    Node:: TYPE_ATTRIBUTE,
+                    Node::TYPE_ATTRIBUTE,
                     $attributeIdentifier
                 ),
                 'expectedData' => [
@@ -90,7 +89,7 @@ class NodeTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function fromIdentifierDataProvider(): array
     {

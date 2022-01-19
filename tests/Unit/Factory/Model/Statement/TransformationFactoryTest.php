@@ -28,7 +28,6 @@ class TransformationFactoryTest extends AbstractBaseTest
     /**
      * @dataProvider createTransformationsDataProvider
      *
-     * @param StatementInterface $statement
      * @param Transformation[] $expectedTransformations
      */
     public function testCreateTransformations(StatementInterface $statement, array $expectedTransformations): void
@@ -37,7 +36,7 @@ class TransformationFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createTransformationsDataProvider(): array
     {

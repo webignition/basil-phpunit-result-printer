@@ -14,9 +14,7 @@ class PassedAssertionStatementTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      *
-     * @param string $source
      * @param array<mixed> $transformations
-     * @param PassedAssertionStatement $expectedStatement
      */
     public function testCreate(
         string $source,
@@ -29,7 +27,7 @@ class PassedAssertionStatementTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -64,7 +62,6 @@ class PassedAssertionStatementTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param PassedAssertionStatement $statement
      * @param array<mixed> $expectedData
      */
     public function testGetData(PassedAssertionStatement $statement, array $expectedData): void
@@ -73,7 +70,7 @@ class PassedAssertionStatementTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {

@@ -23,7 +23,7 @@ class ScalarSourceTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -37,7 +37,6 @@ class ScalarSourceTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param ScalarSource $source
      * @param array<mixed> $expectedData
      */
     public function testGetData(ScalarSource $source, array $expectedData): void
@@ -46,7 +45,7 @@ class ScalarSourceTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {

@@ -29,7 +29,6 @@ class ResultPrinterTest extends AbstractBaseTest
      * @dataProvider failedNoStatementsDataProvider
      *
      * @param BasilTestCaseInterface[] $tests
-     * @param string $expectedOutput
      */
     public function testPrinterOutput(array $tests, string $expectedOutput): void
     {
@@ -54,7 +53,7 @@ class ResultPrinterTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function passedDataProvider(): array
     {
@@ -102,7 +101,7 @@ class ResultPrinterTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function failedExistsAssertionDataProvider(): array
     {
@@ -195,7 +194,7 @@ class ResultPrinterTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function failedExceptionDataProvider(): array
     {
@@ -243,7 +242,7 @@ class ResultPrinterTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function failedIsAssertionDataProvider(): array
     {
@@ -365,7 +364,7 @@ class ResultPrinterTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function failedIsRegExpDataProvider(): array
     {
@@ -419,7 +418,7 @@ class ResultPrinterTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function failedNoStatementsDataProvider(): array
     {

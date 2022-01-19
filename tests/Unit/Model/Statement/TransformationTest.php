@@ -22,7 +22,7 @@ class TransformationTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -41,7 +41,6 @@ class TransformationTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Transformation $transformation
      * @param array<mixed> $expectedData
      */
     public function testGetData(Transformation $transformation, array $expectedData): void
@@ -50,7 +49,7 @@ class TransformationTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {

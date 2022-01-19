@@ -14,10 +14,10 @@ use webignition\DomElementIdentifier\ElementIdentifierInterface;
 
 class BasilTestCase extends TestCase implements BasilTestCaseInterface
 {
-    private string $basilStepName = '';
-    private static string $basilTestPath = '';
     protected static ?\Throwable $lastException = null;
     protected static ConfigurationInterface $basilTestConfiguration;
+    private string $basilStepName = '';
+    private static string $basilTestPath = '';
 
     public static function setBasilTestPath(string $testPath): void
     {

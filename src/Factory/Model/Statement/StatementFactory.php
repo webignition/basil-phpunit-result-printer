@@ -45,15 +45,6 @@ class StatementFactory
         return $this->createForAction($action, Status::STATUS_FAILED);
     }
 
-    private function createForAction(ActionInterface $action, int $status): StatementInterface
-    {
-        return new ActionStatement(
-            $action->getSource(),
-            (string) new Status($status),
-            $this->transformationFactory->createTransformations($action)
-        );
-    }
-
     public function createForPassedAssertion(AssertionInterface $assertion): StatementInterface
     {
         return new PassedAssertionStatement(
@@ -78,5 +69,14 @@ class StatementFactory
         }
 
         return null;
+    }
+
+    private function createForAction(ActionInterface $action, int $status): StatementInterface
+    {
+        return new ActionStatement(
+            $action->getSource(),
+            (string) new Status($status),
+            $this->transformationFactory->createTransformations($action)
+        );
     }
 }

@@ -17,10 +17,7 @@ class ActionStatementTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      *
-     * @param string $source
-     * @param string $status
      * @param array<mixed> $transformations
-     * @param ActionStatement $expectedStatement
      */
     public function testCreate(
         string $source,
@@ -34,7 +31,7 @@ class ActionStatementTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -97,7 +94,6 @@ class ActionStatementTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param ActionStatement $statement
      * @param array<mixed> $expectedData
      */
     public function testGetData(ActionStatement $statement, array $expectedData): void
@@ -106,7 +102,7 @@ class ActionStatementTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {

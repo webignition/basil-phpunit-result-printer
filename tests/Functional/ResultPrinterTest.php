@@ -20,7 +20,6 @@ class ResultPrinterTest extends TestCase
     /**
      * @dataProvider terminatedDataProvider
      *
-     * @param string $phpUnitTestPath
      * @param array<mixed> $expectedPartialOutput
      */
     public function testExceptionHandling(
@@ -42,7 +41,10 @@ class ResultPrinterTest extends TestCase
         self::assertCount(count($expectedPartialOutput), $outputData);
 
         $exceptionData = array_pop($outputData);
+        $exceptionData = is_array($exceptionData) ? $exceptionData : [];
+
         $expectedPartialExceptionData = array_pop($expectedPartialOutput);
+        $expectedPartialExceptionData = is_array($expectedPartialExceptionData) ? $expectedPartialExceptionData : [];
 
         foreach ($expectedPartialOutput as $index => $expectedData) {
             self::assertSame($expectedData, $outputData[$index]);
@@ -52,7 +54,7 @@ class ResultPrinterTest extends TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function terminatedDataProvider(): array
     {
@@ -83,8 +85,6 @@ class ResultPrinterTest extends TestCase
 
     /**
      * @param string[] $output
-     *
-     * @return string
      */
     private function getYamlOutputBody(array $output): string
     {

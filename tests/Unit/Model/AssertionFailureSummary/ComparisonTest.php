@@ -25,7 +25,7 @@ class ComparisonTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -41,7 +41,6 @@ class ComparisonTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Comparison $summary
      * @param array<mixed> $expectedData
      */
     public function testGetData(Comparison $summary, array $expectedData): void
@@ -50,7 +49,7 @@ class ComparisonTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {

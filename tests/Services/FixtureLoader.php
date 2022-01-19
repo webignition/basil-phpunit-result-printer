@@ -6,11 +6,6 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Services;
 
 class FixtureLoader
 {
-    /**
-     * @param string $path
-     *
-     * @return string|null
-     */
     public static function load(string $path): ?string
     {
         $fullPath = realpath(__DIR__ . '/../Fixtures' . $path);

@@ -6,13 +6,6 @@ namespace webignition\BasilPhpUnitResultPrinter\Model\ExceptionData;
 
 abstract class AbstractExceptionData implements ExceptionDataInterface
 {
-    abstract protected function getType(): string;
-
-    /**
-     * @return array<mixed>
-     */
-    abstract protected function getBody(): array;
-
     /**
      * @return array<mixed>
      */
@@ -23,4 +16,11 @@ abstract class AbstractExceptionData implements ExceptionDataInterface
             'body' => $this->getBody(),
         ];
     }
+
+    abstract protected function getType(): string;
+
+    /**
+     * @return array<mixed>
+     */
+    abstract protected function getBody(): array;
 }
