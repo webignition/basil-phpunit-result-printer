@@ -28,7 +28,7 @@ class PropertiesFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {

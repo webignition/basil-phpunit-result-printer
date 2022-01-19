@@ -36,7 +36,7 @@ class TransformationFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createTransformationsDataProvider(): array
     {

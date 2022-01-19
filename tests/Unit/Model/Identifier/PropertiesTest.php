@@ -25,7 +25,7 @@ class PropertiesTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -66,7 +66,7 @@ class PropertiesTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {
@@ -157,7 +157,7 @@ class PropertiesTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function hasAttributeDataProvider(): array
     {

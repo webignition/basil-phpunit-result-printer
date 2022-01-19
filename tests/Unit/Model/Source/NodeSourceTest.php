@@ -24,7 +24,7 @@ class NodeSourceTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {
@@ -49,7 +49,7 @@ class NodeSourceTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function getDataDataProvider(): array
     {

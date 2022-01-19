@@ -18,7 +18,7 @@ class StatusTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function toStringDataProvider(): array
     {

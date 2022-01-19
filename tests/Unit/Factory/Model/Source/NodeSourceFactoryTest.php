@@ -31,7 +31,7 @@ class NodeSourceFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createDataProvider(): array
     {

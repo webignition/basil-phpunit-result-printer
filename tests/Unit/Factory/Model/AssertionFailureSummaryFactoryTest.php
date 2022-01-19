@@ -44,7 +44,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createSuccessDataProvider(): array
     {
@@ -199,7 +199,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTest
     }
 
     /**
-     * @return array[]
+     * @return array<mixed>
      */
     public function createFailureDataProvider(): array
     {
