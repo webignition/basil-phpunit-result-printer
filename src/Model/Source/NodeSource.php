@@ -10,11 +10,9 @@ class NodeSource extends AbstractSource
 {
     private const TYPE = 'node';
 
-    private Node $body;
-
-    public function __construct(Node $node)
-    {
-        $this->body = $node;
+    public function __construct(
+        private Node $body
+    ) {
     }
 
     public function getType(): string

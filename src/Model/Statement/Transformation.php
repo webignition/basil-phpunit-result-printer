@@ -9,13 +9,10 @@ class Transformation
     public const TYPE_DERIVATION = 'derivation';
     public const TYPE_RESOLUTION = 'resolution';
 
-    private string $type;
-    private string $source;
-
-    public function __construct(string $type, string $source)
-    {
-        $this->type = $type;
-        $this->source = $source;
+    public function __construct(
+        private string $type,
+        private string $source
+    ) {
     }
 
     /**

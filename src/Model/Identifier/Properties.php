@@ -9,17 +9,14 @@ class Properties
     public const TYPE_CSS = 'css';
     public const TYPE_XPATH = 'xpath';
 
-    private string $type;
-    private string $locator;
-    private int $position;
     private ?string $attribute = null;
     private ?self $parent = null;
 
-    public function __construct(string $type, string $locator, int $position)
-    {
-        $this->type = $type;
-        $this->locator = $locator;
-        $this->position = $position;
+    public function __construct(
+        private string $type,
+        private string $locator,
+        private int $position
+    ) {
     }
 
     public function hasAttribute(): bool

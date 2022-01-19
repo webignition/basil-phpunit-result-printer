@@ -11,13 +11,10 @@ class Node implements SourceBodyInterface
     public const TYPE_ELEMENT = 'element';
     public const TYPE_ATTRIBUTE = 'attribute';
 
-    private string $type;
-    private Identifier $identifier;
-
-    public function __construct(string $type, Identifier $identifier)
-    {
-        $this->type = $type;
-        $this->identifier = $identifier;
+    public function __construct(
+        private string $type,
+        private Identifier $identifier
+    ) {
     }
 
     public static function fromIdentifier(Identifier $identifier): self

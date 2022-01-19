@@ -8,13 +8,10 @@ class UnknownExceptionData extends AbstractExceptionData
 {
     private const TYPE = 'unknown';
 
-    private string $class;
-    private string $message;
-
-    public function __construct(string $class, string $message)
-    {
-        $this->class = $class;
-        $this->message = $message;
+    public function __construct(
+        private string $class,
+        private string $message
+    ) {
     }
 
     protected function getType(): string

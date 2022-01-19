@@ -14,11 +14,9 @@ use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class ExceptionDataFactory
 {
-    private NodeSourceFactory $nodeSourceFactory;
-
-    public function __construct(NodeSourceFactory $nodeSourceFactory)
-    {
-        $this->nodeSourceFactory = $nodeSourceFactory;
+    public function __construct(
+        private NodeSourceFactory $nodeSourceFactory
+    ) {
     }
 
     public static function createFactory(): self

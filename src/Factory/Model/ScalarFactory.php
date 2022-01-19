@@ -9,11 +9,9 @@ use webignition\BasilValueTypeIdentifier\ValueTypeIdentifier;
 
 class ScalarFactory
 {
-    private ValueTypeIdentifier $valueTypeIdentifier;
-
-    public function __construct(ValueTypeIdentifier $valueTypeIdentifier)
-    {
-        $this->valueTypeIdentifier = $valueTypeIdentifier;
+    public function __construct(
+        private ValueTypeIdentifier $valueTypeIdentifier
+    ) {
     }
 
     public static function createFactory(): self

@@ -8,10 +8,6 @@ use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInter
 
 abstract class AbstractStatement implements StatementInterface
 {
-    private string $type;
-    private string $source;
-    private string $status;
-
     /**
      * @var Transformation[]
      */
@@ -22,11 +18,12 @@ abstract class AbstractStatement implements StatementInterface
     /**
      * @param array<mixed> $transformations
      */
-    public function __construct(string $type, string $source, string $status, array $transformations = [])
-    {
-        $this->type = $type;
-        $this->source = $source;
-        $this->status = $status;
+    public function __construct(
+        private string $type,
+        private string $source,
+        private string $status,
+        array $transformations = []
+    ) {
         $this->transformations = array_filter($transformations, function ($item) {
             return $item instanceof Transformation;
         });

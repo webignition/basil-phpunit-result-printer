@@ -9,18 +9,14 @@ use webignition\BasilPhpUnitResultPrinter\Model\Status;
 
 class FailedAssertionStatement extends AbstractAssertionStatement
 {
-    private AssertionFailureSummaryInterface $failureSummary;
-
     public function __construct(
         string $source,
-        AssertionFailureSummaryInterface $failureSummary,
+        private AssertionFailureSummaryInterface $failureSummary,
         array $transformations = []
     ) {
         $status = (string) new Status(Status::STATUS_FAILED);
 
         parent::__construct($source, $status, $transformations);
-
-        $this->failureSummary = $failureSummary;
     }
 
     public function getData(): array

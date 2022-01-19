@@ -15,13 +15,10 @@ use webignition\BasilRunnerDocuments\Step;
 
 class StepFactory
 {
-    private StatementFactory $statementFactory;
-    private ExceptionDataFactory $exceptionDataFactory;
-
-    public function __construct(StatementFactory $statementFactory, ExceptionDataFactory $exceptionDataFactory)
-    {
-        $this->statementFactory = $statementFactory;
-        $this->exceptionDataFactory = $exceptionDataFactory;
+    public function __construct(
+        private StatementFactory $statementFactory,
+        private ExceptionDataFactory $exceptionDataFactory
+    ) {
     }
 
     public static function createFactory(): self

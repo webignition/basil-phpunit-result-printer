@@ -6,13 +6,10 @@ namespace webignition\BasilPhpUnitResultPrinter\Model\Identifier;
 
 class Identifier
 {
-    private string $source;
-    private Properties $properties;
-
-    public function __construct(string $source, Properties $properties)
-    {
-        $this->source = $source;
-        $this->properties = $properties;
+    public function __construct(
+        private string $source,
+        private Properties $properties
+    ) {
     }
 
     public function isAttribute(): bool

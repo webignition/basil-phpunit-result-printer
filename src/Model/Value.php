@@ -8,13 +8,10 @@ use webignition\BasilPhpUnitResultPrinter\Model\Source\SourceInterface;
 
 class Value
 {
-    private string $value;
-    private SourceInterface $source;
-
-    public function __construct(string $value, SourceInterface $source)
-    {
-        $this->value = $value;
-        $this->source = $source;
+    public function __construct(
+        private string $value,
+        private SourceInterface $source
+    ) {
     }
 
     /**
