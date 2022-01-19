@@ -21,10 +21,7 @@ class FailedAssertionStatementTest extends AbstractBaseTest
     /**
      * @dataProvider createDataProvider
      *
-     * @param string $source
-     * @param AssertionFailureSummaryInterface $summary
      * @param array<mixed> $transformations
-     * @param FailedAssertionStatement $expectedStatement
      */
     public function testCreate(
         string $source,
@@ -95,7 +92,6 @@ class FailedAssertionStatementTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param FailedAssertionStatement $statement
      * @param array<mixed> $expectedData
      */
     public function testGetData(FailedAssertionStatement $statement, array $expectedData): void

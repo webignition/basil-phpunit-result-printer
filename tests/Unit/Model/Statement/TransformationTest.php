@@ -41,7 +41,6 @@ class TransformationTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Transformation $transformation
      * @param array<mixed> $expectedData
      */
     public function testGetData(Transformation $transformation, array $expectedData): void

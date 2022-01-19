@@ -40,7 +40,6 @@ class NodeTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Node $node
      * @param array<mixed> $expectedData
      */
     public function testGetData(Node $node, array $expectedData): void
@@ -70,7 +69,7 @@ class NodeTest extends AbstractBaseTest
             ],
             'attribute' => [
                 'node' => new Node(
-                    Node:: TYPE_ATTRIBUTE,
+                    Node::TYPE_ATTRIBUTE,
                     $attributeIdentifier
                 ),
                 'expectedData' => [

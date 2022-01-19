@@ -20,7 +20,6 @@ class ResultPrinterTest extends TestCase
     /**
      * @dataProvider terminatedDataProvider
      *
-     * @param string $phpUnitTestPath
      * @param array<mixed> $expectedPartialOutput
      */
     public function testExceptionHandling(
@@ -83,8 +82,6 @@ class ResultPrinterTest extends TestCase
 
     /**
      * @param string[] $output
-     *
-     * @return string
      */
     private function getYamlOutputBody(array $output): string
     {

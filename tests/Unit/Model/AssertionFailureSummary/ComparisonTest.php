@@ -41,7 +41,6 @@ class ComparisonTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Comparison $summary
      * @param array<mixed> $expectedData
      */
     public function testGetData(Comparison $summary, array $expectedData): void

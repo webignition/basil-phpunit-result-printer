@@ -39,7 +39,6 @@ class ExistenceTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Existence $summary
      * @param array<mixed> $expectedData
      */
     public function testGetData(Existence $summary, array $expectedData): void

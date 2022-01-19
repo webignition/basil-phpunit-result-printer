@@ -43,8 +43,6 @@ class StepFactory
     }
 
     /**
-     * @param BasilTestCaseInterface $testCase
-     *
      * @return StatementInterface[]
      */
     private function createStatements(BasilTestCaseInterface $testCase): array
@@ -104,9 +102,7 @@ class StepFactory
     }
 
     /**
-     * @param BasilTestCaseInterface $testCase
-     *
-     * @return array<mixed>|null
+     * @return null|array<mixed>
      */
     private function createData(BasilTestCaseInterface $testCase): ?array
     {

@@ -14,8 +14,6 @@ use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 class TransformationFactory
 {
     /**
-     * @param StatementInterface $statement
-     *
      * @return Transformation[]
      */
     public function createTransformations(StatementInterface $statement): array

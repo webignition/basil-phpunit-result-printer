@@ -34,7 +34,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function addError(Test $test, \Throwable $t, float $time): void
     {
@@ -42,8 +42,8 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
             $exception = $t;
 
             if (
-                $exception instanceof ExceptionWrapper &&
-                ($originalException = $exception->getOriginalException()) instanceof \Throwable
+                $exception instanceof ExceptionWrapper
+                && ($originalException = $exception->getOriginalException()) instanceof \Throwable
             ) {
                 $exception = $originalException;
             }
@@ -61,7 +61,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function addWarning(Test $test, Warning $e, float $time): void
     {
@@ -69,7 +69,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function addFailure(Test $test, AssertionFailedError $e, float $time): void
     {
@@ -77,7 +77,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function addIncompleteTest(Test $test, \Throwable $t, float $time): void
     {
@@ -85,7 +85,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function addRiskyTest(Test $test, \Throwable $t, float $time): void
     {
@@ -93,7 +93,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function addSkippedTest(Test $test, \Throwable $t, float $time): void
     {
@@ -117,7 +117,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function startTest(Test $test): void
     {
@@ -129,7 +129,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function endTest(Test $test, float $time): void
     {
@@ -149,9 +149,9 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
     public function printResult(TestResult $result): void
     {
         if (
-            true === $this->exceptionWritten &&
-            $this->testWithException instanceof BasilTestCaseInterface &&
-            ($lastException = $this->testWithException->getLastException()) instanceof \Throwable
+            true === $this->exceptionWritten
+            && $this->testWithException instanceof BasilTestCaseInterface
+            && ($lastException = $this->testWithException->getLastException()) instanceof \Throwable
         ) {
             if ($lastException instanceof \Throwable) {
                 $result->addError($this->testWithException, $lastException, 0);

@@ -37,7 +37,6 @@ class UnknownExceptionDataTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param UnknownExceptionData $unknownExceptionData
      * @param array<mixed> $expectedData
      */
     public function testGetData(UnknownExceptionData $unknownExceptionData, array $expectedData): void

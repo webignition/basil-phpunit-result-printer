@@ -45,7 +45,6 @@ class ValueTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Value $value
      * @param array<mixed> $expectedData
      */
     public function testGetData(Value $value, array $expectedData): void

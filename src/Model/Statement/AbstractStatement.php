@@ -20,9 +20,6 @@ abstract class AbstractStatement implements StatementInterface
     private ?ExceptionDataInterface $exceptionData = null;
 
     /**
-     * @param string $type
-     * @param string $source
-     * @param string $status
      * @param array<mixed> $transformations
      */
     public function __construct(string $type, string $source, string $status, array $transformations = [])

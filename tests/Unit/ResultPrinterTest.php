@@ -29,7 +29,6 @@ class ResultPrinterTest extends AbstractBaseTest
      * @dataProvider failedNoStatementsDataProvider
      *
      * @param BasilTestCaseInterface[] $tests
-     * @param string $expectedOutput
      */
     public function testPrinterOutput(array $tests, string $expectedOutput): void
     {

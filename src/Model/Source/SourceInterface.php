@@ -9,6 +9,7 @@ use webignition\BasilPhpUnitResultPrinter\Model\SourceBodyInterface;
 interface SourceInterface
 {
     public function getType(): string;
+
     public function getBody(): SourceBodyInterface;
 
     /**

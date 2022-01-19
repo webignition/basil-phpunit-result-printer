@@ -51,11 +51,13 @@ class ExceptionDataFactoryTest extends AbstractBaseTest
 
         $invalidElementIdentifier
             ->shouldReceive('isCssSelector')
-            ->andReturn(true);
+            ->andReturn(true)
+        ;
 
         $invalidElementIdentifier
             ->shouldReceive('getLocator')
-            ->andReturn('invalid');
+            ->andReturn('invalid')
+        ;
 
         return [
             'invalid locator, css' => [

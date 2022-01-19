@@ -85,7 +85,7 @@ class ScalarTest extends AbstractBaseTest
                     'type' => Scalar::TYPE_DATA_PARAMETER,
                     'value' => '$data.key',
                 ],
-                ],
+            ],
             'environment parameter' => [
                 'scalar' => new Scalar(
                     Scalar::TYPE_ENVIRONMENT_PARAMETER,
@@ -95,7 +95,7 @@ class ScalarTest extends AbstractBaseTest
                     'type' => Scalar::TYPE_ENVIRONMENT_PARAMETER,
                     'value' => '$env.KEY',
                 ],
-                ],
+            ],
             'literal' => [
                 'scalar' => new Scalar(
                     Scalar::TYPE_LITERAL,

@@ -37,7 +37,6 @@ class ScalarSourceTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param ScalarSource $source
      * @param array<mixed> $expectedData
      */
     public function testGetData(ScalarSource $source, array $expectedData): void

@@ -41,7 +41,6 @@ class NodeSourceTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param NodeSource $source
      * @param array<mixed> $expectedData
      */
     public function testGetData(NodeSource $source, array $expectedData): void

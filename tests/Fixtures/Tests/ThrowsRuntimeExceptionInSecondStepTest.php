@@ -25,6 +25,7 @@ class ThrowsRuntimeExceptionInSecondStepTest extends BasilTestCase
     public function testStep2()
     {
         $this->setBasilStepName('step two');
+
         throw new \RuntimeException('Exception thrown in first step', 123);
     }
 }

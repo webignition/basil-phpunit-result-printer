@@ -58,7 +58,6 @@ class PropertiesTest extends AbstractBaseTest
     /**
      * @dataProvider getDataDataProvider
      *
-     * @param Properties $properties
      * @param array<mixed> $expectedData
      */
     public function testGetData(Properties $properties, array $expectedData): void
@@ -79,7 +78,6 @@ class PropertiesTest extends AbstractBaseTest
                     'locator' => '.selector',
                     'position' => 1,
                 ],
-
             ],
             'xpath, without attribute, without parent' => [
                 'properties' => new Properties(Properties::TYPE_XPATH, '//div/p', 1),
@@ -101,7 +99,6 @@ class PropertiesTest extends AbstractBaseTest
                     'position' => 1,
                     'attribute' => 'attribute_name',
                 ],
-
             ],
             'css, without attribute, with parent' => [
                 'properties' => (new Properties(
@@ -174,12 +171,11 @@ class PropertiesTest extends AbstractBaseTest
                 'expectedHasAttribute' => false,
             ],
             'has attribute' => [
-                'properties' =>
-                    (new Properties(
-                        Properties::TYPE_CSS,
-                        '.selector',
-                        1
-                    ))->withAttribute('attribute'),
+                'properties' => (new Properties(
+                    Properties::TYPE_CSS,
+                    '.selector',
+                    1
+                ))->withAttribute('attribute'),
                 'expectedHasAttribute' => true,
             ],
         ];
