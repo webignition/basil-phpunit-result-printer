@@ -38,33 +38,32 @@ class AssertionFailureSummaryFactory
         $operator = $assertion->getOperator();
         $identifierString = $assertion->getIdentifier();
 
-        if (in_array($operator, ['exists', 'not-exists'])) {
-            if (is_string($identifierString)) {
-                $source = $this->sourceFactory->create($identifierString);
+        if (false === is_string($identifierString)) {
+            return null;
+        }
 
-                if ($source instanceof NodeSource) {
-                    return new Existence($operator, $source);
-                }
+        if (in_array($operator, ['exists', 'not-exists'])) {
+            $source = $this->sourceFactory->create($identifierString);
+
+            if ($source instanceof NodeSource) {
+                return new Existence($operator, $source);
             }
 
             return null;
         }
 
         if ('is-regexp' === $operator) {
-            if (is_string($identifierString)) {
-                $source = $this->sourceFactory->create($identifierString);
+            $source = $this->sourceFactory->create($identifierString);
 
-                if ($source instanceof SourceInterface) {
-                    return new IsRegExp($actualValue, $source);
-                }
+            if ($source instanceof SourceInterface) {
+                return new IsRegExp($actualValue, $source);
             }
 
             return null;
         }
 
         $valueString = $assertion->getValue();
-
-        if (is_string($valueString) && is_string($identifierString)) {
+        if (is_string($valueString)) {
             $expectedValueObject = $this->valueFactory->create($expectedValue, $valueString);
             $actualValueObject = $this->valueFactory->create($actualValue, $identifierString);
 
