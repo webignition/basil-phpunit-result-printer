@@ -1,26 +1,27 @@
 ---
 type: step
-name: 'step name'
-status: failed
-statements:
-  -
-    type: assertion
-    source: '$"form":3 >> $"input":2 exists'
-    status: failed
-    summary:
-      operator: exists
-      source:
-        type: node
-        body:
-          type: element
-          identifier:
-            source: '$"form":3 >> $"input":2'
-            properties:
-              type: css
-              locator: input
-              position: 2
-              parent:
+payload:
+  name: 'step name'
+  status: failed
+  statements:
+    -
+      type: assertion
+      source: '$"form":3 >> $"input":2 exists'
+      status: failed
+      summary:
+        operator: exists
+        source:
+          type: node
+          body:
+            type: element
+            identifier:
+              source: '$"form":3 >> $"input":2'
+              properties:
                 type: css
-                locator: form
-                position: 3
+                locator: input
+                position: 2
+                parent:
+                  type: css
+                  locator: form
+                  position: 3
 ...

@@ -1,28 +1,29 @@
 ---
 type: step
-name: 'step name'
-status: failed
-statements:
-  -
-    type: assertion
-    source: '$".selector".attribute_name is-regexp'
-    status: failed
-    transformations:
-      -
-        type: derivation
-        source: '$page.title matches $".selector".attribute_name'
-    summary:
-      operator: is-regexp
-      value: 'not a regexp'
-      source:
-        type: node
-        body:
-          type: attribute
-          identifier:
-            source: '$".selector".attribute_name'
-            properties:
-              type: css
-              locator: .selector
-              position: 1
-              attribute: attribute_name
+payload:
+  name: 'step name'
+  status: failed
+  statements:
+    -
+      type: assertion
+      source: '$".selector".attribute_name is-regexp'
+      status: failed
+      transformations:
+        -
+          type: derivation
+          source: '$page.title matches $".selector".attribute_name'
+      summary:
+        operator: is-regexp
+        value: 'not a regexp'
+        source:
+          type: node
+          body:
+            type: attribute
+            identifier:
+              source: '$".selector".attribute_name'
+              properties:
+                type: css
+                locator: .selector
+                position: 1
+                attribute: attribute_name
 ...

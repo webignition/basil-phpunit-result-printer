@@ -45,11 +45,11 @@
         "webignition/basil-dom-identifier-factory": ">=0.15,<1",
         "webignition/basil-identifier-analyser": ">=0.9,<1",
         "webignition/basil-models": ">=0.61,<1",
-        "webignition/basil-runner-documents": ">=0.4,<1",
+        "webignition/basil-runner-documents": "^1.0",
         "webignition/basil-value-type-identifier": ">=0.3,<1",
         "webignition/php-dom-element-identifier": ">=0.16,<1",
         "webignition/symfony-panther-dom-crawler-navigator": ">=0.23,<1",
-        "webignition/yaml-document-generator": ">=0.4,<1"
+        "webignition/yaml-document-generator": "^1.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.4",

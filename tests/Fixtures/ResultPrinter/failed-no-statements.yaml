@@ -1,5 +1,6 @@
 ---
 type: step
-name: 'step name'
-status: failed
+payload:
+  name: 'step name'
+  status: failed
 ...
