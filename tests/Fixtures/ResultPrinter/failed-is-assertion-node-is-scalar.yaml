@@ -1,31 +1,32 @@
 ---
 type: step
-name: 'step name'
-status: failed
-statements:
-  -
-    type: assertion
-    source: '$".selector" is "expected value"'
-    status: failed
-    summary:
-      operator: is
-      expected:
-        value: 'expected value'
-        source:
-          type: scalar
-          body:
-            type: literal
-            value: '"expected value"'
-      actual:
-        value: 'actual value'
-        source:
-          type: node
-          body:
-            type: element
-            identifier:
-              source: '$".selector"'
-              properties:
-                type: css
-                locator: .selector
-                position: 1
+payload:
+  name: 'step name'
+  status: failed
+  statements:
+    -
+      type: assertion
+      source: '$".selector" is "expected value"'
+      status: failed
+      summary:
+        operator: is
+        expected:
+          value: 'expected value'
+          source:
+            type: scalar
+            body:
+              type: literal
+              value: '"expected value"'
+        actual:
+          value: 'actual value'
+          source:
+            type: node
+            body:
+              type: element
+              identifier:
+                source: '$".selector"'
+                properties:
+                  type: css
+                  locator: .selector
+                  position: 1
 ...

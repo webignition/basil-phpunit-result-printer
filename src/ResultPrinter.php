@@ -136,12 +136,12 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
         if ($test instanceof BasilTestCaseInterface) {
             if ($this->uncaughtException instanceof Exception) {
                 if (false === $this->exceptionWritten) {
-                    $this->write($this->generator->generate($this->uncaughtException));
+                    $this->write($this->generator->generate($this->uncaughtException->getData()));
                     $this->exceptionWritten = true;
                 }
             } else {
                 $step = $this->stepFactory->create($test);
-                $this->write($this->generator->generate($step));
+                $this->write($this->generator->generate($step->getData()));
             }
         }
     }

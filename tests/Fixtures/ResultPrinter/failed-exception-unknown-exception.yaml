@@ -1,27 +1,28 @@
 ---
 type: step
-name: 'step with unknown exception'
-status: failed
-statements:
-  -
-    type: assertion
-    source: '$"a[href=https://example.com/]" exists'
-    status: failed
-    exception:
-      type: unknown
-      body:
-        class: LogicException
-        message: 'Invalid logic'
-    summary:
-      operator: exists
-      source:
-        type: node
+payload:
+  name: 'step with unknown exception'
+  status: failed
+  statements:
+    -
+      type: assertion
+      source: '$"a[href=https://example.com/]" exists'
+      status: failed
+      exception:
+        type: unknown
         body:
-          type: element
-          identifier:
-            source: '$"a[href=https://example.com/]"'
-            properties:
-              type: css
-              locator: 'a[href=https://example.com/]'
-              position: 1
+          class: LogicException
+          message: 'Invalid logic'
+      summary:
+        operator: exists
+        source:
+          type: node
+          body:
+            type: element
+            identifier:
+              source: '$"a[href=https://example.com/]"'
+              properties:
+                type: css
+                locator: 'a[href=https://example.com/]'
+                position: 1
 ...

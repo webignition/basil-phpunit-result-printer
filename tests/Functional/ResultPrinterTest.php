@@ -20,12 +20,10 @@ class ResultPrinterTest extends TestCase
     /**
      * @dataProvider terminatedDataProvider
      *
-     * @param array<mixed> $expectedPartialOutput
+     * @param array<int, array<mixed>> $expectedPartialDocuments
      */
-    public function testExceptionHandling(
-        string $phpUnitTestPath,
-        array $expectedPartialOutput
-    ): void {
+    public function testExceptionHandling(string $phpUnitTestPath, array $expectedPartialDocuments): void
+    {
         $phpunitCommand = './vendor/bin/phpunit --printer="' . ResultPrinter::class . '" ' . $phpUnitTestPath;
 
         $phpunitOutput = [];
@@ -35,22 +33,18 @@ class ResultPrinterTest extends TestCase
         self::assertSame(TestRunner::EXCEPTION_EXIT, $exitCode);
 
         $outputYaml = $this->getYamlOutputBody($phpunitOutput);
-        $outputData = (new Parser())->parse($outputYaml);
 
-        self::assertIsArray($outputData);
-        self::assertCount(count($expectedPartialOutput), $outputData);
+        /**
+         * @var array<int, array<mixed>> $documents
+         */
+        $documents = (new Parser())->parse($outputYaml);
 
-        $exceptionData = array_pop($outputData);
-        $exceptionData = is_array($exceptionData) ? $exceptionData : [];
+        self::assertIsArray($documents);
+        self::assertCount(count($expectedPartialDocuments), $documents);
 
-        $expectedPartialExceptionData = array_pop($expectedPartialOutput);
-        $expectedPartialExceptionData = is_array($expectedPartialExceptionData) ? $expectedPartialExceptionData : [];
-
-        foreach ($expectedPartialOutput as $index => $expectedData) {
-            self::assertSame($expectedData, $outputData[$index]);
+        foreach ($expectedPartialDocuments as $index => $expectedPartialDocument) {
+            self::assertDocument($expectedPartialDocument, $documents[$index]);
         }
-
-        self::assertExceptionData($expectedPartialExceptionData, $exceptionData);
     }
 
     /**
@@ -64,19 +58,19 @@ class ResultPrinterTest extends TestCase
         return [
             'terminated, RuntimeException thrown during first step' => [
                 'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInFirstStepTest.php',
-                'expectedPartialOutput' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
+                'expectedPartialDocuments' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
                     '/ResultPrinter/failed-runtime-exception-single-test-first-step-partial.yaml'
                 )),
             ],
             'terminated, RuntimeException thrown during second step' => [
                 'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSecondStepTest.php',
-                'expectedPartialOutput' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
+                'expectedPartialDocuments' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
                     '/ResultPrinter/failed-runtime-exception-single-test-second-step-partial.yaml'
                 )),
             ],
             'terminated, lastException set during setupBeforeClass' => [
                 'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/SetsLastExceptionInSetupBeforeClassTest.php',
-                'expectedPartialOutput' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
+                'expectedPartialDocuments' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
                     '/ResultPrinter/failed-set-last-exception-in-setup-before-class.yaml'
                 )),
             ],
@@ -106,16 +100,44 @@ class ResultPrinterTest extends TestCase
     }
 
     /**
-     * @param array<mixed> $expectedSubset
-     * @param array<mixed> $exceptionData
+     * @param array<mixed> $expected
+     * @param array<mixed> $actual
      */
-    private static function assertExceptionData(array $expectedSubset, array $exceptionData): void
+    private static function assertDocument(array $expected, array $actual): void
     {
-        foreach ($expectedSubset as $key => $value) {
-            self::assertArrayHasKey($key, $exceptionData);
-            self::assertSame($value, $exceptionData[$key]);
+        self::assertArrayHasKey('type', $expected);
+        self::assertArrayHasKey('payload', $expected);
+
+        self::assertArrayHasKey('type', $actual);
+        self::assertArrayHasKey('payload', $actual);
+
+        $expectedType = $expected['type'];
+        self::assertSame($expectedType, $actual['type']);
+
+        if ('exception' === $expectedType) {
+            $expectedPayload = $expected['payload'];
+            $expectedPayload = is_array($expectedPayload) ? $expectedPayload : [];
+
+            $outputPayload = $actual['payload'];
+            $outputPayload = is_array($outputPayload) ? $outputPayload : [];
+
+            self::assertExceptionData($expectedPayload, $outputPayload);
+        } else {
+            self::assertSame($expected, $actual);
+        }
+    }
+
+    /**
+     * @param array<mixed> $expected
+     * @param array<mixed> $actual
+     */
+    private static function assertExceptionData(array $expected, array $actual): void
+    {
+        foreach ($expected as $key => $value) {
+            self::assertArrayHasKey($key, $actual);
+            self::assertSame($value, $actual[$key]);
         }
 
-        self::assertArrayHasKey('trace', $exceptionData);
+        self::assertArrayHasKey('trace', $actual);
     }
 }

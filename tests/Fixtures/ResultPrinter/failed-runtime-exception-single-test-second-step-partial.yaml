@@ -1,11 +1,13 @@
 ---
 type: step
-name: step one
-status: passed
+payload:
+  name: step one
+  status: passed
 ...
 ---
 type: exception
-step: step two
-class: RuntimeException
-message: 'Exception thrown in first step'
-code: 123
+payload:
+  step: step two
+  class: RuntimeException
+  message: 'Exception thrown in first step'
+  code: 123
