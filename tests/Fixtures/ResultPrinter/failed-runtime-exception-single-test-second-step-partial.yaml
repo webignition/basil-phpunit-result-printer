@@ -11,3 +11,4 @@ payload:
   class: RuntimeException
   message: 'Exception thrown in first step'
   code: 123
+...
