@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement;
 
-use webignition\BasilModels\Action\ResolvedAction;
-use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
-use webignition\BasilModels\Assertion\ResolvedAssertion;
-use webignition\BasilModels\EncapsulatingStatementInterface;
-use webignition\BasilModels\StatementInterface;
+use webignition\BasilModels\Model\Action\ResolvedAction;
+use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
+use webignition\BasilModels\Model\Assertion\ResolvedAssertion;
+use webignition\BasilModels\Model\EncapsulatingStatementInterface;
+use webignition\BasilModels\Model\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 
 class TransformationFactory

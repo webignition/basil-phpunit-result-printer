@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement;
 
-use webignition\BasilModels\Action\ActionInterface;
-use webignition\BasilModels\Assertion\AssertionInterface;
+use webignition\BasilModels\Model\Action\ActionInterface;
+use webignition\BasilModels\Model\Assertion\AssertionInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\ActionStatement;

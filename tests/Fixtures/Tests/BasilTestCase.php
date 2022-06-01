@@ -8,8 +8,8 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Runner\BaseTestRunner;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BaseBasilTestCase\ClientManager;
-use webignition\BasilModels\DataSet\DataSetInterface;
-use webignition\BasilModels\Test\ConfigurationInterface;
+use webignition\BasilModels\Model\DataSet\DataSetInterface;
+use webignition\BasilModels\Model\Test\ConfigurationInterface;
 use webignition\DomElementIdentifier\ElementIdentifierInterface;
 
 class BasilTestCase extends TestCase implements BasilTestCaseInterface

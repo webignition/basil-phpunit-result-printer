@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
-use webignition\BasilModels\Action\ActionInterface;
-use webignition\BasilModels\Assertion\AssertionInterface;
-use webignition\BasilModels\DataSet\DataSetInterface;
+use webignition\BasilModels\Model\Action\ActionInterface;
+use webignition\BasilModels\Model\Assertion\AssertionInterface;
+use webignition\BasilModels\Model\DataSet\DataSetInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;

@@ -6,7 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Services;
 
 use Mockery\MockInterface;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
-use webignition\BasilModels\Test\ConfigurationInterface;
+use webignition\BasilModels\Model\Test\ConfigurationInterface;
 
 class BasilTestCaseFactory
 {
