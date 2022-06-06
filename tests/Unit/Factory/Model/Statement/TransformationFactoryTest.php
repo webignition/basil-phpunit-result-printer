@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Statement;
 
-use webignition\BasilModels\Action\Action;
-use webignition\BasilModels\Action\ResolvedAction;
-use webignition\BasilModels\Assertion\Assertion;
-use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
-use webignition\BasilModels\Assertion\ResolvedAssertion;
-use webignition\BasilModels\StatementInterface;
+use webignition\BasilModels\Model\Action\Action;
+use webignition\BasilModels\Model\Action\ResolvedAction;
+use webignition\BasilModels\Model\Assertion\Assertion;
+use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
+use webignition\BasilModels\Model\Assertion\ResolvedAssertion;
+use webignition\BasilModels\Model\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\TransformationFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;

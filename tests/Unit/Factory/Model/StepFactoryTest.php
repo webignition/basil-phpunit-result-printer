@@ -6,9 +6,9 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
 
 use Facebook\WebDriver\Exception\InvalidSelectorException;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
-use webignition\BasilModels\Action\ResolvedAction;
-use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
-use webignition\BasilModels\DataSet\DataSet;
+use webignition\BasilModels\Model\Action\ResolvedAction;
+use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
+use webignition\BasilModels\Model\DataSet\DataSet;
 use webignition\BasilParser\ActionParser;
 use webignition\BasilParser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;

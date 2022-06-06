@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Statement;
 
-use webignition\BasilModels\Action\Action;
-use webignition\BasilModels\Action\ActionInterface;
-use webignition\BasilModels\Action\ResolvedAction;
-use webignition\BasilModels\Assertion\AssertionInterface;
-use webignition\BasilModels\Assertion\DerivedValueOperationAssertion;
+use webignition\BasilModels\Model\Action\Action;
+use webignition\BasilModels\Model\Action\ActionInterface;
+use webignition\BasilModels\Model\Action\ResolvedAction;
+use webignition\BasilModels\Model\Assertion\AssertionInterface;
+use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
 use webignition\BasilParser\ActionParser;
 use webignition\BasilParser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
-use webignition\BasilModels\Test\Configuration;
+use webignition\BasilModels\Model\Test\Configuration;
 
 class SetsLastExceptionInSetupBeforeClassTest extends BasilTestCase
 {
