@@ -7,6 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Functional;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\TextUI\TestRunner;
+use Symfony\Component\Yaml\Parser as YamlParser;
 use webignition\BasilPhpUnitResultPrinter\ResultPrinter;
 use webignition\BasilPhpUnitResultPrinter\Tests\Services\FixtureLoader;
 use webignition\YamlDocumentSetParser\Parser;
@@ -20,9 +21,9 @@ class ResultPrinterTest extends TestCase
     /**
      * @dataProvider terminatedDataProvider
      *
-     * @param array<int, array<mixed>> $expectedPartialDocuments
+     * @param array<int, string> $expectedPartialDocumentContents
      */
-    public function testExceptionHandling(string $phpUnitTestPath, array $expectedPartialDocuments): void
+    public function testExceptionHandling(string $phpUnitTestPath, array $expectedPartialDocumentContents): void
     {
         $phpunitCommand = './vendor/bin/phpunit --printer="' . ResultPrinter::class . '" ' . $phpUnitTestPath;
 
@@ -33,17 +34,21 @@ class ResultPrinterTest extends TestCase
         self::assertSame(TestRunner::EXCEPTION_EXIT, $exitCode);
 
         $outputYaml = $this->getYamlOutputBody($phpunitOutput);
-
-        /**
-         * @var array<int, array<mixed>> $documents
-         */
         $documents = (new Parser())->parse($outputYaml);
 
         self::assertIsArray($documents);
-        self::assertCount(count($expectedPartialDocuments), $documents);
+        self::assertCount(count($expectedPartialDocumentContents), $documents);
 
-        foreach ($expectedPartialDocuments as $index => $expectedPartialDocument) {
-            self::assertDocument($expectedPartialDocument, $documents[$index]);
+        $yamlParser = new YamlParser();
+
+        foreach ($expectedPartialDocumentContents as $index => $expectedPartialDocumentContent) {
+            $document = $yamlParser->parse($documents[$index] ?? '');
+            self::assertIsArray($document);
+
+            $expectedPartialDocument = $yamlParser->parse($expectedPartialDocumentContent);
+            self::assertIsArray($expectedPartialDocument);
+
+            self::assertDocument($expectedPartialDocument, $document);
         }
     }
 
@@ -58,19 +63,19 @@ class ResultPrinterTest extends TestCase
         return [
             'terminated, RuntimeException thrown during first step' => [
                 'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInFirstStepTest.php',
-                'expectedPartialDocuments' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
+                'expectedPartialDocumentContents' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
                     '/ResultPrinter/failed-runtime-exception-single-test-first-step-partial.yaml'
                 )),
             ],
             'terminated, RuntimeException thrown during second step' => [
                 'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSecondStepTest.php',
-                'expectedPartialDocuments' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
+                'expectedPartialDocumentContents' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
                     '/ResultPrinter/failed-runtime-exception-single-test-second-step-partial.yaml'
                 )),
             ],
             'terminated, lastException set during setupBeforeClass' => [
                 'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/SetsLastExceptionInSetupBeforeClassTest.php',
-                'expectedPartialDocuments' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
+                'expectedPartialDocumentContents' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
                     '/ResultPrinter/failed-set-last-exception-in-setup-before-class.yaml'
                 )),
             ],
