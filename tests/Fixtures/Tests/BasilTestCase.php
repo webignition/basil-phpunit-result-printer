@@ -9,13 +9,11 @@ use PHPUnit\Runner\BaseTestRunner;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BaseBasilTestCase\ClientManager;
 use webignition\BasilModels\Model\DataSet\DataSetInterface;
-use webignition\BasilModels\Model\Test\ConfigurationInterface;
 use webignition\DomElementIdentifier\ElementIdentifierInterface;
 
 class BasilTestCase extends TestCase implements BasilTestCaseInterface
 {
     protected static ?\Throwable $lastException = null;
-    protected static ConfigurationInterface $basilTestConfiguration;
     private string $basilStepName = '';
     private static string $basilTestPath = '';
 
@@ -117,16 +115,6 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
     public static function staticGetLastException(): ?\Throwable
     {
         return self::$lastException;
-    }
-
-    public static function setBasilTestConfiguration(ConfigurationInterface $configuration): void
-    {
-        self::$basilTestConfiguration = $configuration;
-    }
-
-    public function getBasilTestConfiguration(): ?ConfigurationInterface
-    {
-        return self::$basilTestConfiguration;
     }
 
     public static function setClientManager(ClientManager $clientManager): void

@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
-use webignition\BasilModels\Model\Test\Configuration;
-
 class ThrowsRuntimeExceptionInFirstStepTest extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
         self::setBasilTestPath('/path/to/runtime-exception-on-first-step-test.yml');
-        self::setBasilTestConfiguration(new Configuration('chrome', 'http://example.com'));
 
         parent::setUpBeforeClass();
     }
