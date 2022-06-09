@@ -8,7 +8,6 @@ use Facebook\WebDriver\Exception\InvalidSelectorException;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BasilModels\Model\Action\ResolvedAction;
 use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
-use webignition\BasilModels\Model\Test\Configuration;
 use webignition\BasilParser\ActionParser;
 use webignition\BasilParser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
@@ -65,7 +64,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'verify page is open',
                         'status' => Status::STATUS_PASSED,
                         'handledStatements' => [
@@ -113,7 +111,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -127,7 +124,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -148,7 +144,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -164,7 +159,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -180,7 +174,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -205,7 +198,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step with invalid locator exception',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -225,7 +217,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step with unknown exception',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -253,7 +244,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -271,7 +261,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -292,7 +281,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -310,7 +298,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -328,7 +315,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -346,7 +332,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -373,7 +358,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -388,7 +372,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -403,7 +386,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
@@ -427,7 +409,6 @@ class ResultPrinterTest extends AbstractBaseTest
                 'tests' => [
                     BasilTestCaseFactory::create([
                         'basilTestPath' => 'test.yml',
-                        'basilTestConfiguration' => new Configuration('chrome', 'http://example.com'),
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [],

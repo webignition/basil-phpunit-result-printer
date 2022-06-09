@@ -6,7 +6,6 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Services;
 
 use Mockery\MockInterface;
 use webignition\BaseBasilTestCase\BasilTestCaseInterface;
-use webignition\BasilModels\Model\Test\ConfigurationInterface;
 
 class BasilTestCaseFactory
 {
@@ -25,7 +24,6 @@ class BasilTestCaseFactory
         $examinedValue = $properties['examinedValue'] ?? null;
         $lastException = $properties['lastException'] ?? null;
         $currentDataSet = $properties['currentDataSet'] ?? null;
-        $basilTestConfiguration = $properties['basilTestConfiguration'] ?? null;
 
         $testCase = \Mockery::mock(BasilTestCaseInterface::class);
 
@@ -70,13 +68,6 @@ class BasilTestCaseFactory
             ->shouldReceive('getCurrentDataSet')
             ->andReturn($currentDataSet)
         ;
-
-        if ($basilTestConfiguration instanceof ConfigurationInterface) {
-            $testCase
-                ->shouldReceive('getBasilTestConfiguration')
-                ->andReturn($basilTestConfiguration)
-            ;
-        }
 
         return $testCase;
     }
