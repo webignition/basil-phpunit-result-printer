@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Statement;
 
-use webignition\BasilParser\AssertionParser;
+use webignition\BasilModels\Parser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
