@@ -33,9 +33,6 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
         $this->stepFactory = StepFactory::createFactory();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function addError(Test $test, \Throwable $t, float $time): void
     {
         if ($test instanceof BasilTestCaseInterface) {
@@ -60,41 +57,26 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function addWarning(Test $test, Warning $e, float $time): void
     {
         // TODO: Implement addWarning() method.
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function addFailure(Test $test, AssertionFailedError $e, float $time): void
     {
         // TODO: Implement addFailure() method.
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function addIncompleteTest(Test $test, \Throwable $t, float $time): void
     {
         // TODO: Implement addIncompleteTest() method.
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function addRiskyTest(Test $test, \Throwable $t, float $time): void
     {
         // TODO: Implement addRiskyTest() method.
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function addSkippedTest(Test $test, \Throwable $t, float $time): void
     {
         // TODO: Implement addSkippedTest() method.
@@ -116,9 +98,6 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
         // TODO: Implement endTestSuite() method.
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function startTest(Test $test): void
     {
         if ($test instanceof BasilTestCaseInterface) {
@@ -128,9 +107,6 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function endTest(Test $test, float $time): void
     {
         if ($test instanceof BasilTestCaseInterface) {
