@@ -16,8 +16,7 @@ class Properties
         private string $type,
         private string $locator,
         private int $position
-    ) {
-    }
+    ) {}
 
     public function hasAttribute(): bool
     {

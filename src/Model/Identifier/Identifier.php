@@ -9,8 +9,7 @@ class Identifier
     public function __construct(
         private string $source,
         private Properties $properties
-    ) {
-    }
+    ) {}
 
     public function isAttribute(): bool
     {

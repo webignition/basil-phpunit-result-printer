@@ -12,8 +12,7 @@ class ScalarSource extends AbstractSource
 
     public function __construct(
         private Scalar $body
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

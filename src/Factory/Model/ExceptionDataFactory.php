@@ -16,8 +16,7 @@ class ExceptionDataFactory
 {
     public function __construct(
         private NodeSourceFactory $nodeSourceFactory
-    ) {
-    }
+    ) {}
 
     public static function createFactory(): self
     {

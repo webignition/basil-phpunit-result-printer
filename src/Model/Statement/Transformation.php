@@ -12,8 +12,7 @@ class Transformation
     public function __construct(
         private string $type,
         private string $source
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<mixed>

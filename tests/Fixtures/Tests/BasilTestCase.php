@@ -42,13 +42,9 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
         return [];
     }
 
-    public function setExaminedValue(?string $examinedValue): void
-    {
-    }
+    public function setExaminedValue(?string $examinedValue): void {}
 
-    public function setExpectedValue(?string $expectedValue): void
-    {
-    }
+    public function setExpectedValue(?string $expectedValue): void {}
 
     public function getExaminedValue(): ?string
     {
@@ -60,13 +56,9 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
         return null;
     }
 
-    public function setBooleanExaminedValue(bool $examinedValue): void
-    {
-    }
+    public function setBooleanExaminedValue(bool $examinedValue): void {}
 
-    public function setBooleanExpectedValue(bool $expectedValue): void
-    {
-    }
+    public function setBooleanExpectedValue(bool $expectedValue): void {}
 
     public function getBooleanExaminedValue(): ?bool
     {
@@ -103,9 +95,7 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
         return self::$lastException;
     }
 
-    public function setCurrentDataSet(?DataSetInterface $dataSet): void
-    {
-    }
+    public function setCurrentDataSet(?DataSetInterface $dataSet): void {}
 
     public function getCurrentDataSet(): ?DataSetInterface
     {
@@ -117,9 +107,7 @@ class BasilTestCase extends TestCase implements BasilTestCaseInterface
         return self::$lastException;
     }
 
-    public static function setClientManager(ClientManager $clientManager): void
-    {
-    }
+    public static function setClientManager(ClientManager $clientManager): void {}
 
     public function getStatus(): int
     {

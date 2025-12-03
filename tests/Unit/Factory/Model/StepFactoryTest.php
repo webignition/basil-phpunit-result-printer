@@ -81,8 +81,8 @@ class StepFactoryTest extends AbstractBaseTest
         );
 
         $nodeSourceFactory = NodeSourceFactory::createFactory();
-        $invalidLocatorNodeSource =
-            $nodeSourceFactory->create('$"a[href=https://example.com]"') ?? \Mockery::mock(NodeSource::class);
+        $invalidLocatorNodeSource
+            = $nodeSourceFactory->create('$"a[href=https://example.com]"') ?? \Mockery::mock(NodeSource::class);
 
         return [
             'no statements, passed' => [

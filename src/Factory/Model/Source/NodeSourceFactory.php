@@ -13,8 +13,7 @@ class NodeSourceFactory
 {
     public function __construct(
         private IdentifierFactory $identifierFactory
-    ) {
-    }
+    ) {}
 
     public static function createFactory(): self
     {

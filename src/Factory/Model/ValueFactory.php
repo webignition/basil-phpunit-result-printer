@@ -12,8 +12,7 @@ class ValueFactory
 {
     public function __construct(
         private SourceFactory $sourceFactory
-    ) {
-    }
+    ) {}
 
     public static function createFactory(): self
     {

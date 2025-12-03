@@ -11,8 +11,7 @@ class ScalarFactory
 {
     public function __construct(
         private ValueTypeIdentifier $valueTypeIdentifier
-    ) {
-    }
+    ) {}
 
     public static function createFactory(): self
     {

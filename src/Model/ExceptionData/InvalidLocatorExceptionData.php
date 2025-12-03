@@ -14,8 +14,7 @@ class InvalidLocatorExceptionData extends AbstractExceptionData
         private string $type,
         private string $locator,
         private NodeSource $source
-    ) {
-    }
+    ) {}
 
     protected function getType(): string
     {

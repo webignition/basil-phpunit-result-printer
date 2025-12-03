@@ -19,8 +19,7 @@ class StatementFactory
     public function __construct(
         private TransformationFactory $transformationFactory,
         private AssertionFailureSummaryFactory $assertionFailureSummaryFactory
-    ) {
-    }
+    ) {}
 
     public static function createFactory(): self
     {

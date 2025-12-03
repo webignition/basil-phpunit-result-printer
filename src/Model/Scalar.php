@@ -15,8 +15,7 @@ class Scalar implements SourceBodyInterface
     public function __construct(
         private string $type,
         private string $value
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<mixed>

@@ -12,8 +12,7 @@ class NodeSource extends AbstractSource
 
     public function __construct(
         private Node $body
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

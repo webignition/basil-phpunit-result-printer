@@ -13,8 +13,7 @@ class IsRegExp implements AssertionFailureSummaryInterface
     public function __construct(
         private string $value,
         private SourceInterface $source
-    ) {
-    }
+    ) {}
 
     public function getData(): array
     {

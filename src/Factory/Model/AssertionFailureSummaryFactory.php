@@ -19,8 +19,7 @@ class AssertionFailureSummaryFactory
     public function __construct(
         private SourceFactory $sourceFactory,
         private ValueFactory $valueFactory
-    ) {
-    }
+    ) {}
 
     public static function createFactory(): self
     {

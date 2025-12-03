@@ -12,8 +12,7 @@ class Comparison implements AssertionFailureSummaryInterface
         private string $operator,
         private Value $expected,
         private Value $actual
-    ) {
-    }
+    ) {}
 
     public function getData(): array
     {

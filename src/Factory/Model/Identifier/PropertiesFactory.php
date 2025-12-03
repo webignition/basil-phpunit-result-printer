@@ -13,8 +13,7 @@ class PropertiesFactory
 {
     public function __construct(
         private DomIdentifierFactory $domIdentifierFactory
-    ) {
-    }
+    ) {}
 
     public static function createFactory(): self
     {

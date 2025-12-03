@@ -13,8 +13,7 @@ class SourceFactory
         private NodeSourceFactory $nodeSourceFactory,
         private ScalarSourceFactory $scalarSourceFactory,
         private IdentifierTypeAnalyser $identifierTypeAnalyser
-    ) {
-    }
+    ) {}
 
     public static function createFactory(): self
     {
