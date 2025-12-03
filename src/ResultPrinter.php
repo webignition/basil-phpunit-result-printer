@@ -129,9 +129,7 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
             && $this->testWithException instanceof BasilTestCaseInterface
             && ($lastException = $this->testWithException->getLastException()) instanceof \Throwable
         ) {
-            if ($lastException instanceof \Throwable) {
-                $result->addError($this->testWithException, $lastException, 0);
-            }
+            $result->addError($this->testWithException, $lastException, 0);
         }
     }
 }

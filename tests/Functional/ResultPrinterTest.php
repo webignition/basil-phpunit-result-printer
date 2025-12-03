@@ -36,7 +36,6 @@ class ResultPrinterTest extends TestCase
         $outputYaml = $this->getYamlOutputBody($phpunitOutput);
         $documents = (new Parser())->parse($outputYaml);
 
-        self::assertIsArray($documents);
         self::assertCount(count($expectedPartialDocumentContents), $documents);
 
         $yamlParser = new YamlParser();

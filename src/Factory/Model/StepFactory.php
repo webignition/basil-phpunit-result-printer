@@ -86,11 +86,9 @@ class StepFactory
             if (count($statements) > 0) {
                 $finalStatement = array_pop($statements);
 
-                if ($finalStatement instanceof StatementInterface) {
-                    $exceptionData = $this->exceptionDataFactory->create($lastException);
-                    $finalStatement = $finalStatement->withExceptionData($exceptionData);
-                    $statements[] = $finalStatement;
-                }
+                $exceptionData = $this->exceptionDataFactory->create($lastException);
+                $finalStatement = $finalStatement->withExceptionData($exceptionData);
+                $statements[] = $finalStatement;
             }
         }
 
