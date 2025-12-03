@@ -49,7 +49,7 @@
         "webignition/basil-value-type-identifier": ">=0.3,<1",
         "webignition/php-dom-element-identifier": ">=0.16,<1",
         "webignition/symfony-panther-dom-crawler-navigator": ">=0.23,<1",
-        "webignition/yaml-document-generator": "^1.0"
+        "webignition/yaml-document-generator": "^2.2"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.91",
