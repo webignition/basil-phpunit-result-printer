@@ -1,0 +1,14 @@
+---
+type: step
+payload:
+  name: step one
+  status: passed
+...
+---
+type: exception
+payload:
+  step: step two
+  class: PHPUnit\Framework\ExceptionWrapper
+  message: 'Exception thrown in first step'
+  code: 123
+...
