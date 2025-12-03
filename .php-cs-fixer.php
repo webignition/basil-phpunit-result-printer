@@ -14,5 +14,4 @@ return $config->setRules([
     'class_definition' => false,
     'php_unit_internal_class' => false,
     'php_unit_test_class_requires_covers' => false,
-    'stringable_for_to_string' => false,
 ])->setFinder($finder);

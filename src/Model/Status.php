@@ -6,7 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Model;
 
 use PHPUnit\Runner\BaseTestRunner;
 
-class Status
+class Status implements \Stringable
 {
     public const LABEL_PASSED = 'passed';
     public const LABEL_FAILED = 'failed';
