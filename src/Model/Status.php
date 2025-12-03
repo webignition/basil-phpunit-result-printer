@@ -25,8 +25,7 @@ class Status
 
     public function __construct(
         private int $status
-    ) {
-    }
+    ) {}
 
     public function __toString(): string
     {

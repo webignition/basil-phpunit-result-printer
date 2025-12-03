@@ -11,8 +11,7 @@ class IdentifierFactory
 {
     public function __construct(
         private PropertiesFactory $propertiesFactory
-    ) {
-    }
+    ) {}
 
     public static function createFactory(): self
     {

@@ -29,7 +29,7 @@ class UnknownExceptionDataTest extends AbstractBaseTest
         return [
             'default' => [
                 'class' => 'Acme\ClassName',
-                'message' => 'Unable to update widget when stationary'
+                'message' => 'Unable to update widget when stationary',
             ],
         ];
     }
@@ -61,7 +61,7 @@ class UnknownExceptionDataTest extends AbstractBaseTest
                         'class' => 'Acme\ClassName',
                         'message' => 'Unable to update widget when stationary',
                     ],
-                ]
+                ],
             ],
         ];
     }

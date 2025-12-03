@@ -222,7 +222,7 @@ class ResultPrinterTest extends AbstractBaseTest
                         'handledStatements' => [
                             $assertionParser->parse('$"a[href=https://example.com/]" exists'),
                         ],
-                        'lastException' => new \LogicException('Invalid logic')
+                        'lastException' => new \LogicException('Invalid logic'),
                     ]),
                 ],
                 'expectedOutput' => FixtureLoader::load(
@@ -269,7 +269,7 @@ class ResultPrinterTest extends AbstractBaseTest
                         'expectedValue' => 'expected title value',
                         'examinedValue' => 'Example Domain',
                         'dataSet' => [
-                            'expected_url' => 'expected title value'
+                            'expected_url' => 'expected title value',
                         ],
                     ]),
                 ],

@@ -11,8 +11,7 @@ class Existence implements AssertionFailureSummaryInterface
     public function __construct(
         private string $operator,
         private NodeSource $source
-    ) {
-    }
+    ) {}
 
     public function getData(): array
     {

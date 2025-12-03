@@ -14,8 +14,7 @@ class Node implements SourceBodyInterface
     public function __construct(
         private string $type,
         private Identifier $identifier
-    ) {
-    }
+    ) {}
 
     public static function fromIdentifier(Identifier $identifier): self
     {

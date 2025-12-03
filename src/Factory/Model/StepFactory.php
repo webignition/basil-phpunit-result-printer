@@ -18,8 +18,7 @@ class StepFactory
     public function __construct(
         private StatementFactory $statementFactory,
         private ExceptionDataFactory $exceptionDataFactory
-    ) {
-    }
+    ) {}
 
     public static function createFactory(): self
     {

@@ -73,7 +73,7 @@ class InvalidLocatorExceptionDataTest extends AbstractBaseTest
                         'locator' => 'a[href=https://example.com]',
                         'source' => $nodeSource->getData(),
                     ],
-                ]
+                ],
             ],
         ];
     }

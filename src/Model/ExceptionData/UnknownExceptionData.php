@@ -11,8 +11,7 @@ class UnknownExceptionData extends AbstractExceptionData
     public function __construct(
         private string $class,
         private string $message
-    ) {
-    }
+    ) {}
 
     protected function getType(): string
     {

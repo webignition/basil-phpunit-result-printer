@@ -11,8 +11,7 @@ class Value
     public function __construct(
         private string $value,
         private SourceInterface $source
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<mixed>

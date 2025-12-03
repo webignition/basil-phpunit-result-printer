@@ -12,8 +12,7 @@ class ScalarSourceFactory
 {
     public function __construct(
         private ScalarFactory $scalarFactory
-    ) {
-    }
+    ) {}
 
     public static function createFactory(): self
     {
