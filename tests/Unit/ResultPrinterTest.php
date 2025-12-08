@@ -361,7 +361,7 @@ class ResultPrinterTest extends AbstractBaseTest
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $this->createDerivedIsRegExpAssertion('$page.title matches $".selector".attribute_name'),
+                            self::createDerivedIsRegExpAssertion('$page.title matches $".selector".attribute_name'),
                         ],
                         'examinedValue' => 'not a regexp',
                     ]),
@@ -375,7 +375,7 @@ class ResultPrinterTest extends AbstractBaseTest
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $this->createDerivedIsRegExpAssertion('$page.title matches $".selector"'),
+                            self::createDerivedIsRegExpAssertion('$page.title matches $".selector"'),
                         ],
                         'examinedValue' => 'not a regexp',
                     ]),
@@ -389,7 +389,7 @@ class ResultPrinterTest extends AbstractBaseTest
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $this->createDerivedIsRegExpAssertion('$page.title matches "not a regexp"'),
+                            self::createDerivedIsRegExpAssertion('$page.title matches "not a regexp"'),
                         ],
                         'examinedValue' => 'not a regexp',
                     ]),
@@ -419,7 +419,7 @@ class ResultPrinterTest extends AbstractBaseTest
         ];
     }
 
-    private function createDerivedIsRegExpAssertion(string $assertionSource): DerivedValueOperationAssertion
+    private static function createDerivedIsRegExpAssertion(string $assertionSource): DerivedValueOperationAssertion
     {
         $assertion = AssertionParser::create()->parse($assertionSource);
 
