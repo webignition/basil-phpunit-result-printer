@@ -19,8 +19,8 @@ class IdentifierTest extends AbstractBaseTest
     {
         $identifier = new Identifier($source, $properties);
 
-        $this->assertSame($source, ObjectReflector::getProperty($identifier, 'source'));
-        $this->assertSame($properties, ObjectReflector::getProperty($identifier, 'properties'));
+        self::assertSame($source, ObjectReflector::getProperty($identifier, 'source'));
+        self::assertSame($properties, ObjectReflector::getProperty($identifier, 'properties'));
     }
 
     /**

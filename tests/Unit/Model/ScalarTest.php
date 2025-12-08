@@ -17,8 +17,8 @@ class ScalarTest extends AbstractBaseTest
     {
         $scalar = new Scalar($type, $value);
 
-        $this->assertSame($type, ObjectReflector::getProperty($scalar, 'type'));
-        $this->assertSame($value, ObjectReflector::getProperty($scalar, 'value'));
+        self::assertSame($type, ObjectReflector::getProperty($scalar, 'type'));
+        self::assertSame($value, ObjectReflector::getProperty($scalar, 'value'));
     }
 
     /**
