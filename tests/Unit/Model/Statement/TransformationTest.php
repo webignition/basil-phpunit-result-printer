@@ -17,8 +17,8 @@ class TransformationTest extends AbstractBaseTest
     {
         $transformation = new Transformation($type, $source);
 
-        $this->assertSame($type, ObjectReflector::getProperty($transformation, 'type'));
-        $this->assertSame($source, ObjectReflector::getProperty($transformation, 'source'));
+        self::assertSame($type, ObjectReflector::getProperty($transformation, 'type'));
+        self::assertSame($source, ObjectReflector::getProperty($transformation, 'source'));
     }
 
     /**

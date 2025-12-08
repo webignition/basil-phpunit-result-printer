@@ -45,7 +45,7 @@ class ResultPrinterTest extends AbstractBaseTest
             $outContent = stream_get_contents($outResource);
             fclose($outResource);
 
-            $this->assertSame($expectedOutput, $outContent);
+            self::assertSame($expectedOutput, $outContent);
         } else {
             $this->fail('Failed to open resource "php://memory" for reading and writing');
         }
