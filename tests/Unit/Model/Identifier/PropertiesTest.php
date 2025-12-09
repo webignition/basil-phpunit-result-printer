@@ -34,13 +34,11 @@ class PropertiesTest extends AbstractBaseTestCase
                 'type' => Properties::TYPE_CSS,
                 'locator' => '.selector',
                 'position' => 1,
-                'parent' => null,
             ],
             'xpath' => [
                 'type' => Properties::TYPE_XPATH,
                 'locator' => '//div/p',
                 'position' => 1,
-                'parent' => null,
             ],
         ];
     }
