@@ -158,7 +158,7 @@ class StepFactoryTest extends AbstractBaseTest
                 'expectedStep' => new Step(
                     'step name',
                     $statusFailedLabel,
-                    $this->filterStatements([
+                    self::filterStatements([
                         $statementFactory->createForFailedAssertion($existsAssertion, '', ''),
                     ])
                 ),
@@ -175,7 +175,7 @@ class StepFactoryTest extends AbstractBaseTest
                 'expectedStep' => new Step(
                     'step name',
                     $statusFailedLabel,
-                    $this->filterStatements([
+                    self::filterStatements([
                         ($statementFactory->createForFailedAssertion(
                             $existsAssertion,
                             '',
@@ -205,7 +205,7 @@ class StepFactoryTest extends AbstractBaseTest
                 'expectedStep' => new Step(
                     'step name',
                     $statusFailedLabel,
-                    $this->filterStatements([
+                    self::filterStatements([
                         $statementFactory->createForPassedAssertion($existsAssertion),
                         $statementFactory->createForPassedAssertion($isAssertion),
                         $statementFactory->createForFailedAssertion(
@@ -280,7 +280,7 @@ class StepFactoryTest extends AbstractBaseTest
      *
      * @return StatementInterface[]
      */
-    private function filterStatements(array $statements): array
+    private static function filterStatements(array $statements): array
     {
         return array_filter($statements, function ($item) {
             return $item instanceof StatementInterface;
