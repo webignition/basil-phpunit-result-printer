@@ -25,9 +25,9 @@ use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStateme
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\PassedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
-class StatementFactoryTest extends AbstractBaseTest
+class StatementFactoryTest extends AbstractBaseTestCase
 {
     private StatementFactory $factory;
 

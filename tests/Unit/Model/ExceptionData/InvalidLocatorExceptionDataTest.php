@@ -7,10 +7,10 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\ExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
-class InvalidLocatorExceptionDataTest extends AbstractBaseTest
+class InvalidLocatorExceptionDataTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider

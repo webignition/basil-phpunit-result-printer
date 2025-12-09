@@ -6,9 +6,9 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Identif
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\PropertiesFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
-class PropertiesFactoryTest extends AbstractBaseTest
+class PropertiesFactoryTest extends AbstractBaseTestCase
 {
     private PropertiesFactory $factory;
 

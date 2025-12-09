@@ -7,10 +7,10 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\AssertionFailur
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ValueFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\Comparison;
 use webignition\BasilPhpUnitResultPrinter\Model\Value;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
-class ComparisonTest extends AbstractBaseTest
+class ComparisonTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\ExceptionData;
 
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\UnknownExceptionData;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
-class UnknownExceptionDataTest extends AbstractBaseTest
+class UnknownExceptionDataTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider

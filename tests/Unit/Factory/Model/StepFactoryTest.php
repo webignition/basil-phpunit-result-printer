@@ -20,12 +20,12 @@ use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStateme
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\Tests\Services\BasilTestCaseFactory;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\BasilRunnerDocuments\Step;
 use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
-class StepFactoryTest extends AbstractBaseTest
+class StepFactoryTest extends AbstractBaseTestCase
 {
     private StepFactory $factory;
 

@@ -9,9 +9,9 @@ use webignition\BasilPhpUnitResultPrinter\Factory\Model\ValueFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\ScalarSource;
 use webignition\BasilPhpUnitResultPrinter\Model\Value;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
-class ValueFactoryTest extends AbstractBaseTest
+class ValueFactoryTest extends AbstractBaseTestCase
 {
     private ValueFactory $factory;
 

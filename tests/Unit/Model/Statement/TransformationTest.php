@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Statement;
 
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
-class TransformationTest extends AbstractBaseTest
+class TransformationTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider

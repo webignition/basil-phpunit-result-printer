@@ -8,10 +8,10 @@ use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\IdentifierFac
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\Model\Node;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
-class NodeSourceTest extends AbstractBaseTest
+class NodeSourceTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider

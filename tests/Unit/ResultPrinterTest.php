@@ -17,7 +17,7 @@ use webignition\BasilPhpUnitResultPrinter\Tests\Services\FixtureLoader;
 use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
-class ResultPrinterTest extends AbstractBaseTest
+class ResultPrinterTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider passedDataProvider

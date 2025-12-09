@@ -8,9 +8,9 @@ use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\ScalarSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\SourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\SourceInterface;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
-class SourceFactoryTest extends AbstractBaseTest
+class SourceFactoryTest extends AbstractBaseTestCase
 {
     private SourceFactory $factory;
 

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model;
 
 use webignition\BasilPhpUnitResultPrinter\Model\Scalar;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
-class ScalarTest extends AbstractBaseTest
+class ScalarTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider

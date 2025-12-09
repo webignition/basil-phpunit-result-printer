@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model;
 
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
-class StatusTest extends AbstractBaseTest
+class StatusTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider toStringDataProvider
