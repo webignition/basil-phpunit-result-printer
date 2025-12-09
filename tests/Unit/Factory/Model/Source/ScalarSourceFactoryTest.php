@@ -24,9 +24,9 @@ class ScalarSourceFactoryTest extends AbstractBaseTestCase
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $source, ?ScalarSource $expectedNodeSource): void
+    public function testCreate(string $source, ?ScalarSource $expected): void
     {
-        self::assertEquals($expectedNodeSource, $this->factory->create($source));
+        self::assertEquals($expected, $this->factory->create($source));
     }
 
     /**
@@ -39,11 +39,11 @@ class ScalarSourceFactoryTest extends AbstractBaseTestCase
         return [
             'empty' => [
                 'source' => '',
-                'expectedScalarSource' => null,
+                'expected' => null,
             ],
             'non-empty' => [
                 'source' => '"literal"',
-                'expectedScalarSource' => new ScalarSource(
+                'expected' => new ScalarSource(
                     $scalarFactory->create('"literal"') ?? \Mockery::mock(Scalar::class)
                 ),
             ],
