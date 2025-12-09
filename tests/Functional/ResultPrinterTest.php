@@ -6,7 +6,6 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Functional;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\TextUI\TestRunner;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use webignition\BasilPhpUnitResultPrinter\ResultPrinter;
 use webignition\BasilPhpUnitResultPrinter\Tests\Services\FixtureLoader;
@@ -31,7 +30,8 @@ class ResultPrinterTest extends TestCase
         $exitCode = null;
 
         exec($phpunitCommand, $phpunitOutput, $exitCode);
-        self::assertSame(TestRunner::EXCEPTION_EXIT, $exitCode);
+        // Value of 2 taken from phpunit 9.6 PHPUnit\TextUI\TestRunner::EXCEPTION_EXIT
+        self::assertSame(2, $exitCode);
 
         $outputYaml = $this->getYamlOutputBody($phpunitOutput);
         $documents = (new Parser())->parse($outputYaml);
