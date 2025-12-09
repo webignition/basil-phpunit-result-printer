@@ -49,7 +49,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createForPassedActionDataProvider(): array
+    public static function createForPassedActionDataProvider(): array
     {
         $transformationFactory = new TransformationFactory();
 
@@ -99,7 +99,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createForFailedActionDataProvider(): array
+    public static function createForFailedActionDataProvider(): array
     {
         $transformationFactory = new TransformationFactory();
 
@@ -151,7 +151,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createForPassedAssertionDataProvider(): array
+    public static function createForPassedAssertionDataProvider(): array
     {
         $transformationFactory = new TransformationFactory();
 
@@ -214,7 +214,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createForFailedAssertionDataProvider(): array
+    public static function createForFailedAssertionDataProvider(): array
     {
         $transformationFactory = new TransformationFactory();
         $assertionFailureSummaryFactory = AssertionFailureSummaryFactory::createFactory();

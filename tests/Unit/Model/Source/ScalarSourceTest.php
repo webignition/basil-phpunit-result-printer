@@ -25,7 +25,7 @@ class ScalarSourceTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         return [
             'scalar' => [
@@ -47,7 +47,7 @@ class ScalarSourceTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         $scalarFactory = ScalarFactory::createFactory();
 

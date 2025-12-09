@@ -38,7 +38,7 @@ class TransformationFactoryTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createTransformationsDataProvider(): array
+    public static function createTransformationsDataProvider(): array
     {
         $clickAction = new Action(
             'click $".selector"',

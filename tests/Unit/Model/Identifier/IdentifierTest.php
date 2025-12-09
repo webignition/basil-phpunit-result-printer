@@ -26,7 +26,7 @@ class IdentifierTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         return [
             'default' => [
@@ -49,7 +49,7 @@ class IdentifierTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         $propertiesFactory = PropertiesFactory::createFactory();
         $properties = $propertiesFactory->create('$".selector"') ?? \Mockery::mock(Properties::class);
@@ -76,7 +76,7 @@ class IdentifierTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function isAttributeDataProvider(): array
+    public static function isAttributeDataProvider(): array
     {
         $elementProperties = \Mockery::mock(Properties::class);
         $elementProperties

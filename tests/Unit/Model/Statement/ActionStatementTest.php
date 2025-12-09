@@ -33,7 +33,7 @@ class ActionStatementTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         $statusPassed = (string) new Status(Status::STATUS_PASSED);
         $statusFailed = (string) new Status(Status::STATUS_FAILED);
@@ -104,7 +104,7 @@ class ActionStatementTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         $statusPassed = (string) new Status(Status::STATUS_PASSED);
         $statusFailed = (string) new Status(Status::STATUS_FAILED);

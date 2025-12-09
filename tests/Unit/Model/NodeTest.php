@@ -27,7 +27,7 @@ class NodeTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         return [
             'default' => [
@@ -50,7 +50,7 @@ class NodeTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         $identifierFactory = IdentifierFactory::createFactory();
 
@@ -91,7 +91,7 @@ class NodeTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function fromIdentifierDataProvider(): array
+    public static function fromIdentifierDataProvider(): array
     {
         $elementProperties = new Properties(
             Properties::TYPE_CSS,

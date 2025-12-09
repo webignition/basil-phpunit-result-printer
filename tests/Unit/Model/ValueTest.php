@@ -28,7 +28,7 @@ class ValueTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         return [
             'node' => [
@@ -55,7 +55,7 @@ class ValueTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         $sourceFactory = SourceFactory::createFactory();
 

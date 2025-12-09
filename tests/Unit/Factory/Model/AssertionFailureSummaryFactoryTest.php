@@ -46,7 +46,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createSuccessDataProvider(): array
+    public static function createSuccessDataProvider(): array
     {
         $assertionParser = AssertionParser::create();
 
@@ -201,7 +201,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createFailureDataProvider(): array
+    public static function createFailureDataProvider(): array
     {
         return [
             'exists, invalid source' => [

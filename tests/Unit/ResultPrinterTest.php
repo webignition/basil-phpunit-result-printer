@@ -54,7 +54,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function passedDataProvider(): array
+    public static function passedDataProvider(): array
     {
         $actionParser = ActionParser::create();
         $assertionParser = AssertionParser::create();
@@ -101,7 +101,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function failedExistsAssertionDataProvider(): array
+    public static function failedExistsAssertionDataProvider(): array
     {
         $actionParser = ActionParser::create();
         $assertionParser = AssertionParser::create();
@@ -189,7 +189,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function failedExceptionDataProvider(): array
+    public static function failedExceptionDataProvider(): array
     {
         $assertionParser = AssertionParser::create();
 
@@ -235,7 +235,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function failedIsAssertionDataProvider(): array
+    public static function failedIsAssertionDataProvider(): array
     {
         $assertionParser = AssertionParser::create();
 
@@ -351,7 +351,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function failedIsRegExpDataProvider(): array
+    public static function failedIsRegExpDataProvider(): array
     {
         return [
             'failed, attribute is-regexp assertion' => [
@@ -402,7 +402,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function failedNoStatementsDataProvider(): array
+    public static function failedNoStatementsDataProvider(): array
     {
         return [
             'failed, no statements' => [

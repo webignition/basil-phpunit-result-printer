@@ -32,7 +32,7 @@ class SourceFactoryTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         $nodeSourceFactory = NodeSourceFactory::createFactory();
         $scalarSourceFactory = ScalarSourceFactory::createFactory();

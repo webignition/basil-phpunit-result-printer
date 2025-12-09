@@ -26,7 +26,7 @@ class NodeSourceTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         return [
             'default' => [
@@ -51,7 +51,7 @@ class NodeSourceTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         $identifierFactory = IdentifierFactory::createFactory();
 
