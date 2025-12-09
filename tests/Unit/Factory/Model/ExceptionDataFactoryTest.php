@@ -38,7 +38,7 @@ class ExceptionDataFactoryTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         $nodeSourceFactory = NodeSourceFactory::createFactory();
 

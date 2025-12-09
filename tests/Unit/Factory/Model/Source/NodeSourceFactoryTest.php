@@ -33,7 +33,7 @@ class NodeSourceFactoryTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         $identifierFactory = IdentifierFactory::createFactory();
 

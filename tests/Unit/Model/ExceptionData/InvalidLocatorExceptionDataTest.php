@@ -27,7 +27,7 @@ class InvalidLocatorExceptionDataTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         $nodeSourceFactory = NodeSourceFactory::createFactory();
 
@@ -54,7 +54,7 @@ class InvalidLocatorExceptionDataTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         $nodeSourceFactory = NodeSourceFactory::createFactory();
         $nodeSource = $nodeSourceFactory->create('$"a[href=https://example.com]"') ?? \Mockery::mock(NodeSource::class);

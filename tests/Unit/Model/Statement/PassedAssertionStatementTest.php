@@ -29,7 +29,7 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         $transformations = [
             new Transformation(
@@ -72,7 +72,7 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         $statusPassed = (string) new Status(Status::STATUS_PASSED);
 

@@ -27,7 +27,7 @@ class PropertiesTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         return [
             'css' => [
@@ -68,7 +68,7 @@ class PropertiesTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         return [
             'css, without attribute, without parent' => [
@@ -159,7 +159,7 @@ class PropertiesTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function hasAttributeDataProvider(): array
+    public static function hasAttributeDataProvider(): array
     {
         return [
             'not has attribute' => [

@@ -26,7 +26,7 @@ class ExistenceTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         return [
             'default' => [
@@ -49,7 +49,7 @@ class ExistenceTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         $nodeSourceFactory = NodeSourceFactory::createFactory();
         $nodeSource = $nodeSourceFactory->create('$".selector"') ?? \Mockery::mock(NodeSource::class);

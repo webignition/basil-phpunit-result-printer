@@ -24,7 +24,7 @@ class ScalarTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         return [
             'browser property' => [
@@ -63,7 +63,7 @@ class ScalarTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         return [
             'browser property' => [

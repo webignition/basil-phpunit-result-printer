@@ -54,7 +54,7 @@ class ResultPrinterTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function terminatedDataProvider(): array
+    public static function terminatedDataProvider(): array
     {
         $root = getcwd();
         $yamlDocumentSetParser = new Parser();

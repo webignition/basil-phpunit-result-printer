@@ -29,7 +29,7 @@ class IsRegExpTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         return [
             'node' => [
@@ -56,7 +56,7 @@ class IsRegExpTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public function getDataDataProvider(): array
+    public static function getDataDataProvider(): array
     {
         $nodeSourceFactory = NodeSourceFactory::createFactory();
         $scalarSourceFactory = ScalarSourceFactory::createFactory();
