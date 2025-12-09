@@ -24,9 +24,9 @@ class SourceFactoryTest extends AbstractBaseTestCase
     /**
      * @dataProvider createDataProvider
      */
-    public function testCreate(string $source, ?SourceInterface $expectedNodeSource): void
+    public function testCreate(string $source, ?SourceInterface $expected): void
     {
-        self::assertEquals($expectedNodeSource, $this->factory->create($source));
+        self::assertEquals($expected, $this->factory->create($source));
     }
 
     /**
@@ -40,15 +40,15 @@ class SourceFactoryTest extends AbstractBaseTestCase
         return [
             'empty' => [
                 'source' => '',
-                'expectedSource' => null,
+                'expected' => null,
             ],
             'node' => [
                 'source' => '$".selector"',
-                'expectedSource' => $nodeSourceFactory->create('$".selector"'),
+                'expected' => $nodeSourceFactory->create('$".selector"'),
             ],
             'scalar' => [
                 'source' => '"literal"',
-                'expectedSource' => $scalarSourceFactory->create('"literal"'),
+                'expected' => $scalarSourceFactory->create('"literal"'),
             ],
         ];
     }
