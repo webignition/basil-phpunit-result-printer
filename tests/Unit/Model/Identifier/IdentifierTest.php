@@ -7,10 +7,10 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Identifier;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\PropertiesFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
-class IdentifierTest extends AbstractBaseTest
+class IdentifierTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider

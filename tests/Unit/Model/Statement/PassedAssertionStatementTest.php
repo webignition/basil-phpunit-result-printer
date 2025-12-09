@@ -7,9 +7,9 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Statement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\PassedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
-class PassedAssertionStatementTest extends AbstractBaseTest
+class PassedAssertionStatementTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider

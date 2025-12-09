@@ -6,9 +6,9 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ScalarFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Scalar;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
-class ScalarFactoryTest extends AbstractBaseTest
+class ScalarFactoryTest extends AbstractBaseTestCase
 {
     private ScalarFactory $factory;
 

@@ -7,10 +7,10 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Source;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ScalarFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Scalar;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\ScalarSource;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
-class ScalarSourceTest extends AbstractBaseTest
+class ScalarSourceTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider

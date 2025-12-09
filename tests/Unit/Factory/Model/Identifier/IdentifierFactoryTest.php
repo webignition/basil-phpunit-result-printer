@@ -8,9 +8,9 @@ use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\IdentifierFac
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\PropertiesFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
-class IdentifierFactoryTest extends AbstractBaseTest
+class IdentifierFactoryTest extends AbstractBaseTestCase
 {
     private IdentifierFactory $factory;
 

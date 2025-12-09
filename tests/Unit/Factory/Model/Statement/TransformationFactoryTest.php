@@ -12,9 +12,9 @@ use webignition\BasilModels\Model\Assertion\ResolvedAssertion;
 use webignition\BasilModels\Model\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\TransformationFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
-class TransformationFactoryTest extends AbstractBaseTest
+class TransformationFactoryTest extends AbstractBaseTestCase
 {
     private TransformationFactory $factory;
 

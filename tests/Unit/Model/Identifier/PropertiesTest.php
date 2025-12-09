@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Identifier;
 
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
-class PropertiesTest extends AbstractBaseTest
+class PropertiesTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider

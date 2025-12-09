@@ -9,10 +9,10 @@ use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\ScalarSource;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\SourceInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Value;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
-class ValueTest extends AbstractBaseTest
+class ValueTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider

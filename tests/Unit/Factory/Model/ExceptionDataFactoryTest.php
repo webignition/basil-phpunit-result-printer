@@ -11,12 +11,12 @@ use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInter
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\UnknownExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\DomElementIdentifier\ElementIdentifierInterface;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
-class ExceptionDataFactoryTest extends AbstractBaseTest
+class ExceptionDataFactoryTest extends AbstractBaseTestCase
 {
     private ExceptionDataFactory $factory;
 

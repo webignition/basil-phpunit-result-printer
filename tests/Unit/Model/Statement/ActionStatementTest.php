@@ -10,9 +10,9 @@ use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\ActionStatement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
-use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTest;
+use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
-class ActionStatementTest extends AbstractBaseTest
+class ActionStatementTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider
