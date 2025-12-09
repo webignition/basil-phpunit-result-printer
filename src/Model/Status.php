@@ -11,8 +11,13 @@ class Status implements \Stringable
     public const LABEL_UNKNOWN = 'unknown';
     public const LABEL_TERMINATED = 'terminated';
 
+    // Value taken from old PHPUnit\Runner\BaseTestRunner::STATUS_PASSED
     public const STATUS_PASSED = 0;
+
+    // Value taken from old PHPUnit\Runner\BaseTestRunner::STATUS_FAILURE
     public const STATUS_FAILED = 3;
+
+    // Value taken from old PHPUnit\Runner\BaseTestRunner::STATUS_ERROR
     public const STATUS_TERMINATED = 4;
 
     private const MAP = [
