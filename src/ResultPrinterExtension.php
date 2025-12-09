@@ -8,6 +8,7 @@ use PHPUnit\Runner\Extension\Extension;
 use PHPUnit\Runner\Extension\Facade;
 use PHPUnit\Runner\Extension\ParameterCollection;
 use PHPUnit\TextUI\Configuration\Configuration;
+use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\BeforeFirstTestMethodErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\ErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FailedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FinishedSubscriber;
@@ -30,6 +31,7 @@ class ResultPrinterExtension implements Extension
             new ErroredSubscriber(),
             new FailedSubscriber(),
             new PassedSubscriber(),
+            new BeforeFirstTestMethodErroredSubscriber(),
         );
     }
 }
