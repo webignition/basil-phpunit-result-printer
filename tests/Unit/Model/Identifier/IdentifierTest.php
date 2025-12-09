@@ -31,7 +31,7 @@ class IdentifierTest extends AbstractBaseTestCase
         return [
             'default' => [
                 'source' => '$".selector"',
-                'identifier' => \Mockery::mock(Properties::class),
+                'properties' => \Mockery::mock(Properties::class),
             ],
         ];
     }
