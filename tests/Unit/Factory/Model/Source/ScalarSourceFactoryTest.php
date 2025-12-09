@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Source;
+namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Source;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ScalarFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\ScalarSourceFactory;

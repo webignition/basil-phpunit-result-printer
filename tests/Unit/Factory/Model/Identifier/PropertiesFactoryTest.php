@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory\Identifier;
+namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Identifier;
 
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\PropertiesFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
