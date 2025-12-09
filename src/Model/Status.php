@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Model;
 
-use PHPUnit\Runner\BaseTestRunner;
-
 class Status implements \Stringable
 {
     public const LABEL_PASSED = 'passed';
@@ -13,9 +11,9 @@ class Status implements \Stringable
     public const LABEL_UNKNOWN = 'unknown';
     public const LABEL_TERMINATED = 'terminated';
 
-    public const STATUS_PASSED = BaseTestRunner::STATUS_PASSED;
-    public const STATUS_FAILED = BaseTestRunner::STATUS_FAILURE;
-    public const STATUS_TERMINATED = BaseTestRunner::STATUS_ERROR;
+    public const STATUS_PASSED = 0;
+    public const STATUS_FAILED = 3;
+    public const STATUS_TERMINATED = 4;
 
     private const MAP = [
         self::STATUS_PASSED => self::LABEL_PASSED,
