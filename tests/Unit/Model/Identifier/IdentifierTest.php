@@ -68,9 +68,9 @@ class IdentifierTest extends AbstractBaseTestCase
     /**
      * @dataProvider isAttributeDataProvider
      */
-    public function testIsAttribute(Identifier $identifier, bool $expectedIsAttribute): void
+    public function testIsAttribute(Identifier $identifier, bool $expected): void
     {
-        self::assertSame($expectedIsAttribute, $identifier->isAttribute());
+        self::assertSame($expected, $identifier->isAttribute());
     }
 
     /**
@@ -93,11 +93,11 @@ class IdentifierTest extends AbstractBaseTestCase
         return [
             'not attribute' => [
                 'identifier' => new Identifier('$".selector"', $elementProperties),
-                'expectedHasAttribute' => false,
+                'expected' => false,
             ],
             'is attribute' => [
                 'identifier' => new Identifier('$".selector".attribute_name', $attributeProperties),
-                'expectedHasAttribute' => true,
+                'expected' => true,
             ],
         ];
     }
