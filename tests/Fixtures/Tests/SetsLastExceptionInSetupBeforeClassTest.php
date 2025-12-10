@@ -19,13 +19,23 @@ class SetsLastExceptionInSetupBeforeClassTest extends BasilTestCase
 
     public function testStep1()
     {
-        self::setBasilStepName('step one');
-        self::assertTrue(true);
+        self::assertTrue(
+            true,
+            (string) json_encode([
+                'step' => 'step one',
+                'assertion' => 'assertion statement for step one'
+            ])
+        );
     }
 
     public function testStep2()
     {
-        self::setBasilStepName('step two');
-        self::assertTrue(true);
+        self::assertTrue(
+            true,
+            (string) json_encode([
+                'step' => 'step two',
+                'assertion' => 'assertion statement for step two'
+            ])
+        );
     }
 }
