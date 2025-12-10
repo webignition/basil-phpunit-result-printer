@@ -31,6 +31,8 @@ class ResultPrinterTest extends AbstractBaseTestCase
      */
     public function testPrinterOutput(array $tests, string $expectedOutput): void
     {
+        self::markTestSkipped('Obsolete. Keeping for reference until feature complete. Remove in #232');
+
         $outResource = fopen('php://memory', 'w+');
 
         if (is_resource($outResource)) {
