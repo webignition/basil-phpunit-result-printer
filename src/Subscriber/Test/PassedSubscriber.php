@@ -6,11 +6,15 @@ namespace webignition\BasilPhpUnitResultPrinter\Subscriber\Test;
 
 use PHPUnit\Event\Test\Passed;
 use PHPUnit\Event\Test\PassedSubscriber as PassedSubscriberInterface;
+use PHPUnit\TextUI\Output\Printer;
 
-class PassedSubscriber implements PassedSubscriberInterface
+readonly class PassedSubscriber implements PassedSubscriberInterface
 {
+    public function __construct(private Printer $printer) {}
+
     public function notify(Passed $event): void
     {
-        // TODO: Implement notify() method.
+        $this->printer->print($event::class);
+        $this->printer->print("\n");
     }
 }

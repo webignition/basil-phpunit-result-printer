@@ -8,6 +8,7 @@ use PHPUnit\Runner\Extension\Extension;
 use PHPUnit\Runner\Extension\Facade;
 use PHPUnit\Runner\Extension\ParameterCollection;
 use PHPUnit\TextUI\Configuration\Configuration;
+use PHPUnit\TextUI\Output\DefaultPrinter;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\BeforeFirstTestMethodErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\ErroredSubscriber;
@@ -15,7 +16,6 @@ use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FailedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FinishedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\PassedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\PreparedSubscriber;
-use PHPUnit\TextUI\Output\DefaultPrinter;
 
 readonly class ResultPrinterExtension implements Extension
 {
@@ -23,7 +23,7 @@ readonly class ResultPrinterExtension implements Extension
 
     public function __construct()
     {
-        $this->printer =DefaultPrinter::standardOutput();
+        $this->printer = DefaultPrinter::standardOutput();
     }
 
     public function bootstrap(Configuration $configuration, Facade $facade, ParameterCollection $parameters): void
@@ -35,12 +35,12 @@ readonly class ResultPrinterExtension implements Extension
         $facade->replaceOutput();
 
         $facade->registerSubscribers(
-            new PreparedSubscriber(),
-            new FinishedSubscriber(),
-            new ErroredSubscriber(),
-            new FailedSubscriber(),
-            new PassedSubscriber(),
-            new BeforeFirstTestMethodErroredSubscriber(),
+            new PreparedSubscriber($this->printer),
+            new FinishedSubscriber($this->printer),
+            new ErroredSubscriber($this->printer),
+            new FailedSubscriber($this->printer),
+            new PassedSubscriber($this->printer),
+            new BeforeFirstTestMethodErroredSubscriber($this->printer),
         );
     }
 }
