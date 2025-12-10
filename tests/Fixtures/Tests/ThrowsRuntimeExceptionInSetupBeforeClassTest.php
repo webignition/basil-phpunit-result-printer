@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
-class SetsLastExceptionInSetupBeforeClassTest extends BasilTestCase
+class ThrowsRuntimeExceptionInSetupBeforeClassTest extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
         self::setBasilTestPath('/path/to/set-last-exception-in-setup-before-class.yml');
         parent::setUpBeforeClass();
 
-        self::$lastException = new \RuntimeException(
+        throw new \RuntimeException(
             'Exception thrown in setUpBeforeClass',
             456
         );

@@ -15,7 +15,6 @@ class ThrowsRuntimeExceptionInFirstStepTest extends BasilTestCase
 
     public function testStep1()
     {
-        throw new \RuntimeException('Exception thrown in first step', 123);
         self::assertTrue(
             true,
             (string) json_encode([
@@ -23,6 +22,8 @@ class ThrowsRuntimeExceptionInFirstStepTest extends BasilTestCase
                 'assertion' => 'assertion statement for step one',
             ])
         );
+
+        throw new \RuntimeException('Exception thrown in first step', 123);
     }
 
     public function testStep2()
