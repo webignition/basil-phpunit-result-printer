@@ -6,8 +6,15 @@ namespace webignition\BasilPhpUnitResultPrinter\Subscriber\Test;
 
 use PHPUnit\Event\Test\BeforeFirstTestMethodErrored;
 use PHPUnit\Event\Test\BeforeFirstTestMethodErroredSubscriber as BeforeFirstTestMethodErroredSubscriberInterface;
+use PHPUnit\TextUI\Output\Printer;
 
-class BeforeFirstTestMethodErroredSubscriber implements BeforeFirstTestMethodErroredSubscriberInterface
+readonly class BeforeFirstTestMethodErroredSubscriber implements BeforeFirstTestMethodErroredSubscriberInterface
 {
-    public function notify(BeforeFirstTestMethodErrored $event): void {}
+    public function __construct(private Printer $printer) {}
+
+    public function notify(BeforeFirstTestMethodErrored $event): void
+    {
+        $this->printer->print($event::class);
+        $this->printer->print("\n");
+    }
 }

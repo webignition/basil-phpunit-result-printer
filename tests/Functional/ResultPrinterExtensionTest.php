@@ -13,7 +13,7 @@ class ResultPrinterExtensionTest extends TestCase
     use MockeryPHPUnitIntegration;
 
     #[DataProvider('terminatedDataProvider')]
-    public function testExceptionHandling(string $phpUnitTestPath): void
+    public function testExceptionHandling(string $phpUnitTestPath, string $expectedPhpunitOutput): void
     {
         $phpunitCommand = './vendor/bin/phpunit -c phpunit.printer.xml ' . $phpUnitTestPath;
 
@@ -24,6 +24,11 @@ class ResultPrinterExtensionTest extends TestCase
 
         // Value of 2 taken from phpunit 9.6 PHPUnit\TextUI\TestRunner::EXCEPTION_EXIT
         self::assertSame(2, $exitCode);
+
+        self::assertSame(
+            $expectedPhpunitOutput,
+            implode("\n", $phpunitOutput)
+        );
     }
 
     /**
@@ -36,12 +41,28 @@ class ResultPrinterExtensionTest extends TestCase
         return [
             'terminated, RuntimeException thrown during first step' => [
                 'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInFirstStepTest.php',
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Errored
+                    PHPUnit\Event\Test\Finished
+                    EOD,
             ],
             'terminated, RuntimeException thrown during second step' => [
                 'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSecondStepTest.php',
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Passed
+                    PHPUnit\Event\Test\Finished
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Errored
+                    PHPUnit\Event\Test\Finished
+                    EOD,
             ],
             'terminated, lastException set during setupBeforeClass' => [
                 'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSetupBeforeClassTest.php',
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\BeforeFirstTestMethodErrored
+                    EOD,
             ],
         ];
     }
