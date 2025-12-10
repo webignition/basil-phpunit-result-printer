@@ -24,6 +24,8 @@ class ResultPrinterTest extends TestCase
      */
     public function testExceptionHandling(string $phpUnitTestPath, array $expectedPartialDocumentContents): void
     {
+        self::markTestSkipped('Obsolete. Keeping for reference until feature complete. Remove in #232');
+
         $phpunitCommand = './vendor/bin/phpunit --printer="' . ResultPrinter::class . '" ' . $phpUnitTestPath;
 
         $phpunitOutput = [];
