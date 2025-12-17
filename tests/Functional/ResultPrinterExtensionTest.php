@@ -35,6 +35,31 @@ class ResultPrinterExtensionTest extends TestCase
     /**
      * @return array<mixed>
      */
+    public static function failingTestsDataProvider(): array
+    {
+        $root = getcwd();
+
+        return [
+            'failing' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/Failing01.php',
+                'expectedExitCode' => 1,
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Failed
+                    {"assertion":"assertion statement two for step one"}
+                    PHPUnit\Event\Test\Finished
+                    step one
+                    {"type":"action","statement":"click identifier"}
+                    {"type":"assertion","statement":"assertion statement one for step one"}
+                    {"type":"assertion","statement":"assertion statement two for step one"}
+                    EOD,
+            ],
+        ];
+    }
+
+    /**
+     * @return array<mixed>
+     */
     public static function passingTestsDataProvider(): array
     {
         $root = getcwd();
@@ -47,29 +72,15 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Passed
                     PHPUnit\Event\Test\Finished
+                    step one
+                    {"type":"action","statement":"click identifier"}
+                    {"type":"assertion","statement":"assertion statement one for step one"}
+                    {"type":"assertion","statement":"assertion statement two for step one"}
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Passed
                     PHPUnit\Event\Test\Finished
-                    EOD,
-            ],
-        ];
-    }
-
-    /**
-     * @return array<mixed>
-     */
-    public static function failingTestsDataProvider(): array
-    {
-        $root = getcwd();
-
-        return [
-            'failing' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/Failing01.php',
-                'expectedExitCode' => 1,
-                'expectedPhpunitOutput' => <<<'EOD'
-                    PHPUnit\Event\Test\Prepared
-                    PHPUnit\Event\Test\Failed
-                    PHPUnit\Event\Test\Finished
+                    step two
+                    {"type":"assertion","statement":"assertion statement for step two"}
                     EOD,
             ],
         ];
@@ -89,7 +100,10 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Errored
+                    RuntimeException: Exception thrown in first step
                     PHPUnit\Event\Test\Finished
+                    step one
+                    {"type":"assertion","statement":"assertion statement for step one"}
                     EOD,
             ],
             'terminated, RuntimeException thrown during second step' => [
@@ -99,9 +113,14 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Passed
                     PHPUnit\Event\Test\Finished
+                    step one
+                    {"type":"assertion","statement":"assertion statement for step one"}
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Errored
+                    RuntimeException: Exception thrown in second step
                     PHPUnit\Event\Test\Finished
+                    step two
+                    {"type":"assertion","statement":"assertion statement for step two"}
                     EOD,
             ],
             'terminated, lastException set during setupBeforeClass' => [
@@ -109,6 +128,7 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedExitCode' => 2,
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\BeforeFirstTestMethodErrored
+                    RuntimeException: Exception thrown in setUpBeforeClass
                     EOD,
             ],
         ];
