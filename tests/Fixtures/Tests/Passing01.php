@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
+use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
-use webignition\BasilPhpUnitResultPrinter\Attribute\Statements;
 
 class Passing01 extends BasilTestCase
 {

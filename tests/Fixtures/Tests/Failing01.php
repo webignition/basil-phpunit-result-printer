@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Fixtures\Tests;
 
+use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
-use webignition\BasilPhpUnitResultPrinter\Attribute\Statements;
 use webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests\BasilTestCase;
 
 class Failing01 extends BasilTestCase
