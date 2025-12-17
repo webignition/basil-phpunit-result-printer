@@ -41,14 +41,14 @@
         "php": "^8.4",
         "phpunit/phpunit": "^10",
         "symfony/yaml": "^6 || ^7 || ^8",
-        "webignition/base-basil-test-case": "^7",
+        "webignition/base-basil-test-case": "^8.1",
         "webignition/basil-dom-identifier-factory": ">=1.1,<2",
         "webignition/basil-identifier-analyser": ">=2.0,<3",
         "webignition/basil-models": "^6.0",
         "webignition/basil-runner-documents": "^1.0",
         "webignition/basil-value-type-identifier": ">=0.3,<1",
         "webignition/php-dom-element-identifier": ">=0.16,<1",
-        "webignition/symfony-panther-dom-crawler-navigator": ">=0.23,<1",
+        "webignition/symfony-panther-dom-crawler-navigator": "^2",
         "webignition/yaml-document-generator": "^2.2"
     },
     "require-dev": {
