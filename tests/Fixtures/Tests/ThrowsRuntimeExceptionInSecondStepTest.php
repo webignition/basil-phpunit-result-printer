@@ -21,7 +21,7 @@ class ThrowsRuntimeExceptionInSecondStepTest extends BasilTestCase
             'statement' => 'assertion statement for step one',
         ],
     ])]
-    public function testStep1()
+    public function testStep1(): void
     {
         self::assertTrue(
             true,
@@ -38,7 +38,7 @@ class ThrowsRuntimeExceptionInSecondStepTest extends BasilTestCase
             'statement' => 'assertion statement for step two',
         ],
     ])]
-    public function testStep2()
+    public function testStep2(): void
     {
         throw new \RuntimeException('Exception thrown in first step', 123);
         self::assertTrue(
