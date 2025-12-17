@@ -15,7 +15,7 @@ class ResultPrinterExtensionTest extends TestCase
     #[DataProvider('passingTestsDataProvider')]
     #[DataProvider('failingTestsDataProvider')]
     #[DataProvider('terminatedDataProvider')]
-    public function testRUn(string $testPath, int $expectedExitCode, string $expectedPhpunitOutput): void
+    public function testRun(string $testPath, int $expectedExitCode, string $expectedPhpunitOutput): void
     {
         $phpunitCommand = './vendor/bin/phpunit -c phpunit.printer.xml ' . $testPath;
 
