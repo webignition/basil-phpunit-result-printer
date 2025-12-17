@@ -40,7 +40,7 @@ class ThrowsRuntimeExceptionInSecondStepTest extends BasilTestCase
     ])]
     public function testStep2(): void
     {
-        throw new \RuntimeException('Exception thrown in first step', 123);
+        throw new \RuntimeException('Exception thrown in second step', 123);
         self::assertTrue(
             true,
             (string) json_encode([

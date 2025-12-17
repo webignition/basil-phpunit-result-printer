@@ -16,5 +16,7 @@ readonly class BeforeFirstTestMethodErroredSubscriber implements BeforeFirstTest
     {
         $this->printer->print($event::class);
         $this->printer->print("\n");
+
+        $this->printer->print($event->throwable()->description());
     }
 }
