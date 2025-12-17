@@ -8,7 +8,6 @@ class ThrowsRuntimeExceptionInSetupBeforeClassTest extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
-        self::setBasilTestPath('/path/to/set-last-exception-in-setup-before-class.yml');
         parent::setUpBeforeClass();
 
         throw new \RuntimeException(

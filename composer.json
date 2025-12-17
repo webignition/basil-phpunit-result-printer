@@ -41,7 +41,7 @@
         "php": "^8.4",
         "phpunit/phpunit": "^10",
         "symfony/yaml": "^6 || ^7 || ^8",
-        "webignition/base-basil-test-case": "^6",
+        "webignition/base-basil-test-case": "^7",
         "webignition/basil-dom-identifier-factory": ">=1.1,<2",
         "webignition/basil-identifier-analyser": ">=2.0,<3",
         "webignition/basil-models": "^6.0",

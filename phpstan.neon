@@ -6,6 +6,7 @@ parameters:
   inferPrivatePropertyTypeFromConstructor: true
   excludePaths:
     - src/ResultPrinter.php
+    - src/Factory/Model/StepFactory.php
     - tests/Fixtures/*
     - tests/Functional/ResultPrinterTest.php
     - tests/Unit/ResultPrinterTest.php

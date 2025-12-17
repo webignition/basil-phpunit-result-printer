@@ -8,8 +8,6 @@ class ThrowsRuntimeExceptionInFirstStepTest extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
-        self::setBasilTestPath('/path/to/runtime-exception-on-first-step-test.yml');
-
         parent::setUpBeforeClass();
     }
 
