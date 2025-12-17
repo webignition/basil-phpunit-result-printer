@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
+use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
 class ThrowsRuntimeExceptionInSetupBeforeClassTest extends BasilTestCase
@@ -19,6 +20,12 @@ class ThrowsRuntimeExceptionInSetupBeforeClassTest extends BasilTestCase
     }
 
     #[StepName('step one')]
+    #[Statements([
+        [
+            'type' => 'assertion',
+            'statement' => 'assertion statement for step one',
+        ],
+    ])]
     public function testStep1()
     {
         self::assertTrue(
@@ -30,6 +37,12 @@ class ThrowsRuntimeExceptionInSetupBeforeClassTest extends BasilTestCase
     }
 
     #[StepName('step two')]
+    #[Statements([
+        [
+            'type' => 'assertion',
+            'statement' => 'assertion statement for step two',
+        ],
+    ])]
     public function testStep2()
     {
         self::assertTrue(
