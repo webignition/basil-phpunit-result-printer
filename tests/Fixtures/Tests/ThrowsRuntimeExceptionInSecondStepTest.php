@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
+use webignition\BaseBasilTestCase\Attribute\StepName;
+
 class ThrowsRuntimeExceptionInSecondStepTest extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
@@ -11,6 +13,7 @@ class ThrowsRuntimeExceptionInSecondStepTest extends BasilTestCase
         parent::setUpBeforeClass();
     }
 
+    #[StepName('step one')]
     public function testStep1()
     {
         self::assertTrue(
@@ -22,6 +25,7 @@ class ThrowsRuntimeExceptionInSecondStepTest extends BasilTestCase
         );
     }
 
+    #[StepName('step two')]
     public function testStep2()
     {
         throw new \RuntimeException('Exception thrown in first step', 123);
