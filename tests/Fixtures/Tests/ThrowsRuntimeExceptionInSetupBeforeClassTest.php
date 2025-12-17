@@ -24,7 +24,6 @@ class ThrowsRuntimeExceptionInSetupBeforeClassTest extends BasilTestCase
         self::assertTrue(
             true,
             (string) json_encode([
-                'step' => 'step one',
                 'assertion' => 'assertion statement for step one',
             ])
         );
@@ -36,7 +35,6 @@ class ThrowsRuntimeExceptionInSetupBeforeClassTest extends BasilTestCase
         self::assertTrue(
             true,
             (string) json_encode([
-                'step' => 'step two',
                 'assertion' => 'assertion statement for step two',
             ])
         );
