@@ -7,9 +7,9 @@ namespace webignition\BasilPhpUnitResultPrinter;
 readonly class TestData
 {
     /**
-     * @param non-empty-string $stepName
+     * @param non-empty-string                                                   $stepName
      * @param array{'type':'action'|'assertion', 'statement':non-empty-string}[] $statements
-     * @param ?non-empty-string $failedAssertion
+     * @param ?non-empty-string                                                  $failedAssertion
      */
     public function __construct(
         public string $stepName,

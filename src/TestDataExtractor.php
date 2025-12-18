@@ -13,37 +13,39 @@ class TestDataExtractor
 {
     public function extract(TestMethod $testMethod, ?Throwable $throwable = null): TestData
     {
-        $stepName = 'step name';
-        $statements = [];
-        $failedAssertion = null;
-
         $reflectionClass = new \ReflectionClass($testMethod->className());
         $reflectionMethod = $reflectionClass->getMethod($testMethod->methodName());
+
+        $stepNameAttributes = $reflectionMethod->getAttributes(StepName::class);
+        $stepNameAttribute = $stepNameAttributes[0];
 
         $statementsAttributes = $reflectionMethod->getAttributes(Statements::class);
         $statementsAttribute = $statementsAttributes[0];
 
         return new TestData(
-            $this->getStepName($reflectionMethod),
+            $stepNameAttribute->newInstance()->name,
             $statementsAttribute->newInstance()->statements,
-            $failedAssertion
+            $this->getFailedAssertion($throwable)
         );
     }
 
-
     /**
-     * @param \ReflectionMethod $reflectionMethod
-     *
-     * @return non-empty-string
+     * @return null|non-empty-string
      */
-    private function getStepName(\ReflectionMethod $reflectionMethod): string
+    private function getFailedAssertion(?Throwable $throwable): ?string
     {
-        $stepNameAttributes = $reflectionMethod->getAttributes(StepName::class);
-        $stepNameAttribute = $stepNameAttributes[0];
+        if (null === $throwable) {
+            return null;
+        }
 
-        $name = $stepNameAttribute->newInstance()->name;
-        \assert('' !== $name);
+        $assertionFailureMessage = $throwable->message();
+        $assertionFailureMessageLines = explode("\n", $assertionFailureMessage);
 
-        return $name;
+        $assertion = $assertionFailureMessageLines[0];
+        if ('' === $assertion) {
+            return null;
+        }
+
+        return $assertion;
     }
 }
