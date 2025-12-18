@@ -10,10 +10,14 @@ use PHPUnit\Event\Test\FinishedSubscriber as FinishedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
+use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
 
 readonly class FinishedSubscriber implements FinishedSubscriberInterface
 {
-    public function __construct(private Printer $printer) {}
+    public function __construct(
+        private Printer $printer,
+        private TestDataExtractor $testDataExtractor,
+    ) {}
 
     public function notify(Finished $event): void
     {
@@ -22,6 +26,8 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
 
         $test = $event->test();
         \assert($test instanceof TestMethod);
+
+        $this->testDataExtractor->extract($test);
 
         $this->printer->print($this->getStepName($test) . "\n");
 
