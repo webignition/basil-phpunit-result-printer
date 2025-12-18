@@ -8,12 +8,14 @@ use PHPUnit\Event\Code\TestMethod;
 use PHPUnit\Event\Test\Finished;
 use PHPUnit\Event\Test\FinishedSubscriber as FinishedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
-use webignition\BaseBasilTestCase\Attribute\Statements;
-use webignition\BaseBasilTestCase\Attribute\StepName;
+use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
 
 readonly class FinishedSubscriber implements FinishedSubscriberInterface
 {
-    public function __construct(private Printer $printer) {}
+    public function __construct(
+        private Printer $printer,
+        private TestDataExtractor $testDataExtractor,
+    ) {}
 
     public function notify(Finished $event): void
     {
@@ -23,43 +25,12 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         $test = $event->test();
         \assert($test instanceof TestMethod);
 
-        $this->printer->print($this->getStepName($test) . "\n");
+        $testData = $this->testDataExtractor->extract($test);
 
-        foreach ($this->getStatementsData($test) as $statementData) {
-            $this->printer->print(json_encode($statementData) . "\n");
+        $this->printer->print($testData->stepName . "\n");
+
+        foreach ($testData->statements as $statement) {
+            $this->printer->print(json_encode($statement) . "\n");
         }
-    }
-
-    private function getStepName(TestMethod $testMethod): string
-    {
-        try {
-            $reflectionClass = new \ReflectionClass($testMethod->className());
-            $reflectionMethod = $reflectionClass->getMethod($testMethod->methodName());
-        } catch (\ReflectionException) {
-            return '';
-        }
-
-        $stepNameAttributes = $reflectionMethod->getAttributes(StepName::class);
-        $stepNameAttribute = $stepNameAttributes[0];
-
-        return $stepNameAttribute->newInstance()->name;
-    }
-
-    /**
-     * @return array<mixed>
-     */
-    private function getStatementsData(TestMethod $testMethod): array
-    {
-        try {
-            $reflectionClass = new \ReflectionClass($testMethod->className());
-            $reflectionMethod = $reflectionClass->getMethod($testMethod->methodName());
-        } catch (\ReflectionException $e) {
-            return [];
-        }
-
-        $stepNameAttributes = $reflectionMethod->getAttributes(Statements::class);
-        $stepNameAttribute = $stepNameAttributes[0];
-
-        return $stepNameAttribute->newInstance()->statements;
     }
 }

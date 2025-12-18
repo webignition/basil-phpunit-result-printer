@@ -36,9 +36,9 @@ readonly class ResultPrinterExtension implements Extension
 
         $facade->registerSubscribers(
             new PreparedSubscriber($this->printer),
-            new FinishedSubscriber($this->printer),
+            new FinishedSubscriber($this->printer, new TestDataExtractor()),
             new ErroredSubscriber($this->printer),
-            new FailedSubscriber($this->printer),
+            new FailedSubscriber($this->printer, new TestDataExtractor()),
             new PassedSubscriber($this->printer),
             new BeforeFirstTestMethodErroredSubscriber($this->printer),
         );
