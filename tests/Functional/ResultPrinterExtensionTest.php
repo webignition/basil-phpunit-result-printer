@@ -46,7 +46,7 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Failed
-                    {"assertion":"assertion statement two for step one"}
+                    {"statement":"assertion statement two for step one","type":"assertion"}
                     PHPUnit\Event\Test\Finished
                     step one
                     {"type":"action","statement":"click identifier"}
