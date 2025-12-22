@@ -37,14 +37,16 @@ class Passing01 extends BasilTestCase
         self::assertTrue(
             true,
             (string) json_encode([
-                'assertion' => 'assertion statement one for step one',
+                'statement' => 'assertion statement one for step one',
+                'type' => 'assertion',
             ])
         );
 
         self::assertTrue(
             true,
             (string) json_encode([
-                'assertion' => 'assertion statement two for step one',
+                'statement' => 'assertion statement two for step one',
+                'type' => 'assertion',
             ])
         );
     }
@@ -61,7 +63,8 @@ class Passing01 extends BasilTestCase
         self::assertTrue(
             true,
             (string) json_encode([
-                'assertion' => 'assertion statement for step two',
+                'statement' => 'assertion statement for step two',
+                'type' => 'assertion',
             ])
         );
     }
