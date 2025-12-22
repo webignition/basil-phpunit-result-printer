@@ -4,25 +4,50 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
+use webignition\BaseBasilTestCase\Attribute\Statements;
+use webignition\BaseBasilTestCase\Attribute\StepName;
+
 class ThrowsRuntimeExceptionInSecondStepTest extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
-        self::setBasilTestPath('/path/to/runtime-exception-on-second-step-test.yml');
-
         parent::setUpBeforeClass();
     }
 
-    public function testStep1()
+    #[StepName('step one')]
+    #[Statements([
+        [
+            'type' => 'assertion',
+            'statement' => 'assertion statement for step one',
+        ],
+    ])]
+    public function testStep1(): void
     {
-        $this->setBasilStepName('step one');
-        self::assertTrue(true);
+        self::assertTrue(
+            true,
+            (string) json_encode([
+                'statement' => 'assertion statement for step one',
+                'type' => 'assertion',
+            ])
+        );
     }
 
-    public function testStep2()
+    #[StepName('step two')]
+    #[Statements([
+        [
+            'type' => 'assertion',
+            'statement' => 'assertion statement for step two',
+        ],
+    ])]
+    public function testStep2(): void
     {
-        $this->setBasilStepName('step two');
-
-        throw new \RuntimeException('Exception thrown in first step', 123);
+        throw new \RuntimeException('Exception thrown in second step', 123);
+        self::assertTrue(
+            true,
+            (string) json_encode([
+                'statement' => 'assertion statement for step two',
+                'type' => 'assertion',
+            ])
+        );
     }
 }

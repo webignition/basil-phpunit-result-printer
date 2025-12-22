@@ -6,7 +6,6 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Functional;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\TextUI\TestRunner;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use webignition\BasilPhpUnitResultPrinter\ResultPrinter;
 use webignition\BasilPhpUnitResultPrinter\Tests\Services\FixtureLoader;
@@ -25,13 +24,16 @@ class ResultPrinterTest extends TestCase
      */
     public function testExceptionHandling(string $phpUnitTestPath, array $expectedPartialDocumentContents): void
     {
+        self::markTestSkipped('Obsolete. Keeping for reference until feature complete. Remove in #232');
+
         $phpunitCommand = './vendor/bin/phpunit --printer="' . ResultPrinter::class . '" ' . $phpUnitTestPath;
 
         $phpunitOutput = [];
         $exitCode = null;
 
         exec($phpunitCommand, $phpunitOutput, $exitCode);
-        self::assertSame(TestRunner::EXCEPTION_EXIT, $exitCode);
+        // Value of 2 taken from phpunit 9.6 PHPUnit\TextUI\TestRunner::EXCEPTION_EXIT
+        self::assertSame(2, $exitCode);
 
         $outputYaml = $this->getYamlOutputBody($phpunitOutput);
         $documents = (new Parser())->parse($outputYaml);

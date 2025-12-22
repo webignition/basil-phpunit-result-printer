@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
-class ThrowsRuntimeExceptionInFirstStepTest extends BasilTestCase
+class Passing01 extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -17,21 +17,38 @@ class ThrowsRuntimeExceptionInFirstStepTest extends BasilTestCase
     #[StepName('step one')]
     #[Statements([
         [
+            'type' => 'action',
+            'statement' => 'click identifier',
+        ],
+        [
             'type' => 'assertion',
-            'statement' => 'assertion statement for step one',
+            'statement' => 'assertion statement one for step one',
+        ],
+        [
+            'type' => 'assertion',
+            'statement' => 'assertion statement two for step one',
         ],
     ])]
     public function testStep1(): void
     {
+        // click identifier
+        // ...
+
         self::assertTrue(
             true,
             (string) json_encode([
-                'statement' => 'assertion statement for step one',
+                'statement' => 'assertion statement one for step one',
                 'type' => 'assertion',
             ])
         );
 
-        throw new \RuntimeException('Exception thrown in first step', 123);
+        self::assertTrue(
+            true,
+            (string) json_encode([
+                'statement' => 'assertion statement two for step one',
+                'type' => 'assertion',
+            ])
+        );
     }
 
     #[StepName('step two')]

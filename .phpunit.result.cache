@@ -1,0 +1,1 @@
+{"version":2,"defects":{"webignition\\BasilPhpUnitResultPrinter\\Tests\\Functional\\ResultPrinterTest::testExceptionHandling#terminated, RuntimeException thrown during first step":8},"times":{"webignition\\BasilPhpUnitResultPrinter\\Tests\\Functional\\ResultPrinterTest::testExceptionHandling#terminated, RuntimeException thrown during first step":0.052}}
