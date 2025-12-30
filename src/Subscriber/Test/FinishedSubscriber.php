@@ -9,6 +9,7 @@ use PHPUnit\Event\Test\Finished;
 use PHPUnit\Event\Test\FinishedSubscriber as FinishedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilPhpUnitResultPrinter\StatusContainer;
+use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
 use webignition\BasilPhpUnitResultPrinter\TestMetaDataExtractor;
 
 readonly class FinishedSubscriber implements FinishedSubscriberInterface
@@ -17,6 +18,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         private Printer $printer,
         private StatusContainer $statusContainer,
         private TestMetaDataExtractor $testMetaDataExtractor,
+        private TestDataExtractor $testDataExtractor,
     ) {}
 
     public function notify(Finished $event): void
@@ -29,6 +31,15 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
 
         $test = $event->test();
         \assert($test instanceof TestMethod);
+
+        $testData = $test->testData();
+        if ($testData->hasDataFromDataProvider()) {
+            $testDataSet = $this->testDataExtractor->extract($testData->dataFromDataProvider()->data());
+            $this->printer->print('provided data:');
+            $this->printer->print("\n");
+            $this->printer->print((string) json_encode($testDataSet));
+            $this->printer->print("\n");
+        }
 
         $testMetaData = $this->testMetaDataExtractor->extract($test);
 

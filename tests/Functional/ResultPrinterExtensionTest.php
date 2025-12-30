@@ -66,7 +66,7 @@ class ResultPrinterExtensionTest extends TestCase
         $root = getcwd();
 
         return [
-            'passing' => [
+            'passing 01' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/Passing01.php',
                 'expectedExitCode' => 0,
                 'expectedPhpunitOutput' => <<<'EOD'
@@ -84,6 +84,39 @@ class ResultPrinterExtensionTest extends TestCase
                     status: passed
                     step two
                     {"type":"assertion","statement":"assertion statement for step two"}
+                    EOD,
+            ],
+            'passing with data provider' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/PassingWithDataProvider.php',
+                'expectedExitCode' => 0,
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Passed
+                    PHPUnit\Event\Test\Finished
+                    status: passed
+                    provided data:
+                    {"foo":1,"bar":"two","fooBar":true}
+                    step one
+                    {"type":"action","statement":"set $\".selector\" to $data.value"}
+                    {"type":"assertion","statement":"assertion statement one for step one"}
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Passed
+                    PHPUnit\Event\Test\Finished
+                    status: passed
+                    provided data:
+                    {"foo":7,"bar":"eight","fooBar":true}
+                    step one
+                    {"type":"action","statement":"set $\".selector\" to $data.value"}
+                    {"type":"assertion","statement":"assertion statement one for step one"}
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Passed
+                    PHPUnit\Event\Test\Finished
+                    status: passed
+                    provided data:
+                    {"foo":9,"bar":"ten","fooBar":false}
+                    step one
+                    {"type":"action","statement":"set $\".selector\" to $data.value"}
+                    {"type":"assertion","statement":"assertion statement one for step one"}
                     EOD,
             ],
         ];
