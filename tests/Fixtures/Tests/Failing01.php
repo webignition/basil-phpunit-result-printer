@@ -19,7 +19,7 @@ class Failing01 extends BasilTestCase
     #[Statements([
         [
             'type' => 'action',
-            'statement' => 'click identifier',
+            'statement' => 'click $".selector"',
         ],
         [
             'type' => 'assertion',
@@ -32,8 +32,22 @@ class Failing01 extends BasilTestCase
     ])]
     public function testStep1(): void
     {
-        // click identifier
-        // ...
+        try {
+            // click $".selector"
+        } catch (\Throwable $exception) {
+            self::fail('{
+                "statement": {
+                    "statement": "click $\".selector\"",
+                    "type": "action"
+                },
+                "reason": "action-failed",
+                "exception": {
+                    "class": ' . addcslashes($exception::class, "'\\") . ',
+                    "code": ' . $exception->getCode() . ',
+                    "message": ' . addcslashes($exception->getMessage(), "'\\") . '
+                }
+            }');
+        }
 
         self::assertTrue(
             true,
