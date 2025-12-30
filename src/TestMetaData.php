@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter;
 
-readonly class TestData
+readonly class TestMetaData
 {
     /**
      * @param non-empty-string                                                   $stepName

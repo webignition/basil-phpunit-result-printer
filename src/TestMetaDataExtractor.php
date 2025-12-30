@@ -9,9 +9,9 @@ use PHPUnit\Event\Code\Throwable;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
-class TestDataExtractor
+class TestMetaDataExtractor
 {
-    public function extract(TestMethod $testMethod, ?Throwable $throwable = null): TestData
+    public function extract(TestMethod $testMethod, ?Throwable $throwable = null): TestMetaData
     {
         $reflectionClass = new \ReflectionClass($testMethod->className());
         $reflectionMethod = $reflectionClass->getMethod($testMethod->methodName());
@@ -22,7 +22,7 @@ class TestDataExtractor
         $statementsAttributes = $reflectionMethod->getAttributes(Statements::class);
         $statementsAttribute = $statementsAttributes[0];
 
-        return new TestData(
+        return new TestMetaData(
             $stepNameAttribute->newInstance()->name,
             $statementsAttribute->newInstance()->statements,
             $this->getFailedAssertion($throwable)
