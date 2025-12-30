@@ -38,7 +38,12 @@ class ResultPrinterExtension implements Extension
 
         $facade->registerSubscribers(
             new PreparedSubscriber($this->printer),
-            new FinishedSubscriber($this->printer, $this->statusContainer, new TestMetaDataExtractor()),
+            new FinishedSubscriber(
+                $this->printer,
+                $this->statusContainer,
+                new TestMetaDataExtractor(),
+                new TestDataExtractor(),
+            ),
             new ErroredSubscriber($this->printer, $this->statusContainer),
             new FailedSubscriber($this->printer, $this->statusContainer, new TestMetaDataExtractor()),
             new PassedSubscriber($this->printer, $this->statusContainer),
