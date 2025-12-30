@@ -17,13 +17,15 @@ use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FinishedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\PassedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\PreparedSubscriber;
 
-readonly class ResultPrinterExtension implements Extension
+class ResultPrinterExtension implements Extension
 {
     private Printer $printer;
+    private StatusContainer $statusContainer;
 
     public function __construct()
     {
         $this->printer = DefaultPrinter::standardOutput();
+        $this->statusContainer = new StatusContainer();
     }
 
     public function bootstrap(Configuration $configuration, Facade $facade, ParameterCollection $parameters): void
@@ -36,10 +38,10 @@ readonly class ResultPrinterExtension implements Extension
 
         $facade->registerSubscribers(
             new PreparedSubscriber($this->printer),
-            new FinishedSubscriber($this->printer, new TestMetaDataExtractor()),
-            new ErroredSubscriber($this->printer),
-            new FailedSubscriber($this->printer, new TestMetaDataExtractor()),
-            new PassedSubscriber($this->printer),
+            new FinishedSubscriber($this->printer, $this->statusContainer, new TestMetaDataExtractor()),
+            new ErroredSubscriber($this->printer, $this->statusContainer),
+            new FailedSubscriber($this->printer, $this->statusContainer, new TestMetaDataExtractor()),
+            new PassedSubscriber($this->printer, $this->statusContainer),
             new BeforeFirstTestMethodErroredSubscriber($this->printer),
         );
     }
