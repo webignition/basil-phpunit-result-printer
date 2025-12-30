@@ -12,6 +12,31 @@ class ResultPrinterExtensionTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
+    public function testFoo(): void
+    {
+        $foo = '{
+                    "statement": "click $\".selector\"",
+                    "type": "action"
+                }';
+
+        var_dump($foo);
+
+        $decodedFoo = json_decode($foo, true);
+
+        var_dump($decodedFoo);
+
+        $foo = '{
+                    "statement": "click $\\".selector\\"",
+                    "type": "action"
+                }';
+
+        var_dump($foo);
+
+        $decodedFoo = json_decode($foo, true);
+
+        var_dump($decodedFoo);
+    }
+
     #[DataProvider('passingTestsDataProvider')]
     #[DataProvider('failingTestsDataProvider')]
     #[DataProvider('terminatedDataProvider')]
