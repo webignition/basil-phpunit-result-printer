@@ -8,13 +8,13 @@ use PHPUnit\Event\Code\TestMethod;
 use PHPUnit\Event\Test\Failed;
 use PHPUnit\Event\Test\FailedSubscriber as FailedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
-use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
+use webignition\BasilPhpUnitResultPrinter\TestMetaDataExtractor;
 
 readonly class FailedSubscriber implements FailedSubscriberInterface
 {
     public function __construct(
         private Printer $printer,
-        private TestDataExtractor $testDataExtractor,
+        private TestMetaDataExtractor $testMetaDataExtractor,
     ) {}
 
     public function notify(Failed $event): void
@@ -25,8 +25,8 @@ readonly class FailedSubscriber implements FailedSubscriberInterface
         $test = $event->test();
         \assert($test instanceof TestMethod);
 
-        $testData = $this->testDataExtractor->extract($test, $event->throwable());
+        $testMetaData = $this->testMetaDataExtractor->extract($test, $event->throwable());
 
-        $this->printer->print($testData->failedAssertion . "\n");
+        $this->printer->print($testMetaData->failedAssertion . "\n");
     }
 }
