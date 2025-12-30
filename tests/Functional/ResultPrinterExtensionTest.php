@@ -12,31 +12,6 @@ class ResultPrinterExtensionTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    public function testFoo(): void
-    {
-        $foo = '{
-                    "statement": "click $\".selector\"",
-                    "type": "action"
-                }';
-
-        var_dump($foo);
-
-        $decodedFoo = json_decode($foo, true);
-
-        var_dump($decodedFoo);
-
-        $foo = '{
-                    "statement": "click $\\".selector\\"",
-                    "type": "action"
-                }';
-
-        var_dump($foo);
-
-        $decodedFoo = json_decode($foo, true);
-
-        var_dump($decodedFoo);
-    }
-
     #[DataProvider('passingTestsDataProvider')]
     #[DataProvider('failingTestsDataProvider')]
     #[DataProvider('terminatedDataProvider')]
@@ -74,7 +49,7 @@ class ResultPrinterExtensionTest extends TestCase
                     {"statement":"assertion statement two for step one","type":"assertion"}
                     PHPUnit\Event\Test\Finished
                     step one
-                    {"type":"action","statement":"click identifier"}
+                    {"type":"action","statement":"click $\".selector\""}
                     {"type":"assertion","statement":"assertion statement one for step one"}
                     {"type":"assertion","statement":"assertion statement two for step one"}
                     EOD,
@@ -98,7 +73,7 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Passed
                     PHPUnit\Event\Test\Finished
                     step one
-                    {"type":"action","statement":"click identifier"}
+                    {"type":"action","statement":"click $\".selector\""}
                     {"type":"assertion","statement":"assertion statement one for step one"}
                     {"type":"assertion","statement":"assertion statement two for step one"}
                     PHPUnit\Event\Test\Prepared

@@ -37,7 +37,7 @@ class Failing01 extends BasilTestCase
         } catch (\Throwable $exception) {
             self::fail('{
                 "statement": {
-                    "statement": "click $\\".selector\\"",
+                    "statement": "click $\".selector\"",
                     "type": "action"
                 },
                 "reason": "action-failed",
