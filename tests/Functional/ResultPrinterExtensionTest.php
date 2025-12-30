@@ -48,6 +48,7 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Failed
                     {"statement":"assertion statement two for step one","type":"assertion"}
                     PHPUnit\Event\Test\Finished
+                    status: failed
                     step one
                     {"type":"action","statement":"click $\".selector\""}
                     {"type":"assertion","statement":"assertion statement one for step one"}
@@ -72,6 +73,7 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Passed
                     PHPUnit\Event\Test\Finished
+                    status: passed
                     step one
                     {"type":"action","statement":"click $\".selector\""}
                     {"type":"assertion","statement":"assertion statement one for step one"}
@@ -79,6 +81,7 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Passed
                     PHPUnit\Event\Test\Finished
+                    status: passed
                     step two
                     {"type":"assertion","statement":"assertion statement for step two"}
                     EOD,
@@ -102,6 +105,7 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Errored
                     RuntimeException: Exception thrown in first step
                     PHPUnit\Event\Test\Finished
+                    status: terminated
                     step one
                     {"type":"assertion","statement":"assertion statement for step one"}
                     EOD,
@@ -113,12 +117,14 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Passed
                     PHPUnit\Event\Test\Finished
+                    status: passed
                     step one
                     {"type":"assertion","statement":"assertion statement for step one"}
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Errored
                     RuntimeException: Exception thrown in second step
                     PHPUnit\Event\Test\Finished
+                    status: terminated
                     step two
                     {"type":"assertion","statement":"assertion statement for step two"}
                     EOD,
