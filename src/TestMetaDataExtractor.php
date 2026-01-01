@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter;
 
 use PHPUnit\Event\Code\TestMethod;
-use PHPUnit\Event\Code\Throwable;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
 class TestMetaDataExtractor
 {
-    public function extract(TestMethod $testMethod, ?Throwable $throwable = null): TestMetaData
+    public function extract(TestMethod $testMethod): TestMetaData
     {
         $reflectionClass = new \ReflectionClass($testMethod->className());
         $reflectionMethod = $reflectionClass->getMethod($testMethod->methodName());
@@ -25,25 +24,6 @@ class TestMetaDataExtractor
         return new TestMetaData(
             $stepNameAttribute->newInstance()->name,
             $statementsAttribute->newInstance()->statements,
-            $this->getFailedAssertion($throwable)
         );
-    }
-
-    /**
-     * @return null|non-empty-string
-     */
-    private function getFailedAssertion(?Throwable $throwable): ?string
-    {
-        if (null === $throwable) {
-            return null;
-        }
-
-        $assertionFailureMessage = $throwable->message();
-
-        $finalBracePosition = (int) strrpos($assertionFailureMessage, '}');
-
-        $json = substr($assertionFailureMessage, 0, $finalBracePosition + 1);
-
-        return '' === $json ? null : $json;
     }
 }

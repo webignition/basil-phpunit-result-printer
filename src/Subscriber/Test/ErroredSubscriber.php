@@ -8,18 +8,18 @@ use PHPUnit\Event\Test\Errored;
 use PHPUnit\Event\Test\ErroredSubscriber as ErroredSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
-use webignition\BasilPhpUnitResultPrinter\StatusContainer;
+use webignition\BasilPhpUnitResultPrinter\State;
 
 class ErroredSubscriber implements ErroredSubscriberInterface
 {
     public function __construct(
         private readonly Printer $printer,
-        private StatusContainer $statusContainer,
+        private State $state,
     ) {}
 
     public function notify(Errored $event): void
     {
-        $this->statusContainer->setStatus(new Status(Status::STATUS_TERMINATED));
+        $this->state->setStatus(new Status(Status::STATUS_TERMINATED));
 
         $this->printer->print($event::class);
         $this->printer->print("\n");

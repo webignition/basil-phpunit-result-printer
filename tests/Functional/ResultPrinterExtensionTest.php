@@ -46,16 +46,13 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Failed
-                    {
-                        "statement": "assertion statement two for step one",
-                        "type": "assertion"
-                    }
                     PHPUnit\Event\Test\Finished
                     status: failed
                     step one
                     {"type":"action","statement":"click $\".selector\""}
-                    {"type":"assertion","statement":"assertion statement one for step one"}
-                    {"type":"assertion","statement":"assertion statement two for step one"}
+                    {"type":"assertion","statement":"$page.url is \"https:\/\/www.example.com\""}
+                    {"type":"assertion","statement":"$page.title is \"Foo\""}
+                    failed assertion: $page.title is "Foo"
                     EOD,
             ],
             'failing action' => [
@@ -64,23 +61,12 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Failed
-                    {
-                        "statement": {
-                            "statement": "click $\".selector\"",
-                            "type": "action"
-                        },
-                        "reason": "action-failed",
-                        "exception": {
-                            "class": "RuntimeException",
-                            "code": 0,
-                            "message": "Runtime exception executing action"
-                        }
-                    }
                     PHPUnit\Event\Test\Finished
                     status: failed
                     step one
                     {"type":"action","statement":"click $\".selector\""}
-                    {"type":"assertion","statement":"assertion statement one for step one"}
+                    {"type":"assertion","statement":"$page.url is \"https:\/\/www.example.com\""}
+                    failed action: click $".selector"
                     EOD,
             ],
         ];
