@@ -22,7 +22,7 @@ class FailingAction extends BasilTestCase
         ],
         [
             'type' => 'assertion',
-            'statement' => 'assertion statement one for step one',
+            'statement' => '$page.url is "https://www.example.com"',
         ],
     ])]
     public function testStep1(): void
@@ -48,7 +48,7 @@ class FailingAction extends BasilTestCase
         self::assertTrue(
             true,
             (string) json_encode([
-                'statement' => 'assertion statement one for step one',
+                'statement' => '$page.url is "https://www.example.com"',
                 'type' => 'assertion',
             ])
         );

@@ -20,12 +20,12 @@ use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\PreparedSubscriber;
 class ResultPrinterExtension implements Extension
 {
     private Printer $printer;
-    private StatusContainer $statusContainer;
+    private State $state;
 
     public function __construct()
     {
         $this->printer = DefaultPrinter::standardOutput();
-        $this->statusContainer = new StatusContainer();
+        $this->state = new State();
     }
 
     public function bootstrap(Configuration $configuration, Facade $facade, ParameterCollection $parameters): void
@@ -40,13 +40,20 @@ class ResultPrinterExtension implements Extension
             new PreparedSubscriber($this->printer),
             new FinishedSubscriber(
                 $this->printer,
-                $this->statusContainer,
+                $this->state,
                 new TestMetaDataExtractor(),
                 new TestDataExtractor(),
             ),
-            new ErroredSubscriber($this->printer, $this->statusContainer),
-            new FailedSubscriber($this->printer, $this->statusContainer, new TestMetaDataExtractor()),
-            new PassedSubscriber($this->printer, $this->statusContainer),
+            new ErroredSubscriber($this->printer, $this->state),
+            new FailedSubscriber(
+                $this->printer,
+                $this->state,
+                new FailedActionExtractor(
+                    new FailedActionExceptionExtractor(),
+                ),
+                new FailedAssertionExtractor(),
+            ),
+            new PassedSubscriber($this->printer, $this->state),
             new BeforeFirstTestMethodErroredSubscriber($this->printer),
         );
     }
