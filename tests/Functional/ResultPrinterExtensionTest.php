@@ -46,7 +46,10 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Failed
-                    {"statement":"assertion statement two for step one","type":"assertion"}
+                    {
+                        "statement": "assertion statement two for step one",
+                        "type": "assertion"
+                    }
                     PHPUnit\Event\Test\Finished
                     status: failed
                     step one
@@ -62,6 +65,17 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Failed
                     {
+                        "statement": {
+                            "statement": "click $\".selector\"",
+                            "type": "action"
+                        },
+                        "reason": "action-failed",
+                        "exception": {
+                            "class": "RuntimeException",
+                            "code": 0,
+                            "message": "Runtime exception executing action"
+                        }
+                    }
                     PHPUnit\Event\Test\Finished
                     status: failed
                     step one

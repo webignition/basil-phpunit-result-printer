@@ -39,13 +39,11 @@ class TestMetaDataExtractor
         }
 
         $assertionFailureMessage = $throwable->message();
-        $assertionFailureMessageLines = explode("\n", $assertionFailureMessage);
 
-        $assertion = $assertionFailureMessageLines[0];
-        if ('' === $assertion) {
-            return null;
-        }
+        $finalBracePosition = (int) strrpos($assertionFailureMessage, '}');
 
-        return $assertion;
+        $json = substr($assertionFailureMessage, 0, $finalBracePosition + 1);
+
+        return '' === $json ? null : $json;
     }
 }
