@@ -32,6 +32,11 @@ class FailedSubscriber implements FailedSubscriberInterface
 
         $testMetaData = $this->testMetaDataExtractor->extract($test, $event->throwable());
 
-        $this->printer->print($testMetaData->failedAssertion . "\n");
+        $formattedFailedStatement = json_encode(
+            json_decode((string) $testMetaData->failedAssertion),
+            JSON_PRETTY_PRINT,
+        );
+
+        $this->printer->print($formattedFailedStatement . "\n");
     }
 }
