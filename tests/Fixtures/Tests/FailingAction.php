@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Fixtures\Tests;
+namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
-use webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests\BasilTestCase;
 
-class Failing01 extends BasilTestCase
+class FailingAction extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -25,15 +24,12 @@ class Failing01 extends BasilTestCase
             'type' => 'assertion',
             'statement' => 'assertion statement one for step one',
         ],
-        [
-            'type' => 'assertion',
-            'statement' => 'assertion statement two for step one',
-        ],
     ])]
     public function testStep1(): void
     {
         try {
             // click $".selector"
+            throw new \RuntimeException('Runtime exception executing action');
         } catch (\Throwable $exception) {
             self::fail('{
                 "statement": {
@@ -53,32 +49,6 @@ class Failing01 extends BasilTestCase
             true,
             (string) json_encode([
                 'statement' => 'assertion statement one for step one',
-                'type' => 'assertion',
-            ])
-        );
-
-        self::assertTrue(
-            false,
-            (string) json_encode([
-                'statement' => 'assertion statement two for step one',
-                'type' => 'assertion',
-            ])
-        );
-    }
-
-    #[StepName('step two')]
-    #[Statements([
-        [
-            'type' => 'assertion',
-            'statement' => 'assertion statement for step two',
-        ],
-    ])]
-    public function testStep2(): void
-    {
-        self::assertTrue(
-            true,
-            (string) json_encode([
-                'statement' => 'assertion statement for step two',
                 'type' => 'assertion',
             ])
         );

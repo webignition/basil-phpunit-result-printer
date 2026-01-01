@@ -40,8 +40,8 @@ class ResultPrinterExtensionTest extends TestCase
         $root = getcwd();
 
         return [
-            'failing' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/Failing01.php',
+            'failing assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\Prepared
@@ -53,6 +53,20 @@ class ResultPrinterExtensionTest extends TestCase
                     {"type":"action","statement":"click $\".selector\""}
                     {"type":"assertion","statement":"assertion statement one for step one"}
                     {"type":"assertion","statement":"assertion statement two for step one"}
+                    EOD,
+            ],
+            'failing action' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingAction.php',
+                'expectedExitCode' => 1,
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Failed
+                    {
+                    PHPUnit\Event\Test\Finished
+                    status: failed
+                    step one
+                    {"type":"action","statement":"click $\".selector\""}
+                    {"type":"assertion","statement":"assertion statement one for step one"}
                     EOD,
             ],
         ];
