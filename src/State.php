@@ -6,7 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter;
 
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 
-class State implements \Stringable
+class State
 {
     private Status $status;
     private FailedAction $failedAction;
@@ -15,11 +15,6 @@ class State implements \Stringable
     public function __construct()
     {
         $this->status = new Status(Status::STATUS_UNKNOWN);
-    }
-
-    public function __toString(): string
-    {
-        return (string) $this->status;
     }
 
     public function getStatus(): Status

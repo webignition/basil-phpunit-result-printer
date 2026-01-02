@@ -26,7 +26,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         $this->printer->print($event::class);
         $this->printer->print("\n");
 
-        $this->printer->print('status: ' . $this->state);
+        $this->printer->print('status: ' . $this->state->getStatus());
         $this->printer->print("\n");
 
         $test = $event->test();
