@@ -69,8 +69,8 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'verify page is open',
                         'status' => Status::STATUS_PASSED,
                         'handledStatements' => [
-                            $assertionParser->parse('$page.url is "http://example.com/"'),
-                            $assertionParser->parse('$page.title is "Example Domain"'),
+                            $assertionParser->parse('$page.url is "http://example.com/"', 0),
+                            $assertionParser->parse('$page.title is "Example Domain"', 0),
                         ],
                     ]),
                     BasilTestCaseFactory::create([
@@ -79,23 +79,23 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'handledStatements' => [
                             new DerivedValueOperationAssertion(
                                 new ResolvedAction(
-                                    $actionParser->parse('click $page_import_name.elements.selector'),
+                                    $actionParser->parse('click $page_import_name.elements.selector', 0),
                                     '$".button"'
                                 ),
                                 '$".button"',
                                 'exists'
                             ),
                             new ResolvedAction(
-                                $actionParser->parse('click $page_import_name.elements.selector'),
+                                $actionParser->parse('click $page_import_name.elements.selector', 0),
                                 '$".button"'
                             ),
-                            $actionParser->parse('set $".form" >> $".input" to "literal value"'),
-                            $assertionParser->parse('$".button".data-clicked is "1"'),
-                            $assertionParser->parse('$".form" >> $".input" is "literal value"'),
+                            $actionParser->parse('set $".form" >> $".input" to "literal value"', 0),
+                            $assertionParser->parse('$".button".data-clicked is "1"', 0),
+                            $assertionParser->parse('$".form" >> $".input" is "literal value"', 0),
                         ],
                     ]),
                 ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/passed-single-test.yaml'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/passed-single-test.yaml', 0),
             ],
         ];
     }
@@ -116,11 +116,11 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$".selector" exists'),
+                            $assertionParser->parse('$".selector" exists', 0),
                         ],
                     ]),
                 ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-exists-assertion-element.yaml'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-exists-assertion-element.yaml', 0),
             ],
             'failed, derived element exists assertion' => [
                 'tests' => [
@@ -131,7 +131,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'handledStatements' => [
                             new DerivedValueOperationAssertion(
                                 new ResolvedAction(
-                                    $actionParser->parse('click $page_import_name.elements.selector'),
+                                    $actionParser->parse('click $page_import_name.elements.selector', 0),
                                     '$".selector"'
                                 ),
                                 '$".selector"',
@@ -149,7 +149,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$"form":3 >> $"input":2 exists'),
+                            $assertionParser->parse('$"form":3 >> $"input":2 exists', 0),
                         ],
                     ]),
                 ],
@@ -164,7 +164,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$"form" >> $"/input" exists'),
+                            $assertionParser->parse('$"form" >> $"/input" exists', 0),
                         ],
                     ]),
                 ],
@@ -179,11 +179,11 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$".selector".attribute_name exists'),
+                            $assertionParser->parse('$".selector".attribute_name exists', 0),
                         ],
                     ]),
                 ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-exists-assertion-attribute.yaml'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-exists-assertion-attribute.yaml', 0),
             ],
         ];
     }
@@ -203,10 +203,10 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step with invalid locator exception',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$"a[href=https://example.com/]" exists'),
+                            $assertionParser->parse('$"a[href=https://example.com/]" exists', 0),
                         ],
                         'lastException' => new InvalidLocatorException(
-                            new ElementIdentifier('a[href=https://example.com/]'),
+                            new ElementIdentifier('a[href=https://example.com/]', 0),
                             \Mockery::mock(InvalidSelectorException::class)
                         ),
                     ]),
@@ -222,9 +222,9 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step with unknown exception',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$"a[href=https://example.com/]" exists'),
+                            $assertionParser->parse('$"a[href=https://example.com/]" exists', 0),
                         ],
-                        'lastException' => new \LogicException('Invalid logic'),
+                        'lastException' => new \LogicException('Invalid logic', 0),
                     ]),
                 ],
                 'expectedOutput' => FixtureLoader::load(
@@ -249,7 +249,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$browser.size is "literal value"'),
+                            $assertionParser->parse('$browser.size is "literal value"', 0),
                         ],
                         'expectedValue' => 'literal value',
                         'examinedValue' => '1024x768',
@@ -266,7 +266,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$page.title is $data.expected_title'),
+                            $assertionParser->parse('$page.title is $data.expected_title', 0),
                         ],
                         'expectedValue' => 'expected title value',
                         'examinedValue' => 'Example Domain',
@@ -286,7 +286,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$page.title is $env.PAGE_TITLE'),
+                            $assertionParser->parse('$page.title is $env.PAGE_TITLE', 0),
                         ],
                         'expectedValue' => 'expected title value',
                         'examinedValue' => 'Example Domain',
@@ -303,7 +303,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$".selector" is "expected value"'),
+                            $assertionParser->parse('$".selector" is "expected value"', 0),
                         ],
                         'expectedValue' => 'expected value',
                         'examinedValue' => 'actual value',
@@ -320,7 +320,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$page.title is $".selector"'),
+                            $assertionParser->parse('$page.title is $".selector"', 0),
                         ],
                         'expectedValue' => 'expected value',
                         'examinedValue' => 'actual value',
@@ -337,7 +337,7 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            $assertionParser->parse('$".actual" is $".expected"'),
+                            $assertionParser->parse('$".actual" is $".expected"', 0),
                         ],
                         'expectedValue' => 'expected value',
                         'examinedValue' => 'actual value',
@@ -363,12 +363,12 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            self::createDerivedIsRegExpAssertion('$page.title matches $".selector".attribute_name'),
+                            self::createDerivedIsRegExpAssertion('$page.title matches $".selector".attribute_name', 0),
                         ],
                         'examinedValue' => 'not a regexp',
                     ]),
                 ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-is-regexp-assertion-attribute.yaml'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-is-regexp-assertion-attribute.yaml', 0),
             ],
             'failed, element is-regexp assertion' => [
                 'tests' => [
@@ -377,12 +377,12 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            self::createDerivedIsRegExpAssertion('$page.title matches $".selector"'),
+                            self::createDerivedIsRegExpAssertion('$page.title matches $".selector"', 0),
                         ],
                         'examinedValue' => 'not a regexp',
                     ]),
                 ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-is-regexp-assertion-element.yaml'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-is-regexp-assertion-element.yaml', 0),
             ],
             'failed, scalar is-regexp assertion' => [
                 'tests' => [
@@ -391,12 +391,12 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'basilStepName' => 'step name',
                         'status' => Status::STATUS_FAILED,
                         'handledStatements' => [
-                            self::createDerivedIsRegExpAssertion('$page.title matches "not a regexp"'),
+                            self::createDerivedIsRegExpAssertion('$page.title matches "not a regexp"', 0),
                         ],
                         'examinedValue' => 'not a regexp',
                     ]),
                 ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-is-regexp-assertion-scalar.yaml'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-is-regexp-assertion-scalar.yaml', 0),
             ],
         ];
     }
@@ -416,14 +416,14 @@ class ResultPrinterTest extends AbstractBaseTestCase
                         'handledStatements' => [],
                     ]),
                 ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-no-statements.yaml'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-no-statements.yaml', 0),
             ],
         ];
     }
 
     private static function createDerivedIsRegExpAssertion(string $assertionSource): DerivedValueOperationAssertion
     {
-        $assertion = AssertionParser::create()->parse($assertionSource);
+        $assertion = AssertionParser::create()->parse($assertionSource, 0);
 
         return new DerivedValueOperationAssertion($assertion, (string) $assertion->getValue(), 'is-regexp');
     }
