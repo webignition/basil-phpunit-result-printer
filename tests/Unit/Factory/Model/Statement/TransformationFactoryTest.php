@@ -42,18 +42,21 @@ class TransformationFactoryTest extends AbstractBaseTestCase
     {
         $clickAction = new Action(
             'click $".selector"',
+            0,
             'click',
             '$".selector'
         );
 
         $existsAssertion = new Assertion(
             '$".selector" exists',
+            0,
             '$".selector"',
             'exists'
         );
 
         $unresolvedIsAssertion = new Assertion(
             '$page_import_name.elements.selector is "value"',
+            0,
             '$page_import_name.elements.selector',
             'is',
             '"value"'
@@ -61,6 +64,7 @@ class TransformationFactoryTest extends AbstractBaseTestCase
 
         $unresolvedClickAction = new Action(
             'click $page_import_name.elements.selector',
+            0,
             'click',
             '$page_import_name.elements.selector',
             '$page_import_name.elements.selector'

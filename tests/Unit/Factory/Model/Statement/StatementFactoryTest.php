@@ -55,10 +55,11 @@ class StatementFactoryTest extends AbstractBaseTestCase
 
         $actionParser = ActionParser::create();
 
-        $clickAction = $actionParser->parse('click $".selector"');
+        $clickAction = $actionParser->parse('click $".selector"', 0);
 
         $unresolvedClickAction = new Action(
             'click $page_import_name.elements.selector',
+            0,
             'click',
             '$page_import_name.elements.selector',
             '$page_import_name.elements.selector'
@@ -105,10 +106,11 @@ class StatementFactoryTest extends AbstractBaseTestCase
 
         $actionParser = ActionParser::create();
 
-        $clickAction = $actionParser->parse('click $".selector"');
+        $clickAction = $actionParser->parse('click $".selector"', 0);
 
         $unresolvedClickAction = new Action(
             'click $page_import_name.elements.selector',
+            0,
             'click',
             '$page_import_name.elements.selector',
             '$page_import_name.elements.selector'
@@ -158,11 +160,11 @@ class StatementFactoryTest extends AbstractBaseTestCase
         $actionParser = ActionParser::create();
         $assertionParser = AssertionParser::create();
 
-        $clickAction = $actionParser->parse('click $".selector"');
-        $unresolvedClickAction = $actionParser->parse('click $page_import_name.elements.selector');
+        $clickAction = $actionParser->parse('click $".selector"', 0);
+        $unresolvedClickAction = $actionParser->parse('click $page_import_name.elements.selector', 0);
         $resolvedClickAction = new ResolvedAction($unresolvedClickAction, '$".selector"');
 
-        $existsAssertion = $assertionParser->parse('$".selector" exists');
+        $existsAssertion = $assertionParser->parse('$".selector" exists', 0);
         $derivedExistsAssertion = new DerivedValueOperationAssertion($clickAction, '$".selector"', 'exists');
         $derivedResolvedExistsAssertion = new DerivedValueOperationAssertion(
             $resolvedClickAction,
@@ -190,7 +192,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'is assertion' => [
-                'assertion' => $assertionParser->parse('$".selector" is "value"'),
+                'assertion' => $assertionParser->parse('$".selector" is "value"', 0),
                 'expectedStatement' => new PassedAssertionStatement('$".selector" is "value"'),
             ],
         ];
@@ -222,11 +224,11 @@ class StatementFactoryTest extends AbstractBaseTestCase
         $actionParser = ActionParser::create();
         $assertionParser = AssertionParser::create();
 
-        $clickAction = $actionParser->parse('click $".selector"');
-        $unresolvedClickAction = $actionParser->parse('click $page_import_name.elements.selector');
+        $clickAction = $actionParser->parse('click $".selector"', 0);
+        $unresolvedClickAction = $actionParser->parse('click $page_import_name.elements.selector', 0);
         $resolvedClickAction = new ResolvedAction($unresolvedClickAction, '$".selector"');
 
-        $existsAssertion = $assertionParser->parse('$".selector" exists');
+        $existsAssertion = $assertionParser->parse('$".selector" exists', 0);
         $derivedExistsAssertion = new DerivedValueOperationAssertion($clickAction, '$".selector"', 'exists');
         $derivedResolvedExistsAssertion = new DerivedValueOperationAssertion(
             $resolvedClickAction,
@@ -234,8 +236,8 @@ class StatementFactoryTest extends AbstractBaseTestCase
             'exists'
         );
 
-        $isAssertion = $assertionParser->parse('$".selector" is "value"');
-        $isRegExpAssertion = $assertionParser->parse('"literal" is-regexp');
+        $isAssertion = $assertionParser->parse('$".selector" is "value"', 0);
+        $isRegExpAssertion = $assertionParser->parse('"literal" is-regexp', 0);
 
         $elementNodeSource = new NodeSource(
             new Node(

@@ -7,8 +7,8 @@ namespace webignition\BasilPhpUnitResultPrinter;
 readonly class TestMetaData
 {
     /**
-     * @param non-empty-string                                                   $stepName
-     * @param array{'type':'action'|'assertion', 'statement':non-empty-string}[] $statements
+     * @param non-empty-string $stepName
+     * @param string[]         $statements
      */
     public function __construct(
         public string $stepName,

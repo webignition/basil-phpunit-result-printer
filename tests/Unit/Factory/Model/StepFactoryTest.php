@@ -54,11 +54,11 @@ class StepFactoryTest extends AbstractBaseTestCase
         $actionParser = ActionParser::create();
         $assertionParser = AssertionParser::create();
 
-        $clickAction = $actionParser->parse('click $".selector"');
-        $unresolvedClickAction = $actionParser->parse('click $page_import_name.elements.selector');
+        $clickAction = $actionParser->parse('click $".selector"', 0);
+        $unresolvedClickAction = $actionParser->parse('click $page_import_name.elements.selector', 0);
         $resolvedClickAction = new ResolvedAction($unresolvedClickAction, '$".selector"');
 
-        $existsAssertion = $assertionParser->parse('$".selector" exists');
+        $existsAssertion = $assertionParser->parse('$".selector" exists', 0);
         $derivedExistsAssertion = new DerivedValueOperationAssertion($clickAction, '$".selector"', 'exists');
         $derivedResolvedExistsAssertion = new DerivedValueOperationAssertion(
             $resolvedClickAction,
@@ -66,9 +66,9 @@ class StepFactoryTest extends AbstractBaseTestCase
             'exists'
         );
 
-        $isAssertion = $assertionParser->parse('$".selector" is "value"');
-        $includesAssertion = $assertionParser->parse('$page.title includes "expected"');
-        $isAssertionWithData = $assertionParser->parse('$".selector" is $data.expected_value');
+        $isAssertion = $assertionParser->parse('$".selector" is "value"', 0);
+        $includesAssertion = $assertionParser->parse('$page.title includes "expected"', 0);
+        $isAssertionWithData = $assertionParser->parse('$".selector" is $data.expected_value', 0);
 
         $statusPassedLabel = (string) new Status(Status::STATUS_PASSED);
         $statusFailedLabel = (string) new Status(Status::STATUS_FAILED);

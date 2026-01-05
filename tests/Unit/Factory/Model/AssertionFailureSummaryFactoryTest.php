@@ -56,7 +56,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
 
         return [
             'exists, node' => [
-                'assertion' => $assertionParser->parse('$".identifier" exists'),
+                'assertion' => $assertionParser->parse('$".identifier" exists', 0),
                 'expectedValue' => '',
                 'actualValue' => '',
                 'expectedSummary' => new Existence(
@@ -65,7 +65,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'not-exists, node' => [
-                'assertion' => $assertionParser->parse('$".identifier" not-exists'),
+                'assertion' => $assertionParser->parse('$".identifier" not-exists', 0),
                 'expectedValue' => '',
                 'actualValue' => '',
                 'expectedSummary' => new Existence(
@@ -74,7 +74,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'is-regexp, node' => [
-                'assertion' => $assertionParser->parse('$".identifier" is-regexp'),
+                'assertion' => $assertionParser->parse('$".identifier" is-regexp', 0),
                 'expectedValue' => '',
                 'actualValue' => 'invalid regexp',
                 'expectedSummary' => new IsRegExp(
@@ -83,7 +83,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'is-regexp, scalar' => [
-                'assertion' => $assertionParser->parse('$page.title is-regexp'),
+                'assertion' => $assertionParser->parse('$page.title is-regexp', 0),
                 'expectedValue' => '',
                 'actualValue' => 'invalid regexp',
                 'expectedSummary' => new IsRegExp(
@@ -92,7 +92,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'is, element node identifier, scalar value' => [
-                'assertion' => $assertionParser->parse('$".identifier" is "expected"'),
+                'assertion' => $assertionParser->parse('$".identifier" is "expected"', 0),
                 'expectedValue' => 'expected',
                 'actualValue' => 'identifier element node value',
                 'expectedSummary' => new Comparison(
@@ -108,7 +108,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'is, element node identifier, element node value' => [
-                'assertion' => $assertionParser->parse('$".identifier" is $".value"'),
+                'assertion' => $assertionParser->parse('$".identifier" is $".value"', 0),
                 'expectedValue' => 'value element node value',
                 'actualValue' => 'identifier element node value',
                 'expectedSummary' => new Comparison(
@@ -124,7 +124,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'is, scalar identifier, element node value' => [
-                'assertion' => $assertionParser->parse('"expected" is $".value"'),
+                'assertion' => $assertionParser->parse('"expected" is $".value"', 0),
                 'expectedValue' => 'value element node value',
                 'actualValue' => 'expected',
                 'expectedSummary' => new Comparison(
@@ -140,7 +140,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'is, scalar identifier, scalar value' => [
-                'assertion' => $assertionParser->parse('"actual" is "expected"'),
+                'assertion' => $assertionParser->parse('"actual" is "expected"', 0),
                 'expectedValue' => 'expected',
                 'actualValue' => 'actual',
                 'expectedSummary' => new Comparison(
@@ -156,7 +156,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'is, attribute node identifier, scalar value' => [
-                'assertion' => $assertionParser->parse('$".identifier".attribute_name is "expected"'),
+                'assertion' => $assertionParser->parse('$".identifier".attribute_name is "expected"', 0),
                 'expectedValue' => 'expected',
                 'actualValue' => 'identifier attribute node value',
                 'expectedSummary' => new Comparison(
@@ -172,7 +172,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'is, element node identifier, attribute node value' => [
-                'assertion' => $assertionParser->parse('$".identifier" is $".value".attribute_name'),
+                'assertion' => $assertionParser->parse('$".identifier" is $".value".attribute_name', 0),
                 'expectedValue' => 'value attribute node value',
                 'actualValue' => 'identifier element node value',
                 'expectedSummary' => new Comparison(
@@ -207,6 +207,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
             'exists, invalid source' => [
                 'assertion' => new Assertion(
                     'invalid exists',
+                    0,
                     'invalid',
                     'exists'
                 ),
@@ -214,6 +215,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
             'is-regexp, invalid source' => [
                 'assertion' => new Assertion(
                     'invalid exists',
+                    0,
                     'invalid',
                     'is-regexp'
                 ),
@@ -221,6 +223,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
             'is, invalid identifier' => [
                 'assertion' => new Assertion(
                     'invalid is "value"',
+                    0,
                     'invalid',
                     'is',
                     '"value"'
@@ -229,6 +232,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
             'is, invalid value' => [
                 'assertion' => new Assertion(
                     '$".identifier" is invalid',
+                    0,
                     '$".identifier"',
                     'is',
                     'invalid'

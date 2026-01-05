@@ -40,7 +40,7 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
     public static function createDataProvider(): array
     {
         $assertionParser = AssertionParser::create();
-        $existsAssertion = $assertionParser->parse('$".selector" exists');
+        $existsAssertion = $assertionParser->parse('$".selector" exists', 0);
 
         $assertionFailureSummaryFactory = AssertionFailureSummaryFactory::createFactory();
 
@@ -105,7 +105,7 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
     public static function getDataDataProvider(): array
     {
         $assertionParser = AssertionParser::create();
-        $existsAssertion = $assertionParser->parse('$".selector" exists');
+        $existsAssertion = $assertionParser->parse('$".selector" exists', 0);
 
         $assertionFailureSummaryFactory = AssertionFailureSummaryFactory::createFactory();
 
