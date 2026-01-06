@@ -10,6 +10,7 @@ use PHPUnit\Runner\Extension\ParameterCollection;
 use PHPUnit\TextUI\Configuration\Configuration;
 use PHPUnit\TextUI\Output\DefaultPrinter;
 use PHPUnit\TextUI\Output\Printer;
+use webignition\BasilModels\Model\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\BeforeFirstTestMethodErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\ErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FailedSubscriber;
@@ -41,7 +42,9 @@ class ResultPrinterExtension implements Extension
             new FinishedSubscriber(
                 $this->printer,
                 $this->state,
-                new TestMetaDataExtractor(),
+                new TestMetaDataExtractor(
+                    StatementFactory::createFactory(),
+                ),
                 new TestDataExtractor(),
             ),
             new ErroredSubscriber($this->printer, $this->state),
@@ -49,9 +52,14 @@ class ResultPrinterExtension implements Extension
                 $this->printer,
                 $this->state,
                 new FailedActionExtractor(
+                    StatementFactory::createFactory(),
+                    new JsonExtractor(),
                     new FailedActionExceptionExtractor(),
                 ),
-                new FailedAssertionExtractor(),
+                new FailedAssertionExtractor(
+                    StatementFactory::createFactory(),
+                    new JsonExtractor(),
+                ),
             ),
             new PassedSubscriber($this->printer, $this->state),
             new BeforeFirstTestMethodErroredSubscriber($this->printer),

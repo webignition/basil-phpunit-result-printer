@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter;
 
+use webignition\BasilModels\Model\Assertion\AssertionInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 
 class State
 {
     private Status $status;
     private FailedAction $failedAction;
-    private FailedAssertion $failedAssertion;
+    private AssertionInterface $failedAssertion;
 
     public function __construct()
     {
@@ -42,12 +43,12 @@ class State
         return isset($this->failedAction);
     }
 
-    public function setFailedAssertion(FailedAssertion $failedAssertion): void
+    public function setFailedAssertion(AssertionInterface $assertion): void
     {
-        $this->failedAssertion = $failedAssertion;
+        $this->failedAssertion = $assertion;
     }
 
-    public function getFailedAssertion(): FailedAssertion
+    public function getFailedAssertion(): AssertionInterface
     {
         return $this->failedAssertion;
     }

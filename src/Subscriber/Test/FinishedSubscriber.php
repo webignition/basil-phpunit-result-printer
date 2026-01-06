@@ -45,7 +45,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         $this->printer->print($testMetaData->stepName . "\n");
 
         foreach ($testMetaData->statements as $statement) {
-            $this->printer->print(json_encode($statement) . "\n");
+            $this->printer->print(json_encode($statement, JSON_PRETTY_PRINT) . "\n");
         }
 
         if ($this->state->hasFailedAction()) {
@@ -53,7 +53,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         }
 
         if ($this->state->hasFailedAssertion()) {
-            $this->printer->print('failed assertion: ' . $this->state->getFailedAssertion()->assertion . "\n");
+            $this->printer->print('failed assertion: ' . $this->state->getFailedAssertion() . "\n");
         }
     }
 }

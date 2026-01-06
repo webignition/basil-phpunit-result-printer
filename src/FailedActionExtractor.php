@@ -5,23 +5,35 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter;
 
 use PHPUnit\Event\Code\Throwable;
+use webignition\BasilModels\Model\Action\ActionInterface;
+use webignition\BasilModels\Model\StatementFactory;
+use webignition\BasilModels\Model\UnknownEncapsulatedStatementException;
 
 readonly class FailedActionExtractor
 {
     public function __construct(
+        private StatementFactory $statementFactory,
+        private JsonExtractor $jsonExtractor,
         private FailedActionExceptionExtractor $exceptionExtractor,
     ) {}
 
     public function extract(Throwable $throwable): ?FailedAction
     {
-        $data = json_decode($throwable->message(), true);
+        $json = $this->jsonExtractor->extract($throwable);
+
+        $data = json_decode($json, true);
         $data = is_array($data) ? $data : [];
 
         $statementData = $data['statement'] ?? [];
         $statementData = is_array($statementData) ? $statementData : [];
 
-        $statement = $this->extractStatement($statementData);
-        if (null === $statement) {
+        try {
+            $statement = $this->statementFactory->createFromArray($statementData);
+        } catch (UnknownEncapsulatedStatementException) {
+            $statement = null;
+        }
+
+        if (!$statement instanceof ActionInterface) {
             return null;
         }
 
@@ -41,23 +53,5 @@ readonly class FailedActionExtractor
         }
 
         return new FailedAction($statement, $reason, $exception);
-    }
-
-    /**
-     * @param array<mixed> $data
-     *
-     * @return ?non-empty-string
-     */
-    private function extractStatement(array $data): ?string
-    {
-        $statement = $data['statement'] ?? '';
-        $statement = is_string($statement) ? $statement : '';
-        $statement = trim($statement);
-
-        if ('' === $statement) {
-            return null;
-        }
-
-        return $statement;
     }
 }

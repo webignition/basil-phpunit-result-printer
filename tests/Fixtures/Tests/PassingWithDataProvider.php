@@ -18,14 +18,22 @@ class PassingWithDataProvider extends BasilTestCase
 
     #[StepName('step one')]
     #[Statements([
-        [
-            'type' => 'action',
-            'statement' => 'set $".selector" to $data.value',
-        ],
-        [
-            'type' => 'assertion',
-            'statement' => 'assertion statement one for step one',
-        ],
+        '{
+            "statement-type": "action",
+            "source": "set $\".selector\" to $data.value",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "type": "set",
+            "arguments": "$data.value"
+        }',
+        '{
+            "statement-type": "assertion",
+            "source": "$page.url is \"http:\/\/www.example.com\"",
+            "index": 1,
+            "identifier": "$page.url",
+            "value": "\"http:\/\/www.example.com\"",
+            "operator": "is"            
+        }',
     ])]
     #[DataProvider('StepOneDataProvider')]
     public function testStep1(int $foo, string $bar, bool $fooBar): void
@@ -35,8 +43,12 @@ class PassingWithDataProvider extends BasilTestCase
         } catch (\Throwable $exception) {
             self::fail('{
                 "statement": {
-                    "statement": "set $\".selector\" to $data.value",
-                    "type": "action"
+                    "statement-type": "action",
+                    "source": "set $\".selector\" to $data.value",
+                    "index": 0,
+                    "identifier": "$\".selector\"",
+                    "type": "set",
+                    "arguments": "$data.value"
                 },
                 "reason": "action-failed",
                 "exception": {
@@ -49,10 +61,14 @@ class PassingWithDataProvider extends BasilTestCase
 
         self::assertTrue(
             true,
-            (string) json_encode([
-                'statement' => 'assertion statement one for step one',
-                'type' => 'assertion',
-            ])
+            '{
+                "statement-type": "assertion",
+                "source": "$page.url is \"http:\/\/www.example.com\"",
+                "identifier": "$page.url",
+                "value": "\"http:\/\/www.example.com\"",
+                "operator": "is",
+                "index": 1
+            }'
         );
     }
 

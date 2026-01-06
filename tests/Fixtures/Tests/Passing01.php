@@ -16,18 +16,30 @@ class Passing01 extends BasilTestCase
 
     #[StepName('step one')]
     #[Statements([
-        [
-            'type' => 'action',
-            'statement' => 'click $".selector"',
-        ],
-        [
-            'type' => 'assertion',
-            'statement' => 'assertion statement one for step one',
-        ],
-        [
-            'type' => 'assertion',
-            'statement' => 'assertion statement two for step one',
-        ],
+        '{
+            "statement-type": "action",
+            "source": "click $\".selector\"",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "type": "click",
+            "arguments": "$\".selector\""            
+        }',
+        '{
+            "statement-type": "assertion",
+            "source": "$page.url is \"http:\/\/www.example.com\"",
+            "index": 1,
+            "identifier": "$page.url",
+            "value": "\"http:\/\/www.example.com\"",
+            "operator": "is"            
+        }',
+        '{
+            "statement-type": "assertion",
+            "source": "$page.title is \"Foo\"",
+            "index": 2,
+            "identifier": "$page.title",
+            "value": "\"Foo\"",
+            "operator": "is"
+        }',
     ])]
     public function testStep1(): void
     {
@@ -36,8 +48,12 @@ class Passing01 extends BasilTestCase
         } catch (\Throwable $exception) {
             self::fail('{
                 "statement": {
-                    "statement": "click $\".selector\"",
-                    "type": "action"
+                    "statement-type": "action",
+                    "source": "click $\".selector\"",
+                    "identifier": "$\".selector\"",
+                    "type": "click",
+                    "arguments": "$\".selector\"",
+                    "index": 0
                 },
                 "reason": "action-failed",
                 "exception": {
@@ -50,36 +66,52 @@ class Passing01 extends BasilTestCase
 
         self::assertTrue(
             true,
-            (string) json_encode([
-                'statement' => 'assertion statement one for step one',
-                'type' => 'assertion',
-            ])
+            '{
+                "statement-type": "assertion",
+                "source": "$page.url is \"http:\/\/www.example.com\"",
+                "identifier": "$page.url",
+                "value": "\"http:\/\/www.example.com\"",
+                "operator": "is",
+                "index": 1
+            }'
         );
 
         self::assertTrue(
             true,
-            (string) json_encode([
-                'statement' => 'assertion statement two for step one',
-                'type' => 'assertion',
-            ])
+            '{
+                "statement-type": "assertion",
+                "source": "$page.title is \"Foo\"",
+                "identifier": "$page.title",
+                "value": "\"Foo\"",
+                "operator": "is",
+                "index": 2
+            }'
         );
     }
 
     #[StepName('step two')]
     #[Statements([
-        [
-            'type' => 'assertion',
-            'statement' => 'assertion statement for step two',
-        ],
+        '{
+            "statement-type": "assertion",
+            "source": "$page.url is \"http:\/\/www.example.com\"",
+            "index": 0,
+            "identifier": "$page.url",
+            "value": "\"http:\/\/www.example.com\"",
+            "operator": "is"            
+        }',
     ])]
     public function testStep2(): void
     {
         self::assertTrue(
             true,
-            (string) json_encode([
-                'statement' => 'assertion statement for step two',
-                'type' => 'assertion',
-            ])
+            '{
+                "statement-type": "assertion",
+                "source": "$page.url is \"http:\/\/www.example.com\"",
+                "identifier": "$page.url",
+                "value": "\"http:\/\/www.example.com\"",
+                "operator": "is",
+                "index": 0
+            }'
         );
     }
 }

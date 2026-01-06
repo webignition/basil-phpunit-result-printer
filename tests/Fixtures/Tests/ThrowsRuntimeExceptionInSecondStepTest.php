@@ -16,38 +16,43 @@ class ThrowsRuntimeExceptionInSecondStepTest extends BasilTestCase
 
     #[StepName('step one')]
     #[Statements([
-        [
-            'type' => 'assertion',
-            'statement' => 'assertion statement for step one',
-        ],
+        '{
+            "statement-type": "assertion",
+            "source": "$page.url is \"http:\/\/www.example.com\"",
+            "index": 0,
+            "identifier": "$page.url",
+            "value": "\"http:\/\/www.example.com\"",
+            "operator": "is"            
+        }',
     ])]
     public function testStep1(): void
     {
         self::assertTrue(
             true,
-            (string) json_encode([
-                'statement' => 'assertion statement for step one',
-                'type' => 'assertion',
-            ])
+            '{
+                "statement-type": "assertion",
+                "source": "$page.url is \"http:\/\/www.example.com\"",
+                "identifier": "$page.url",
+                "value": "\"http:\/\/www.example.com\"",
+                "operator": "is",
+                "index": 0
+            }'
         );
     }
 
     #[StepName('step two')]
     #[Statements([
-        [
-            'type' => 'assertion',
-            'statement' => 'assertion statement for step two',
-        ],
+        '{
+            "statement-type": "assertion",
+            "source": "$page.title is \"Foo\"",
+            "index": 0,
+            "identifier": "$page.title",
+            "value": "\"Foo\"",
+            "operator": "is"
+        }',
     ])]
     public function testStep2(): void
     {
         throw new \RuntimeException('Exception thrown in second step', 123);
-        self::assertTrue(
-            true,
-            (string) json_encode([
-                'statement' => 'assertion statement for step two',
-                'type' => 'assertion',
-            ])
-        );
     }
 }

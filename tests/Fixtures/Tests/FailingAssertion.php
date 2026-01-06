@@ -17,18 +17,30 @@ class FailingAssertion extends BasilTestCase
 
     #[StepName('step one')]
     #[Statements([
-        [
-            'type' => 'action',
-            'statement' => 'click $".selector"',
-        ],
-        [
-            'type' => 'assertion',
-            'statement' => '$page.url is "https://www.example.com"',
-        ],
-        [
-            'type' => 'assertion',
-            'statement' => '$page.title is "Foo"',
-        ],
+        '{
+            "statement-type": "action",
+            "source": "click $\".selector\"",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "type": "click",
+            "arguments": "$\".selector\""            
+        }',
+        '{
+            "statement-type": "assertion",
+            "source": "$page.url is \"http:\/\/www.example.com\"",
+            "index": 1,
+            "identifier": "$page.url",
+            "value": "\"http:\/\/www.example.com\"",
+            "operator": "is"
+        }',
+        '{
+            "statement-type": "assertion",
+            "source": "$page.title is \"Foo\"",
+            "index": 2,
+            "identifier": "$page.title",
+            "value": "\"Foo\"",
+            "operator": "is"
+        }',
     ])]
     public function testStep1(): void
     {
@@ -37,8 +49,12 @@ class FailingAssertion extends BasilTestCase
         } catch (\Throwable $exception) {
             self::fail('{
                 "statement": {
-                    "statement": "click $\".selector\"",
-                    "type": "action"
+                    "statement-type": "action",
+                    "source": "click $\".selector\"",
+                    "index": 0,
+                    "identifier": "$\".selector\"",
+                    "type": "click",
+                    "arguments": "$\".selector\""
                 },
                 "reason": "action-failed",
                 "exception": {
@@ -51,36 +67,52 @@ class FailingAssertion extends BasilTestCase
 
         self::assertTrue(
             true,
-            (string) json_encode([
-                'statement' => '$page.url is "https://www.example.com"',
-                'type' => 'assertion',
-            ])
+            '{
+                "statement-type": "assertion",
+                "source": "$page.url is \"http:\/\/www.example.com\"",
+                "identifier": "$page.url",
+                "value": "\"http:\/\/www.example.com\"",
+                "operator": "is",
+                "index": 1
+            }'
         );
 
         self::assertTrue(
             false,
-            (string) json_encode([
-                'statement' => '$page.title is "Foo"',
-                'type' => 'assertion',
-            ])
+            '{
+                "statement-type": "assertion",
+                "source": "$page.title is \"Foo\"",
+                "identifier": "$page.title",
+                "value": "\"Foo\"",
+                "operator": "is",
+                "index": 2
+            }'
         );
     }
 
     #[StepName('step two')]
     #[Statements([
-        [
-            'type' => 'assertion',
-            'statement' => 'assertion statement for step two',
-        ],
+        '{
+            "statement-type": "assertion",
+            "source": "$page.title is \"Foo\"",
+            "index": 0,
+            "identifier": "$page.title",
+            "value": "\"Foo\"",
+            "operator": "is"
+        }',
     ])]
     public function testStep2(): void
     {
         self::assertTrue(
             true,
-            (string) json_encode([
-                'statement' => 'assertion statement for step two',
-                'type' => 'assertion',
-            ])
+            '{
+                "statement-type": "assertion",
+                "source": "$page.title is \"Foo\"",
+                "identifier": "$page.title",
+                "value": "\"Foo\"",
+                "operator": "is",
+                "index": 0
+            }'
         );
     }
 }
