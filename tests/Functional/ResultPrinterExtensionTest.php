@@ -40,8 +40,8 @@ class ResultPrinterExtensionTest extends TestCase
         $root = getcwd();
 
         return [
-            'failing assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingAssertion.php',
+            'failing regular assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingRegularAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\Prepared
@@ -74,6 +74,42 @@ class ResultPrinterExtensionTest extends TestCase
                         "operator": "is"
                     }
                     failed assertion: $page.title is "Foo"
+                    EOD,
+            ],
+            'failing derived assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingDerivedAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Failed
+                    PHPUnit\Event\Test\Finished
+                    status: failed
+                    step one
+                    {
+                        "statement-type": "action",
+                        "source": "click $\".selector\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "type": "click",
+                        "arguments": "$\".selector\""
+                    }
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.url is \"http:\/\/www.example.com\"",
+                        "index": 1,
+                        "identifier": "$page.url",
+                        "value": "\"http:\/\/www.example.com\"",
+                        "operator": "is"
+                    }
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.title is \"Foo\"",
+                        "index": 2,
+                        "identifier": "$page.title",
+                        "value": "\"Foo\"",
+                        "operator": "is"
+                    }
+                    failed assertion: $".selector" exists
                     EOD,
             ],
             'failing action' => [
