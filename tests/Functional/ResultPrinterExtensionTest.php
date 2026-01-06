@@ -140,6 +140,26 @@ class ResultPrinterExtensionTest extends TestCase
                     failed action: click $".selector"
                     EOD,
             ],
+            'failing string contains string assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingStringContainsStringAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Failed
+                    PHPUnit\Event\Test\Finished
+                    status: failed
+                    step one
+                    {
+                        "statement-type": "assertion",
+                        "source": "$\".selector\" includes \"value\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "value": "\"value\"",
+                        "operator": "includes"
+                    }
+                    failed assertion: $".selector" includes "value"
+                    EOD,
+            ],
         ];
     }
 
