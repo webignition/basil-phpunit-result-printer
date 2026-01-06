@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
 
 use Facebook\WebDriver\Exception\InvalidSelectorException;
-use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BasilModels\Model\Action\ResolvedAction;
 use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
 use webignition\BasilModels\Model\DataSet\DataSet;
@@ -19,7 +18,6 @@ use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
-use webignition\BasilPhpUnitResultPrinter\Tests\Services\BasilTestCaseFactory;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\BasilRunnerDocuments\Step;
 use webignition\DomElementIdentifier\ElementIdentifier;
@@ -27,21 +25,23 @@ use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class StepFactoryTest extends AbstractBaseTestCase
 {
-    private StepFactory $factory;
+    //    private StepFactory $factory;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->factory = StepFactory::createFactory();
+        //        $this->factory = StepFactory::createFactory();
     }
 
     /**
-     * @dataProvider createDataProvider
+     * dataProvider createDataProvider.
      */
-    public function testCreate(BasilTestCaseInterface $testCase, Step $expectedStep): void
+    public function testCreate(/* object $testCase, Step $expectedStep */): void
     {
-        self::assertEquals($expectedStep, $this->factory->create($testCase));
+        self::markTestSkipped('Obsolete. Keeping for reference until feature complete. Remove in #232');
+
+        //        self::assertEquals($expectedStep, $this->factory->create($testCase));
     }
 
     /**

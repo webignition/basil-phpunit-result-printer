@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 
-use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BasilModels\Model\Action\ActionInterface;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
 use webignition\BasilModels\Model\DataSet\DataSetInterface;
@@ -28,7 +27,7 @@ class StepFactory
         );
     }
 
-    public function create(BasilTestCaseInterface $testCase): Step
+    public function create(object $testCase): Step
     {
         return new Step(
             $testCase->getBasilStepName(),
@@ -41,7 +40,7 @@ class StepFactory
     /**
      * @return StatementInterface[]
      */
-    private function createStatements(BasilTestCaseInterface $testCase): array
+    private function createStatements(object $testCase): array
     {
         /** @var StatementInterface[] $statements */
         $statements = [];
@@ -98,7 +97,7 @@ class StepFactory
     /**
      * @return null|array<mixed>
      */
-    private function createData(BasilTestCaseInterface $testCase): ?array
+    private function createData(object $testCase): ?array
     {
         $dataSet = $testCase->getCurrentDataSet();
 
