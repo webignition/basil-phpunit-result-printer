@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter;
 
+use webignition\BasilModels\Model\StatementInterface;
+
 readonly class TestMetaData
 {
     /**
-     * @param non-empty-string $stepName
-     * @param string[]         $statements
+     * @param non-empty-string     $stepName
+     * @param StatementInterface[] $statements
      */
     public function __construct(
         public string $stepName,

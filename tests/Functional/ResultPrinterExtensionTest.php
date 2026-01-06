@@ -49,9 +49,30 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Finished
                     status: failed
                     step one
-                    {"type":"action","statement":"click $\".selector\""}
-                    {"type":"assertion","statement":"$page.url is \"https:\/\/www.example.com\""}
-                    {"type":"assertion","statement":"$page.title is \"Foo\""}
+                    {
+                        "statement-type": "action",
+                        "source": "click $\".selector\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "type": "click",
+                        "arguments": "$\".selector\""
+                    }
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.url is \"http:\/\/www.example.com\"",
+                        "index": 1,
+                        "identifier": "$page.url",
+                        "value": "\"http:\/\/www.example.com\"",
+                        "operator": "is"
+                    }
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.title is \"Foo\"",
+                        "index": 2,
+                        "identifier": "$page.title",
+                        "value": "\"Foo\"",
+                        "operator": "is"
+                    }
                     failed assertion: $page.title is "Foo"
                     EOD,
             ],
@@ -64,8 +85,22 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Finished
                     status: failed
                     step one
-                    {"type":"action","statement":"click $\".selector\""}
-                    {"type":"assertion","statement":"$page.url is \"https:\/\/www.example.com\""}
+                    {
+                        "statement-type": "action",
+                        "source": "click $\".selector\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "type": "click",
+                        "arguments": "$\".selector\""
+                    }
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.url is \"http:\/\/www.example.com\"",
+                        "index": 1,
+                        "identifier": "$page.url",
+                        "value": "\"http:\/\/www.example.com\"",
+                        "operator": "is"
+                    }
                     failed action: click $".selector"
                     EOD,
             ],
@@ -89,15 +124,43 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Finished
                     status: passed
                     step one
-                    {"type":"action","statement":"click $\".selector\""}
-                    {"type":"assertion","statement":"assertion statement one for step one"}
-                    {"type":"assertion","statement":"assertion statement two for step one"}
+                    {
+                        "statement-type": "action",
+                        "source": "click $\".selector\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "type": "click",
+                        "arguments": "$\".selector\""
+                    }
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.url is \"http:\/\/www.example.com\"",
+                        "index": 1,
+                        "identifier": "$page.url",
+                        "value": "\"http:\/\/www.example.com\"",
+                        "operator": "is"
+                    }
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.title is \"Foo\"",
+                        "index": 2,
+                        "identifier": "$page.title",
+                        "value": "\"Foo\"",
+                        "operator": "is"
+                    }
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Passed
                     PHPUnit\Event\Test\Finished
                     status: passed
                     step two
-                    {"type":"assertion","statement":"assertion statement for step two"}
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.url is \"http:\/\/www.example.com\"",
+                        "index": 0,
+                        "identifier": "$page.url",
+                        "value": "\"http:\/\/www.example.com\"",
+                        "operator": "is"
+                    }
                     EOD,
             ],
             'passing with data provider' => [
@@ -111,8 +174,22 @@ class ResultPrinterExtensionTest extends TestCase
                     provided data:
                     {"foo":1,"bar":"two","fooBar":true}
                     step one
-                    {"type":"action","statement":"set $\".selector\" to $data.value"}
-                    {"type":"assertion","statement":"assertion statement one for step one"}
+                    {
+                        "statement-type": "action",
+                        "source": "set $\".selector\" to $data.value",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "type": "set",
+                        "arguments": "$data.value"
+                    }
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.url is \"http:\/\/www.example.com\"",
+                        "index": 1,
+                        "identifier": "$page.url",
+                        "value": "\"http:\/\/www.example.com\"",
+                        "operator": "is"
+                    }
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Passed
                     PHPUnit\Event\Test\Finished
@@ -120,8 +197,22 @@ class ResultPrinterExtensionTest extends TestCase
                     provided data:
                     {"foo":7,"bar":"eight","fooBar":true}
                     step one
-                    {"type":"action","statement":"set $\".selector\" to $data.value"}
-                    {"type":"assertion","statement":"assertion statement one for step one"}
+                    {
+                        "statement-type": "action",
+                        "source": "set $\".selector\" to $data.value",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "type": "set",
+                        "arguments": "$data.value"
+                    }
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.url is \"http:\/\/www.example.com\"",
+                        "index": 1,
+                        "identifier": "$page.url",
+                        "value": "\"http:\/\/www.example.com\"",
+                        "operator": "is"
+                    }
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Passed
                     PHPUnit\Event\Test\Finished
@@ -129,8 +220,22 @@ class ResultPrinterExtensionTest extends TestCase
                     provided data:
                     {"foo":9,"bar":"ten","fooBar":false}
                     step one
-                    {"type":"action","statement":"set $\".selector\" to $data.value"}
-                    {"type":"assertion","statement":"assertion statement one for step one"}
+                    {
+                        "statement-type": "action",
+                        "source": "set $\".selector\" to $data.value",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "type": "set",
+                        "arguments": "$data.value"
+                    }
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.url is \"http:\/\/www.example.com\"",
+                        "index": 1,
+                        "identifier": "$page.url",
+                        "value": "\"http:\/\/www.example.com\"",
+                        "operator": "is"
+                    }
                     EOD,
             ],
         ];
@@ -154,7 +259,14 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Finished
                     status: terminated
                     step one
-                    {"type":"assertion","statement":"assertion statement for step one"}
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.url is \"http:\/\/www.example.com\"",
+                        "index": 0,
+                        "identifier": "$page.url",
+                        "value": "\"http:\/\/www.example.com\"",
+                        "operator": "is"
+                    }
                     EOD,
             ],
             'terminated, RuntimeException thrown during second step' => [
@@ -166,14 +278,28 @@ class ResultPrinterExtensionTest extends TestCase
                     PHPUnit\Event\Test\Finished
                     status: passed
                     step one
-                    {"type":"assertion","statement":"assertion statement for step one"}
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.url is \"http:\/\/www.example.com\"",
+                        "index": 0,
+                        "identifier": "$page.url",
+                        "value": "\"http:\/\/www.example.com\"",
+                        "operator": "is"
+                    }
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Errored
                     RuntimeException: Exception thrown in second step
                     PHPUnit\Event\Test\Finished
                     status: terminated
                     step two
-                    {"type":"assertion","statement":"assertion statement for step two"}
+                    {
+                        "statement-type": "assertion",
+                        "source": "$page.title is \"Foo\"",
+                        "index": 0,
+                        "identifier": "$page.title",
+                        "value": "\"Foo\"",
+                        "operator": "is"
+                    }
                     EOD,
             ],
             'terminated, lastException set during setupBeforeClass' => [

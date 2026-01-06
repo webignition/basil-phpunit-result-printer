@@ -5,26 +5,27 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter;
 
 use PHPUnit\Event\Code\Throwable;
+use webignition\BasilModels\Model\Assertion\AssertionInterface;
+use webignition\BasilModels\Model\StatementFactory;
+use webignition\BasilModels\Model\UnknownEncapsulatedStatementException;
 
 readonly class FailedAssertionExtractor
 {
-    public function extract(Throwable $throwable): ?FailedAssertion
+    public function __construct(
+        private StatementFactory $statementFactory,
+        private JsonExtractor $jsonExtractor,
+    ) {}
+
+    public function extract(Throwable $throwable): ?AssertionInterface
     {
-        $assertionFailureMessage = $throwable->message();
-        $finalBracePosition = (int) strrpos($assertionFailureMessage, '}');
-        $json = substr($assertionFailureMessage, 0, $finalBracePosition + 1);
+        $json = $this->jsonExtractor->extract($throwable);
 
-        $data = json_decode($json, true);
-        $data = is_array($data) ? $data : [];
-
-        $statement = $data['statement'] ?? null;
-        $statement = is_string($statement) ? $statement : null;
-        $statement = '' === $statement ? null : $statement;
-
-        if (null === $statement) {
+        try {
+            $statement = $this->statementFactory->createFromJson($json);
+        } catch (UnknownEncapsulatedStatementException) {
             return null;
         }
 
-        return new FailedAssertion($statement);
+        return $statement instanceof AssertionInterface ? $statement : null;
     }
 }

@@ -16,14 +16,22 @@ class FailingAction extends BasilTestCase
 
     #[StepName('step one')]
     #[Statements([
-        [
-            'type' => 'action',
-            'statement' => 'click $".selector"',
-        ],
-        [
-            'type' => 'assertion',
-            'statement' => '$page.url is "https://www.example.com"',
-        ],
+        '{
+            "statement-type": "action",
+            "source": "click $\".selector\"",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "type": "click",
+            "arguments": "$\".selector\""            
+        }',
+        '{
+            "statement-type": "assertion",
+            "source": "$page.url is \"http:\/\/www.example.com\"",
+            "index": 1,
+            "identifier": "$page.url",
+            "value": "\"http:\/\/www.example.com\"",
+            "operator": "is"            
+        }',
     ])]
     public function testStep1(): void
     {
@@ -33,8 +41,12 @@ class FailingAction extends BasilTestCase
         } catch (\Throwable $exception) {
             self::fail('{
                 "statement": {
-                    "statement": "click $\".selector\"",
-                    "type": "action"
+                    "statement-type": "action",
+                    "source": "click $\".selector\"",
+                    "identifier": "$\".selector\"",
+                    "type": "click",
+                    "arguments": "$\".selector\"",
+                    "index": 0
                 },
                 "reason": "action-failed",
                 "exception": {
@@ -47,10 +59,14 @@ class FailingAction extends BasilTestCase
 
         self::assertTrue(
             true,
-            (string) json_encode([
-                'statement' => '$page.url is "https://www.example.com"',
-                'type' => 'assertion',
-            ])
+            '{
+                "statement-type": "assertion",
+                "source": "$page.url is \"http:\/\/www.example.com\"",
+                "identifier": "$page.url",
+                "value": "\"http:\/\/www.example.com\"",
+                "operator": "is",
+                "index": 1
+            }'
         );
     }
 }

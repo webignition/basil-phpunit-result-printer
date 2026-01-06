@@ -8,9 +8,9 @@ use PHPUnit\Event\Code\TestMethod;
 use PHPUnit\Event\Test\Failed;
 use PHPUnit\Event\Test\FailedSubscriber as FailedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
+use webignition\BasilModels\Model\Assertion\AssertionInterface;
 use webignition\BasilPhpUnitResultPrinter\FailedAction;
 use webignition\BasilPhpUnitResultPrinter\FailedActionExtractor;
-use webignition\BasilPhpUnitResultPrinter\FailedAssertion;
 use webignition\BasilPhpUnitResultPrinter\FailedAssertionExtractor;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\State;
@@ -40,7 +40,7 @@ class FailedSubscriber implements FailedSubscriberInterface
         }
 
         $failedAssertion = $this->failedAssertionExtractor->extract($event->throwable());
-        if ($failedAssertion instanceof FailedAssertion) {
+        if ($failedAssertion instanceof AssertionInterface) {
             $this->state->setFailedAssertion($failedAssertion);
         }
     }
