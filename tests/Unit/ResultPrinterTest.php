@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit;
 
 use Facebook\WebDriver\Exception\InvalidSelectorException;
-use webignition\BaseBasilTestCase\BasilTestCaseInterface;
 use webignition\BasilModels\Model\Action\ResolvedAction;
 use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
 use webignition\BasilModels\Parser\ActionParser;
 use webignition\BasilModels\Parser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\ResultPrinter;
-use webignition\BasilPhpUnitResultPrinter\Tests\Services\BasilTestCaseFactory;
 use webignition\BasilPhpUnitResultPrinter\Tests\Services\FixtureLoader;
 use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
