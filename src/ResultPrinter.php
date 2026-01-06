@@ -34,26 +34,26 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 
     public function addError(Test $test, \Throwable $t, float $time): void
     {
-//        if ($test instanceof BasilTestCaseInterface) {
-            $exception = $t;
+        //        if ($test instanceof BasilTestCaseInterface) {
+        $exception = $t;
 
-            if (
-                $exception instanceof ExceptionWrapper
-                && ($originalException = $exception->getOriginalException()) instanceof \Throwable
-            ) {
-                $exception = $originalException;
-            }
+        if (
+            $exception instanceof ExceptionWrapper
+            && ($originalException = $exception->getOriginalException()) instanceof \Throwable
+        ) {
+            $exception = $originalException;
+        }
 
-            $test->setLastException($exception);
-            $this->testWithException = $test;
+        $test->setLastException($exception);
+        $this->testWithException = $test;
 
-            $step = $test->getBasilStepName();
-            if ('' === $step) {
-                $step = null;
-            }
+        $step = $test->getBasilStepName();
+        if ('' === $step) {
+            $step = null;
+        }
 
-            $this->uncaughtException = Exception::createFromThrowable($exception, $step);
-//        }
+        $this->uncaughtException = Exception::createFromThrowable($exception, $step);
+        //        }
     }
 
     public function addWarning(Test $test, Warning $e, float $time): void
@@ -99,26 +99,26 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
 
     public function startTest(Test $test): void
     {
-//        if ($test instanceof BasilTestCaseInterface) {
-            if (null !== $test->getLastException() && '' === $test->getBasilStepName()) {
-                $this->addError($test, $test->getLastException(), 0);
-            }
-//        }
+        //        if ($test instanceof BasilTestCaseInterface) {
+        if (null !== $test->getLastException() && '' === $test->getBasilStepName()) {
+            $this->addError($test, $test->getLastException(), 0);
+        }
+        //        }
     }
 
     public function endTest(Test $test, float $time): void
     {
-//        if ($test instanceof BasilTestCaseInterface) {
-            if ($this->uncaughtException instanceof Exception) {
-                if (false === $this->exceptionWritten) {
-                    $this->write($this->generator->generate($this->uncaughtException->getData()));
-                    $this->exceptionWritten = true;
-                }
-            } else {
-                $step = $this->stepFactory->create($test);
-                $this->write($this->generator->generate($step->getData()));
+        //        if ($test instanceof BasilTestCaseInterface) {
+        if ($this->uncaughtException instanceof Exception) {
+            if (false === $this->exceptionWritten) {
+                $this->write($this->generator->generate($this->uncaughtException->getData()));
+                $this->exceptionWritten = true;
             }
-//        }
+        } else {
+            $step = $this->stepFactory->create($test);
+            $this->write($this->generator->generate($step->getData()));
+        }
+        //        }
     }
 
     public function printResult(TestResult $result): void

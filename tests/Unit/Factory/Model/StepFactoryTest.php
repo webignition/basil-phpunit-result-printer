@@ -25,13 +25,13 @@ use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class StepFactoryTest extends AbstractBaseTestCase
 {
-//    private StepFactory $factory;
+    //    private StepFactory $factory;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-//        $this->factory = StepFactory::createFactory();
+        //        $this->factory = StepFactory::createFactory();
     }
 
     /**
