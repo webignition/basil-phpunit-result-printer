@@ -18,37 +18,37 @@ use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 class ResultPrinterTest extends AbstractBaseTestCase
 {
     /**
-     * @dataProvider passedDataProvider
-     * @dataProvider failedExistsAssertionDataProvider
-     * @dataProvider failedExceptionDataProvider
-     * @dataProvider failedIsAssertionDataProvider
-     * @dataProvider failedIsRegExpDataProvider
-     * @dataProvider failedNoStatementsDataProvider
+     * dataProvider passedDataProvider
+     * dataProvider failedExistsAssertionDataProvider
+     * dataProvider failedExceptionDataProvider
+     * dataProvider failedIsAssertionDataProvider
+     * dataProvider failedIsRegExpDataProvider
+     * dataProvider failedNoStatementsDataProvider.
      *
      * @param BasilTestCaseInterface[] $tests
      */
-    public function testPrinterOutput(array $tests, string $expectedOutput): void
+    public function testPrinterOutput(/* array $tests, string $expectedOutput */): void
     {
         self::markTestSkipped('Obsolete. Keeping for reference until feature complete. Remove in #232');
 
-        $outResource = fopen('php://memory', 'w+');
-
-        if (is_resource($outResource)) {
-            $printer = new ResultPrinter($outResource);
-
-            foreach ($tests as $test) {
-                $printer->startTest($test);
-                $printer->endTest($test, 0.1);
-            }
-
-            rewind($outResource);
-            $outContent = stream_get_contents($outResource);
-            fclose($outResource);
-
-            self::assertSame($expectedOutput, $outContent);
-        } else {
-            $this->fail('Failed to open resource "php://memory" for reading and writing');
-        }
+        //        $outResource = fopen('php://memory', 'w+');
+        //
+        //        if (is_resource($outResource)) {
+        //            $printer = new ResultPrinter($outResource);
+        //
+        //            foreach ($tests as $test) {
+        //                $printer->startTest($test);
+        //                $printer->endTest($test, 0.1);
+        //            }
+        //
+        //            rewind($outResource);
+        //            $outContent = stream_get_contents($outResource);
+        //            fclose($outResource);
+        //
+        //            self::assertSame($expectedOutput, $outContent);
+        //        } else {
+        //            $this->fail('Failed to open resource "php://memory" for reading and writing');
+        //        }
     }
 
     /**

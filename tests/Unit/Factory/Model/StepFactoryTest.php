@@ -35,13 +35,13 @@ class StepFactoryTest extends AbstractBaseTestCase
     }
 
     /**
-     * @dataProvider createDataProvider
+     * dataProvider createDataProvider.
      */
-    public function testCreate(object $testCase, Step $expectedStep): void
+    public function testCreate(/* object $testCase, Step $expectedStep */): void
     {
         self::markTestSkipped('Obsolete. Keeping for reference until feature complete. Remove in #232');
 
-        self::assertEquals($expectedStep, $this->factory->create($testCase));
+        //        self::assertEquals($expectedStep, $this->factory->create($testCase));
     }
 
     /**
