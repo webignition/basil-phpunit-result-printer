@@ -6,8 +6,6 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
-use webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests\BasilTestCase;
-use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class FailingStringContainsStringAssertion extends BasilTestCase
 {
@@ -25,16 +23,16 @@ class FailingStringContainsStringAssertion extends BasilTestCase
             "identifier": "$\".selector\"",
             "value": "\"value\"",
             "operator": "includes"
-        }'
+        }',
     ])]
     public function testStep1(): void
     {
-        $expectedValue = 'expected-value';
-        $examinedValue = 'examined-value';
+        $expectedValue = 'string-contains-string-expected-value';
+        $examinedValue = 'string-contains-string-examined-value';
         $this->assertStringContainsString(
-            ($expectedValue),
-            ($examinedValue),
-        '{
+            $expectedValue,
+            $examinedValue,
+            '{
                     "statement-type": "assertion",
                     "source": "$\".selector\" includes \"value\"",
                     "index": 0,

@@ -11,6 +11,7 @@ use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
 use webignition\BasilPhpUnitResultPrinter\FailedAction;
 use webignition\BasilPhpUnitResultPrinter\FailedActionExtractor;
+use webignition\BasilPhpUnitResultPrinter\FailedAssertionExpectedActualValuesParser;
 use webignition\BasilPhpUnitResultPrinter\FailedAssertionExtractor;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\State;
@@ -24,6 +25,7 @@ class FailedSubscriber implements FailedSubscriberInterface
         private readonly StatementMessageParser $statementMessageParser,
         private readonly FailedActionExtractor $failedActionExtractor,
         private readonly FailedAssertionExtractor $failedAssertionExtractor,
+        private readonly FailedAssertionExpectedActualValuesParser $expectedActualValuesParser,
     ) {}
 
     public function notify(Failed $event): void
@@ -46,6 +48,19 @@ class FailedSubscriber implements FailedSubscriberInterface
         $failedAssertion = $this->failedAssertionExtractor->extract($parsedStatementMessage['data']);
         if ($failedAssertion instanceof AssertionInterface) {
             $this->state->setFailedAssertion($failedAssertion);
+
+            if (str_starts_with($parsedStatementMessage['message'], 'Failed asserting that false is true')) {
+                $this->state->setHasFailedAssertTrueAssertion();
+            } elseif (str_starts_with($parsedStatementMessage['message'], 'Failed asserting that true is false')) {
+                $this->state->setHasFailedAssertFalseAssertion();
+            } else {
+                $actualAndExpectedValues = $this->expectedActualValuesParser->parse(
+                    $event,
+                    $parsedStatementMessage['message']
+                );
+                $this->state->setExpectedValue($actualAndExpectedValues['expected']);
+                $this->state->setActualValue($actualAndExpectedValues['actual']);
+            }
         }
     }
 }

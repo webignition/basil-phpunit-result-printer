@@ -13,6 +13,12 @@ class State
     private FailedAction $failedAction;
     private AssertionInterface $failedAssertion;
 
+    private ?string $expected = null;
+    private ?string $actual = null;
+
+    private bool $hasFailedAssertTrueAssertion = false;
+    private bool $hasFailedAssertFalseAssertion = false;
+
     public function __construct()
     {
         $this->status = new Status(Status::STATUS_UNKNOWN);
@@ -56,5 +62,55 @@ class State
     public function hasFailedAssertion(): bool
     {
         return isset($this->failedAssertion);
+    }
+
+    public function setExpectedValue(string $value): void
+    {
+        $this->expected = $value;
+    }
+
+    public function getExpectedValue(): ?string
+    {
+        return $this->expected;
+    }
+
+    public function hasExpectedValue(): bool
+    {
+        return null !== $this->expected;
+    }
+
+    public function setActualValue(string $value): void
+    {
+        $this->actual = $value;
+    }
+
+    public function getActualValue(): ?string
+    {
+        return $this->actual;
+    }
+
+    public function hasActualValue(): bool
+    {
+        return null !== $this->actual;
+    }
+
+    public function hasFailedAssertTrueAssertion(): bool
+    {
+        return $this->hasFailedAssertTrueAssertion;
+    }
+
+    public function setHasFailedAssertTrueAssertion(): void
+    {
+        $this->hasFailedAssertTrueAssertion = true;
+    }
+
+    public function hasFailedAssertFalseAssertion(): bool
+    {
+        return $this->hasFailedAssertFalseAssertion;
+    }
+
+    public function setHasFailedAssertFalseAssertion(): void
+    {
+        $this->hasFailedAssertFalseAssertion = true;
     }
 }

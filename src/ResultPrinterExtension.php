@@ -59,6 +59,7 @@ class ResultPrinterExtension implements Extension
                 new FailedAssertionExtractor(
                     StatementFactory::createFactory(),
                 ),
+                new FailedAssertionExpectedActualValuesParser(),
             ),
             new PassedSubscriber($this->printer, $this->state),
             new BeforeFirstTestMethodErroredSubscriber($this->printer),
