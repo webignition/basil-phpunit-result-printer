@@ -210,6 +210,28 @@ class ResultPrinterExtensionTest extends TestCase
                     actual: "assert-equals-actual-value"
                     EOD,
             ],
+            'failing "not-equals" assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingAssertNotEqualsAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Failed
+                    PHPUnit\Event\Test\Finished
+                    status: failed
+                    step one
+                    {
+                        "statement-type": "assertion",
+                        "source": "$\".selector\" is-not \"value\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "value": "\"value\"",
+                        "operator": "is-not"
+                    }
+                    failed assertion: $".selector" is-not "value"
+                    expected: "assert-not-equals-value"
+                    actual: "assert-not-equals-value"
+                    EOD,
+            ],
         ];
     }
 
