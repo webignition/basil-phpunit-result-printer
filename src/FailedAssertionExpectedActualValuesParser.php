@@ -15,8 +15,8 @@ readonly class FailedAssertionExpectedActualValuesParser
     {
         if ($event->hasComparisonFailure()) {
             return [
-                'expected' => 'expected-from-comparison-failure',
-                'actual' => 'actual-from-comparison-failure',
+                'expected' => $this->removeEncapsulatingSingleQuote($event->comparisonFailure()->expected()),
+                'actual' => $this->removeEncapsulatingSingleQuote($event->comparisonFailure()->actual()),
             ];
         }
 
@@ -88,5 +88,18 @@ readonly class FailedAssertionExpectedActualValuesParser
         }
 
         return is_int($lastDigitPosition) ? $lastDigitPosition : strlen($message);
+    }
+
+    private function removeEncapsulatingSingleQuote(string $value): string
+    {
+        if (str_starts_with($value, "'")) {
+            $value = substr($value, 1);
+        }
+
+        if (str_ends_with($value, "'")) {
+            $value = substr($value, 0, -1);
+        }
+
+        return $value;
     }
 }
