@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter;
 
-use PHPUnit\Event\Code\Throwable;
 use webignition\BasilModels\Model\Action\ActionInterface;
 use webignition\BasilModels\Model\StatementFactory;
 use webignition\BasilModels\Model\UnknownEncapsulatedStatementException;
@@ -13,17 +12,14 @@ readonly class FailedActionExtractor
 {
     public function __construct(
         private StatementFactory $statementFactory,
-        private JsonExtractor $jsonExtractor,
         private FailedActionExceptionExtractor $exceptionExtractor,
     ) {}
 
-    public function extract(Throwable $throwable): ?FailedAction
+    /**
+     * @param array<mixed> $data
+     */
+    public function extract(array $data): ?FailedAction
     {
-        $json = $this->jsonExtractor->extract($throwable);
-
-        $data = json_decode($json, true);
-        $data = is_array($data) ? $data : [];
-
         $statementData = $data['statement'] ?? [];
         $statementData = is_array($statementData) ? $statementData : [];
 
