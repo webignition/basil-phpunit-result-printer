@@ -20,6 +20,48 @@ readonly class FailedAssertionExpectedActualValuesParser
             ];
         }
 
+        $containsValueLengthMarker = 1 === preg_match('/\[ASCII]\(length: \d+\)\.$/', $content);
+        if ($containsValueLengthMarker) {
+            return $this->getValuesFromContentContainingValueLengthMarker($content);
+        }
+
+        if (str_starts_with($content, 'Failed asserting that \'')) {
+            $content = substr($content, strlen('Failed asserting that \''));
+        }
+
+        if (str_ends_with($content, '.')) {
+            $content = substr($content, 0, -strlen('.'));
+        }
+
+        if (str_ends_with($content, '\'')) {
+            $content = substr($content, 0, -strlen('.'));
+        }
+
+        $contentMiddlePosition = (int) (strlen($content) / 2);
+
+        $leftHalfContent = substr($content, 0, $contentMiddlePosition);
+        $leftHalfFinalQuotePosition = (int) strrpos($leftHalfContent, '\'');
+
+        $rightHalfContent = substr($content, $contentMiddlePosition);
+        $rightHandFirstQuotePosition = strpos($rightHalfContent, '\'');
+
+        $expectedValue = 'foo';
+        $actualValue = 'bar';
+
+        $expectedValue = substr($leftHalfContent, 0, $leftHalfFinalQuotePosition);
+        $actualValue = substr($rightHalfContent, $rightHandFirstQuotePosition + 1);
+
+        return [
+            'expected' => $expectedValue,
+            'actual' => $actualValue,
+        ];
+    }
+
+    /**
+     * @return array{'expected': string, 'actual': string}
+     */
+    private function getValuesFromContentContainingValueLengthMarker(string $content): array
+    {
         $expectedValueLength = $this->getLastNumber($content);
         $expectedValueSuffix = ' [ASCII](length: ' . $expectedValueLength . ').';
         $expectedValueSuffixLength = strlen($expectedValueSuffix);
