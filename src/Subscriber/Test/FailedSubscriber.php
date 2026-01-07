@@ -58,8 +58,8 @@ class FailedSubscriber implements FailedSubscriberInterface
                     $event,
                     $parsedStatementMessage['message']
                 );
-                $this->state->setExpectedValue($actualAndExpectedValues['expected']);
-                $this->state->setActualValue($actualAndExpectedValues['actual']);
+                $this->state->setExpectedValue((string) $actualAndExpectedValues['expected']);
+                $this->state->setActualValue((string) $actualAndExpectedValues['actual']);
             }
         }
     }

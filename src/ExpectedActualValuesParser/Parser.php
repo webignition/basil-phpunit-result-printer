@@ -16,7 +16,7 @@ readonly class Parser
     ) {}
 
     /**
-     * @return array{'expected': string, 'actual': string}
+     * @return array{'expected': ?string, 'actual': ?string}
      */
     public function parse(Failed $event, string $content): array
     {
@@ -28,32 +28,9 @@ readonly class Parser
             }
         }
 
-        if (str_starts_with($content, 'Failed asserting that \'')) {
-            $content = substr($content, strlen('Failed asserting that \''));
-        }
-
-        if (str_ends_with($content, '.')) {
-            $content = substr($content, 0, -strlen('.'));
-        }
-
-        if (str_ends_with($content, '\'')) {
-            $content = substr($content, 0, -strlen('.'));
-        }
-
-        $contentMiddlePosition = (int) (strlen($content) / 2);
-
-        $leftHalfContent = substr($content, 0, $contentMiddlePosition);
-        $leftHalfFinalQuotePosition = (int) strrpos($leftHalfContent, '\'');
-
-        $rightHalfContent = substr($content, $contentMiddlePosition);
-        $rightHandFirstQuotePosition = strpos($rightHalfContent, '\'');
-
-        $expectedValue = substr($leftHalfContent, 0, $leftHalfFinalQuotePosition);
-        $actualValue = substr($rightHalfContent, $rightHandFirstQuotePosition + 1);
-
         return [
-            'expected' => $expectedValue,
-            'actual' => $actualValue,
+            'expected' => null,
+            'actual' => null,
         ];
     }
 }
