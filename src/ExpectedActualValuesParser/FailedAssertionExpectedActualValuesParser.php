@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter;
+namespace webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser;
 
 use PHPUnit\Event\Test\Failed;
 
