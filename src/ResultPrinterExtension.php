@@ -12,6 +12,7 @@ use PHPUnit\TextUI\Output\DefaultPrinter;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser\HasComparisonFailureHandler;
+use webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser\HasLengthMarkerHandler;
 use webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser\Parser;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\BeforeFirstTestMethodErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\ErroredSubscriber;
@@ -64,6 +65,7 @@ class ResultPrinterExtension implements Extension
                 new Parser(
                     [
                         new HasComparisonFailureHandler(),
+                        new HasLengthMarkerHandler(),
                     ]
                 ),
             ),
