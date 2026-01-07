@@ -51,14 +51,13 @@ class ResultPrinterExtension implements Extension
             new FailedSubscriber(
                 $this->printer,
                 $this->state,
+                new StatementMessageParser(),
                 new FailedActionExtractor(
                     StatementFactory::createFactory(),
-                    new JsonExtractor(),
                     new FailedActionExceptionExtractor(),
                 ),
                 new FailedAssertionExtractor(
                     StatementFactory::createFactory(),
-                    new JsonExtractor(),
                 ),
             ),
             new PassedSubscriber($this->printer, $this->state),
