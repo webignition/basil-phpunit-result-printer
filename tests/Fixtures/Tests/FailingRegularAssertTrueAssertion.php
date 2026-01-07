@@ -9,7 +9,7 @@ use webignition\BaseBasilTestCase\Attribute\StepName;
 use webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests\BasilTestCase;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
-class FailingDerivedAssertion extends BasilTestCase
+class FailingRegularAssertTrueAssertion extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -74,7 +74,7 @@ class FailingDerivedAssertion extends BasilTestCase
             }');
         }
         $this->assertTrue(
-            false,
+            true,
             '{
                 "container": {
                     "value": "$\".selector\"",
@@ -127,7 +127,7 @@ class FailingDerivedAssertion extends BasilTestCase
         );
 
         self::assertTrue(
-            true,
+            false,
             '{
                 "statement-type": "assertion",
                 "source": "$page.title is \"Foo\"",

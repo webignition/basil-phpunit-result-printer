@@ -41,7 +41,7 @@ class ResultPrinterExtensionTest extends TestCase
 
         return [
             'failing regular assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingRegularAssertion.php',
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingRegularAssertTrueAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\Prepared
@@ -74,10 +74,12 @@ class ResultPrinterExtensionTest extends TestCase
                         "operator": "is"
                     }
                     failed assertion: $page.title is "Foo"
+                    expected: true
+                    actual: false
                     EOD,
             ],
             'failing derived assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingDerivedAssertion.php',
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingDerivedAssertTrueAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\Prepared
@@ -110,6 +112,8 @@ class ResultPrinterExtensionTest extends TestCase
                         "operator": "is"
                     }
                     failed assertion: $".selector" exists
+                    expected: true
+                    actual: false
                     EOD,
             ],
             'failing action' => [
@@ -138,6 +142,28 @@ class ResultPrinterExtensionTest extends TestCase
                         "operator": "is"
                     }
                     failed action: click $".selector"
+                    EOD,
+            ],
+            'failing "string contains string" assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingStringContainsStringAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Failed
+                    PHPUnit\Event\Test\Finished
+                    status: failed
+                    step one
+                    {
+                        "statement-type": "assertion",
+                        "source": "$\".selector\" includes \"value\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "value": "\"value\"",
+                        "operator": "includes"
+                    }
+                    failed assertion: $".selector" includes "value"
+                    expected: "string-contains-string-expected-value"
+                    actual: "string-contains-string-examined-value"
                     EOD,
             ],
         ];
