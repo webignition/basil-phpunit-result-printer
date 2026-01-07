@@ -6,7 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser;
 
 use PHPUnit\Event\Test\Failed;
 
-readonly class FailedAssertionExpectedActualValuesParser
+readonly class Parser
 {
     /**
      * @return array{'expected': string, 'actual': string}

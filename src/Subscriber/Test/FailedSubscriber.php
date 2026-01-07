@@ -9,7 +9,7 @@ use PHPUnit\Event\Test\Failed;
 use PHPUnit\Event\Test\FailedSubscriber as FailedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
-use webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser\FailedAssertionExpectedActualValuesParser;
+use webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser\Parser;
 use webignition\BasilPhpUnitResultPrinter\FailedAction;
 use webignition\BasilPhpUnitResultPrinter\FailedActionExtractor;
 use webignition\BasilPhpUnitResultPrinter\FailedAssertionExtractor;
@@ -25,7 +25,7 @@ class FailedSubscriber implements FailedSubscriberInterface
         private readonly StatementMessageParser $statementMessageParser,
         private readonly FailedActionExtractor $failedActionExtractor,
         private readonly FailedAssertionExtractor $failedAssertionExtractor,
-        private readonly FailedAssertionExpectedActualValuesParser $expectedActualValuesParser,
+        private readonly Parser $expectedActualValuesParser,
     ) {}
 
     public function notify(Failed $event): void
