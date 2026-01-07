@@ -11,6 +11,7 @@ use PHPUnit\TextUI\Configuration\Configuration;
 use PHPUnit\TextUI\Output\DefaultPrinter;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\StatementFactory;
+use webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser\HasComparisonFailureHandler;
 use webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser\Parser;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\BeforeFirstTestMethodErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\ErroredSubscriber;
@@ -60,7 +61,11 @@ class ResultPrinterExtension implements Extension
                 new FailedAssertionExtractor(
                     StatementFactory::createFactory(),
                 ),
-                new Parser(),
+                new Parser(
+                    [
+                        new HasComparisonFailureHandler(),
+                    ]
+                ),
             ),
             new PassedSubscriber($this->printer, $this->state),
             new BeforeFirstTestMethodErroredSubscriber($this->printer),

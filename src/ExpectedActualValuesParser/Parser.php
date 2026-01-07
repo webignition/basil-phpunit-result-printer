@@ -9,15 +9,23 @@ use PHPUnit\Event\Test\Failed;
 readonly class Parser
 {
     /**
+     * @param HandlerInterface[] $handlers
+     */
+    public function __construct(
+        private array $handlers,
+    ) {}
+
+    /**
      * @return array{'expected': string, 'actual': string}
      */
     public function parse(Failed $event, string $content): array
     {
-        if ($event->hasComparisonFailure()) {
-            return [
-                'expected' => $this->removeEncapsulatingSingleQuote($event->comparisonFailure()->expected()),
-                'actual' => $this->removeEncapsulatingSingleQuote($event->comparisonFailure()->actual()),
-            ];
+        foreach ($this->handlers as $handler) {
+            $result = $handler->handle($event, $content);
+
+            if (is_array($result)) {
+                return $result;
+            }
         }
 
         $containsValueLengthMarker = 1 === preg_match('/\[ASCII]\(length: \d+\)\.$/', $content);
@@ -44,9 +52,6 @@ readonly class Parser
 
         $rightHalfContent = substr($content, $contentMiddlePosition);
         $rightHandFirstQuotePosition = strpos($rightHalfContent, '\'');
-
-        $expectedValue = 'foo';
-        $actualValue = 'bar';
 
         $expectedValue = substr($leftHalfContent, 0, $leftHalfFinalQuotePosition);
         $actualValue = substr($rightHalfContent, $rightHandFirstQuotePosition + 1);
@@ -130,18 +135,5 @@ readonly class Parser
         }
 
         return is_int($lastDigitPosition) ? $lastDigitPosition : strlen($message);
-    }
-
-    private function removeEncapsulatingSingleQuote(string $value): string
-    {
-        if (str_starts_with($value, "'")) {
-            $value = substr($value, 1);
-        }
-
-        if (str_ends_with($value, "'")) {
-            $value = substr($value, 0, -1);
-        }
-
-        return $value;
     }
 }
