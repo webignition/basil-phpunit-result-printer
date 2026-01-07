@@ -2,66 +2,19 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter;
+namespace webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser;
 
 use PHPUnit\Event\Test\Failed;
 
-readonly class FailedAssertionExpectedActualValuesParser
+readonly class HasLengthMarkerHandler implements HandlerInterface
 {
-    /**
-     * @return array{'expected': string, 'actual': string}
-     */
-    public function parse(Failed $event, string $content): array
+    public function handle(Failed $event, string $content): ?array
     {
-        if ($event->hasComparisonFailure()) {
-            return [
-                'expected' => $this->removeEncapsulatingSingleQuote($event->comparisonFailure()->expected()),
-                'actual' => $this->removeEncapsulatingSingleQuote($event->comparisonFailure()->actual()),
-            ];
-        }
-
         $containsValueLengthMarker = 1 === preg_match('/\[ASCII]\(length: \d+\)\.$/', $content);
-        if ($containsValueLengthMarker) {
-            return $this->getValuesFromContentContainingValueLengthMarker($content);
+        if (false === $containsValueLengthMarker) {
+            return null;
         }
 
-        if (str_starts_with($content, 'Failed asserting that \'')) {
-            $content = substr($content, strlen('Failed asserting that \''));
-        }
-
-        if (str_ends_with($content, '.')) {
-            $content = substr($content, 0, -strlen('.'));
-        }
-
-        if (str_ends_with($content, '\'')) {
-            $content = substr($content, 0, -strlen('.'));
-        }
-
-        $contentMiddlePosition = (int) (strlen($content) / 2);
-
-        $leftHalfContent = substr($content, 0, $contentMiddlePosition);
-        $leftHalfFinalQuotePosition = (int) strrpos($leftHalfContent, '\'');
-
-        $rightHalfContent = substr($content, $contentMiddlePosition);
-        $rightHandFirstQuotePosition = strpos($rightHalfContent, '\'');
-
-        $expectedValue = 'foo';
-        $actualValue = 'bar';
-
-        $expectedValue = substr($leftHalfContent, 0, $leftHalfFinalQuotePosition);
-        $actualValue = substr($rightHalfContent, $rightHandFirstQuotePosition + 1);
-
-        return [
-            'expected' => $expectedValue,
-            'actual' => $actualValue,
-        ];
-    }
-
-    /**
-     * @return array{'expected': string, 'actual': string}
-     */
-    private function getValuesFromContentContainingValueLengthMarker(string $content): array
-    {
         $expectedValueLength = $this->getLastNumber($content);
         $expectedValueSuffix = ' [ASCII](length: ' . $expectedValueLength . ').';
         $expectedValueSuffixLength = strlen($expectedValueSuffix);
@@ -130,18 +83,5 @@ readonly class FailedAssertionExpectedActualValuesParser
         }
 
         return is_int($lastDigitPosition) ? $lastDigitPosition : strlen($message);
-    }
-
-    private function removeEncapsulatingSingleQuote(string $value): string
-    {
-        if (str_starts_with($value, "'")) {
-            $value = substr($value, 1);
-        }
-
-        if (str_ends_with($value, "'")) {
-            $value = substr($value, 0, -1);
-        }
-
-        return $value;
     }
 }

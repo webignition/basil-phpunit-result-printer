@@ -9,9 +9,9 @@ use PHPUnit\Event\Test\Failed;
 use PHPUnit\Event\Test\FailedSubscriber as FailedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
+use webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser\Parser;
 use webignition\BasilPhpUnitResultPrinter\FailedAction;
 use webignition\BasilPhpUnitResultPrinter\FailedActionExtractor;
-use webignition\BasilPhpUnitResultPrinter\FailedAssertionExpectedActualValuesParser;
 use webignition\BasilPhpUnitResultPrinter\FailedAssertionExtractor;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\State;
@@ -25,7 +25,7 @@ class FailedSubscriber implements FailedSubscriberInterface
         private readonly StatementMessageParser $statementMessageParser,
         private readonly FailedActionExtractor $failedActionExtractor,
         private readonly FailedAssertionExtractor $failedAssertionExtractor,
-        private readonly FailedAssertionExpectedActualValuesParser $expectedActualValuesParser,
+        private readonly Parser $expectedActualValuesParser,
     ) {}
 
     public function notify(Failed $event): void
@@ -58,8 +58,8 @@ class FailedSubscriber implements FailedSubscriberInterface
                     $event,
                     $parsedStatementMessage['message']
                 );
-                $this->state->setExpectedValue($actualAndExpectedValues['expected']);
-                $this->state->setActualValue($actualAndExpectedValues['actual']);
+                $this->state->setExpectedValue((string) $actualAndExpectedValues['expected']);
+                $this->state->setActualValue((string) $actualAndExpectedValues['actual']);
             }
         }
     }
