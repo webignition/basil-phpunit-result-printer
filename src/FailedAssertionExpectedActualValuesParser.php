@@ -29,8 +29,11 @@ readonly class FailedAssertionExpectedActualValuesParser
 
         $content = substr($content, 0, strlen($content) - $expectedValueLength - 1);
 
+        $finalDigitPosition = $this->findFinalDigitPosition($content);
+        $content = substr($content, 0, $finalDigitPosition + 2);
+
         $actualValueLength = $this->getLastNumber($content);
-        $actualValueSuffix = ' [ASCII](length: ' . $actualValueLength . ') contains ';
+        $actualValueSuffix = ' [ASCII](length: ' . $actualValueLength . ')';
         $actualValueSuffixLength = strlen($actualValueSuffix);
 
         $content = substr($content, 0, strlen($content) - $actualValueSuffixLength - 1);
@@ -72,5 +75,18 @@ readonly class FailedAssertionExpectedActualValuesParser
         }
 
         return (int) implode('', array_reverse($digits));
+    }
+
+    private function findFinalDigitPosition(string $message): int
+    {
+        $lastDigitPosition = null;
+
+        foreach (str_split($message) as $position => $character) {
+            if (ctype_digit($character)) {
+                $lastDigitPosition = $position;
+            }
+        }
+
+        return is_int($lastDigitPosition) ? $lastDigitPosition : strlen($message);
     }
 }

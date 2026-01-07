@@ -166,6 +166,28 @@ class ResultPrinterExtensionTest extends TestCase
                     actual: "string-contains-string-examined-value"
                     EOD,
             ],
+            'failing "string not contains string" assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingStringNotContainsStringAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Failed
+                    PHPUnit\Event\Test\Finished
+                    status: failed
+                    step one
+                    {
+                        "statement-type": "assertion",
+                        "source": "$\".selector\" excludes \"value\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "value": "\"value\"",
+                        "operator": "excludes"
+                    }
+                    failed assertion: $".selector" excludes "value"
+                    expected: "string-not-contains-string"
+                    actual: "string-not-contains-string-within"
+                    EOD,
+            ],
         ];
     }
 
