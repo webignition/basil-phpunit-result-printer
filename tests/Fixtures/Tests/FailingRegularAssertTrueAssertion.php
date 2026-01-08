@@ -76,19 +76,23 @@ class FailingRegularAssertTrueAssertion extends BasilTestCase
         $this->assertTrue(
             true,
             '{
-                "container": {
-                    "value": "$\".selector\"",
-                    "operator": "exists",
-                    "type": "derived-value-operation-assertion"
-                },
                 "statement": {
-                    "statement-type": "action",
-                    "source": "click $\".selector\"",
-                    "index": 0,
-                    "identifier": "$\".selector\"",
-                    "type": "click",
-                    "arguments": "$\".selector\""
-                }
+                    "container": {
+                        "value": "$\".selector\"",
+                        "operator": "exists",
+                        "type": "derived-value-operation-assertion"
+                    },
+                    "statement": {
+                        "statement-type": "action",
+                        "source": "click $\".selector\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "type": "click",
+                        "arguments": "$\".selector\""
+                    }                
+                },
+                "expected": true' . ',
+                "examined": true' . '
             }'
         );
 
@@ -117,24 +121,32 @@ class FailingRegularAssertTrueAssertion extends BasilTestCase
         self::assertTrue(
             true,
             '{
-                "statement-type": "assertion",
-                "source": "$page.url is \"http:\/\/www.example.com\"",
-                "identifier": "$page.url",
-                "value": "\"http:\/\/www.example.com\"",
-                "operator": "is",
-                "index": 1
+                "statement": {
+                    "statement-type": "assertion",
+                    "source": "$page.url is \"http:\/\/www.example.com\"",
+                    "identifier": "$page.url",
+                    "value": "\"http:\/\/www.example.com\"",
+                    "operator": "is",
+                    "index": 1               
+                },
+                "expected": true' . ',
+                "examined": true' . '
             }'
         );
 
         self::assertTrue(
             false,
             '{
-                "statement-type": "assertion",
-                "source": "$page.title is \"Foo\"",
-                "identifier": "$page.title",
-                "value": "\"Foo\"",
-                "operator": "is",
-                "index": 2
+                "statement": {
+                    "statement-type": "assertion",
+                    "source": "$page.title is \"Foo\"",
+                    "identifier": "$page.title",
+                    "value": "\"Foo\"",
+                    "operator": "is",
+                    "index": 2               
+                },
+                "expected": true' . ',
+                "examined": false' . '
             }'
         );
     }

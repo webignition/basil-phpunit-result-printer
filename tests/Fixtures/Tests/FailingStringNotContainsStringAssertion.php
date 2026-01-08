@@ -33,12 +33,16 @@ class FailingStringNotContainsStringAssertion extends BasilTestCase
             $expectedValue,
             $examinedValue,
             '{
-                    "statement-type": "assertion",
-                    "source": "$\".selector\" excludes \"value\"",
-                    "index": 0,
-                    "identifier": "$\".selector\"",
-                    "value": "\"value\"",
-                    "operator": "excludes"
+                    "statement": {
+                        "statement-type": "assertion",
+                        "source": "$\".selector\" excludes \"value\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "value": "\"value\"",
+                        "operator": "excludes"               
+                    },
+                    "expected": "' . addcslashes((string) $expectedValue, "'") . '",
+                    "examined": "' . addcslashes((string) $examinedValue, "'") . '"
                 }'
         );
     }

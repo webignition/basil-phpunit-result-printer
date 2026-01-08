@@ -60,12 +60,16 @@ class FailingAction extends BasilTestCase
         self::assertTrue(
             true,
             '{
-                "statement-type": "assertion",
-                "source": "$page.url is \"http:\/\/www.example.com\"",
-                "identifier": "$page.url",
-                "value": "\"http:\/\/www.example.com\"",
-                "operator": "is",
-                "index": 1
+                "statement": {
+                    "statement-type": "assertion",
+                    "source": "$page.url is \"http:\/\/www.example.com\"",
+                    "identifier": "$page.url",
+                    "value": "\"http:\/\/www.example.com\"",
+                    "operator": "is",
+                    "index": 1                
+                },
+                "expected": true' . ',
+                "examined": true' . '                
             }'
         );
     }

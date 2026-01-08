@@ -34,13 +34,17 @@ class FailingAssertEqualsAssertion extends BasilTestCase
             $expectedValue,
             $examinedValue,
             '{
-                "statement-type": "assertion",
-                "source": "$\".selector\" is \"value\"",
-                "index": 0,
-                "identifier": "$\".selector\"",
-                "value": "\"value\"",
-                "operator": "is"
-            }'
+                    "statement": {
+                        "statement-type": "assertion",
+                        "source": "$\".selector\" is \"value\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "value": "\"value\"",
+                        "operator": "is"          
+                    },
+                    "expected": "' . addcslashes((string) $expectedValue, "'") . '",
+                    "examined": "' . addcslashes((string) $examinedValue, "'") . '"
+                }'
         );
     }
 }

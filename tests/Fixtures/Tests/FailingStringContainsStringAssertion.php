@@ -33,12 +33,16 @@ class FailingStringContainsStringAssertion extends BasilTestCase
             $expectedValue,
             $examinedValue,
             '{
-                    "statement-type": "assertion",
-                    "source": "$\".selector\" includes \"value\"",
-                    "index": 0,
-                    "identifier": "$\".selector\"",
-                    "value": "\"value\"",
-                    "operator": "includes"
+                    "statement": {
+                        "statement-type": "assertion",
+                        "source": "$\".selector\" includes \"value\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "value": "\"value\"",
+                        "operator": "includes"                    
+                    },
+                    "expected": "' . addcslashes((string) $expectedValue, "'") . '",
+                    "examined": "' . addcslashes((string) $examinedValue, "'") . '"
                 }'
         );
     }
