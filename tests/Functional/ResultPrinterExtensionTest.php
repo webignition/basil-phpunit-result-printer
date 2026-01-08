@@ -232,6 +232,28 @@ class ResultPrinterExtensionTest extends TestCase
                     actual: "assert-not-equals-value"
                     EOD,
             ],
+            'failing "matches regular expression" assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingAssertMatchesRegularExpressionAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Failed
+                    PHPUnit\Event\Test\Finished
+                    status: failed
+                    step one
+                    {
+                        "statement-type": "assertion",
+                        "source": "$\".selector\" matches \"\/^value\/\"",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "value": "\"\/^value\/\"",
+                        "operator": "matches"
+                    }
+                    failed assertion: $".selector" matches "/^value/"
+                    expected: "/pattern/"
+                    actual: "assert-matches-regular-expression-expected-value"
+                    EOD,
+            ],
         ];
     }
 
