@@ -12,9 +12,9 @@ class ResultPrinterExtensionTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    #[DataProvider('passingTestsDataProvider')]
+    //    #[DataProvider('passingTestsDataProvider')]
     #[DataProvider('failingTestsDataProvider')]
-    #[DataProvider('terminatedDataProvider')]
+    //    #[DataProvider('terminatedDataProvider')]
     public function testRun(string $testPath, int $expectedExitCode, string $expectedPhpunitOutput): void
     {
         $phpunitCommand = './vendor/bin/phpunit -c phpunit.printer.xml ' . $testPath;

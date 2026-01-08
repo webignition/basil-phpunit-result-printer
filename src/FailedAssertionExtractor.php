@@ -19,8 +19,11 @@ readonly class FailedAssertionExtractor
      */
     public function extract(array $data): ?AssertionInterface
     {
+        $statementData = $data['statement'] ?? [];
+        $statementData = is_array($statementData) ? $statementData : [];
+
         try {
-            $statement = $this->statementFactory->createFromArray($data);
+            $statement = $this->statementFactory->createFromArray($statementData);
         } catch (UnknownEncapsulatedStatementException) {
             return null;
         }

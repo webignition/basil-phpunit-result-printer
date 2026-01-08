@@ -9,7 +9,6 @@ use PHPUnit\Event\Test\Failed;
 use PHPUnit\Event\Test\FailedSubscriber as FailedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
-use webignition\BasilPhpUnitResultPrinter\ExpectedActualValuesParser\Parser;
 use webignition\BasilPhpUnitResultPrinter\FailedAction;
 use webignition\BasilPhpUnitResultPrinter\FailedActionExtractor;
 use webignition\BasilPhpUnitResultPrinter\FailedAssertionExtractor;
@@ -25,7 +24,6 @@ class FailedSubscriber implements FailedSubscriberInterface
         private readonly StatementMessageParser $statementMessageParser,
         private readonly FailedActionExtractor $failedActionExtractor,
         private readonly FailedAssertionExtractor $failedAssertionExtractor,
-        private readonly Parser $expectedActualValuesParser,
     ) {}
 
     public function notify(Failed $event): void
@@ -39,7 +37,6 @@ class FailedSubscriber implements FailedSubscriberInterface
         \assert($test instanceof TestMethod);
 
         $parsedStatementMessage = $this->statementMessageParser->parse($event->throwable()->message());
-
         $failedAction = $this->failedActionExtractor->extract($parsedStatementMessage['data']);
         if ($failedAction instanceof FailedAction) {
             $this->state->setFailedAction($failedAction);
@@ -49,17 +46,20 @@ class FailedSubscriber implements FailedSubscriberInterface
         if ($failedAssertion instanceof AssertionInterface) {
             $this->state->setFailedAssertion($failedAssertion);
 
-            if (str_starts_with($parsedStatementMessage['message'], 'Failed asserting that false is true')) {
+            $expected = $parsedStatementMessage['data']['expected'];
+            $examined = $parsedStatementMessage['data']['examined'];
+
+            if (true === $expected) {
                 $this->state->setHasFailedAssertTrueAssertion();
-            } elseif (str_starts_with($parsedStatementMessage['message'], 'Failed asserting that true is false')) {
+            }
+
+            if (false === $expected) {
                 $this->state->setHasFailedAssertFalseAssertion();
-            } else {
-                $actualAndExpectedValues = $this->expectedActualValuesParser->parse(
-                    $event,
-                    $parsedStatementMessage['message']
-                );
-                $this->state->setExpectedValue((string) $actualAndExpectedValues['expected']);
-                $this->state->setActualValue((string) $actualAndExpectedValues['actual']);
+            }
+
+            if (is_string($expected) && is_string($examined)) {
+                $this->state->setExpectedValue($expected);
+                $this->state->setActualValue($examined);
             }
         }
     }
