@@ -42,8 +42,8 @@ class FailingAssertNotEqualsAssertion extends BasilTestCase
                         "value": "\"value\"",
                         "operator": "is-not"      
                     },
-                    "expected": "' . addcslashes((string) $expectedValue, "'") . '",
-                    "examined": "' . addcslashes((string) $examinedValue, "'") . '"
+                    "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
+                    "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"
                 }'
         );
     }

@@ -41,8 +41,8 @@ class FailingStringContainsStringAssertion extends BasilTestCase
                         "value": "\"value\"",
                         "operator": "includes"                    
                     },
-                    "expected": "' . addcslashes((string) $expectedValue, "'") . '",
-                    "examined": "' . addcslashes((string) $examinedValue, "'") . '"
+                    "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
+                    "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"
                 }'
         );
     }
