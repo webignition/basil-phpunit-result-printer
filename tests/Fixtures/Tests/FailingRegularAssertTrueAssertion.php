@@ -49,6 +49,8 @@ class FailingRegularAssertTrueAssertion extends BasilTestCase
         try {
             // $".selector" exists <- click $".selector"
         } catch (InvalidLocatorException $exception) {
+            $locator = $exception->getElementIdentifier()->getLocator();
+            $type = $exception->getElementIdentifier()->isCssSelector() ? 'css' : 'xpath';
             $this->fail('{
                 "statement": {
                     "container": {
@@ -70,6 +72,10 @@ class FailingRegularAssertTrueAssertion extends BasilTestCase
                     "class": "' . addcslashes($exception::class, '"\\') . '",
                     "code": ' . $exception->getCode() . ',
                     "message": "' . addcslashes($exception->getMessage(), '"\\') . '"
+                },
+                "context": {
+                    "locator": "' . addcslashes($locator, '"\\') . '",
+                    "type": "' . addcslashes($type, '"\\') . '"
                 }
             }');
         }
