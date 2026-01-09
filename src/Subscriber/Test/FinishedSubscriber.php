@@ -73,6 +73,16 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
 
                 $this->printer->print('actual: "' . $actual . "\"\n");
             }
+
+            $failureReason = $this->state->getFailureReason();
+            if (is_string($failureReason)) {
+                $this->printer->print('failure reason: "' . $failureReason . "\"\n");
+            }
+
+            $failureContext = $this->state->getFailureContext();
+            if ([] !== $failureContext) {
+                $this->printer->print('failure context: "' . json_encode($failureContext) . "\"\n");
+            }
         }
 
         $throwable = $this->state->getThrowable();

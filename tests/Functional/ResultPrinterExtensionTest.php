@@ -254,6 +254,27 @@ class ResultPrinterExtensionTest extends TestCase
                     actual: "assert-matches-regular-expression-expected-value"
                     EOD,
             ],
+            'failing with InvalidLocatorException' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingWithInvalidLocatorException.php',
+                'expectedExitCode' => 1,
+                'expectedPhpunitOutput' => <<<'EOD'
+                    PHPUnit\Event\Test\Prepared
+                    PHPUnit\Event\Test\Failed
+                    PHPUnit\Event\Test\Finished
+                    status: failed
+                    step one
+                    {
+                        "statement-type": "assertion",
+                        "source": "$\".selector\" exists",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "operator": "exists"
+                    }
+                    failed assertion: $".selector" exists
+                    failure reason: "locator-invalid"
+                    failure context: "{"locator":"$\".selector\"","type":"css"}"
+                    EOD,
+            ],
         ];
     }
 
