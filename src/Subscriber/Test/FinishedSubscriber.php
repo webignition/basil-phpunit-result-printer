@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Subscriber\Test;
 
 use PHPUnit\Event\Code\TestMethod;
+use PHPUnit\Event\Code\Throwable;
 use PHPUnit\Event\Test\Finished;
 use PHPUnit\Event\Test\FinishedSubscriber as FinishedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
@@ -72,6 +73,11 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
 
                 $this->printer->print('actual: "' . $actual . "\"\n");
             }
+        }
+
+        $throwable = $this->state->getThrowable();
+        if ($throwable instanceof Throwable) {
+            $this->printer->print('throwable: "' . trim($throwable->description()) . "\"\n");
         }
     }
 }

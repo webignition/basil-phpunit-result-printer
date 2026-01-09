@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter;
 
+use PHPUnit\Event\Code\Throwable;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 
@@ -12,6 +13,7 @@ class State
     private Status $status;
     private FailedAction $failedAction;
     private AssertionInterface $failedAssertion;
+    private ?Throwable $throwable = null;
     private bool|string|null $expected = null;
     private bool|string|null $actual = null;
 
@@ -88,5 +90,15 @@ class State
     public function hasActualValue(): bool
     {
         return null !== $this->actual;
+    }
+
+    public function setThrowable(Throwable $throwable): void
+    {
+        $this->throwable = $throwable;
+    }
+
+    public function getThrowable(): ?Throwable
+    {
+        return $this->throwable;
     }
 }
