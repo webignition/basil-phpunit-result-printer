@@ -44,7 +44,7 @@ readonly class TestMetaDataExtractor
 
         return new TestMetaData(
             $stepNameAttribute->newInstance()->name,
-            $statements,
+            new StatementCollection($statements),
         );
     }
 }
