@@ -23,7 +23,5 @@ class ErroredSubscriber implements ErroredSubscriberInterface
 
         $this->printer->print($event::class);
         $this->printer->print("\n");
-
-        $this->state->setThrowable($event->throwable());
     }
 }
