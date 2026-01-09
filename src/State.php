@@ -16,6 +16,12 @@ class State
     private ?Throwable $throwable = null;
     private bool|string|null $expected = null;
     private bool|string|null $actual = null;
+    private ?string $failureReason = null;
+
+    /**
+     * @var array<mixed>
+     */
+    private array $failureContext = [];
 
     public function __construct()
     {
@@ -100,5 +106,31 @@ class State
     public function getThrowable(): ?Throwable
     {
         return $this->throwable;
+    }
+
+    public function setFailureReason(string $reason): void
+    {
+        $this->failureReason = $reason;
+    }
+
+    public function getFailureReason(): ?string
+    {
+        return $this->failureReason;
+    }
+
+    /**
+     * @param array<mixed> $context
+     */
+    public function setFailureContext(array $context): void
+    {
+        $this->failureContext = $context;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getFailureContext(): array
+    {
+        return $this->failureContext;
     }
 }

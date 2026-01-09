@@ -56,6 +56,16 @@ class FailedSubscriber implements FailedSubscriberInterface
             if (is_string($examined) || is_bool($examined)) {
                 $this->state->setActualValue($examined);
             }
+
+            $reason = $parsedStatementMessage['data']['reason'];
+            if (is_string($reason)) {
+                $this->state->setFailureReason($reason);
+            }
+
+            $context = $parsedStatementMessage['data']['context'];
+            if (is_array($context)) {
+                $this->state->setFailureContext($context);
+            }
         }
     }
 }
