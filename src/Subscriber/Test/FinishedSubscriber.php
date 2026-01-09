@@ -56,21 +56,21 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
             $this->printer->print('failed assertion: ' . $this->state->getFailedAssertion() . "\n");
 
             if ($this->state->hasExpectedValue()) {
-                $this->printer->print('expected: "' . $this->state->getExpectedValue() . "\"\n");
+                $expected = $this->state->getExpectedValue();
+                if (is_bool($expected)) {
+                    $expected = $expected ? 'true' : 'false';
+                }
+
+                $this->printer->print('expected: "' . $expected . "\"\n");
             }
 
             if ($this->state->hasActualValue()) {
-                $this->printer->print('actual: "' . $this->state->getActualValue() . "\"\n");
-            }
+                $actual = $this->state->getActualValue();
+                if (is_bool($actual)) {
+                    $actual = $actual ? 'true' : 'false';
+                }
 
-            if ($this->state->hasFailedAssertTrueAssertion()) {
-                $this->printer->print('expected: true' . "\n");
-                $this->printer->print('actual: false' . "\n");
-            }
-
-            if ($this->state->hasFailedAssertFalseAssertion()) {
-                $this->printer->print('expected: false' . "\n");
-                $this->printer->print('actual: true' . "\n");
+                $this->printer->print('actual: "' . $actual . "\"\n");
             }
         }
     }

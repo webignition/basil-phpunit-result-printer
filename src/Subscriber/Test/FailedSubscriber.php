@@ -49,16 +49,11 @@ class FailedSubscriber implements FailedSubscriberInterface
             $expected = $parsedStatementMessage['data']['expected'];
             $examined = $parsedStatementMessage['data']['examined'];
 
-            if (true === $expected) {
-                $this->state->setHasFailedAssertTrueAssertion();
-            }
-
-            if (false === $expected) {
-                $this->state->setHasFailedAssertFalseAssertion();
-            }
-
-            if (is_string($expected) && is_string($examined)) {
+            if (is_string($expected) || is_bool($expected)) {
                 $this->state->setExpectedValue($expected);
+            }
+
+            if (is_string($examined) || is_bool($examined)) {
                 $this->state->setActualValue($examined);
             }
         }

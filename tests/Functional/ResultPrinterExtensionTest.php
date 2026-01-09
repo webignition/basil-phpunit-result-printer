@@ -74,8 +74,8 @@ class ResultPrinterExtensionTest extends TestCase
                         "operator": "is"
                     }
                     failed assertion: $page.title is "Foo"
-                    expected: true
-                    actual: false
+                    expected: "true"
+                    actual: "false"
                     EOD,
             ],
             'failing derived assertion' => [
@@ -112,8 +112,8 @@ class ResultPrinterExtensionTest extends TestCase
                         "operator": "is"
                     }
                     failed assertion: $".selector" exists
-                    expected: true
-                    actual: false
+                    expected: "true"
+                    actual: "false"
                     EOD,
             ],
             'failing action' => [
