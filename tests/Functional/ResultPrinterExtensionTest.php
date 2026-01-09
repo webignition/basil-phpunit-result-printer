@@ -405,7 +405,6 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Errored
-                    RuntimeException: Exception thrown in first step
                     PHPUnit\Event\Test\Finished
                     status: terminated
                     step one
@@ -417,6 +416,7 @@ class ResultPrinterExtensionTest extends TestCase
                         "value": "\"http:\/\/www.example.com\"",
                         "operator": "is"
                     }
+                    throwable: "RuntimeException: Exception thrown in first step"
                     EOD,
             ],
             'terminated, RuntimeException thrown during second step' => [
@@ -438,7 +438,6 @@ class ResultPrinterExtensionTest extends TestCase
                     }
                     PHPUnit\Event\Test\Prepared
                     PHPUnit\Event\Test\Errored
-                    RuntimeException: Exception thrown in second step
                     PHPUnit\Event\Test\Finished
                     status: terminated
                     step two
@@ -450,6 +449,7 @@ class ResultPrinterExtensionTest extends TestCase
                         "value": "\"Foo\"",
                         "operator": "is"
                     }
+                    throwable: "RuntimeException: Exception thrown in second step"
                     EOD,
             ],
             'terminated, lastException set during setupBeforeClass' => [
@@ -457,7 +457,8 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedExitCode' => 2,
                 'expectedPhpunitOutput' => <<<'EOD'
                     PHPUnit\Event\Test\BeforeFirstTestMethodErrored
-                    RuntimeException: Exception thrown in setUpBeforeClass
+                    status: terminated
+                    throwable: "RuntimeException: Exception thrown in setUpBeforeClass"
                     EOD,
             ],
         ];
