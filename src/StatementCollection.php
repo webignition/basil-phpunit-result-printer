@@ -35,11 +35,11 @@ class StatementCollection
         $hasFoundFailedStatement = false;
 
         foreach ($this->statements as $statement) {
-            if ($statement->getIndex() === $statement->getIndex()) {
+            if ($statement->getIndex() === $this->failedStatement->getIndex()) {
                 $hasFoundFailedStatement = true;
             }
 
-            if (!$hasFoundFailedStatement) {
+            if (false === $hasFoundFailedStatement) {
                 $handledStatements[] = $statement;
             }
         }
