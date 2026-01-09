@@ -42,8 +42,8 @@ class FailingAssertMatchesRegularExpressionAssertion extends BasilTestCase
                     "value": "\"\/^value\/\"",
                     "operator": "matches"               
                 },
-                "expected": "' . addcslashes((string) $expectedValue, "'") . '",
-                "examined": "' . addcslashes((string) $examinedValue, "'") . '"
+                "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
+                "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"
             }'
         );
     }

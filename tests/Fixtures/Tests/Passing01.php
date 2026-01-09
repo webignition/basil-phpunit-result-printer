@@ -57,9 +57,9 @@ class Passing01 extends BasilTestCase
                 },
                 "reason": "action-failed",
                 "exception": {
-                    "class": "' . addcslashes($exception::class, "'\\") . '",
+                    "class": "' . addcslashes($exception::class, '"\\') . '",
                     "code": ' . $exception->getCode() . ',
-                    "message": "' . addcslashes($exception->getMessage(), "'\\") . '"
+                    "message": "' . addcslashes($exception->getMessage(), '"\\') . '"
                 }
             }');
         }
