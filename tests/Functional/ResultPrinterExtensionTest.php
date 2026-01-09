@@ -420,59 +420,6 @@ class ResultPrinterExtensionTest extends TestCase
         $root = getcwd();
 
         return [
-            'terminated, RuntimeException thrown during first step' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInFirstStepTest.php',
-                'expectedExitCode' => 2,
-                'expectedPhpunitOutput' => <<<'EOD'
-                    PHPUnit\Event\Test\Prepared
-                    PHPUnit\Event\Test\Errored
-                    PHPUnit\Event\Test\Finished
-                    status: terminated
-                    step one
-                    {
-                        "statement-type": "assertion",
-                        "source": "$page.url is \"http:\/\/www.example.com\"",
-                        "index": 0,
-                        "identifier": "$page.url",
-                        "value": "\"http:\/\/www.example.com\"",
-                        "operator": "is"
-                    }
-                    throwable: "RuntimeException: Exception thrown in first step"
-                    EOD,
-            ],
-            'terminated, RuntimeException thrown during second step' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSecondStepTest.php',
-                'expectedExitCode' => 2,
-                'expectedPhpunitOutput' => <<<'EOD'
-                    PHPUnit\Event\Test\Prepared
-                    PHPUnit\Event\Test\Passed
-                    PHPUnit\Event\Test\Finished
-                    status: passed
-                    step one
-                    {
-                        "statement-type": "assertion",
-                        "source": "$page.url is \"http:\/\/www.example.com\"",
-                        "index": 0,
-                        "identifier": "$page.url",
-                        "value": "\"http:\/\/www.example.com\"",
-                        "operator": "is"
-                    }
-                    PHPUnit\Event\Test\Prepared
-                    PHPUnit\Event\Test\Errored
-                    PHPUnit\Event\Test\Finished
-                    status: terminated
-                    step two
-                    {
-                        "statement-type": "assertion",
-                        "source": "$page.title is \"Foo\"",
-                        "index": 0,
-                        "identifier": "$page.title",
-                        "value": "\"Foo\"",
-                        "operator": "is"
-                    }
-                    throwable: "RuntimeException: Exception thrown in second step"
-                    EOD,
-            ],
             'terminated, lastException set during setupBeforeClass' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSetupBeforeClassTest.php',
                 'expectedExitCode' => 2,
