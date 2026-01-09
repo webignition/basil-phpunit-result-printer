@@ -6,7 +6,10 @@ namespace webignition\BasilPhpUnitResultPrinter;
 
 use webignition\BasilModels\Model\StatementInterface;
 
-class StatementCollection
+/**
+ * @implements \IteratorAggregate<StatementInterface>
+ */
+class StatementCollection implements \IteratorAggregate
 {
     private ?StatementInterface $failedStatement = null;
 
@@ -45,5 +48,10 @@ class StatementCollection
         }
 
         return $handledStatements;
+    }
+
+    public function getIterator(): \Traversable
+    {
+        return new \ArrayIterator($this->statements);
     }
 }
