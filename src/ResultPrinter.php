@@ -114,10 +114,10 @@ class ResultPrinter extends Printer implements \PHPUnit\TextUI\ResultPrinter
                 $this->write($this->generator->generate($this->uncaughtException->getData()));
                 $this->exceptionWritten = true;
             }
-        } else {
-            $step = $this->stepFactory->create($test);
-            $this->write($this->generator->generate($step->getData()));
         }
+        //            $step = $this->stepFactory->create($test);
+        //            $this->write($this->generator->generate($step->getData()));
+
         //        }
     }
 
