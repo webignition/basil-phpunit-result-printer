@@ -10,7 +10,7 @@ use PHPUnit\Event\Test\FinishedSubscriber as FinishedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
-use webignition\BasilPhpUnitResultPrinter\Factory\Model\NewStepFactory;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
@@ -23,7 +23,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         private State $state,
         private TestMetaDataExtractor $testMetaDataExtractor,
         private TestDataExtractor $testDataExtractor,
-        private NewStepFactory $newStepFactory,
+        private StepFactory $stepFactory,
         private GeneratorInterface $generator,
     ) {}
 
@@ -51,7 +51,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
             $testDataSet = $this->testDataExtractor->extract($testData->dataFromDataProvider()->data());
         }
 
-        $step = $this->newStepFactory->create($testMetaData->stepName, $this->state, $statements, $testDataSet);
+        $step = $this->stepFactory->create($testMetaData->stepName, $this->state, $statements, $testDataSet);
 
         $this->printer->print($this->generator->generate($step->getData()));
     }

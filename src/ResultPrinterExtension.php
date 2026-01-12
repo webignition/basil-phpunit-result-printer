@@ -11,7 +11,7 @@ use PHPUnit\TextUI\Configuration\Configuration;
 use PHPUnit\TextUI\Output\DefaultPrinter;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\StatementFactory;
-use webignition\BasilPhpUnitResultPrinter\Factory\Model\NewStepFactory;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\BeforeFirstTestMethodErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\ErroredSubscriber;
@@ -46,7 +46,7 @@ class ResultPrinterExtension implements Extension
                     StatementFactory::createFactory(),
                 ),
                 new TestDataExtractor(),
-                NewStepFactory::createFactory(),
+                StepFactory::createFactory(),
                 new YamlGenerator(),
             ),
             new ErroredSubscriber($this->state),

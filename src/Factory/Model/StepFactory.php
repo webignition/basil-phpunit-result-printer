@@ -15,7 +15,7 @@ use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\StatementCollection;
 use webignition\BasilRunnerDocuments\Step;
 
-readonly class NewStepFactory
+readonly class StepFactory
 {
     public function __construct(
         private StatementFactory $statementFactory,
@@ -24,7 +24,7 @@ readonly class NewStepFactory
 
     public static function createFactory(): self
     {
-        return new NewStepFactory(
+        return new StepFactory(
             StatementFactory::createFactory(),
             NewExceptionDataFactory::createFactory(),
         );

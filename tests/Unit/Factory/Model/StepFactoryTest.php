@@ -13,9 +13,9 @@ use webignition\BasilModels\Parser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailureException;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
-use webignition\BasilPhpUnitResultPrinter\Factory\Model\NewStepFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
@@ -29,12 +29,12 @@ use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class StepFactoryTest extends AbstractBaseTestCase
 {
-    private NewStepFactory $factory;
+    private StepFactory $factory;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->factory = NewStepFactory::createFactory();
+        $this->factory = StepFactory::createFactory();
     }
 
     /**
