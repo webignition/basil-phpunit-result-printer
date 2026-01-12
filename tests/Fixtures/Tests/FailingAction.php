@@ -37,7 +37,7 @@ class FailingAction extends BasilTestCase
     {
         try {
             // click $".selector"
-            throw new \RuntimeException('Runtime exception executing action');
+            throw new \RuntimeException('Runtime exception executing action', 123);
         } catch (\Throwable $exception) {
             self::fail('{
                 "statement": {

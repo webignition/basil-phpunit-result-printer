@@ -6,6 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement;
 
 use webignition\BasilModels\Model\Action\ActionInterface;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\ActionStatement;
@@ -47,12 +48,22 @@ class StatementFactory
         );
     }
 
-    public function createForFailedAssertion(
+    public function createForExpectationFailure(
         AssertionInterface $assertion,
-        string $expectedValue,
-        string $actualValue
+        ExpectationFailure $expectationFailure,
     ): ?StatementInterface {
-        $failureSummary = $this->assertionFailureSummaryFactory->create($assertion, $expectedValue, $actualValue);
+        $expectedValue = $expectationFailure->expected;
+        $examinedValue = $expectationFailure->examined;
+
+        if (is_bool($expectedValue)) {
+            $expectedValue = $expectedValue ? 'true' : 'false';
+        }
+
+        if (is_bool($examinedValue)) {
+            $examinedValue = $examinedValue ? 'true' : 'false';
+        }
+
+        $failureSummary = $this->assertionFailureSummaryFactory->create($assertion, $expectedValue, $examinedValue);
 
         if ($failureSummary instanceof AssertionFailureSummaryInterface) {
             return new FailedAssertionStatement(
@@ -63,6 +74,15 @@ class StatementFactory
         }
 
         return null;
+    }
+
+    public function createForAssertionFailure(AssertionInterface $assertion): StatementInterface
+    {
+        return new FailedAssertionStatement(
+            $assertion->getSource(),
+            null,
+            $this->transformationFactory->createTransformations($assertion),
+        );
     }
 
     private function createForAction(ActionInterface $action, int $status): StatementInterface

@@ -69,7 +69,7 @@ class StepFactory
         }
 
         if ($failedStatement instanceof AssertionInterface) {
-            $statement = $this->statementFactory->createForFailedAssertion(
+            $statement = $this->statementFactory->createForExpectationFailure(
                 $failedStatement,
                 (string) $testCase->getExpectedValue(),
                 (string) $testCase->getExaminedValue()

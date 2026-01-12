@@ -159,7 +159,7 @@ class StepFactoryTest extends AbstractBaseTestCase
                     'step name',
                     $statusFailedLabel,
                     self::filterStatements([
-                        $statementFactory->createForFailedAssertion($existsAssertion, '', ''),
+                        $statementFactory->createForExpectationFailure($existsAssertion, '', ''),
                     ])
                 ),
             ],
@@ -176,7 +176,7 @@ class StepFactoryTest extends AbstractBaseTestCase
                     'step name',
                     $statusFailedLabel,
                     self::filterStatements([
-                        ($statementFactory->createForFailedAssertion(
+                        ($statementFactory->createForExpectationFailure(
                             $existsAssertion,
                             '',
                             ''
@@ -208,7 +208,7 @@ class StepFactoryTest extends AbstractBaseTestCase
                     self::filterStatements([
                         $statementFactory->createForPassedAssertion($existsAssertion),
                         $statementFactory->createForPassedAssertion($isAssertion),
-                        $statementFactory->createForFailedAssertion(
+                        $statementFactory->createForExpectationFailure(
                             $includesAssertion,
                             'expected',
                             'actual'

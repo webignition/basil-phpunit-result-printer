@@ -11,12 +11,13 @@ use PHPUnit\TextUI\Configuration\Configuration;
 use PHPUnit\TextUI\Output\DefaultPrinter;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\StatementFactory;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\NewStepFactory;
+use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\BeforeFirstTestMethodErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\ErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FailedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FinishedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\PassedSubscriber;
-use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\PreparedSubscriber;
 
 class ResultPrinterExtension implements Extension
 {
@@ -38,7 +39,6 @@ class ResultPrinterExtension implements Extension
         $facade->replaceOutput();
 
         $facade->registerSubscribers(
-            new PreparedSubscriber($this->printer),
             new FinishedSubscriber(
                 $this->printer,
                 $this->state,
@@ -46,10 +46,11 @@ class ResultPrinterExtension implements Extension
                     StatementFactory::createFactory(),
                 ),
                 new TestDataExtractor(),
+                NewStepFactory::createFactory(),
+                new YamlGenerator(),
             ),
-            new ErroredSubscriber($this->printer, $this->state),
+            new ErroredSubscriber($this->state),
             new FailedSubscriber(
-                $this->printer,
                 $this->state,
                 new StatementMessageParser(),
                 new AssertionFailureExtractor(
@@ -60,7 +61,7 @@ class ResultPrinterExtension implements Extension
                     StatementFactory::createFactory(),
                 ),
             ),
-            new PassedSubscriber($this->printer, $this->state),
+            new PassedSubscriber($this->state),
             new BeforeFirstTestMethodErroredSubscriber($this->printer),
         );
     }
