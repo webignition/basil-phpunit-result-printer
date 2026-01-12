@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter;
 
-readonly class FailedActionExceptionExtractor
+readonly class AssertionFailureExceptionExtractor
 {
     /**
      * @param array<mixed> $data
      */
-    public function extract(array $data): ?FailedActionException
+    public function extract(array $data): ?AssertionFailureException
     {
         $class = $data['class'] ?? '';
         $class = is_string($class) ? $class : '';
@@ -30,6 +30,6 @@ readonly class FailedActionExceptionExtractor
             return null;
         }
 
-        return new FailedActionException($class, $code, $message);
+        return new AssertionFailureException($class, $code, $message);
     }
 }

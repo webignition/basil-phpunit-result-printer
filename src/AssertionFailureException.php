@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter;
 
-readonly class FailedActionException
+readonly class AssertionFailureException
 {
     /**
      * @param non-empty-string $class

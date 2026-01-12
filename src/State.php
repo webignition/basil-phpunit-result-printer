@@ -9,7 +9,7 @@ use webignition\BasilPhpUnitResultPrinter\Model\Status;
 class State
 {
     private Status $status;
-    private FailedAction $failedAction;
+    private AssertionFailure $assertionFailure;
     private ExpectationFailure $expectationFailure;
     private ?string $failureReason = null;
 
@@ -33,19 +33,19 @@ class State
         $this->status = $status;
     }
 
-    public function setFailedAction(FailedAction $failedAction): void
+    public function setAssertionFailure(AssertionFailure $failedAction): void
     {
-        $this->failedAction = $failedAction;
+        $this->assertionFailure = $failedAction;
     }
 
-    public function getFailedAction(): FailedAction
+    public function getAssertionFailure(): AssertionFailure
     {
-        return $this->failedAction;
+        return $this->assertionFailure;
     }
 
-    public function hasFailedAction(): bool
+    public function hasAssertionFailure(): bool
     {
-        return isset($this->failedAction);
+        return isset($this->assertionFailure);
     }
 
     public function setExpectationFailure(ExpectationFailure $assertion): void

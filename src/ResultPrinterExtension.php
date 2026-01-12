@@ -52,9 +52,9 @@ class ResultPrinterExtension implements Extension
                 $this->printer,
                 $this->state,
                 new StatementMessageParser(),
-                new FailedActionExtractor(
+                new AssertionFailureExtractor(
                     StatementFactory::createFactory(),
-                    new FailedActionExceptionExtractor(),
+                    new AssertionFailureExceptionExtractor(),
                 ),
                 new ExpectationFailureExtractor(
                     StatementFactory::createFactory(),
