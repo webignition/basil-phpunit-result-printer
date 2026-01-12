@@ -117,8 +117,8 @@ readonly class NewStepFactory
             }
         }
 
-        if ($failedStatement instanceof AssertionInterface && $expectationFailure instanceof ExpectationFailure) {
-            $statement = $this->statementFactory->createForExpectationFailure($failedStatement, $expectationFailure);
+        if ($expectationFailure instanceof ExpectationFailure) {
+            $statement = $this->statementFactory->createForExpectationFailure($expectationFailure);
 
             if ($statement instanceof StatementInterface) {
                 $statements[] = $statement;

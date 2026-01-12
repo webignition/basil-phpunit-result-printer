@@ -48,10 +48,8 @@ class StatementFactory
         );
     }
 
-    public function createForExpectationFailure(
-        AssertionInterface $assertion,
-        ExpectationFailure $expectationFailure,
-    ): ?StatementInterface {
+    public function createForExpectationFailure(ExpectationFailure $expectationFailure): ?StatementInterface
+    {
         $expectedValue = $expectationFailure->expected;
         $examinedValue = $expectationFailure->examined;
 
@@ -63,13 +61,17 @@ class StatementFactory
             $examinedValue = $examinedValue ? 'true' : 'false';
         }
 
-        $failureSummary = $this->assertionFailureSummaryFactory->create($assertion, $expectedValue, $examinedValue);
+        $failureSummary = $this->assertionFailureSummaryFactory->create(
+            $expectationFailure->assertion,
+            $expectedValue,
+            $examinedValue
+        );
 
         if ($failureSummary instanceof AssertionFailureSummaryInterface) {
             return new FailedAssertionStatement(
-                $assertion->getSource(),
+                $expectationFailure->assertion->getSource(),
                 $failureSummary,
-                $this->transformationFactory->createTransformations($assertion)
+                $this->transformationFactory->createTransformations($expectationFailure->assertion)
             );
         }
 
