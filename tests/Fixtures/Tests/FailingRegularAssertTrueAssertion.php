@@ -37,7 +37,7 @@ class FailingRegularAssertTrueAssertion extends BasilTestCase
         '{
             "statement-type": "assertion",
             "source": "$\".selector\" exists",
-            "index": 0,
+            "index": 2,
             "identifier": "$\".selector\"",
             "operator": "exists"
         }',
@@ -145,7 +145,7 @@ class FailingRegularAssertTrueAssertion extends BasilTestCase
                 "statement": {
                     "statement-type": "assertion",
                     "source": "$\".selector\" exists",
-                    "index": 0,
+                    "index": 2,
                     "identifier": "$\".selector\"",
                     "operator": "exists"
                 },

@@ -11,7 +11,7 @@ class FailedAssertionStatement extends AbstractAssertionStatement
 {
     public function __construct(
         string $source,
-        private AssertionFailureSummaryInterface $failureSummary,
+        private ?AssertionFailureSummaryInterface $failureSummary,
         array $transformations = []
     ) {
         $status = (string) new Status(Status::STATUS_FAILED);
@@ -22,7 +22,10 @@ class FailedAssertionStatement extends AbstractAssertionStatement
     public function getData(): array
     {
         $data = parent::getData();
-        $data['summary'] = $this->failureSummary->getData();
+
+        if ($this->failureSummary instanceof AssertionFailureSummaryInterface) {
+            $data['summary'] = $this->failureSummary->getData();
+        }
 
         return $data;
     }

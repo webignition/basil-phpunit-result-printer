@@ -10,6 +10,8 @@ use PHPUnit\Event\Test\FinishedSubscriber as FinishedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
+use webignition\BasilPhpUnitResultPrinter\Factory\Model\NewStepFactory;
+use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
 use webignition\BasilPhpUnitResultPrinter\TestMetaDataExtractor;
@@ -21,66 +23,43 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         private State $state,
         private TestMetaDataExtractor $testMetaDataExtractor,
         private TestDataExtractor $testDataExtractor,
+        private NewStepFactory $newStepFactory,
+        private GeneratorInterface $generator,
     ) {}
 
     public function notify(Finished $event): void
     {
-        $this->printer->print($event::class);
-        $this->printer->print("\n");
-
-        $this->printer->print('status: ' . $this->state->getStatus());
-        $this->printer->print("\n");
-
         $test = $event->test();
         \assert($test instanceof TestMethod);
 
-        $testData = $test->testData();
-        if ($testData->hasDataFromDataProvider()) {
-            $testDataSet = $this->testDataExtractor->extract($testData->dataFromDataProvider()->data());
-            $this->printer->print('provided data:');
-            $this->printer->print("\n");
-            $this->printer->print((string) json_encode($testDataSet));
-            $this->printer->print("\n");
-        }
-
         $testMetaData = $this->testMetaDataExtractor->extract($test);
-        $this->printer->print($testMetaData->stepName . "\n");
-
-        foreach ($testMetaData->statements as $statement) {
-            $this->printer->print(json_encode($statement, JSON_PRETTY_PRINT) . "\n");
-        }
+        $statements = $testMetaData->statements;
 
         $assertionFailure = $this->state->getAssertionFailure();
         if ($assertionFailure instanceof AssertionFailure) {
-            $this->printer->print('assertion failure statement: ' . $assertionFailure->statement . "\n");
-
-            $this->printer->print('reason: "' . $assertionFailure->reason . "\"\n");
-
-            $exception = $assertionFailure->exception;
-            $this->printer->print('exception class: "' . $exception->class . "\"\n");
-            $this->printer->print('exception code: "' . $exception->code . "\"\n");
-            $this->printer->print('exception message: "' . $exception->message . "\"\n");
-
-            $this->printer->print('context: "' . json_encode($assertionFailure->context) . "\"\n");
+            $statements->setFailedStatement($assertionFailure->statement);
         }
 
         $expectationFailure = $this->state->getExpectationFailure();
         if ($expectationFailure instanceof ExpectationFailure) {
-            $this->printer->print('failed assertion: ' . $expectationFailure->assertion . "\n");
-
-            $expected = $expectationFailure->expected;
-            if (is_bool($expected)) {
-                $expected = $expected ? 'true' : 'false';
-            }
-
-            $this->printer->print('expected: "' . $expected . "\"\n");
-
-            $actual = $expectationFailure->examined;
-            if (is_bool($actual)) {
-                $actual = $actual ? 'true' : 'false';
-            }
-
-            $this->printer->print('actual: "' . $actual . "\"\n");
+            $statements->setFailedStatement($expectationFailure->assertion);
         }
+
+        $testDataSet = null;
+        $testData = $test->testData();
+        if ($testData->hasDataFromDataProvider()) {
+            $testDataSet = $this->testDataExtractor->extract($testData->dataFromDataProvider()->data());
+        }
+
+        $step = $this->newStepFactory->create(
+            $testMetaData->stepName,
+            $this->state,
+            $statements,
+            $assertionFailure,
+            $expectationFailure,
+            $testDataSet,
+        );
+
+        $this->printer->print($this->generator->generate($step->getData()));
     }
 }

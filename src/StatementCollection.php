@@ -25,6 +25,11 @@ class StatementCollection implements \IteratorAggregate
         $this->failedStatement = $statement;
     }
 
+    public function getFailedStatement(): ?StatementInterface
+    {
+        return $this->failedStatement;
+    }
+
     /**
      * @return StatementInterface[]
      */
