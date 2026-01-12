@@ -52,36 +52,35 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
             $this->printer->print('failed action: ' . $this->state->getFailedAction()->action . "\n");
         }
 
-        if ($this->state->hasFailedAssertion()) {
-            $this->printer->print('failed assertion: ' . $this->state->getFailedAssertion() . "\n");
+        if ($this->state->hasExpectationFailure()) {
+            $expectationFailure = $this->state->getExpectationFailure();
 
-            if ($this->state->hasExpectedValue()) {
-                $expected = $this->state->getExpectedValue();
-                if (is_bool($expected)) {
-                    $expected = $expected ? 'true' : 'false';
-                }
+            $this->printer->print('failed assertion: ' . $expectationFailure->assertion . "\n");
 
-                $this->printer->print('expected: "' . $expected . "\"\n");
+            $expected = $expectationFailure->expected;
+            if (is_bool($expected)) {
+                $expected = $expected ? 'true' : 'false';
             }
 
-            if ($this->state->hasActualValue()) {
-                $actual = $this->state->getActualValue();
-                if (is_bool($actual)) {
-                    $actual = $actual ? 'true' : 'false';
-                }
+            $this->printer->print('expected: "' . $expected . "\"\n");
 
-                $this->printer->print('actual: "' . $actual . "\"\n");
+            $actual = $expectationFailure->examined;
+            if (is_bool($actual)) {
+                $actual = $actual ? 'true' : 'false';
             }
 
-            $failureReason = $this->state->getFailureReason();
-            if (is_string($failureReason)) {
-                $this->printer->print('failure reason: "' . $failureReason . "\"\n");
-            }
+            $this->printer->print('actual: "' . $actual . "\"\n");
 
-            $failureContext = $this->state->getFailureContext();
-            if ([] !== $failureContext) {
-                $this->printer->print('failure context: "' . json_encode($failureContext) . "\"\n");
-            }
+            // @todo: re-implement below in #337
+            //            $failureReason = $this->state->getFailureReason();
+            //            if (is_string($failureReason)) {
+            //                $this->printer->print('failure reason: "' . $failureReason . "\"\n");
+            //            }
+            //
+            //            $failureContext = $this->state->getFailureContext();
+            //            if ([] !== $failureContext) {
+            //                $this->printer->print('failure context: "' . json_encode($failureContext) . "\"\n");
+            //            }
         }
     }
 }

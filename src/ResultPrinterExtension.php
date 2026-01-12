@@ -56,7 +56,7 @@ class ResultPrinterExtension implements Extension
                     StatementFactory::createFactory(),
                     new FailedActionExceptionExtractor(),
                 ),
-                new FailedAssertionExtractor(
+                new ExpectationFailureExtractor(
                     StatementFactory::createFactory(),
                 ),
             ),

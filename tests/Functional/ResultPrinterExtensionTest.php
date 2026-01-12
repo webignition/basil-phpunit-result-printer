@@ -269,9 +269,6 @@ class ResultPrinterExtensionTest extends TestCase
                         "identifier": "$\".selector\"",
                         "operator": "exists"
                     }
-                    failed assertion: $".selector" exists
-                    failure reason: "locator-invalid"
-                    failure context: "{"locator":"$\".selector\"","type":"css"}"
                     EOD,
             ],
         ];

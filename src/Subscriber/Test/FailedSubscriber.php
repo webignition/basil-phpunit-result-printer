@@ -8,10 +8,10 @@ use PHPUnit\Event\Code\TestMethod;
 use PHPUnit\Event\Test\Failed;
 use PHPUnit\Event\Test\FailedSubscriber as FailedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
-use webignition\BasilModels\Model\Assertion\AssertionInterface;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailureExtractor;
 use webignition\BasilPhpUnitResultPrinter\FailedAction;
 use webignition\BasilPhpUnitResultPrinter\FailedActionExtractor;
-use webignition\BasilPhpUnitResultPrinter\FailedAssertionExtractor;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\StatementMessageParser;
@@ -23,7 +23,7 @@ class FailedSubscriber implements FailedSubscriberInterface
         private State $state,
         private readonly StatementMessageParser $statementMessageParser,
         private readonly FailedActionExtractor $failedActionExtractor,
-        private readonly FailedAssertionExtractor $failedAssertionExtractor,
+        private readonly ExpectationFailureExtractor $expectationFailureExtractor,
     ) {}
 
     public function notify(Failed $event): void
@@ -42,30 +42,18 @@ class FailedSubscriber implements FailedSubscriberInterface
             $this->state->setFailedAction($failedAction);
         }
 
-        $failedAssertion = $this->failedAssertionExtractor->extract($parsedStatementMessage['data']);
-        if ($failedAssertion instanceof AssertionInterface) {
-            $this->state->setFailedAssertion($failedAssertion);
-
-            $expected = $parsedStatementMessage['data']['expected'];
-            $examined = $parsedStatementMessage['data']['examined'];
-
-            if (is_string($expected) || is_bool($expected)) {
-                $this->state->setExpectedValue($expected);
-            }
-
-            if (is_string($examined) || is_bool($examined)) {
-                $this->state->setActualValue($examined);
-            }
-
-            $reason = $parsedStatementMessage['data']['reason'];
-            if (is_string($reason)) {
-                $this->state->setFailureReason($reason);
-            }
-
-            $context = $parsedStatementMessage['data']['context'];
-            if (is_array($context)) {
-                $this->state->setFailureContext($context);
-            }
+        $expectationFailure = $this->expectationFailureExtractor->extract($parsedStatementMessage['data']);
+        if ($expectationFailure instanceof ExpectationFailure) {
+            $this->state->setExpectationFailure($expectationFailure);
+            //            $reason = $parsedStatementMessage['data']['reason'];
+            //            if (is_string($reason)) {
+            //                $this->state->setFailureReason($reason);
+            //            }
+            //
+            //            $context = $parsedStatementMessage['data']['context'];
+            //            if (is_array($context)) {
+            //                $this->state->setFailureContext($context);
+            //            }
         }
     }
 }
