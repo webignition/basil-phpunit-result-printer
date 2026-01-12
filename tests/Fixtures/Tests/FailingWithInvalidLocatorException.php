@@ -50,7 +50,9 @@ class FailingWithInvalidLocatorException extends BasilTestCase
                 },
                 "reason": "locator-invalid",
                 "exception": {
-                    "class": "' . addcslashes($exception::class, '"\\') . '"
+                    "class": "' . addcslashes($exception::class, '"\\') . '",
+                    "code": ' . $exception->getCode() . ',
+                    "message": "' . addcslashes($exception->getMessage(), '"\\') . '"
                 },
                 "context": {
                     "locator": "' . addcslashes($locator, '"\\') . '",
