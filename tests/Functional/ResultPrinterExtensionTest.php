@@ -67,13 +67,12 @@ class ResultPrinterExtensionTest extends TestCase
                     }
                     {
                         "statement-type": "assertion",
-                        "source": "$page.title is \"Foo\"",
-                        "index": 2,
-                        "identifier": "$page.title",
-                        "value": "\"Foo\"",
-                        "operator": "is"
+                        "source": "$\".selector\" exists",
+                        "index": 0,
+                        "identifier": "$\".selector\"",
+                        "operator": "exists"
                     }
-                    failed assertion: $page.title is "Foo"
+                    failed assertion: $".selector" exists
                     expected: "true"
                     actual: "false"
                     EOD,
