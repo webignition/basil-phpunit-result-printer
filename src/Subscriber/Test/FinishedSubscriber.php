@@ -8,6 +8,8 @@ use PHPUnit\Event\Code\TestMethod;
 use PHPUnit\Event\Test\Finished;
 use PHPUnit\Event\Test\FinishedSubscriber as FinishedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
 use webignition\BasilPhpUnitResultPrinter\TestMetaDataExtractor;
@@ -48,9 +50,8 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
             $this->printer->print(json_encode($statement, JSON_PRETTY_PRINT) . "\n");
         }
 
-        if ($this->state->hasAssertionFailure()) {
-            $assertionFailure = $this->state->getAssertionFailure();
-
+        $assertionFailure = $this->state->getAssertionFailure();
+        if ($assertionFailure instanceof AssertionFailure) {
             $this->printer->print('assertion failure statement: ' . $assertionFailure->statement . "\n");
 
             $this->printer->print('reason: "' . $assertionFailure->reason . "\"\n");
@@ -63,9 +64,8 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
             $this->printer->print('context: "' . json_encode($assertionFailure->context) . "\"\n");
         }
 
-        if ($this->state->hasExpectationFailure()) {
-            $expectationFailure = $this->state->getExpectationFailure();
-
+        $expectationFailure = $this->state->getExpectationFailure();
+        if ($expectationFailure instanceof ExpectationFailure) {
             $this->printer->print('failed assertion: ' . $expectationFailure->assertion . "\n");
 
             $expected = $expectationFailure->expected;
