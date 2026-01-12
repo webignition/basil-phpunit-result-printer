@@ -33,21 +33,15 @@ readonly class NewStepFactory
     /**
      * @param null|array<mixed> $data
      */
-    public function create(
-        string $stepName,
-        State $state,
-        StatementCollection $statements,
-        ?AssertionFailure $assertionFailure,
-        ?ExpectationFailure $expectationFailure,
-        ?array $data,
-    ): Step {
+    public function create(string $stepName, State $state, StatementCollection $statements, ?array $data): Step
+    {
         return new Step(
             $stepName,
             (string) $state->getStatus(),
             $this->fooCreateStatements(
                 $statements,
-                $expectationFailure,
-                $assertionFailure,
+                $state->getExpectationFailure(),
+                $state->getAssertionFailure(),
             ),
             $data,
         );
