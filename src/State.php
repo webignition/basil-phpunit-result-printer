@@ -11,12 +11,6 @@ class State
     private Status $status;
     private AssertionFailure $assertionFailure;
     private ExpectationFailure $expectationFailure;
-    private ?string $failureReason = null;
-
-    /**
-     * @var array<mixed>
-     */
-    private array $failureContext = [];
 
     public function __construct()
     {
@@ -61,31 +55,5 @@ class State
     public function hasExpectationFailure(): bool
     {
         return isset($this->expectationFailure);
-    }
-
-    public function setFailureReason(string $reason): void
-    {
-        $this->failureReason = $reason;
-    }
-
-    public function getFailureReason(): ?string
-    {
-        return $this->failureReason;
-    }
-
-    /**
-     * @param array<mixed> $context
-     */
-    public function setFailureContext(array $context): void
-    {
-        $this->failureContext = $context;
-    }
-
-    /**
-     * @return array<mixed>
-     */
-    public function getFailureContext(): array
-    {
-        return $this->failureContext;
     }
 }
