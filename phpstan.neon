@@ -9,5 +9,4 @@ parameters:
     - tests/Fixtures/*
     - tests/Functional/ResultPrinterTest.php
     - tests/Unit/ResultPrinterTest.php
-    - tests/Unit/Factory/Model/StepFactoryTest.php
     - tests/Unit/Factory/Model/Statement/StatementFactoryTest.php
