@@ -36,11 +36,10 @@ class FailingRegularAssertTrueAssertion extends BasilTestCase
         }',
         '{
             "statement-type": "assertion",
-            "source": "$page.title is \"Foo\"",
-            "index": 2,
-            "identifier": "$page.title",
-            "value": "\"Foo\"",
-            "operator": "is"
+            "source": "$\".selector\" exists",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "operator": "exists"
         }',
     ])]
     public function testStep1(): void
@@ -145,14 +144,13 @@ class FailingRegularAssertTrueAssertion extends BasilTestCase
             '{
                 "statement": {
                     "statement-type": "assertion",
-                    "source": "$page.title is \"Foo\"",
-                    "identifier": "$page.title",
-                    "value": "\"Foo\"",
-                    "operator": "is",
-                    "index": 2               
+                    "source": "$\".selector\" exists",
+                    "index": 0,
+                    "identifier": "$\".selector\"",
+                    "operator": "exists"
                 },
-                "expected": true' . ',
-                "examined": false' . '
+                "expected": true,
+                "examined": false
             }'
         );
     }
