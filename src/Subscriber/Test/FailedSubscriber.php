@@ -8,10 +8,10 @@ use PHPUnit\Event\Code\TestMethod;
 use PHPUnit\Event\Test\Failed;
 use PHPUnit\Event\Test\FailedSubscriber as FailedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailureExtractor;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailureExtractor;
-use webignition\BasilPhpUnitResultPrinter\FailedAction;
-use webignition\BasilPhpUnitResultPrinter\FailedActionExtractor;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\StatementMessageParser;
@@ -22,7 +22,7 @@ class FailedSubscriber implements FailedSubscriberInterface
         private readonly Printer $printer,
         private State $state,
         private readonly StatementMessageParser $statementMessageParser,
-        private readonly FailedActionExtractor $failedActionExtractor,
+        private readonly AssertionFailureExtractor $assertionFailureExtractor,
         private readonly ExpectationFailureExtractor $expectationFailureExtractor,
     ) {}
 
@@ -37,10 +37,13 @@ class FailedSubscriber implements FailedSubscriberInterface
         \assert($test instanceof TestMethod);
 
         $parsedStatementMessage = $this->statementMessageParser->parse($event->throwable()->message());
-        $failedAction = $this->failedActionExtractor->extract($parsedStatementMessage['data']);
-        if ($failedAction instanceof FailedAction) {
-            $this->state->setFailedAction($failedAction);
+
+        $assertionFailure = $this->assertionFailureExtractor->extract($parsedStatementMessage['data']);
+        if ($assertionFailure instanceof AssertionFailure) {
+            $this->state->setAssertionFailure($assertionFailure);
         }
+        //
+        //        var_dump($parsedStatementMessage);
 
         $expectationFailure = $this->expectationFailureExtractor->extract($parsedStatementMessage['data']);
         if ($expectationFailure instanceof ExpectationFailure) {

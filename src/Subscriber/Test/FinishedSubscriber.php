@@ -48,8 +48,19 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
             $this->printer->print(json_encode($statement, JSON_PRETTY_PRINT) . "\n");
         }
 
-        if ($this->state->hasFailedAction()) {
-            $this->printer->print('failed action: ' . $this->state->getFailedAction()->action . "\n");
+        if ($this->state->hasAssertionFailure()) {
+            $assertionFailure = $this->state->getAssertionFailure();
+
+            $this->printer->print('assertion failure statement: ' . $assertionFailure->statement . "\n");
+
+            $this->printer->print('reason: "' . $assertionFailure->reason . "\"\n");
+
+            $exception = $assertionFailure->exception;
+            $this->printer->print('exception class: "' . $exception->class . "\"\n");
+            $this->printer->print('exception code: "' . $exception->code . "\"\n");
+            $this->printer->print('exception message: "' . $exception->message . "\"\n");
+
+            $this->printer->print('context: "' . json_encode($assertionFailure->context) . "\"\n");
         }
 
         if ($this->state->hasExpectationFailure()) {
@@ -70,17 +81,6 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
             }
 
             $this->printer->print('actual: "' . $actual . "\"\n");
-
-            // @todo: re-implement below in #337
-            //            $failureReason = $this->state->getFailureReason();
-            //            if (is_string($failureReason)) {
-            //                $this->printer->print('failure reason: "' . $failureReason . "\"\n");
-            //            }
-            //
-            //            $failureContext = $this->state->getFailureContext();
-            //            if ([] !== $failureContext) {
-            //                $this->printer->print('failure context: "' . json_encode($failureContext) . "\"\n");
-            //            }
         }
     }
 }

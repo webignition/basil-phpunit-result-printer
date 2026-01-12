@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter;
 
-use webignition\BasilModels\Model\Action\ActionInterface;
 use webignition\BasilModels\Model\StatementFactory;
+use webignition\BasilModels\Model\StatementInterface;
 use webignition\BasilModels\Model\UnknownEncapsulatedStatementException;
 
-readonly class FailedActionExtractor
+readonly class AssertionFailureExtractor
 {
     public function __construct(
         private StatementFactory $statementFactory,
-        private FailedActionExceptionExtractor $exceptionExtractor,
+        private AssertionFailureExceptionExtractor $exceptionExtractor,
     ) {}
 
     /**
      * @param array<mixed> $data
      */
-    public function extract(array $data): ?FailedAction
+    public function extract(array $data): ?AssertionFailure
     {
         $statementData = $data['statement'] ?? [];
         $statementData = is_array($statementData) ? $statementData : [];
@@ -29,7 +29,7 @@ readonly class FailedActionExtractor
             $statement = null;
         }
 
-        if (!$statement instanceof ActionInterface) {
+        if (!$statement instanceof StatementInterface) {
             return null;
         }
 
@@ -48,6 +48,9 @@ readonly class FailedActionExtractor
             return null;
         }
 
-        return new FailedAction($statement, $reason, $exception);
+        $context = $data['context'] ?? [];
+        $context = is_array($context) ? $context : [];
+
+        return new AssertionFailure($statement, $reason, $exception, $context);
     }
 }

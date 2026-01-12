@@ -140,7 +140,12 @@ class ResultPrinterExtensionTest extends TestCase
                         "value": "\"http:\/\/www.example.com\"",
                         "operator": "is"
                     }
-                    failed action: click $".selector"
+                    assertion failure statement: click $".selector"
+                    reason: "action-failed"
+                    exception class: "RuntimeException"
+                    exception code: "0"
+                    exception message: "Runtime exception executing action"
+                    context: "[]"
                     EOD,
             ],
             'failing "string contains string" assertion' => [
@@ -269,6 +274,12 @@ class ResultPrinterExtensionTest extends TestCase
                         "identifier": "$\".selector\"",
                         "operator": "exists"
                     }
+                    assertion failure statement: $".selector" exists
+                    reason: "locator-invalid"
+                    exception class: "webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException"
+                    exception code: "0"
+                    exception message: "Invalid CSS selector locator $".selector""
+                    context: "{"locator":"$\".selector\"","type":"css"}"
                     EOD,
             ],
         ];
