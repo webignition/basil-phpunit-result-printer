@@ -51,14 +51,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
             $testDataSet = $this->testDataExtractor->extract($testData->dataFromDataProvider()->data());
         }
 
-        $step = $this->newStepFactory->create(
-            $testMetaData->stepName,
-            $this->state,
-            $statements,
-            $assertionFailure,
-            $expectationFailure,
-            $testDataSet,
-        );
+        $step = $this->newStepFactory->create($testMetaData->stepName, $this->state, $statements, $testDataSet);
 
         $this->printer->print($this->generator->generate($step->getData()));
     }
