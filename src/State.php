@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter;
 
-use webignition\BasilModels\Model\Assertion\AssertionInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 
 class State
 {
     private Status $status;
     private FailedAction $failedAction;
-    private AssertionInterface $failedAssertion;
-    private bool|string|null $expected = null;
-    private bool|string|null $actual = null;
+    private ExpectationFailure $expectationFailure;
     private ?string $failureReason = null;
 
     /**
@@ -51,49 +48,19 @@ class State
         return isset($this->failedAction);
     }
 
-    public function setFailedAssertion(AssertionInterface $assertion): void
+    public function setExpectationFailure(ExpectationFailure $assertion): void
     {
-        $this->failedAssertion = $assertion;
+        $this->expectationFailure = $assertion;
     }
 
-    public function getFailedAssertion(): AssertionInterface
+    public function getExpectationFailure(): ExpectationFailure
     {
-        return $this->failedAssertion;
+        return $this->expectationFailure;
     }
 
-    public function hasFailedAssertion(): bool
+    public function hasExpectationFailure(): bool
     {
-        return isset($this->failedAssertion);
-    }
-
-    public function setExpectedValue(bool|string $value): void
-    {
-        $this->expected = $value;
-    }
-
-    public function getExpectedValue(): bool|string|null
-    {
-        return $this->expected;
-    }
-
-    public function hasExpectedValue(): bool
-    {
-        return null !== $this->expected;
-    }
-
-    public function setActualValue(bool|string $value): void
-    {
-        $this->actual = $value;
-    }
-
-    public function getActualValue(): bool|string|null
-    {
-        return $this->actual;
-    }
-
-    public function hasActualValue(): bool
-    {
-        return null !== $this->actual;
+        return isset($this->expectationFailure);
     }
 
     public function setFailureReason(string $reason): void

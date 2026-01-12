@@ -8,7 +8,7 @@ use webignition\BasilModels\Model\Assertion\AssertionInterface;
 use webignition\BasilModels\Model\StatementFactory;
 use webignition\BasilModels\Model\UnknownEncapsulatedStatementException;
 
-readonly class FailedAssertionExtractor
+readonly class ExpectationFailureExtractor
 {
     public function __construct(
         private StatementFactory $statementFactory,
@@ -17,17 +17,32 @@ readonly class FailedAssertionExtractor
     /**
      * @param array<mixed> $data
      */
-    public function extract(array $data): ?AssertionInterface
+    public function extract(array $data): ?ExpectationFailure
     {
         $statementData = $data['statement'] ?? [];
         $statementData = is_array($statementData) ? $statementData : [];
 
         try {
-            $statement = $this->statementFactory->createFromArray($statementData);
+            $assertion = $this->statementFactory->createFromArray($statementData);
         } catch (UnknownEncapsulatedStatementException) {
             return null;
         }
 
-        return $statement instanceof AssertionInterface ? $statement : null;
+        if (!$assertion instanceof AssertionInterface) {
+            return null;
+        }
+
+        $expected = $data['expected'];
+        $examined = $data['examined'];
+
+        if (!is_string($expected) && !is_bool($expected)) {
+            return null;
+        }
+
+        if (!is_string($examined) && !is_bool($examined)) {
+            return null;
+        }
+
+        return new ExpectationFailure($assertion, $expected, $examined);
     }
 }
