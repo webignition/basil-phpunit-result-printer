@@ -19,7 +19,7 @@ class StatementTest extends AbstractBaseTestCase
     /**
      * @dataProvider createDataProvider
      *
-     * @param array<mixed> $transformations
+     * @param Transformation[] $transformations
      */
     public function testCreate(
         string $source,
@@ -27,7 +27,11 @@ class StatementTest extends AbstractBaseTestCase
         array $transformations,
         StatementInterface $expectedStatement
     ): void {
-        $statement = new Statement(StatementType::ACTION, $source, $status, $transformations);
+        $statement = new Statement(
+            StatementType::ACTION,
+            $source,
+            $status,
+        )->withTransformations($transformations);
 
         self::assertEquals($expectedStatement, $statement);
     }
@@ -51,18 +55,6 @@ class StatementTest extends AbstractBaseTestCase
                     $statusPassed
                 ),
             ],
-            'passed, has invalid transformations' => [
-                'source' => 'click $".selector"',
-                'status' => $statusPassed,
-                'transformations' => [
-                    new \stdClass(),
-                ],
-                'expectedStatement' => new Statement(
-                    StatementType::ACTION,
-                    'click $".selector"',
-                    $statusPassed
-                ),
-            ],
             'passed, has transformations' => [
                 'source' => 'click $".selector"',
                 'status' => $statusPassed,
@@ -76,13 +68,12 @@ class StatementTest extends AbstractBaseTestCase
                     StatementType::ACTION,
                     'click $".selector"',
                     $statusPassed,
-                    [
-                        new Transformation(
-                            Transformation::TYPE_RESOLUTION,
-                            'click $page_import_name.elements.element_name'
-                        ),
-                    ]
-                ),
+                )->withTransformations([
+                    new Transformation(
+                        Transformation::TYPE_RESOLUTION,
+                        'click $page_import_name.elements.element_name'
+                    ),
+                ]),
             ],
             'failed' => [
                 'source' => 'click $".selector"',
@@ -141,30 +132,14 @@ class StatementTest extends AbstractBaseTestCase
                     'status' => $statusPassed,
                 ],
             ],
-            'passed, has invalid transformations' => [
-                'statement' => new Statement(
-                    StatementType::ACTION,
-                    'click $".selector"',
-                    $statusPassed,
-                    [
-                        new \stdClass(),
-                    ]
-                ),
-                'expectedData' => [
-                    'type' => 'action',
-                    'source' => 'click $".selector"',
-                    'status' => $statusPassed,
-                ],
-            ],
             'passed, has transformations' => [
                 'statement' => new Statement(
                     StatementType::ACTION,
                     'click $".selector"',
                     $statusPassed,
-                    [
-                        $resolutionTransformation,
-                    ]
-                ),
+                )->withTransformations([
+                    $resolutionTransformation,
+                ]),
                 'expectedData' => [
                     'type' => 'action',
                     'source' => 'click $".selector"',

@@ -13,4 +13,9 @@ interface StatementInterface extends DocumentInterface
     public function withExceptionData(ExceptionDataInterface $exceptionData): StatementInterface;
 
     public function withFailureSummary(AssertionFailureSummaryInterface $summary): StatementInterface;
+
+    /**
+     * @param Transformation[] $transformations
+     */
+    public function withTransformations(array $transformations): StatementInterface;
 }

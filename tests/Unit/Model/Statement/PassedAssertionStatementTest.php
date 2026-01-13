@@ -16,7 +16,7 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
     /**
      * @dataProvider createDataProvider
      *
-     * @param array<mixed> $transformations
+     * @param Transformation[] $transformations
      */
     public function testCreate(
         string $source,
@@ -27,8 +27,7 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
             StatementType::ASSERTION,
             $source,
             (string) new Status(Status::STATUS_PASSED),
-            $transformations
-        );
+        )->withTransformations($transformations);
 
         self::assertEquals($expectedStatement, $statement);
     }
@@ -55,17 +54,6 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
                     (string) new Status(Status::STATUS_PASSED),
                 ),
             ],
-            'invalid transformations' => [
-                'source' => '$page.url is "http://example.com/"',
-                'transformations' => [
-                    new \stdClass(),
-                ],
-                'expectedStatement' => new Statement(
-                    StatementType::ASSERTION,
-                    '$page.url is "http://example.com/"',
-                    (string) new Status(Status::STATUS_PASSED),
-                ),
-            ],
             'valid transformations' => [
                 'source' => '$".selector" exists',
                 'transformations' => $transformations,
@@ -73,8 +61,7 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
                     StatementType::ASSERTION,
                     '$".selector" exists',
                     (string) new Status(Status::STATUS_PASSED),
-                    $transformations,
-                ),
+                )->withTransformations($transformations),
             ],
         ];
     }
@@ -114,27 +101,14 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
                     'status' => $statusPassed,
                 ],
             ],
-            'invalid transformations' => [
-                'statement' => new Statement(
-                    StatementType::ASSERTION,
-                    '$page.url is "http://example.com/"',
-                    (string) new Status(Status::STATUS_PASSED),
-                ),
-                'expectedData' => [
-                    'type' => 'assertion',
-                    'source' => '$page.url is "http://example.com/"',
-                    'status' => $statusPassed,
-                ],
-            ],
             'valid transformations' => [
                 'statement' => new Statement(
                     StatementType::ASSERTION,
                     '$".selector" exists',
                     (string) new Status(Status::STATUS_PASSED),
-                    [
-                        $resolutionTransformation,
-                    ]
-                ),
+                )->withTransformations([
+                    $resolutionTransformation,
+                ]),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',

@@ -85,6 +85,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     StatementType::ACTION,
                     'click $".selector"',
                     (string) new Status(Status::STATUS_PASSED),
+                )->withTransformations(
                     $transformationFactory->createTransformations($resolvedClickAction),
                 ),
             ],
@@ -138,6 +139,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     StatementType::ACTION,
                     'click $".selector"',
                     (string) new Status(Status::STATUS_FAILED),
+                )->withTransformations(
                     $transformationFactory->createTransformations($resolvedClickAction)
                 ),
             ],
@@ -191,6 +193,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     StatementType::ASSERTION,
                     '$".selector" exists',
                     (string) new Status(Status::STATUS_PASSED),
+                )->withTransformations(
                     $transformationFactory->createTransformations($derivedExistsAssertion)
                 ),
             ],
@@ -200,6 +203,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     StatementType::ASSERTION,
                     '$".selector" exists',
                     (string) new Status(Status::STATUS_PASSED),
+                )->withTransformations(
                     $transformationFactory->createTransformations($derivedResolvedExistsAssertion)
                 ),
             ],
@@ -284,8 +288,13 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     StatementType::ASSERTION,
                     '$".selector" exists',
                     (string) new Status(Status::STATUS_FAILED),
-                    $transformationFactory->createTransformations($derivedExistsAssertion)
-                )->withFailureSummary($existenceFailureSummary),
+                )
+                    ->withFailureSummary(
+                        $existenceFailureSummary
+                    )
+                    ->withTransformations(
+                        $transformationFactory->createTransformations($derivedExistsAssertion)
+                    ),
             ],
             'derived, resolved exists assertion' => [
                 'expectationFailure' => new ExpectationFailure($derivedResolvedExistsAssertion, '', ''),
@@ -293,8 +302,12 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     StatementType::ASSERTION,
                     '$".selector" exists',
                     (string) new Status(Status::STATUS_FAILED),
-                    $transformationFactory->createTransformations($derivedResolvedExistsAssertion)
-                )->withFailureSummary($existenceFailureSummary),
+                )
+                    ->withFailureSummary(
+                        $existenceFailureSummary
+                    )->withTransformations(
+                        $transformationFactory->createTransformations($derivedResolvedExistsAssertion)
+                    ),
             ],
             'is assertion' => [
                 'expectationFailure' => new ExpectationFailure(
@@ -388,6 +401,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     StatementType::ASSERTION,
                     '$".selector" exists',
                     (string) new Status(Status::STATUS_FAILED),
+                )->withTransformations(
                     $transformationFactory->createTransformations($derivedExistsAssertion)
                 ),
             ],
@@ -397,6 +411,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     StatementType::ASSERTION,
                     '$".selector" exists',
                     (string) new Status(Status::STATUS_FAILED),
+                )->withTransformations(
                     $transformationFactory->createTransformations($derivedResolvedExistsAssertion)
                 ),
             ],

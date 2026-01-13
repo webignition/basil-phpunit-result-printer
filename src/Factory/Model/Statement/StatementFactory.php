@@ -45,6 +45,7 @@ class StatementFactory
             StatementType::ASSERTION,
             $assertion->getSource(),
             (string) new Status(Status::STATUS_PASSED),
+        )->withTransformations(
             $this->transformationFactory->createTransformations($assertion)
         );
     }
@@ -73,8 +74,14 @@ class StatementFactory
                 StatementType::ASSERTION,
                 $expectationFailure->assertion->getSource(),
                 (string) new Status(Status::STATUS_FAILED),
-                $this->transformationFactory->createTransformations($expectationFailure->assertion)
-            )->withFailureSummary($failureSummary);
+            )
+                ->withFailureSummary(
+                    $failureSummary
+                )
+                ->withTransformations(
+                    $this->transformationFactory->createTransformations($expectationFailure->assertion)
+                )
+            ;
         }
 
         return null;
@@ -86,6 +93,7 @@ class StatementFactory
             StatementType::ASSERTION,
             $assertion->getSource(),
             (string) new Status(Status::STATUS_FAILED),
+        )->withTransformations(
             $this->transformationFactory->createTransformations($assertion),
         );
     }
@@ -96,6 +104,7 @@ class StatementFactory
             StatementType::ACTION,
             $action->getSource(),
             (string) new Status($status),
+        )->withTransformations(
             $this->transformationFactory->createTransformations($action)
         );
     }

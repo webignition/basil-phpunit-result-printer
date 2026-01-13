@@ -13,25 +13,17 @@ class Statement implements StatementInterface
     /**
      * @var Transformation[]
      */
-    private array $transformations;
+    private array $transformations = [];
 
     private ?ExceptionDataInterface $exceptionData = null;
 
     private ?AssertionFailureSummaryInterface $failureSummary = null;
 
-    /**
-     * @param array<mixed> $transformations
-     */
     public function __construct(
         private StatementType $type,
         private string $source,
         private string $status,
-        array $transformations = []
-    ) {
-        $this->transformations = array_filter($transformations, function ($item) {
-            return $item instanceof Transformation;
-        });
-    }
+    ) {}
 
     public function withExceptionData(ExceptionDataInterface $exceptionData): self
     {
@@ -45,6 +37,14 @@ class Statement implements StatementInterface
     {
         $new = clone $this;
         $new->failureSummary = $summary;
+
+        return $new;
+    }
+
+    public function withTransformations(array $transformations): StatementInterface
+    {
+        $new = clone $this;
+        $new->transformations = $transformations;
 
         return $new;
     }

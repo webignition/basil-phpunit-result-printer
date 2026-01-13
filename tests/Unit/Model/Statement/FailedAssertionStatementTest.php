@@ -23,7 +23,7 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
     /**
      * @dataProvider createDataProvider
      *
-     * @param array<mixed> $transformations
+     * @param Transformation[] $transformations
      */
     public function testCreate(
         string $source,
@@ -35,8 +35,10 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
             StatementType::ASSERTION,
             $source,
             (string) new Status(Status::STATUS_FAILED),
-            $transformations
-        )->withFailureSummary($summary);
+        )
+            ->withFailureSummary($summary)
+            ->withTransformations($transformations)
+        ;
 
         self::assertEquals($expectedStatement, $statement);
     }
@@ -79,18 +81,6 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
                     (string) new Status(Status::STATUS_FAILED),
                 )->withFailureSummary($existenceSummary),
             ],
-            'invalid transformations' => [
-                'source' => '$".selector" exists',
-                'summary' => $existenceSummary,
-                'transformations' => [
-                    new \stdClass(),
-                ],
-                'expectedStatement' => new Statement(
-                    StatementType::ASSERTION,
-                    '$".selector" exists',
-                    (string) new Status(Status::STATUS_FAILED),
-                )->withFailureSummary($existenceSummary),
-            ],
             'valid transformations' => [
                 'source' => '$".selector" exists',
                 'summary' => $existenceSummary,
@@ -99,8 +89,9 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
                     StatementType::ASSERTION,
                     '$".selector" exists',
                     (string) new Status(Status::STATUS_FAILED),
-                    $transformations
-                )->withFailureSummary($existenceSummary),
+                )
+                    ->withFailureSummary($existenceSummary)
+                    ->withTransformations($transformations),
             ],
         ];
     }
@@ -170,26 +161,14 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
                     'summary' => $existenceSummary->getData(),
                 ],
             ],
-            'invalid transformations' => [
-                'statement' => new Statement(
-                    StatementType::ASSERTION,
-                    '$".selector" exists',
-                    (string) new Status(Status::STATUS_FAILED),
-                )->withFailureSummary($existenceSummary),
-                'expectedData' => [
-                    'type' => 'assertion',
-                    'source' => '$".selector" exists',
-                    'status' => $statusFailed,
-                    'summary' => $existenceSummary->getData(),
-                ],
-            ],
             'valid transformations' => [
                 'statement' => new Statement(
                     StatementType::ASSERTION,
                     '$".selector" exists',
                     (string) new Status(Status::STATUS_FAILED),
-                    $transformations
-                )->withFailureSummary($existenceSummary),
+                )
+                    ->withFailureSummary($existenceSummary)
+                    ->withTransformations($transformations),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',
