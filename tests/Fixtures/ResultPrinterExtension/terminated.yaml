@@ -7,6 +7,6 @@ payload:
   code: 0
   trace:
     -
-      path: /home/jon/www/lib/webignition/basil-phpunit-result-printer/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSetupBeforeClassTest.php
+      path: /tests/Fixtures/Tests/ThrowsRuntimeExceptionInSetupBeforeClassTest.php
       line_number: 16
 ...

@@ -62,7 +62,11 @@ class ResultPrinterExtension implements Extension
                 ),
             ),
             new PassedSubscriber($this->state),
-            new BeforeFirstTestMethodErroredSubscriber($this->printer, new YamlGenerator()),
+            new BeforeFirstTestMethodErroredSubscriber(
+                $this->printer,
+                new YamlGenerator(),
+                getcwd()
+            ),
         );
     }
 }

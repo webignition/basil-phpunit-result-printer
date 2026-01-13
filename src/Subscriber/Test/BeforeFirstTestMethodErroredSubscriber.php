@@ -17,6 +17,7 @@ readonly class BeforeFirstTestMethodErroredSubscriber implements BeforeFirstTest
     public function __construct(
         private Printer $printer,
         private GeneratorInterface $generator,
+        private string $basePath,
     ) {}
 
     public function notify(BeforeFirstTestMethodErrored $event): void
@@ -51,6 +52,10 @@ readonly class BeforeFirstTestMethodErroredSubscriber implements BeforeFirstTest
             }
 
             $path = $parts[0];
+            if (str_starts_with($path, $this->basePath)) {
+                $path = substr($path, strlen($this->basePath));
+            }
+
             if ('' === $path) {
                 continue;
             }
