@@ -123,26 +123,6 @@ class ResultPrinterTest extends AbstractBaseTestCase
                     '/ResultPrinter/failed-is-assertion-browser-property-is-literal.yaml'
                 ),
             ],
-            'failed, is assertion, scalar is scalar, page property is data parameter' => [
-                'tests' => [
-                    BasilTestCaseFactory::create([
-                        'basilTestPath' => 'test.yml',
-                        'basilStepName' => 'step name',
-                        'status' => Status::STATUS_FAILED,
-                        'handledStatements' => [
-                            $assertionParser->parse('$page.title is $data.expected_title', 0),
-                        ],
-                        'expectedValue' => 'expected title value',
-                        'examinedValue' => 'Example Domain',
-                        'dataSet' => [
-                            'expected_url' => 'expected title value',
-                        ],
-                    ]),
-                ],
-                'expectedOutput' => FixtureLoader::load(
-                    '/ResultPrinter/failed-is-assertion-browser-property-is-data-parameter.yaml'
-                ),
-            ],
             'failed, is assertion, scalar is scalar, page property is environment parameter' => [
                 'tests' => [
                     BasilTestCaseFactory::create([
