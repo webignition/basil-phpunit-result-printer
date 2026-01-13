@@ -45,7 +45,7 @@
         "webignition/basil-dom-identifier-factory": ">=1.1,<2",
         "webignition/basil-identifier-analyser": ">=2.0,<3",
         "webignition/basil-models": "^11.2",
-        "webignition/basil-runner-documents": "^1.0",
+        "webignition/basil-runner-documents": "^3",
         "webignition/basil-value-type-identifier": ">=0.3,<1",
         "webignition/php-dom-element-identifier": ">=0.16,<1",
         "webignition/symfony-panther-dom-crawler-navigator": "^2",

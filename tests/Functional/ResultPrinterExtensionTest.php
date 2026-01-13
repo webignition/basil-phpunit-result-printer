@@ -127,7 +127,7 @@ class ResultPrinterExtensionTest extends TestCase
             'terminated, lastException set during setupBeforeClass' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSetupBeforeClassTest.php',
                 'expectedExitCode' => 2,
-                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/terminated.txt'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/terminated.yaml'),
             ],
         ];
     }
