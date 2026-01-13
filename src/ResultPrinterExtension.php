@@ -65,7 +65,7 @@ class ResultPrinterExtension implements Extension
             new BeforeFirstTestMethodErroredSubscriber(
                 $this->printer,
                 new YamlGenerator(),
-                getcwd()
+                (string) getcwd()
             ),
         );
     }
