@@ -6,7 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Model\Statement;
 
 use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
 
-abstract class AbstractAssertionStatement extends AbstractStatement
+abstract class AbstractAssertionStatement extends Statement
 {
     public function __construct(string $source, string $status, array $transformations = [])
     {

@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Model\Statement;
 use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInterface;
 
-abstract class AbstractStatement implements StatementInterface
+class Statement implements StatementInterface
 {
     /**
      * @var Transformation[]
