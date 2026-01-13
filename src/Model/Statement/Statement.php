@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Model\Statement;
 
 use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
+use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInterface;
 
 class Statement implements StatementInterface
@@ -15,6 +16,8 @@ class Statement implements StatementInterface
     private array $transformations;
 
     private ?ExceptionDataInterface $exceptionData = null;
+
+    private ?AssertionFailureSummaryInterface $failureSummary = null;
 
     /**
      * @param array<mixed> $transformations
@@ -34,6 +37,14 @@ class Statement implements StatementInterface
     {
         $new = clone $this;
         $new->exceptionData = $exceptionData;
+
+        return $new;
+    }
+
+    public function withFailureSummary(AssertionFailureSummaryInterface $summary): self
+    {
+        $new = clone $this;
+        $new->failureSummary = $summary;
 
         return $new;
     }
@@ -61,6 +72,10 @@ class Statement implements StatementInterface
 
         if (null !== $this->exceptionData) {
             $data['exception'] = $this->exceptionData->getData();
+        }
+
+        if ($this->failureSummary instanceof AssertionFailureSummaryInterface) {
+            $data['summary'] = $this->failureSummary->getData();
         }
 
         return $data;

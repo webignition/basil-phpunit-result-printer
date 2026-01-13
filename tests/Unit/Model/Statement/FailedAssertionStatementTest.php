@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Statement;
 
 use webignition\BasilModels\Parser\AssertionParser;
+use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\Existence;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\Statement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
@@ -27,9 +29,14 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
         string $source,
         AssertionFailureSummaryInterface $summary,
         array $transformations,
-        FailedAssertionStatement $expectedStatement
+        StatementInterface $expectedStatement
     ): void {
-        $statement = new FailedAssertionStatement($source, $summary, $transformations);
+        $statement = new Statement(
+            StatementType::ASSERTION,
+            $source,
+            (string) new Status(Status::STATUS_FAILED),
+            $transformations
+        )->withFailureSummary($summary);
 
         self::assertEquals($expectedStatement, $statement);
     }
@@ -66,7 +73,11 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
                 'source' => '$".selector" exists',
                 'summary' => $existenceSummary,
                 'transformations' => [],
-                'expectedStatement' => new FailedAssertionStatement('$".selector" exists', $existenceSummary),
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$".selector" exists',
+                    (string) new Status(Status::STATUS_FAILED),
+                )->withFailureSummary($existenceSummary),
             ],
             'invalid transformations' => [
                 'source' => '$".selector" exists',
@@ -74,17 +85,22 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
                 'transformations' => [
                     new \stdClass(),
                 ],
-                'expectedStatement' => new FailedAssertionStatement('$".selector" exists', $existenceSummary),
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$".selector" exists',
+                    (string) new Status(Status::STATUS_FAILED),
+                )->withFailureSummary($existenceSummary),
             ],
             'valid transformations' => [
                 'source' => '$".selector" exists',
                 'summary' => $existenceSummary,
                 'transformations' => $transformations,
-                'expectedStatement' => new FailedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" exists',
-                    $existenceSummary,
+                    (string) new Status(Status::STATUS_FAILED),
                     $transformations
-                ),
+                )->withFailureSummary($existenceSummary),
             ],
         ];
     }
@@ -94,7 +110,7 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
      *
      * @param array<mixed> $expectedData
      */
-    public function testGetData(FailedAssertionStatement $statement, array $expectedData): void
+    public function testGetData(StatementInterface $statement, array $expectedData): void
     {
         self::assertSame($expectedData, $statement->getData());
     }
@@ -142,7 +158,11 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
 
         return [
             'no transformations' => [
-                'statement' => new FailedAssertionStatement('$".selector" exists', $existenceSummary),
+                'statement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$".selector" exists',
+                    (string) new Status(Status::STATUS_FAILED),
+                )->withFailureSummary($existenceSummary),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',
@@ -151,7 +171,11 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
                 ],
             ],
             'invalid transformations' => [
-                'statement' => new FailedAssertionStatement('$".selector" exists', $existenceSummary),
+                'statement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$".selector" exists',
+                    (string) new Status(Status::STATUS_FAILED),
+                )->withFailureSummary($existenceSummary),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',
@@ -160,11 +184,12 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
                 ],
             ],
             'valid transformations' => [
-                'statement' => new FailedAssertionStatement(
+                'statement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" exists',
-                    $existenceSummary,
+                    (string) new Status(Status::STATUS_FAILED),
                     $transformations
-                ),
+                )->withFailureSummary($existenceSummary),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$".selector" exists',
@@ -177,9 +202,13 @@ class FailedAssertionStatementTest extends AbstractBaseTestCase
                 ],
             ],
             'no transformations, has invalid locator exception' => [
-                'statement' => (
-                    new FailedAssertionStatement('$"a[href=https://example.com]" exists', $existenceSummary)
-                )->withExceptionData($invalidLocatorExceptionData),
+                'statement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$"a[href=https://example.com]" exists',
+                    (string) new Status(Status::STATUS_FAILED),
+                )
+                    ->withExceptionData($invalidLocatorExceptionData)
+                    ->withFailureSummary($existenceSummary),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$"a[href=https://example.com]" exists',

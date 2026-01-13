@@ -22,7 +22,6 @@ use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\Model\Node;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Statement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
@@ -273,23 +272,29 @@ class StatementFactoryTest extends AbstractBaseTestCase
         return [
             'exists assertion' => [
                 'expectationFailure' => new ExpectationFailure($existsAssertion, '', ''),
-                'expectedStatement' => new FailedAssertionStatement('$".selector" exists', $existenceFailureSummary),
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$".selector" exists',
+                    (string) new Status(Status::STATUS_FAILED),
+                )->withFailureSummary($existenceFailureSummary),
             ],
             'derived exists assertion' => [
                 'expectationFailure' => new ExpectationFailure($derivedExistsAssertion, '', ''),
-                'expectedStatement' => new FailedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" exists',
-                    $existenceFailureSummary,
+                    (string) new Status(Status::STATUS_FAILED),
                     $transformationFactory->createTransformations($derivedExistsAssertion)
-                ),
+                )->withFailureSummary($existenceFailureSummary),
             ],
             'derived, resolved exists assertion' => [
                 'expectationFailure' => new ExpectationFailure($derivedResolvedExistsAssertion, '', ''),
-                'expectedStatement' => new FailedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" exists',
-                    $existenceFailureSummary,
+                    (string) new Status(Status::STATUS_FAILED),
                     $transformationFactory->createTransformations($derivedResolvedExistsAssertion)
-                ),
+                )->withFailureSummary($existenceFailureSummary),
             ],
             'is assertion' => [
                 'expectationFailure' => new ExpectationFailure(
@@ -297,8 +302,11 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     'value',
                     'selector value'
                 ),
-                'expectedStatement' => new FailedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" is "value"',
+                    (string) new Status(Status::STATUS_FAILED),
+                )->withFailureSummary(
                     $assertionFailureSummaryFactory->create(
                         $isAssertion,
                         'value',
@@ -312,8 +320,11 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     '',
                     'literal'
                 ),
-                'expectedStatement' => new FailedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '"literal" is-regexp',
+                    (string) new Status(Status::STATUS_FAILED),
+                )->withFailureSummary(
                     $assertionFailureSummaryFactory->create(
                         $isRegExpAssertion,
                         '',

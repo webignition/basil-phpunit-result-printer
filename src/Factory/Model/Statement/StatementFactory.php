@@ -10,7 +10,6 @@ use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Statement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
@@ -70,11 +69,12 @@ class StatementFactory
         );
 
         if ($failureSummary instanceof AssertionFailureSummaryInterface) {
-            return new FailedAssertionStatement(
+            return new Statement(
+                StatementType::ASSERTION,
                 $expectationFailure->assertion->getSource(),
-                $failureSummary,
+                (string) new Status(Status::STATUS_FAILED),
                 $this->transformationFactory->createTransformations($expectationFailure->assertion)
-            );
+            )->withFailureSummary($failureSummary);
         }
 
         return null;
