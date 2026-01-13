@@ -6,12 +6,12 @@ namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement;
 
 use webignition\BasilModels\Model\Action\ActionInterface;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
+use webignition\BasilModels\Model\StatementInterface as StatementModelInterface;
+use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\ActionStatement;
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\PassedAssertionStatement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\Statement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 
@@ -30,21 +30,18 @@ class StatementFactory
         );
     }
 
-    public function createForPassedAction(ActionInterface $action): StatementInterface
+    public function create(StatementModelInterface $statement, Status $status): StatementInterface
     {
-        return $this->createForAction($action, Status::STATUS_PASSED);
-    }
+        $statementType = $statement instanceof ActionInterface
+            ? StatementType::ACTION
+            : StatementType::ASSERTION;
 
-    public function createForFailedAction(ActionInterface $action): StatementInterface
-    {
-        return $this->createForAction($action, Status::STATUS_FAILED);
-    }
-
-    public function createForPassedAssertion(AssertionInterface $assertion): StatementInterface
-    {
-        return new PassedAssertionStatement(
-            $assertion->getSource(),
-            $this->transformationFactory->createTransformations($assertion)
+        return new Statement(
+            $statementType,
+            $statement->getSource(),
+            (string) $status,
+        )->withTransformations(
+            $this->transformationFactory->createTransformations($statement)
         );
     }
 
@@ -68,11 +65,18 @@ class StatementFactory
         );
 
         if ($failureSummary instanceof AssertionFailureSummaryInterface) {
-            return new FailedAssertionStatement(
+            return new Statement(
+                StatementType::ASSERTION,
                 $expectationFailure->assertion->getSource(),
-                $failureSummary,
-                $this->transformationFactory->createTransformations($expectationFailure->assertion)
-            );
+                (string) new Status(Status::STATUS_FAILED),
+            )
+                ->withFailureSummary(
+                    $failureSummary
+                )
+                ->withTransformations(
+                    $this->transformationFactory->createTransformations($expectationFailure->assertion)
+                )
+            ;
         }
 
         return null;
@@ -80,19 +84,12 @@ class StatementFactory
 
     public function createForAssertionFailure(AssertionInterface $assertion): StatementInterface
     {
-        return new FailedAssertionStatement(
+        return new Statement(
+            StatementType::ASSERTION,
             $assertion->getSource(),
-            null,
+            (string) new Status(Status::STATUS_FAILED),
+        )->withTransformations(
             $this->transformationFactory->createTransformations($assertion),
-        );
-    }
-
-    private function createForAction(ActionInterface $action, int $status): StatementInterface
-    {
-        return new ActionStatement(
-            $action->getSource(),
-            (string) new Status($status),
-            $this->transformationFactory->createTransformations($action)
         );
     }
 }
