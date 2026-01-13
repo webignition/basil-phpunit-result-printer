@@ -1,0 +1,12 @@
+---
+type: exception
+payload:
+  step: null
+  class: RuntimeException
+  message: 'Exception thrown in setUpBeforeClass'
+  code: 0
+  trace:
+    -
+      path: /home/jon/www/lib/webignition/basil-phpunit-result-printer/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSetupBeforeClassTest.php
+      line_number: 16
+...

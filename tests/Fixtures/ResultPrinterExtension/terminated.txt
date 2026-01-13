@@ -1,3 +1,0 @@
-PHPUnit\Event\Test\BeforeFirstTestMethodErrored
-status: terminated
-throwable: "RuntimeException: Exception thrown in setUpBeforeClass"
