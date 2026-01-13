@@ -10,7 +10,7 @@ use webignition\BaseBasilTestCase\Attribute\StepName;
 use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
-class FailingWithInvalidLocatorException extends BasilTestCase
+class FailedElementIsAssertionWithInvalidLocator extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {

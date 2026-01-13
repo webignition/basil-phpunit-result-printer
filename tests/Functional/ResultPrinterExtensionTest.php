@@ -41,53 +41,59 @@ class ResultPrinterExtensionTest extends TestCase
         $root = getcwd();
 
         return [
-            'failing regular assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingRegularAssertTrueAssertion.php',
+            'failing exists assertion for element as third statement' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementExistsAssertionAsThirdStatement.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
-                    '/ResultPrinterExtension/failed-exists-assertion-as-third-statement.yaml'
+                    '/ResultPrinterExtension/failed-element-exists-assertion-as-third-statement.yaml'
                 ),
             ],
-            'failing derived assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingDerivedAssertTrueAssertion.php',
+            'failing derived exists assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedDerivedExistsAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-derived-exists-assertion.yaml'),
             ],
-            'failing action' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingAction.php',
+            'failing click action' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedClickAction.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-click-action.yaml'),
             ],
-            'failing "string contains string" assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingStringContainsStringAssertion.php',
-                'expectedExitCode' => 1,
-                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-includes-assertion.yaml'),
-            ],
-            'failing "string not contains string" assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingStringNotContainsStringAssertion.php',
-                'expectedExitCode' => 1,
-                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-excludes-assertion.yaml'),
-            ],
-            'failing "equals" assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingAssertEqualsAssertion.php',
-                'expectedExitCode' => 1,
-                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-is-assertion.yaml'),
-            ],
-            'failing "not-equals" assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingAssertNotEqualsAssertion.php',
-                'expectedExitCode' => 1,
-                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-is-not-assertion.yaml'),
-            ],
-            'failing "matches regular expression" assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingAssertMatchesRegularExpressionAssertion.php',
-                'expectedExitCode' => 1,
-                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-matches-assertion.yaml'),
-            ],
-            'failing with InvalidLocatorException' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingWithInvalidLocatorException.php',
+            'failing includes assertion for element' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIncludesAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
-                    '/ResultPrinterExtension/failed-assertion-with-invalid-locator.yaml'
+                    '/ResultPrinterExtension/failed-element-includes-assertion.yaml'
+                ),
+            ],
+            'failing excludes assertion for element' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementExcludesAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinterExtension/failed-element-excludes-assertion.yaml'
+                ),
+            ],
+            'failing is assertion for element' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-assertion.yaml'),
+            ],
+            'failing is-not assertion for element' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsNotAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-not-assertion.yaml'),
+            ],
+            'failing matches assertion for element' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementMatchesAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinterExtension/failed-element-matches-assertion.yaml'
+                ),
+            ],
+            'failing with InvalidLocatorException' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsAssertionWithInvalidLocator.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinterExtension/failed-element-is-assertion-with-invalid-locator.yaml'
                 ),
             ],
         ];

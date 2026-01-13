@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
-class FailingStringContainsStringAssertion extends BasilTestCase
+class FailedElementIsNotAssertion extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -18,28 +18,29 @@ class FailingStringContainsStringAssertion extends BasilTestCase
     #[Statements([
         '{
             "statement-type": "assertion",
-            "source": "$\".selector\" includes \"value\"",
+            "source": "$\".selector\" is-not \"value\"",
             "index": 0,
             "identifier": "$\".selector\"",
             "value": "\"value\"",
-            "operator": "includes"
+            "operator": "is-not"
         }',
     ])]
     public function testStep1(): void
     {
-        $expectedValue = 'string-contains-string-expected-value';
-        $examinedValue = 'string-contains-string-examined-value';
-        $this->assertStringContainsString(
+        $expectedValue = 'assert-not-equals-value';
+        $examinedValue = 'assert-not-equals-value';
+
+        $this->assertNotEquals(
             $expectedValue,
             $examinedValue,
             '{
                     "statement": {
                         "statement-type": "assertion",
-                        "source": "$\".selector\" includes \"value\"",
+                        "source": "$\".selector\" is-not \"value\"",
                         "index": 0,
                         "identifier": "$\".selector\"",
                         "value": "\"value\"",
-                        "operator": "includes"                    
+                        "operator": "is-not"      
                     },
                     "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
                     "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"
