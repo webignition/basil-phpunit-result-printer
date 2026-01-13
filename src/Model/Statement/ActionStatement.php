@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Model\Statement;
 
+use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
+
 class ActionStatement extends AbstractStatement
 {
-    private const TYPE = 'action';
-
     public function __construct(string $source, string $status, array $transformations = [])
     {
-        parent::__construct(self::TYPE, $source, $status, $transformations);
-    }
-
-    public function getType(): string
-    {
-        return self::TYPE;
+        parent::__construct(StatementType::ACTION, $source, $status, $transformations);
     }
 }

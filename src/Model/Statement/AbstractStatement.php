@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Model\Statement;
 
+use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInterface;
 
 abstract class AbstractStatement implements StatementInterface
@@ -19,7 +20,7 @@ abstract class AbstractStatement implements StatementInterface
      * @param array<mixed> $transformations
      */
     public function __construct(
-        private string $type,
+        private StatementType $type,
         private string $source,
         private string $status,
         array $transformations = []
@@ -43,7 +44,7 @@ abstract class AbstractStatement implements StatementInterface
     public function getData(): array
     {
         $data = [
-            'type' => $this->type,
+            'type' => $this->type->value,
             'source' => $this->source,
             'status' => $this->status,
         ];
