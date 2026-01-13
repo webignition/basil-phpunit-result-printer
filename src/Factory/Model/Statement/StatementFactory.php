@@ -11,7 +11,6 @@ use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\PassedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Statement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
@@ -43,8 +42,10 @@ class StatementFactory
 
     public function createForPassedAssertion(AssertionInterface $assertion): StatementInterface
     {
-        return new PassedAssertionStatement(
+        return new Statement(
+            StatementType::ASSERTION,
             $assertion->getSource(),
+            (string) new Status(Status::STATUS_PASSED),
             $this->transformationFactory->createTransformations($assertion)
         );
     }

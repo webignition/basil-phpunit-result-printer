@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Statement;
 
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\PassedAssertionStatement;
+use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\Statement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
@@ -19,9 +21,14 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
     public function testCreate(
         string $source,
         array $transformations,
-        PassedAssertionStatement $expectedStatement
+        StatementInterface $expectedStatement
     ): void {
-        $statement = new PassedAssertionStatement($source, $transformations);
+        $statement = new Statement(
+            StatementType::ASSERTION,
+            $source,
+            (string) new Status(Status::STATUS_PASSED),
+            $transformations
+        );
 
         self::assertEquals($expectedStatement, $statement);
     }
@@ -42,19 +49,32 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
             'no transformations' => [
                 'source' => '$page.url is "http://example.com/"',
                 'transformations' => [],
-                'expectedStatement' => new PassedAssertionStatement('$page.url is "http://example.com/"'),
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$page.url is "http://example.com/"',
+                    (string) new Status(Status::STATUS_PASSED),
+                ),
             ],
             'invalid transformations' => [
                 'source' => '$page.url is "http://example.com/"',
                 'transformations' => [
                     new \stdClass(),
                 ],
-                'expectedStatement' => new PassedAssertionStatement('$page.url is "http://example.com/"'),
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$page.url is "http://example.com/"',
+                    (string) new Status(Status::STATUS_PASSED),
+                ),
             ],
             'valid transformations' => [
                 'source' => '$".selector" exists',
                 'transformations' => $transformations,
-                'expectedStatement' => new PassedAssertionStatement('$".selector" exists', $transformations),
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$".selector" exists',
+                    (string) new Status(Status::STATUS_PASSED),
+                    $transformations,
+                ),
             ],
         ];
     }
@@ -64,7 +84,7 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
      *
      * @param array<mixed> $expectedData
      */
-    public function testGetData(PassedAssertionStatement $statement, array $expectedData): void
+    public function testGetData(StatementInterface $statement, array $expectedData): void
     {
         self::assertSame($expectedData, $statement->getData());
     }
@@ -83,7 +103,11 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
 
         return [
             'no transformations' => [
-                'statement' => new PassedAssertionStatement('$page.url is "http://example.com/"'),
+                'statement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$page.url is "http://example.com/"',
+                    (string) new Status(Status::STATUS_PASSED),
+                ),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$page.url is "http://example.com/"',
@@ -91,7 +115,11 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
                 ],
             ],
             'invalid transformations' => [
-                'statement' => new PassedAssertionStatement('$page.url is "http://example.com/"'),
+                'statement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$page.url is "http://example.com/"',
+                    (string) new Status(Status::STATUS_PASSED),
+                ),
                 'expectedData' => [
                     'type' => 'assertion',
                     'source' => '$page.url is "http://example.com/"',
@@ -99,8 +127,10 @@ class PassedAssertionStatementTest extends AbstractBaseTestCase
                 ],
             ],
             'valid transformations' => [
-                'statement' => new PassedAssertionStatement(
+                'statement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" exists',
+                    (string) new Status(Status::STATUS_PASSED),
                     [
                         $resolutionTransformation,
                     ]

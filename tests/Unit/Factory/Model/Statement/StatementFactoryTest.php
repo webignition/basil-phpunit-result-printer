@@ -23,7 +23,6 @@ use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\Model\Node;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\PassedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Statement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
@@ -181,25 +180,37 @@ class StatementFactoryTest extends AbstractBaseTestCase
         return [
             'exists assertion' => [
                 'assertion' => $existsAssertion,
-                'expectedStatement' => new PassedAssertionStatement('$".selector" exists'),
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$".selector" exists',
+                    (string) new Status(Status::STATUS_PASSED),
+                ),
             ],
             'derived exists assertion' => [
                 'assertion' => $derivedExistsAssertion,
-                'expectedStatement' => new PassedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" exists',
+                    (string) new Status(Status::STATUS_PASSED),
                     $transformationFactory->createTransformations($derivedExistsAssertion)
                 ),
             ],
             'derived, resolved exists assertion' => [
                 'assertion' => $derivedResolvedExistsAssertion,
-                'expectedStatement' => new PassedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" exists',
+                    (string) new Status(Status::STATUS_PASSED),
                     $transformationFactory->createTransformations($derivedResolvedExistsAssertion)
                 ),
             ],
             'is assertion' => [
                 'assertion' => $assertionParser->parse('$".selector" is "value"', 0),
-                'expectedStatement' => new PassedAssertionStatement('$".selector" is "value"'),
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
+                    '$".selector" is "value"',
+                    (string) new Status(Status::STATUS_PASSED),
+                ),
             ],
         ];
     }
