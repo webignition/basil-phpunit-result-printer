@@ -41,9 +41,12 @@ class StatementFactoryTest extends AbstractBaseTestCase
     /**
      * @dataProvider createForPassedActionDataProvider
      */
-    public function testCreateForPassedAction(ActionInterface $action, StatementInterface $expectedStatement): void
-    {
-        self::assertEquals($expectedStatement, $this->factory->createForPassedAction($action));
+    public function testCreateForAction(
+        ActionInterface $action,
+        Status $status,
+        StatementInterface $expectedStatement
+    ): void {
+        self::assertEquals($expectedStatement, $this->factory->createForAction($action, $status));
     }
 
     /**
@@ -73,6 +76,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
         return [
             'click action' => [
                 'action' => $clickAction,
+                'status' => new Status(Status::STATUS_PASSED),
                 'expectedStatement' => new Statement(
                     StatementType::ACTION,
                     'click $".selector"',
@@ -81,6 +85,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
             ],
             'resolved click action' => [
                 'action' => $resolvedClickAction,
+                'status' => new Status(Status::STATUS_PASSED),
                 'expectedStatement' => new Statement(
                     StatementType::ACTION,
                     'click $".selector"',

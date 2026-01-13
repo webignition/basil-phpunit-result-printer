@@ -29,14 +29,28 @@ class StatementFactory
         );
     }
 
-    public function createForPassedAction(ActionInterface $action): StatementInterface
-    {
-        return $this->createForAction($action, Status::STATUS_PASSED);
+    public function createForAction(
+        ActionInterface $action,
+        Status $status,
+    ): StatementInterface {
+        return new Statement(
+            StatementType::ACTION,
+            $action->getSource(),
+            (string) $status,
+        )->withTransformations(
+            $this->transformationFactory->createTransformations($action)
+        );
     }
 
     public function createForFailedAction(ActionInterface $action): StatementInterface
     {
-        return $this->createForAction($action, Status::STATUS_FAILED);
+        return new Statement(
+            StatementType::ACTION,
+            $action->getSource(),
+            (string) new Status(Status::STATUS_FAILED),
+        )->withTransformations(
+            $this->transformationFactory->createTransformations($action)
+        );
     }
 
     public function createForPassedAssertion(AssertionInterface $assertion): StatementInterface
@@ -95,17 +109,6 @@ class StatementFactory
             (string) new Status(Status::STATUS_FAILED),
         )->withTransformations(
             $this->transformationFactory->createTransformations($assertion),
-        );
-    }
-
-    private function createForAction(ActionInterface $action, int $status): StatementInterface
-    {
-        return new Statement(
-            StatementType::ACTION,
-            $action->getSource(),
-            (string) new Status($status),
-        )->withTransformations(
-            $this->transformationFactory->createTransformations($action)
         );
     }
 }

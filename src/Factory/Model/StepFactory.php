@@ -11,6 +11,7 @@ use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\StatementCollection;
 use webignition\BasilRunnerDocuments\Step;
@@ -61,7 +62,10 @@ readonly class StepFactory
         $passedStatements = $statementCollection->getHandledStatements();
         foreach ($passedStatements as $passedStatement) {
             if ($passedStatement instanceof ActionInterface) {
-                $statements[] = $this->statementFactory->createForPassedAction($passedStatement);
+                $statements[] = $this->statementFactory->createForAction(
+                    $passedStatement,
+                    new Status(Status::STATUS_PASSED),
+                );
             }
 
             if ($passedStatement instanceof AssertionInterface) {
