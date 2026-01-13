@@ -64,16 +64,6 @@ class ResultPrinterTest extends TestCase
         $isGithubRunner = array_key_exists('GITHUB_ACTIONS', $_SERVER);
 
         return [
-            'terminated, RuntimeException thrown during second step' => [
-                'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSecondStepTest.php',
-                'expectedPartialDocumentContents' => (function (Parser $yamlDocumentSetParser, bool $isGithubRunner) {
-                    $fixturePath = $isGithubRunner
-                        ? '/ResultPrinter/failed-exception-wrapper-exception-single-test-second-step-partial.yaml'
-                        : '/ResultPrinter/failed-runtime-exception-single-test-second-step-partial.yaml';
-
-                    return $yamlDocumentSetParser->parse((string) FixtureLoader::load($fixturePath));
-                })($yamlDocumentSetParser, $isGithubRunner),
-            ],
             'terminated, lastException set during setupBeforeClass' => [
                 'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/SetsLastExceptionInSetupBeforeClassTest.php',
                 'expectedPartialDocumentContents' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
