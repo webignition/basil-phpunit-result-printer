@@ -62,7 +62,7 @@ readonly class StepFactory
         $passedStatements = $statementCollection->getHandledStatements();
         foreach ($passedStatements as $passedStatement) {
             if ($passedStatement instanceof ActionInterface) {
-                $statements[] = $this->statementFactory->createForAction(
+                $statements[] = $this->statementFactory->create(
                     $passedStatement,
                     new Status(Status::STATUS_PASSED),
                 );
@@ -79,7 +79,7 @@ readonly class StepFactory
             $statement = null;
 
             if ($failedStatement instanceof ActionInterface) {
-                $statement = $this->statementFactory->createForAction(
+                $statement = $this->statementFactory->create(
                     $failedStatement,
                     new Status(Status::STATUS_FAILED),
                 );

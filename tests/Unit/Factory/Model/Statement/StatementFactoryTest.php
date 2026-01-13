@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Statement;
 
 use webignition\BasilModels\Model\Action\Action;
-use webignition\BasilModels\Model\Action\ActionInterface;
 use webignition\BasilModels\Model\Action\ResolvedAction;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
 use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
+use webignition\BasilModels\Model\StatementInterface as StatementModelInterface;
 use webignition\BasilModels\Parser\ActionParser;
 use webignition\BasilModels\Parser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
@@ -42,12 +42,12 @@ class StatementFactoryTest extends AbstractBaseTestCase
      * @dataProvider createForPassedActionDataProvider
      * @dataProvider createForFailedActionDataProvider
      */
-    public function testCreateForAction(
-        ActionInterface $action,
+    public function testCreate(
+        StatementModelInterface $statement,
         Status $status,
         StatementInterface $expectedStatement
     ): void {
-        self::assertEquals($expectedStatement, $this->factory->createForAction($action, $status));
+        self::assertEquals($expectedStatement, $this->factory->create($statement, $status));
     }
 
     /**
@@ -76,7 +76,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
 
         return [
             'action, passed, click action' => [
-                'action' => $clickAction,
+                'statement' => $clickAction,
                 'status' => new Status(Status::STATUS_PASSED),
                 'expectedStatement' => new Statement(
                     StatementType::ACTION,
@@ -85,7 +85,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'action, passed, resolved click action' => [
-                'action' => $resolvedClickAction,
+                'statement' => $resolvedClickAction,
                 'status' => new Status(Status::STATUS_PASSED),
                 'expectedStatement' => new Statement(
                     StatementType::ACTION,
@@ -124,7 +124,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
 
         return [
             'action, failed, click action' => [
-                'action' => $clickAction,
+                'statement' => $clickAction,
                 'status' => new Status(Status::STATUS_FAILED),
                 'expectedStatement' => new Statement(
                     StatementType::ACTION,
@@ -133,7 +133,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'action, failed, resolved click action' => [
-                'action' => $resolvedClickAction,
+                'statement' => $resolvedClickAction,
                 'status' => new Status(Status::STATUS_FAILED),
                 'expectedStatement' => new Statement(
                     StatementType::ACTION,

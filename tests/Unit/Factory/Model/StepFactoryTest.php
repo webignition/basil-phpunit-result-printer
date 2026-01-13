@@ -311,7 +311,7 @@ class StepFactoryTest extends AbstractBaseTestCase
                     'step name',
                     $statusPassedLabel,
                     [
-                        $statementFactory->createForAction($clickAction, new Status(Status::STATUS_PASSED)),
+                        $statementFactory->create($clickAction, new Status(Status::STATUS_PASSED)),
                     ]
                 ),
             ],
@@ -332,7 +332,7 @@ class StepFactoryTest extends AbstractBaseTestCase
                     'step name',
                     $statusPassedLabel,
                     [
-                        $statementFactory->createForAction($clickAction, new Status(Status::STATUS_PASSED)),
+                        $statementFactory->create($clickAction, new Status(Status::STATUS_PASSED)),
                         $statementFactory->createForPassedAssertion($existsAssertion),
                     ]
                 ),

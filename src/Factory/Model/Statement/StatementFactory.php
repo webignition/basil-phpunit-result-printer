@@ -6,6 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement;
 
 use webignition\BasilModels\Model\Action\ActionInterface;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
+use webignition\BasilModels\Model\StatementInterface as StatementModelInterface;
 use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
@@ -29,16 +30,18 @@ class StatementFactory
         );
     }
 
-    public function createForAction(
-        ActionInterface $action,
-        Status $status,
-    ): StatementInterface {
+    public function create(StatementModelInterface $statement, Status $status): StatementInterface
+    {
+        $statementType = $statement instanceof ActionInterface
+            ? StatementType::ACTION
+            : StatementType::ASSERTION;
+
         return new Statement(
-            StatementType::ACTION,
-            $action->getSource(),
+            $statementType,
+            $statement->getSource(),
             (string) $status,
         )->withTransformations(
-            $this->transformationFactory->createTransformations($action)
+            $this->transformationFactory->createTransformations($statement)
         );
     }
 
