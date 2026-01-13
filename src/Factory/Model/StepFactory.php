@@ -79,7 +79,10 @@ readonly class StepFactory
             $statement = null;
 
             if ($failedStatement instanceof ActionInterface) {
-                $statement = $this->statementFactory->createForFailedAction($failedStatement);
+                $statement = $this->statementFactory->createForAction(
+                    $failedStatement,
+                    new Status(Status::STATUS_FAILED),
+                );
 
                 $exceptionData = $this->exceptionDataFactory->create($assertionFailure->exception);
                 if ($exceptionData instanceof ExceptionDataInterface) {

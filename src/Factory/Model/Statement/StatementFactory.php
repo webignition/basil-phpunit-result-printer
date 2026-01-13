@@ -42,17 +42,6 @@ class StatementFactory
         );
     }
 
-    public function createForFailedAction(ActionInterface $action): StatementInterface
-    {
-        return new Statement(
-            StatementType::ACTION,
-            $action->getSource(),
-            (string) new Status(Status::STATUS_FAILED),
-        )->withTransformations(
-            $this->transformationFactory->createTransformations($action)
-        );
-    }
-
     public function createForPassedAssertion(AssertionInterface $assertion): StatementInterface
     {
         return new Statement(

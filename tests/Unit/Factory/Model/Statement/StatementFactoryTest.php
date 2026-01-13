@@ -40,6 +40,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
 
     /**
      * @dataProvider createForPassedActionDataProvider
+     * @dataProvider createForFailedActionDataProvider
      */
     public function testCreateForAction(
         ActionInterface $action,
@@ -74,7 +75,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
         );
 
         return [
-            'click action' => [
+            'action, passed, click action' => [
                 'action' => $clickAction,
                 'status' => new Status(Status::STATUS_PASSED),
                 'expectedStatement' => new Statement(
@@ -83,7 +84,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     (string) new Status(Status::STATUS_PASSED)
                 ),
             ],
-            'resolved click action' => [
+            'action, passed, resolved click action' => [
                 'action' => $resolvedClickAction,
                 'status' => new Status(Status::STATUS_PASSED),
                 'expectedStatement' => new Statement(
@@ -95,14 +96,6 @@ class StatementFactoryTest extends AbstractBaseTestCase
                 ),
             ],
         ];
-    }
-
-    /**
-     * @dataProvider createForFailedActionDataProvider
-     */
-    public function testCreateForFailedAction(ActionInterface $action, StatementInterface $expectedStatement): void
-    {
-        self::assertEquals($expectedStatement, $this->factory->createForFailedAction($action));
     }
 
     /**
@@ -130,16 +123,18 @@ class StatementFactoryTest extends AbstractBaseTestCase
         );
 
         return [
-            'click action' => [
+            'action, failed, click action' => [
                 'action' => $clickAction,
+                'status' => new Status(Status::STATUS_FAILED),
                 'expectedStatement' => new Statement(
                     StatementType::ACTION,
                     'click $".selector"',
                     (string) new Status(Status::STATUS_FAILED)
                 ),
             ],
-            'resolved click action' => [
+            'action, failed, resolved click action' => [
                 'action' => $resolvedClickAction,
+                'status' => new Status(Status::STATUS_FAILED),
                 'expectedStatement' => new Statement(
                     StatementType::ACTION,
                     'click $".selector"',
