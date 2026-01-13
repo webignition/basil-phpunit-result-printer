@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
-class FailedIsAssertionForElement extends BasilTestCase
+class FailedElementIsAssertion extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {

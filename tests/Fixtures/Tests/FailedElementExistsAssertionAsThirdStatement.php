@@ -9,7 +9,7 @@ use webignition\BaseBasilTestCase\Attribute\StepName;
 use webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests\BasilTestCase;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
-class FailedExistsAssertionForElementAsThirdStatement extends BasilTestCase
+class FailedElementExistsAssertionAsThirdStatement extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {

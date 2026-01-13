@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
-class FailedExcludesAssertionForElement extends BasilTestCase
+class FailedElementIsNotAssertion extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -18,28 +18,29 @@ class FailedExcludesAssertionForElement extends BasilTestCase
     #[Statements([
         '{
             "statement-type": "assertion",
-            "source": "$\".selector\" excludes \"value\"",
+            "source": "$\".selector\" is-not \"value\"",
             "index": 0,
             "identifier": "$\".selector\"",
             "value": "\"value\"",
-            "operator": "excludes"
+            "operator": "is-not"
         }',
     ])]
     public function testStep1(): void
     {
-        $expectedValue = 'string-not-contains-string';
-        $examinedValue = 'string-not-contains-string-within';
-        $this->assertStringNotContainsString(
+        $expectedValue = 'assert-not-equals-value';
+        $examinedValue = 'assert-not-equals-value';
+
+        $this->assertNotEquals(
             $expectedValue,
             $examinedValue,
             '{
                     "statement": {
                         "statement-type": "assertion",
-                        "source": "$\".selector\" excludes \"value\"",
+                        "source": "$\".selector\" is-not \"value\"",
                         "index": 0,
                         "identifier": "$\".selector\"",
                         "value": "\"value\"",
-                        "operator": "excludes"               
+                        "operator": "is-not"      
                     },
                     "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
                     "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"
