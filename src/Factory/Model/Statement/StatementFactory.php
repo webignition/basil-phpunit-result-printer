@@ -6,12 +6,13 @@ namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement;
 
 use webignition\BasilModels\Model\Action\ActionInterface;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
+use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\AssertionFailureSummaryInterface;
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\ActionStatement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\PassedAssertionStatement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\Statement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 
@@ -89,7 +90,8 @@ class StatementFactory
 
     private function createForAction(ActionInterface $action, int $status): StatementInterface
     {
-        return new ActionStatement(
+        return new Statement(
+            StatementType::ACTION,
             $action->getSource(),
             (string) new Status($status),
             $this->transformationFactory->createTransformations($action)

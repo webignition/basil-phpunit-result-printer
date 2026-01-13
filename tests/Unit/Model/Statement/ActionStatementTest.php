@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Statement;
 
+use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\ActionStatement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\Statement;
+use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
@@ -23,9 +25,9 @@ class ActionStatementTest extends AbstractBaseTestCase
         string $source,
         string $status,
         array $transformations,
-        ActionStatement $expectedStatement
+        StatementInterface $expectedStatement
     ): void {
-        $statement = new ActionStatement($source, $status, $transformations);
+        $statement = new Statement(StatementType::ACTION, $source, $status, $transformations);
 
         self::assertEquals($expectedStatement, $statement);
     }
@@ -43,7 +45,8 @@ class ActionStatementTest extends AbstractBaseTestCase
                 'source' => 'click $".selector"',
                 'status' => $statusPassed,
                 'transformations' => [],
-                'expectedStatement' => new ActionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ACTION,
                     'click $".selector"',
                     $statusPassed
                 ),
@@ -54,7 +57,8 @@ class ActionStatementTest extends AbstractBaseTestCase
                 'transformations' => [
                     new \stdClass(),
                 ],
-                'expectedStatement' => new ActionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ACTION,
                     'click $".selector"',
                     $statusPassed
                 ),
@@ -68,7 +72,8 @@ class ActionStatementTest extends AbstractBaseTestCase
                         'click $page_import_name.elements.element_name'
                     ),
                 ],
-                'expectedStatement' => new ActionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ACTION,
                     'click $".selector"',
                     $statusPassed,
                     [
@@ -83,7 +88,8 @@ class ActionStatementTest extends AbstractBaseTestCase
                 'source' => 'click $".selector"',
                 'status' => $statusFailed,
                 'transformations' => [],
-                'expectedStatement' => new ActionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ACTION,
                     'click $".selector"',
                     $statusFailed
                 ),
@@ -96,7 +102,7 @@ class ActionStatementTest extends AbstractBaseTestCase
      *
      * @param array<mixed> $expectedData
      */
-    public function testGetData(ActionStatement $statement, array $expectedData): void
+    public function testGetData(StatementInterface $statement, array $expectedData): void
     {
         self::assertSame($expectedData, $statement->getData());
     }
@@ -124,7 +130,8 @@ class ActionStatementTest extends AbstractBaseTestCase
 
         return [
             'passed, no transformations' => [
-                'statement' => new ActionStatement(
+                'statement' => new Statement(
+                    StatementType::ACTION,
                     'click $".selector"',
                     $statusPassed,
                 ),
@@ -135,7 +142,8 @@ class ActionStatementTest extends AbstractBaseTestCase
                 ],
             ],
             'passed, has invalid transformations' => [
-                'statement' => new ActionStatement(
+                'statement' => new Statement(
+                    StatementType::ACTION,
                     'click $".selector"',
                     $statusPassed,
                     [
@@ -149,7 +157,8 @@ class ActionStatementTest extends AbstractBaseTestCase
                 ],
             ],
             'passed, has transformations' => [
-                'statement' => new ActionStatement(
+                'statement' => new Statement(
+                    StatementType::ACTION,
                     'click $".selector"',
                     $statusPassed,
                     [
@@ -166,7 +175,8 @@ class ActionStatementTest extends AbstractBaseTestCase
                 ],
             ],
             'failed' => [
-                'statement' => new ActionStatement(
+                'statement' => new Statement(
+                    StatementType::ACTION,
                     'click $".selector"',
                     $statusFailed,
                 ),
@@ -177,10 +187,11 @@ class ActionStatementTest extends AbstractBaseTestCase
                 ],
             ],
             'failed, has invalid locator exception' => [
-                'statement' => (new ActionStatement(
+                'statement' => new Statement(
+                    StatementType::ACTION,
                     'click $"a[href=https://example.com]"',
                     $statusFailed,
-                ))->withExceptionData($invalidLocatorExceptionData),
+                )->withExceptionData($invalidLocatorExceptionData),
                 'expectedData' => [
                     'type' => 'action',
                     'source' => 'click $"a[href=https://example.com]"',
