@@ -101,31 +101,6 @@ class ResultPrinterTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public static function failedExistsAssertionDataProvider(): array
-    {
-        $actionParser = ActionParser::create();
-        $assertionParser = AssertionParser::create();
-
-        return [
-            'failed, element exists assertion' => [
-                'tests' => [
-                    BasilTestCaseFactory::create([
-                        'basilTestPath' => 'test.yml',
-                        'basilStepName' => 'step name',
-                        'status' => Status::STATUS_FAILED,
-                        'handledStatements' => [
-                            $assertionParser->parse('$".selector" exists', 0),
-                        ],
-                    ]),
-                ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-exists-assertion-element.yaml', 0),
-            ],
-        ];
-    }
-
-    /**
-     * @return array<mixed>
-     */
     public static function failedIsAssertionDataProvider(): array
     {
         $assertionParser = AssertionParser::create();
