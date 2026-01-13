@@ -7,16 +7,15 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Functional;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use webignition\BasilModels\Parser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Tests\Services\FixtureLoader;
 
 class ResultPrinterExtensionTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-//    #[DataProvider('passingTestsDataProvider')]
+    #[DataProvider('passingTestsDataProvider')]
     #[DataProvider('failingTestsDataProvider')]
-//    #[DataProvider('terminatedDataProvider')]
+    #[DataProvider('terminatedDataProvider')]
     public function testRun(string $testPath, int $expectedExitCode, string $expectedOutput): void
     {
         $phpunitCommand = './vendor/bin/phpunit -c phpunit.printer.xml ' . $testPath;
@@ -54,6 +53,13 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
                     '/ResultPrinterExtension/failed-attribute-exists-assertion.yaml'
+                ),
+            ],
+            'failing descendant css > css element exists assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedDescendantCssCssElementExistsAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinterExtension/failed-descendant-css-css-element-exists-assertion.yaml'
                 ),
             ],
             'failing descendant css > xpath element exists assertion' => [
