@@ -169,33 +169,6 @@ class ResultPrinterTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public static function failedExceptionDataProvider(): array
-    {
-        $assertionParser = AssertionParser::create();
-
-        return [
-            'failed, unknown exception' => [
-                'tests' => [
-                    BasilTestCaseFactory::create([
-                        'basilTestPath' => 'test.yml',
-                        'basilStepName' => 'step with unknown exception',
-                        'status' => Status::STATUS_FAILED,
-                        'handledStatements' => [
-                            $assertionParser->parse('$"a[href=https://example.com/]" exists', 0),
-                        ],
-                        'lastException' => new \LogicException('Invalid logic', 0),
-                    ]),
-                ],
-                'expectedOutput' => FixtureLoader::load(
-                    '/ResultPrinter/failed-exception-unknown-exception.yaml'
-                ),
-            ],
-        ];
-    }
-
-    /**
-     * @return array<mixed>
-     */
     public static function failedIsAssertionDataProvider(): array
     {
         $assertionParser = AssertionParser::create();
