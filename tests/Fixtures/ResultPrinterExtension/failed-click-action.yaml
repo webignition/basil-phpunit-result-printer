@@ -1,0 +1,16 @@
+---
+type: step
+payload:
+  name: 'step one'
+  status: failed
+  statements:
+    -
+      type: action
+      source: 'click $".selector"'
+      status: failed
+      exception:
+        type: unknown
+        body:
+          class: RuntimeException
+          message: 'Runtime exception executing action'
+...
