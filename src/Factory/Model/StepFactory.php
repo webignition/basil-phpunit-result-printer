@@ -21,14 +21,14 @@ readonly class StepFactory
 {
     public function __construct(
         private StatementFactory $statementFactory,
-        private NewExceptionDataFactory $exceptionDataFactory,
+        private ExceptionDataFactory $exceptionDataFactory,
     ) {}
 
     public static function createFactory(): self
     {
         return new StepFactory(
             StatementFactory::createFactory(),
-            NewExceptionDataFactory::createFactory(),
+            ExceptionDataFactory::createFactory(),
         );
     }
 
