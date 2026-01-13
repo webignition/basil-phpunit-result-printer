@@ -1,0 +1,32 @@
+---
+type: step
+payload:
+  name: 'step one'
+  status: failed
+  statements:
+    -
+      type: assertion
+      source: '$".selector" includes "value"'
+      status: failed
+      summary:
+        operator: includes
+        expected:
+          value: string-contains-string-expected-value
+          source:
+            type: scalar
+            body:
+              type: literal
+              value: '"value"'
+        actual:
+          value: string-contains-string-examined-value
+          source:
+            type: node
+            body:
+              type: element
+              identifier:
+                source: '$".selector"'
+                properties:
+                  type: css
+                  locator: .selector
+                  position: 1
+...

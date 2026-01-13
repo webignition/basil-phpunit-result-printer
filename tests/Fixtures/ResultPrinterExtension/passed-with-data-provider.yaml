@@ -1,0 +1,57 @@
+---
+type: step
+payload:
+  name: 'step one'
+  status: passed
+  statements:
+    -
+      type: action
+      source: 'set $".selector" to $data.value'
+      status: passed
+    -
+      type: assertion
+      source: '$page.url is "http://www.example.com"'
+      status: passed
+  data:
+    foo: 1
+    bar: two
+    fooBar: true
+...
+---
+type: step
+payload:
+  name: 'step one'
+  status: passed
+  statements:
+    -
+      type: action
+      source: 'set $".selector" to $data.value'
+      status: passed
+    -
+      type: assertion
+      source: '$page.url is "http://www.example.com"'
+      status: passed
+  data:
+    foo: 7
+    bar: eight
+    fooBar: true
+...
+---
+type: step
+payload:
+  name: 'step one'
+  status: passed
+  statements:
+    -
+      type: action
+      source: 'set $".selector" to $data.value'
+      status: passed
+    -
+      type: assertion
+      source: '$page.url is "http://www.example.com"'
+      status: passed
+  data:
+    foo: 9
+    bar: ten
+    fooBar: false
+...

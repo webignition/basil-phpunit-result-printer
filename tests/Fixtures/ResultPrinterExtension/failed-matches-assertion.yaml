@@ -1,0 +1,32 @@
+---
+type: step
+payload:
+  name: 'step one'
+  status: failed
+  statements:
+    -
+      type: assertion
+      source: '$".selector" matches "/^value/"'
+      status: failed
+      summary:
+        operator: matches
+        expected:
+          value: /pattern/
+          source:
+            type: scalar
+            body:
+              type: literal
+              value: '"/^value/"'
+        actual:
+          value: assert-matches-regular-expression-expected-value
+          source:
+            type: node
+            body:
+              type: element
+              identifier:
+                source: '$".selector"'
+                properties:
+                  type: css
+                  locator: .selector
+                  position: 1
+...

@@ -1,0 +1,32 @@
+---
+type: step
+payload:
+  name: 'step one'
+  status: failed
+  statements:
+    -
+      type: assertion
+      source: '$".selector" is-not "value"'
+      status: failed
+      summary:
+        operator: is-not
+        expected:
+          value: assert-not-equals-value
+          source:
+            type: scalar
+            body:
+              type: literal
+              value: '"value"'
+        actual:
+          value: assert-not-equals-value
+          source:
+            type: node
+            body:
+              type: element
+              identifier:
+                source: '$".selector"'
+                properties:
+                  type: css
+                  locator: .selector
+                  position: 1
+...

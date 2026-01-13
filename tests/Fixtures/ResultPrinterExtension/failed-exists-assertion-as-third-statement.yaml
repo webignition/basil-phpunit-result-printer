@@ -1,0 +1,31 @@
+---
+type: step
+payload:
+  name: 'step one'
+  status: failed
+  statements:
+    -
+      type: action
+      source: 'click $".selector"'
+      status: passed
+    -
+      type: assertion
+      source: '$page.url is "http://www.example.com"'
+      status: passed
+    -
+      type: assertion
+      source: '$".selector" exists'
+      status: failed
+      summary:
+        operator: exists
+        source:
+          type: node
+          body:
+            type: element
+            identifier:
+              source: '$".selector"'
+              properties:
+                type: css
+                locator: .selector
+                position: 1
+...

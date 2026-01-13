@@ -1,0 +1,30 @@
+---
+type: step
+payload:
+  name: 'step one'
+  status: passed
+  statements:
+    -
+      type: action
+      source: 'click $".selector"'
+      status: passed
+    -
+      type: assertion
+      source: '$page.url is "http://www.example.com"'
+      status: passed
+    -
+      type: assertion
+      source: '$page.title is "Foo"'
+      status: passed
+...
+---
+type: step
+payload:
+  name: 'step two'
+  status: passed
+  statements:
+    -
+      type: assertion
+      source: '$page.url is "http://www.example.com"'
+      status: passed
+...
