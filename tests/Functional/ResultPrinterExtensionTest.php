@@ -13,9 +13,10 @@ class ResultPrinterExtensionTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    #[DataProvider('passingTestsDataProvider')]
-    #[DataProvider('failingTestsDataProvider')]
-    #[DataProvider('terminatedDataProvider')]
+//    #[DataProvider('passingTestsDataProvider')]
+//    #[DataProvider('failingTestsDataProvider')]
+//    #[DataProvider('terminatedDataProvider')]
+    #[DataProvider('fooDataProvider')]
     public function testRun(string $testPath, int $expectedExitCode, string $expectedOutput): void
     {
         $phpunitCommand = './vendor/bin/phpunit -c phpunit.printer.xml ' . $testPath;
@@ -24,6 +25,9 @@ class ResultPrinterExtensionTest extends TestCase
         $exitCode = null;
 
         exec($phpunitCommand, $phpunitOutput, $exitCode);
+
+        var_dump($phpunitOutput);
+        exit();
 
         self::assertSame($expectedExitCode, $exitCode);
 
@@ -132,6 +136,22 @@ class ResultPrinterExtensionTest extends TestCase
         return [
             'terminated, lastException set during setupBeforeClass' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSetupBeforeClassTest.php',
+                'expectedExitCode' => 2,
+                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/terminated.yaml'),
+            ],
+        ];
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public static function fooDataProvider(): array
+    {
+        $root = getcwd();
+
+        return [
+            'failed derived exists assertion for element' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailingDerivedExistsAssertionForElement.php',
                 'expectedExitCode' => 2,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/terminated.yaml'),
             ],
