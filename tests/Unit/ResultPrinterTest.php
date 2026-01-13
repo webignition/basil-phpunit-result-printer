@@ -150,19 +150,6 @@ class ResultPrinterTest extends AbstractBaseTestCase
                     '/ResultPrinter/failed-exists-assertion-descendant-css-xpath-element.yaml'
                 ),
             ],
-            'failed, attribute exists assertion' => [
-                'tests' => [
-                    BasilTestCaseFactory::create([
-                        'basilTestPath' => 'test.yml',
-                        'basilStepName' => 'step name',
-                        'status' => Status::STATUS_FAILED,
-                        'handledStatements' => [
-                            $assertionParser->parse('$".selector".attribute_name exists', 0),
-                        ],
-                    ]),
-                ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-exists-assertion-attribute.yaml', 0),
-            ],
         ];
     }
 

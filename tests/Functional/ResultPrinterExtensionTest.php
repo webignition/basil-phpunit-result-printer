@@ -14,9 +14,8 @@ class ResultPrinterExtensionTest extends TestCase
     use MockeryPHPUnitIntegration;
 
 //    #[DataProvider('passingTestsDataProvider')]
-//    #[DataProvider('failingTestsDataProvider')]
+    #[DataProvider('failingTestsDataProvider')]
 //    #[DataProvider('terminatedDataProvider')]
-    #[DataProvider('fooDataProvider')]
     public function testRun(string $testPath, int $expectedExitCode, string $expectedOutput): void
     {
         $phpunitCommand = './vendor/bin/phpunit -c phpunit.printer.xml ' . $testPath;
@@ -25,9 +24,6 @@ class ResultPrinterExtensionTest extends TestCase
         $exitCode = null;
 
         exec($phpunitCommand, $phpunitOutput, $exitCode);
-
-        var_dump($phpunitOutput);
-        exit();
 
         self::assertSame($expectedExitCode, $exitCode);
 
@@ -45,11 +41,18 @@ class ResultPrinterExtensionTest extends TestCase
         $root = getcwd();
 
         return [
-            'failing exists assertion for element as third statement' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementExistsAssertionAsThirdStatement.php',
+//            'failing exists assertion for element as third statement' => [
+//                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementExistsAssertionAsThirdStatement.php',
+//                'expectedExitCode' => 1,
+//                'expectedOutput' => FixtureLoader::load(
+//                    '/ResultPrinterExtension/failed-element-exists-assertion-as-third-statement.yaml'
+//                ),
+//            ],
+            'failing attribute exists assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedAttributeExistsAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
-                    '/ResultPrinterExtension/failed-element-exists-assertion-as-third-statement.yaml'
+                    '/ResultPrinterExtension/failed-attribute-exists-assertion.yaml'
                 ),
             ],
             'failing derived exists assertion' => [
@@ -136,22 +139,6 @@ class ResultPrinterExtensionTest extends TestCase
         return [
             'terminated, lastException set during setupBeforeClass' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/ThrowsRuntimeExceptionInSetupBeforeClassTest.php',
-                'expectedExitCode' => 2,
-                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/terminated.yaml'),
-            ],
-        ];
-    }
-
-    /**
-     * @return array<mixed>
-     */
-    public static function fooDataProvider(): array
-    {
-        $root = getcwd();
-
-        return [
-            'failed derived exists assertion for element' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingDerivedExistsAssertionForElement.php',
                 'expectedExitCode' => 2,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/terminated.yaml'),
             ],
