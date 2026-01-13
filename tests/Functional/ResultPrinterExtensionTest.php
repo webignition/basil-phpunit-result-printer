@@ -84,10 +84,10 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-matches-assertion-for-element.yaml'),
             ],
             'failing with InvalidLocatorException' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailingWithInvalidLocatorException.php',
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsAssertionWithInvalidLocator.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
-                    '/ResultPrinterExtension/failed-assertion-with-invalid-locator.yaml'
+                    '/ResultPrinterExtension/failed-element-is-assertion-with-invalid-locator.yaml'
                 ),
             ],
         ];
