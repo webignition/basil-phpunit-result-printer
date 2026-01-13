@@ -39,7 +39,7 @@ readonly class StepFactory
         return new Step(
             $stepName,
             (string) $state->getStatus(),
-            $this->fooCreateStatements(
+            $this->createStatements(
                 $statements,
                 $state->getExpectationFailure(),
                 $state->getAssertionFailure(),
@@ -51,7 +51,7 @@ readonly class StepFactory
     /**
      * @return StatementInterface[]
      */
-    private function fooCreateStatements(
+    private function createStatements(
         StatementCollection $statementCollection,
         ?ExpectationFailure $expectationFailure,
         ?AssertionFailure $assertionFailure,
@@ -67,10 +67,7 @@ readonly class StepFactory
         $failedStatement = $statementCollection->getFailedStatement();
 
         if ($failedStatement instanceof ActionInterface && $assertionFailure instanceof AssertionFailure) {
-            $statement = $this->statementFactory->create(
-                $failedStatement,
-                new Status(Status::STATUS_FAILED),
-            );
+            $statement = $this->statementFactory->create($failedStatement, new Status(Status::STATUS_FAILED));
 
             $exceptionData = $this->exceptionDataFactory->create($assertionFailure->exception);
             if ($exceptionData instanceof ExceptionDataInterface) {
