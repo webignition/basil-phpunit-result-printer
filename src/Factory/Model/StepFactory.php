@@ -69,7 +69,10 @@ readonly class StepFactory
             }
 
             if ($passedStatement instanceof AssertionInterface) {
-                $statements[] = $this->statementFactory->createForPassedAssertion($passedStatement);
+                $statements[] = $this->statementFactory->create(
+                    $passedStatement,
+                    new Status(Status::STATUS_PASSED),
+                );
             }
         }
 

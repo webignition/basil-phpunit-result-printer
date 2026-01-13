@@ -45,17 +45,6 @@ class StatementFactory
         );
     }
 
-    public function createForPassedAssertion(AssertionInterface $assertion): StatementInterface
-    {
-        return new Statement(
-            StatementType::ASSERTION,
-            $assertion->getSource(),
-            (string) new Status(Status::STATUS_PASSED),
-        )->withTransformations(
-            $this->transformationFactory->createTransformations($assertion)
-        );
-    }
-
     public function createForExpectationFailure(ExpectationFailure $expectationFailure): ?StatementInterface
     {
         $expectedValue = $expectationFailure->expected;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Statement;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilModels\Model\Action\Action;
 use webignition\BasilModels\Model\Action\ResolvedAction;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
@@ -38,10 +39,9 @@ class StatementFactoryTest extends AbstractBaseTestCase
         $this->factory = StatementFactory::createFactory();
     }
 
-    /**
-     * @dataProvider createForPassedActionDataProvider
-     * @dataProvider createForFailedActionDataProvider
-     */
+    #[DataProvider('createForPassedActionDataProvider')]
+    #[DataProvider('createForFailedActionDataProvider')]
+    #[DataProvider('createForPassedAssertionDataProvider')]
     public function testCreate(
         StatementModelInterface $statement,
         Status $status,
@@ -147,16 +147,6 @@ class StatementFactoryTest extends AbstractBaseTestCase
     }
 
     /**
-     * @dataProvider createForPassedAssertionDataProvider
-     */
-    public function testCreateForPassedAssertion(
-        AssertionInterface $assertion,
-        StatementInterface $expectedStatement
-    ): void {
-        self::assertEquals($expectedStatement, $this->factory->createForPassedAssertion($assertion));
-    }
-
-    /**
      * @return array<mixed>
      */
     public static function createForPassedAssertionDataProvider(): array
@@ -179,16 +169,18 @@ class StatementFactoryTest extends AbstractBaseTestCase
         );
 
         return [
-            'exists assertion' => [
-                'assertion' => $existsAssertion,
+            'assertion, passed, exists assertion' => [
+                'statement' => $existsAssertion,
+                'status' => new Status(Status::STATUS_PASSED),
                 'expectedStatement' => new Statement(
                     StatementType::ASSERTION,
                     '$".selector" exists',
                     (string) new Status(Status::STATUS_PASSED),
                 ),
             ],
-            'derived exists assertion' => [
-                'assertion' => $derivedExistsAssertion,
+            'assertion, passed, derived exists assertion' => [
+                'statement' => $derivedExistsAssertion,
+                'status' => new Status(Status::STATUS_PASSED),
                 'expectedStatement' => new Statement(
                     StatementType::ASSERTION,
                     '$".selector" exists',
@@ -197,8 +189,9 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     $transformationFactory->createTransformations($derivedExistsAssertion)
                 ),
             ],
-            'derived, resolved exists assertion' => [
-                'assertion' => $derivedResolvedExistsAssertion,
+            'assertion, passed, derived, resolved exists assertion' => [
+                'statement' => $derivedResolvedExistsAssertion,
+                'status' => new Status(Status::STATUS_PASSED),
                 'expectedStatement' => new Statement(
                     StatementType::ASSERTION,
                     '$".selector" exists',
@@ -207,8 +200,9 @@ class StatementFactoryTest extends AbstractBaseTestCase
                     $transformationFactory->createTransformations($derivedResolvedExistsAssertion)
                 ),
             ],
-            'is assertion' => [
-                'assertion' => $assertionParser->parse('$".selector" is "value"', 0),
+            'assertion, passed, is assertion' => [
+                'statement' => $assertionParser->parse('$".selector" is "value"', 0),
+                'status' => new Status(Status::STATUS_PASSED),
                 'expectedStatement' => new Statement(
                     StatementType::ASSERTION,
                     '$".selector" is "value"',
@@ -352,12 +346,12 @@ class StatementFactoryTest extends AbstractBaseTestCase
      * @dataProvider createForAssertionFailureDataProvider
      */
     public function testCreateForAssertionFailure(
-        AssertionInterface $assertion,
+        AssertionInterface $statement,
         StatementInterface $expectedStatement
     ): void {
         self::assertEquals(
             $expectedStatement,
-            $this->factory->createForAssertionFailure($assertion)
+            $this->factory->createForAssertionFailure($statement)
         );
     }
 
@@ -388,7 +382,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
 
         return [
             'exists assertion' => [
-                'assertion' => $existsAssertion,
+                'statement' => $existsAssertion,
                 'expectedStatement' => new Statement(
                     StatementType::ASSERTION,
                     '$".selector" exists',
@@ -396,7 +390,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'derived exists assertion' => [
-                'assertion' => $derivedExistsAssertion,
+                'statement' => $derivedExistsAssertion,
                 'expectedStatement' => new Statement(
                     StatementType::ASSERTION,
                     '$".selector" exists',
@@ -406,7 +400,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'derived, resolved exists assertion' => [
-                'assertion' => $derivedResolvedExistsAssertion,
+                'statement' => $derivedResolvedExistsAssertion,
                 'expectedStatement' => new Statement(
                     StatementType::ASSERTION,
                     '$".selector" exists',
@@ -416,7 +410,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'is assertion' => [
-                'assertion' => $isAssertion,
+                'statement' => $isAssertion,
                 'expectedStatement' => new Statement(
                     StatementType::ASSERTION,
                     '$".selector" is "value"',
@@ -424,7 +418,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'is-regexp assertion' => [
-                'assertion' => $isRegExpAssertion,
+                'statement' => $isRegExpAssertion,
                 'expectedStatement' => new Statement(
                     StatementType::ASSERTION,
                     '"literal" is-regexp',
