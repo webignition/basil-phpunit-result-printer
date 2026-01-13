@@ -14,7 +14,7 @@ use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
-class ActionStatementTest extends AbstractBaseTestCase
+class StatementTest extends AbstractBaseTestCase
 {
     /**
      * @dataProvider createDataProvider
