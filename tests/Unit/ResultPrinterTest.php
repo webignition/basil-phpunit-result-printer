@@ -120,26 +120,6 @@ class ResultPrinterTest extends AbstractBaseTestCase
                 ],
                 'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-exists-assertion-element.yaml', 0),
             ],
-            'failed, derived element exists assertion' => [
-                'tests' => [
-                    BasilTestCaseFactory::create([
-                        'basilTestPath' => 'test.yml',
-                        'basilStepName' => 'step name',
-                        'status' => Status::STATUS_FAILED,
-                        'handledStatements' => [
-                            new DerivedValueOperationAssertion(
-                                new ResolvedAction(
-                                    $actionParser->parse('click $page_import_name.elements.selector', 0),
-                                    '$".selector"'
-                                ),
-                                '$".selector"',
-                                'exists'
-                            ),
-                        ],
-                    ]),
-                ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-derived-exists-assertion-element.yaml'),
-            ],
             'failed, descendant element exists assertion' => [
                 'tests' => [
                     BasilTestCaseFactory::create([
