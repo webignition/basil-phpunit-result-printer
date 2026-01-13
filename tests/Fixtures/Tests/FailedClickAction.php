@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
-class FailingAction extends BasilTestCase
+class FailedClickAction extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
