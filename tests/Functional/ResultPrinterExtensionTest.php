@@ -7,6 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Functional;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use webignition\BasilModels\Parser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Tests\Services\FixtureLoader;
 
 class ResultPrinterExtensionTest extends TestCase
@@ -41,18 +42,25 @@ class ResultPrinterExtensionTest extends TestCase
         $root = getcwd();
 
         return [
-//            'failing exists assertion for element as third statement' => [
-//                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementExistsAssertionAsThirdStatement.php',
-//                'expectedExitCode' => 1,
-//                'expectedOutput' => FixtureLoader::load(
-//                    '/ResultPrinterExtension/failed-element-exists-assertion-as-third-statement.yaml'
-//                ),
-//            ],
+            'failing exists assertion for element as third statement' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementExistsAssertionAsThirdStatement.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinterExtension/failed-element-exists-assertion-as-third-statement.yaml'
+                ),
+            ],
             'failing attribute exists assertion' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedAttributeExistsAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
                     '/ResultPrinterExtension/failed-attribute-exists-assertion.yaml'
+                ),
+            ],
+            'failing descendant css > xpath element exists assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedDescendantCssXpathElementExistsAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinterExtension/failed-descendant-css-xpath-element-exists-assertion.yaml'
                 ),
             ],
             'failing derived exists assertion' => [
