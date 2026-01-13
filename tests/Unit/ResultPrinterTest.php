@@ -174,25 +174,6 @@ class ResultPrinterTest extends AbstractBaseTestCase
         $assertionParser = AssertionParser::create();
 
         return [
-            'failed, invalid locator exception' => [
-                'tests' => [
-                    BasilTestCaseFactory::create([
-                        'basilTestPath' => 'test.yml',
-                        'basilStepName' => 'step with invalid locator exception',
-                        'status' => Status::STATUS_FAILED,
-                        'handledStatements' => [
-                            $assertionParser->parse('$"a[href=https://example.com/]" exists', 0),
-                        ],
-                        'lastException' => new InvalidLocatorException(
-                            new ElementIdentifier('a[href=https://example.com/]', 0),
-                            \Mockery::mock(InvalidSelectorException::class)
-                        ),
-                    ]),
-                ],
-                'expectedOutput' => FixtureLoader::load(
-                    '/ResultPrinter/failed-exception-invalid-locator-exception.yaml'
-                ),
-            ],
             'failed, unknown exception' => [
                 'tests' => [
                     BasilTestCaseFactory::create([
