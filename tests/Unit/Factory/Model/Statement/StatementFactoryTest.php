@@ -365,39 +365,44 @@ class StatementFactoryTest extends AbstractBaseTestCase
         return [
             'exists assertion' => [
                 'assertion' => $existsAssertion,
-                'expectedStatement' => new FailedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" exists',
-                    null
+                    (string) new Status(Status::STATUS_FAILED),
                 ),
             ],
             'derived exists assertion' => [
                 'assertion' => $derivedExistsAssertion,
-                'expectedStatement' => new FailedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" exists',
-                    null,
+                    (string) new Status(Status::STATUS_FAILED),
                     $transformationFactory->createTransformations($derivedExistsAssertion)
                 ),
             ],
             'derived, resolved exists assertion' => [
                 'assertion' => $derivedResolvedExistsAssertion,
-                'expectedStatement' => new FailedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" exists',
-                    null,
+                    (string) new Status(Status::STATUS_FAILED),
                     $transformationFactory->createTransformations($derivedResolvedExistsAssertion)
                 ),
             ],
             'is assertion' => [
                 'assertion' => $isAssertion,
-                'expectedStatement' => new FailedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '$".selector" is "value"',
-                    null
+                    (string) new Status(Status::STATUS_FAILED),
                 ),
             ],
             'is-regexp assertion' => [
                 'assertion' => $isRegExpAssertion,
-                'expectedStatement' => new FailedAssertionStatement(
+                'expectedStatement' => new Statement(
+                    StatementType::ASSERTION,
                     '"literal" is-regexp',
-                    null
+                    (string) new Status(Status::STATUS_FAILED),
                 ),
             ],
         ];

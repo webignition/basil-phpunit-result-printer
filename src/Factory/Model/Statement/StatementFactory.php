@@ -82,9 +82,10 @@ class StatementFactory
 
     public function createForAssertionFailure(AssertionInterface $assertion): StatementInterface
     {
-        return new FailedAssertionStatement(
+        return new Statement(
+            StatementType::ASSERTION,
             $assertion->getSource(),
-            null,
+            (string) new Status(Status::STATUS_FAILED),
             $this->transformationFactory->createTransformations($assertion),
         );
     }
