@@ -10,6 +10,7 @@ use webignition\BasilPhpUnitResultPrinter\AssertionFailure;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\UnknownExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\State;
@@ -20,14 +21,14 @@ readonly class StepFactory
 {
     public function __construct(
         private StatementFactory $statementFactory,
-        private NewExceptionDataFactory $exceptionDataFactory,
+        private ExceptionDataFactory $exceptionDataFactory,
     ) {}
 
     public static function createFactory(): self
     {
         return new StepFactory(
             StatementFactory::createFactory(),
-            NewExceptionDataFactory::createFactory(),
+            ExceptionDataFactory::createFactory(),
         );
     }
 
@@ -68,18 +69,19 @@ readonly class StepFactory
 
         if ($failedStatement instanceof ActionInterface && $assertionFailure instanceof AssertionFailure) {
             $statement = $this->statementFactory->create($failedStatement, new Status(Status::STATUS_FAILED));
+            $exception = $assertionFailure->exception;
 
-            $exceptionData = $this->exceptionDataFactory->create($assertionFailure->exception);
-            if ($exceptionData instanceof ExceptionDataInterface) {
-                $statement = $statement->withExceptionData($exceptionData);
-            }
+            $statement = $statement->withExceptionData(
+                new UnknownExceptionData($exception->class, $exception->message)
+            );
 
             $statements[] = $statement;
         }
 
         if ($failedStatement instanceof AssertionInterface && $assertionFailure instanceof AssertionFailure) {
             $statement = $this->statementFactory->createForAssertionFailure($failedStatement);
-            $exceptionData = null;
+            $exception = $assertionFailure->exception;
+            $exceptionData = new UnknownExceptionData($exception->class, $exception->message);
 
             if ('locator-invalid' === $assertionFailure->reason) {
                 $locator = $assertionFailure->context['locator'] ?? null;
@@ -91,8 +93,6 @@ readonly class StepFactory
                 if (is_string($locator) && is_string($type)) {
                     $exceptionData = $this->exceptionDataFactory->createForInvalidLocator($locator, $type);
                 }
-            } else {
-                $exceptionData = $this->exceptionDataFactory->create($assertionFailure->exception);
             }
 
             if ($exceptionData instanceof ExceptionDataInterface) {
