@@ -113,10 +113,10 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-browser-property-is-literal-assertion.yaml'),
             ],
-            'failing element is-not assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsNotAssertion.php',
+            'failing element is-not literal assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsNotLiteralAssertion.php',
                 'expectedExitCode' => 1,
-                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-not-assertion.yaml'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-not-literal-assertion.yaml'),
             ],
             'failing element matches assertion' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedElementMatchesAssertion.php',
