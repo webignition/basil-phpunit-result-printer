@@ -1,22 +1,27 @@
 ---
 type: step
 payload:
-  name: 'step name'
+  name: 'step one'
   status: failed
   statements:
     -
       type: assertion
-      source: '$".selector" is "expected value"'
+      source: '$".actual" is $".expected"'
       status: failed
       summary:
         operator: is
         expected:
           value: 'expected value'
           source:
-            type: scalar
+            type: node
             body:
-              type: literal
-              value: '"expected value"'
+              type: element
+              identifier:
+                source: '$".expected"'
+                properties:
+                  type: css
+                  locator: .expected
+                  position: 1
         actual:
           value: 'actual value'
           source:
@@ -24,9 +29,9 @@ payload:
             body:
               type: element
               identifier:
-                source: '$".selector"'
+                source: '$".actual"'
                 properties:
                   type: css
-                  locator: .selector
+                  locator: .actual
                   position: 1
 ...

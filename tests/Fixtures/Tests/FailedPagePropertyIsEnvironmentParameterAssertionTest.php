@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
-class FailedElementIsAssertion extends BasilTestCase
+class FailedPagePropertyIsEnvironmentParameterAssertionTest extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -18,10 +18,10 @@ class FailedElementIsAssertion extends BasilTestCase
     #[Statements([
         '{
             "statement-type": "assertion",
-            "source": "$\".selector\" is \"value\"",
+            "source": "$page.title is $env.PAGE_TITLE",
             "index": 0,
-            "identifier": "$\".selector\"",
-            "value": "\"value\"",
+            "identifier": "$page.title",
+            "value": "$env.PAGE_TITLE",
             "operator": "is"
         }',
     ])]
@@ -36,11 +36,11 @@ class FailedElementIsAssertion extends BasilTestCase
             '{
                     "statement": {
                         "statement-type": "assertion",
-                        "source": "$\".selector\" is \"value\"",
+                        "source": "$page.title is $env.PAGE_TITLE",
                         "index": 0,
-                        "identifier": "$\".selector\"",
-                        "value": "\"value\"",
-                        "operator": "is"          
+                        "identifier": "$page.title",
+                        "value": "$env.PAGE_TITLE",
+                        "operator": "is"       
                     },
                     "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
                     "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"

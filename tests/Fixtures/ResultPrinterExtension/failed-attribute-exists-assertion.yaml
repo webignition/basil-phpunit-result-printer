@@ -1,20 +1,15 @@
 ---
 type: step
 payload:
-  name: 'step name'
+  name: 'step one'
   status: failed
   statements:
     -
       type: assertion
-      source: '$".selector".attribute_name is-regexp'
+      source: '$".selector".attribute_name exists'
       status: failed
-      transformations:
-        -
-          type: derivation
-          source: '$page.title matches $".selector".attribute_name'
       summary:
-        operator: is-regexp
-        value: 'not a regexp'
+        operator: exists
         source:
           type: node
           body:

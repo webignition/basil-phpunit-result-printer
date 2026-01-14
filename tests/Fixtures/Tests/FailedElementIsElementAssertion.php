@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
-class FailedElementExcludesAssertion extends BasilTestCase
+class FailedElementIsElementAssertion extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {
@@ -18,28 +18,29 @@ class FailedElementExcludesAssertion extends BasilTestCase
     #[Statements([
         '{
             "statement-type": "assertion",
-            "source": "$\".selector\" excludes \"value\"",
+            "source": "$\".actual\" is $\".expected\"",
             "index": 0,
-            "identifier": "$\".selector\"",
-            "value": "\"value\"",
-            "operator": "excludes"
+            "identifier": "$\".actual\"",
+            "value": "$\".expected\"",
+            "operator": "is"
         }',
     ])]
     public function testStep1(): void
     {
-        $expectedValue = 'string-not-contains-string';
-        $examinedValue = 'string-not-contains-string-within';
-        $this->assertStringNotContainsString(
+        $expectedValue = 'expected value';
+        $examinedValue = 'actual value';
+
+        $this->assertEquals(
             $expectedValue,
             $examinedValue,
             '{
                     "statement": {
                         "statement-type": "assertion",
-                        "source": "$\".selector\" excludes \"value\"",
+                        "source": "$\".actual\" is $\".expected\"",
                         "index": 0,
-                        "identifier": "$\".selector\"",
-                        "value": "\"value\"",
-                        "operator": "excludes"               
+                        "identifier": "$\".actual\"",
+                        "value": "$\".expected\"",
+                        "operator": "is"         
                     },
                     "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
                     "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"

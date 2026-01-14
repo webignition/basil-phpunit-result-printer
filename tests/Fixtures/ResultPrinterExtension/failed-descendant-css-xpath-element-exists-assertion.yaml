@@ -1,12 +1,12 @@
 ---
 type: step
 payload:
-  name: 'step name'
+  name: 'step one'
   status: failed
   statements:
     -
       type: assertion
-      source: '$"form":3 >> $"input":2 exists'
+      source: '$"form" >> $"/input" exists'
       status: failed
       summary:
         operator: exists
@@ -15,13 +15,13 @@ payload:
           body:
             type: element
             identifier:
-              source: '$"form":3 >> $"input":2'
+              source: '$"form" >> $"/input"'
               properties:
-                type: css
-                locator: input
-                position: 2
+                type: xpath
+                locator: /input
+                position: 1
                 parent:
                   type: css
                   locator: form
-                  position: 3
+                  position: 1
 ...
