@@ -86,11 +86,11 @@ class ResultPrinterExtensionTest extends TestCase
                     '/ResultPrinterExtension/failed-element-includes-literal-assertion.yaml'
                 ),
             ],
-            'failing element excludes assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementExcludesAssertion.php',
+            'failing element excludes literal assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementExcludesLiteralAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
-                    '/ResultPrinterExtension/failed-element-excludes-assertion.yaml'
+                    '/ResultPrinterExtension/failed-element-excludes-literal-assertion.yaml'
                 ),
             ],
             'failing element is literal assertion' => [
