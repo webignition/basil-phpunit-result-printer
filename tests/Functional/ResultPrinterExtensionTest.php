@@ -103,6 +103,11 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-browser-property-is-data-parameter-assertion.yaml'),
             ],
+            'failing page property is environment parameter assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedBrowserPropertyIsEnvironmentParameterAssertionTest.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-browser-property-is-environment-parameter-assertion.yaml'),
+            ],
             'failing is-not assertion for element' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsNotAssertion.php',
                 'expectedExitCode' => 1,
