@@ -13,9 +13,9 @@ class ResultPrinterExtensionTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-//    #[DataProvider('passingTestsDataProvider')]
+    #[DataProvider('passingTestsDataProvider')]
     #[DataProvider('failingTestsDataProvider')]
-//    #[DataProvider('terminatedDataProvider')]
+    #[DataProvider('terminatedDataProvider')]
     public function testRun(string $testPath, int $expectedExitCode, string $expectedOutput): void
     {
         $phpunitCommand = './vendor/bin/phpunit -c phpunit.printer.xml ' . $testPath;
@@ -140,6 +140,13 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
                     '/ResultPrinterExtension/failed-element-is-assertion-with-invalid-locator.yaml'
+                ),
+            ],
+            'failing attribute is-regexp assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedAttributeIsRegexpAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinterExtension/failed-attribute-is-regexp-assertion.yaml'
                 ),
             ],
         ];
