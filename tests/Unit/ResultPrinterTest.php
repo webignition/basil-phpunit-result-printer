@@ -54,53 +54,6 @@ class ResultPrinterTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public static function passedDataProvider(): array
-    {
-        $actionParser = ActionParser::create();
-        $assertionParser = AssertionParser::create();
-
-        return [
-            'passed, single test containing resolved and derived statements' => [
-                'tests' => [
-                    BasilTestCaseFactory::create([
-                        'basilTestPath' => 'test.yml',
-                        'basilStepName' => 'verify page is open',
-                        'status' => Status::STATUS_PASSED,
-                        'handledStatements' => [
-                            $assertionParser->parse('$page.url is "http://example.com/"', 0),
-                            $assertionParser->parse('$page.title is "Example Domain"', 0),
-                        ],
-                    ]),
-                    BasilTestCaseFactory::create([
-                        'basilStepName' => 'passing actions and assertions',
-                        'status' => Status::STATUS_PASSED,
-                        'handledStatements' => [
-                            new DerivedValueOperationAssertion(
-                                new ResolvedAction(
-                                    $actionParser->parse('click $page_import_name.elements.selector', 0),
-                                    '$".button"'
-                                ),
-                                '$".button"',
-                                'exists'
-                            ),
-                            new ResolvedAction(
-                                $actionParser->parse('click $page_import_name.elements.selector', 0),
-                                '$".button"'
-                            ),
-                            $actionParser->parse('set $".form" >> $".input" to "literal value"', 0),
-                            $assertionParser->parse('$".button".data-clicked is "1"', 0),
-                            $assertionParser->parse('$".form" >> $".input" is "literal value"', 0),
-                        ],
-                    ]),
-                ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/passed-single-test.yaml', 0),
-            ],
-        ];
-    }
-
-    /**
-     * @return array<mixed>
-     */
     public static function failedIsAssertionDataProvider(): array
     {
         $assertionParser = AssertionParser::create();

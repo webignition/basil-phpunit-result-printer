@@ -18,62 +18,6 @@ class ResultPrinterTest extends TestCase
     private const YAML_DOCUMENT_START = '---';
 
     /**
-     * @dataProvider terminatedDataProvider
-     *
-     * @param array<int, string> $expectedPartialDocumentContents
-     */
-    public function testExceptionHandling(string $phpUnitTestPath, array $expectedPartialDocumentContents): void
-    {
-        self::markTestSkipped('Obsolete. Keeping for reference until feature complete. Remove in #232');
-
-        $phpunitCommand = './vendor/bin/phpunit --printer="' . ResultPrinter::class . '" ' . $phpUnitTestPath;
-
-        $phpunitOutput = [];
-        $exitCode = null;
-
-        exec($phpunitCommand, $phpunitOutput, $exitCode);
-        // Value of 2 taken from phpunit 9.6 PHPUnit\TextUI\TestRunner::EXCEPTION_EXIT
-        self::assertSame(2, $exitCode);
-
-        $outputYaml = $this->getYamlOutputBody($phpunitOutput);
-        $documents = (new Parser())->parse($outputYaml);
-
-        self::assertCount(count($expectedPartialDocumentContents), $documents);
-
-        $yamlParser = new YamlParser();
-
-        foreach ($expectedPartialDocumentContents as $index => $expectedPartialDocumentContent) {
-            $document = $yamlParser->parse($documents[$index] ?? '');
-            self::assertIsArray($document);
-
-            $expectedPartialDocument = $yamlParser->parse($expectedPartialDocumentContent);
-            self::assertIsArray($expectedPartialDocument);
-
-            self::assertDocument($expectedPartialDocument, $document);
-        }
-    }
-
-    /**
-     * @return array<mixed>
-     */
-    public static function terminatedDataProvider(): array
-    {
-        $root = getcwd();
-        $yamlDocumentSetParser = new Parser();
-
-        $isGithubRunner = array_key_exists('GITHUB_ACTIONS', $_SERVER);
-
-        return [
-            'terminated, lastException set during setupBeforeClass' => [
-                'phpUnitTestPath' => $root . '/tests/Fixtures/Tests/SetsLastExceptionInSetupBeforeClassTest.php',
-                'expectedPartialDocumentContents' => $yamlDocumentSetParser->parse((string) FixtureLoader::load(
-                    '/ResultPrinter/failed-set-last-exception-in-setup-before-class.yaml'
-                )),
-            ],
-        ];
-    }
-
-    /**
      * @param string[] $output
      */
     private function getYamlOutputBody(array $output): string
