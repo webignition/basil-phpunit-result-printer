@@ -41,7 +41,7 @@ class ResultPrinterExtensionTest extends TestCase
         $root = getcwd();
 
         return [
-            'failing exists assertion for element as third statement' => [
+            'failing element exists assertion as third statement' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedElementExistsAssertionAsThirdStatement.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
@@ -79,21 +79,21 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-click-action.yaml'),
             ],
-            'failing includes assertion for element' => [
+            'failing element includes assertion' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIncludesAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
                     '/ResultPrinterExtension/failed-element-includes-assertion.yaml'
                 ),
             ],
-            'failing excludes assertion for element' => [
+            'failing element excludes assertion' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedElementExcludesAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
                     '/ResultPrinterExtension/failed-element-excludes-assertion.yaml'
                 ),
             ],
-            'failing is assertion for element' => [
+            'failing element is literal assertion' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsLiteralAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-literal-assertion.yaml'),
@@ -113,12 +113,12 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-browser-property-is-literal-assertion.yaml'),
             ],
-            'failing is-not assertion for element' => [
+            'failing element is-not assertion' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsNotAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-not-assertion.yaml'),
             ],
-            'failing matches assertion for element' => [
+            'failing element matches assertion' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedElementMatchesAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
