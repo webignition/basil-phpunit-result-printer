@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\ExceptionData;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\UnknownExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
 class UnknownExceptionDataTest extends AbstractBaseTestCase
 {
-    /**
-     * @dataProvider createDataProvider
-     */
+    #[DataProvider('createDataProvider')]
     public function testCreate(string $class, string $message): void
     {
         $unknownExceptionData = new UnknownExceptionData($class, $message);
@@ -35,10 +34,9 @@ class UnknownExceptionDataTest extends AbstractBaseTestCase
     }
 
     /**
-     * @dataProvider getDataDataProvider
-     *
      * @param array<mixed> $expectedData
      */
+    #[DataProvider('getDataDataProvider')]
     public function testGetData(UnknownExceptionData $unknownExceptionData, array $expectedData): void
     {
         self::assertSame($expectedData, $unknownExceptionData->getData());

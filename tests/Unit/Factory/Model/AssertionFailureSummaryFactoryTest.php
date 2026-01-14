@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilModels\Model\Assertion\Assertion;
 use webignition\BasilModels\Model\Assertion\AssertionInterface;
 use webignition\BasilModels\Parser\AssertionParser;
@@ -31,9 +32,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
         $this->factory = AssertionFailureSummaryFactory::createFactory();
     }
 
-    /**
-     * @dataProvider createSuccessDataProvider
-     */
+    #[DataProvider('createSuccessDataProvider')]
     public function testCreateSuccess(
         AssertionInterface $assertion,
         string $expectedValue,
@@ -190,9 +189,7 @@ class AssertionFailureSummaryFactoryTest extends AbstractBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider createFailureDataProvider
-     */
+    #[DataProvider('createFailureDataProvider')]
     public function testCreateFailure(AssertionInterface $assertion): void
     {
         self::assertNull($this->factory->create($assertion, '', ''));

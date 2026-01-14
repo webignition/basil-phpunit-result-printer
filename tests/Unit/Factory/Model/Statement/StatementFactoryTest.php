@@ -212,9 +212,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider createForExpectationFailureDataProvider
-     */
+    #[DataProvider('createForExpectationFailureDataProvider')]
     public function testCreateForExpectationFailure(
         ExpectationFailure $expectationFailure,
         StatementInterface $expectedStatement,
@@ -342,9 +340,7 @@ class StatementFactoryTest extends AbstractBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider createForAssertionFailureDataProvider
-     */
+    #[DataProvider('createForAssertionFailureDataProvider')]
     public function testCreateForAssertionFailure(
         AssertionInterface $statement,
         StatementInterface $expectedStatement

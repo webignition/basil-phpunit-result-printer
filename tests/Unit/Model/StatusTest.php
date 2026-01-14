@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 
 class StatusTest extends AbstractBaseTestCase
 {
-    /**
-     * @dataProvider toStringDataProvider
-     */
+    #[DataProvider('toStringDataProvider')]
     public function testToString(Status $status, string $expectedString): void
     {
         self::assertSame($expectedString, (string) $status);

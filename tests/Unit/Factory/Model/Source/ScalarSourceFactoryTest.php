@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Source;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ScalarFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\ScalarSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Scalar;
@@ -21,9 +22,7 @@ class ScalarSourceFactoryTest extends AbstractBaseTestCase
         $this->factory = ScalarSourceFactory::createFactory();
     }
 
-    /**
-     * @dataProvider createDataProvider
-     */
+    #[DataProvider('createDataProvider')]
     public function testCreate(string $source, ?ScalarSource $expected): void
     {
         self::assertEquals($expected, $this->factory->create($source));
