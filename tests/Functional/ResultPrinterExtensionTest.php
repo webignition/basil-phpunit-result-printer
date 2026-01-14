@@ -94,9 +94,9 @@ class ResultPrinterExtensionTest extends TestCase
                 ),
             ],
             'failing is assertion for element' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsAssertion.php',
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsLiteralAssertion.php',
                 'expectedExitCode' => 1,
-                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-assertion.yaml'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-literal-assertion.yaml'),
             ],
             'failing page property is data parameter assertion' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedPagePropertyIsDataParameterAssertionTest.php',
