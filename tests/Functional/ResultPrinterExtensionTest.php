@@ -156,6 +156,13 @@ class ResultPrinterExtensionTest extends TestCase
                     '/ResultPrinterExtension/failed-element-is-regexp-assertion.yaml'
                 ),
             ],
+            'failing scalar is-regexp assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedLiteralIsRegexpAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load(
+                    '/ResultPrinterExtension/failed-literal-is-regexp-assertion.yaml'
+                ),
+            ],
         ];
     }
 

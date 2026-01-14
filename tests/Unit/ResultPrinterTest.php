@@ -180,29 +180,6 @@ class ResultPrinterTest extends AbstractBaseTestCase
     /**
      * @return array<mixed>
      */
-    public static function failedIsRegExpDataProvider(): array
-    {
-        return [
-            'failed, scalar is-regexp assertion' => [
-                'tests' => [
-                    BasilTestCaseFactory::create([
-                        'basilTestPath' => 'test.yml',
-                        'basilStepName' => 'step name',
-                        'status' => Status::STATUS_FAILED,
-                        'handledStatements' => [
-                            self::createDerivedIsRegExpAssertion('$page.title matches "not a regexp"', 0),
-                        ],
-                        'examinedValue' => 'not a regexp',
-                    ]),
-                ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-is-regexp-assertion-scalar.yaml', 0),
-            ],
-        ];
-    }
-
-    /**
-     * @return array<mixed>
-     */
     public static function failedNoStatementsDataProvider(): array
     {
         return [
