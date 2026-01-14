@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
 
-use Facebook\WebDriver\Exception\InvalidSelectorException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilModels\Model\Action\ResolvedAction;
 use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
@@ -24,7 +23,6 @@ use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\StatementCollection;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\BasilRunnerDocuments\Step;
-use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class StepFactoryTest extends AbstractBaseTestCase
@@ -81,13 +79,6 @@ class StepFactoryTest extends AbstractBaseTestCase
 
         $statusPassedLabel = (string) new Status(Status::STATUS_PASSED);
         $statusFailedLabel = (string) new Status(Status::STATUS_FAILED);
-
-        $invalidLocatorElementIdentifier = new ElementIdentifier('a[href=https://example.com]');
-
-        $invalidLocatorException = new InvalidLocatorException(
-            $invalidLocatorElementIdentifier,
-            \Mockery::mock(InvalidSelectorException::class)
-        );
 
         $nodeSourceFactory = NodeSourceFactory::createFactory();
         $invalidLocatorNodeSource
