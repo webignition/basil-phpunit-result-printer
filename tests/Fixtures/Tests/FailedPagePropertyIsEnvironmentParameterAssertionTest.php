@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
-class FailedBrowserPropertyIsEnvironmentParameterAssertionTest extends BasilTestCase
+class FailedPagePropertyIsEnvironmentParameterAssertionTest extends BasilTestCase
 {
     public static function setUpBeforeClass(): void
     {

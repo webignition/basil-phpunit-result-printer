@@ -99,14 +99,14 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-assertion.yaml'),
             ],
             'failing page property is data parameter assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailedBrowserPropertyIsDataParameterAssertionTest.php',
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedPagePropertyIsDataParameterAssertionTest.php',
                 'expectedExitCode' => 1,
-                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-browser-property-is-data-parameter-assertion.yaml'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-page-property-is-data-parameter-assertion.yaml'),
             ],
             'failing page property is environment parameter assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailedBrowserPropertyIsEnvironmentParameterAssertionTest.php',
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedPagePropertyIsEnvironmentParameterAssertionTest.php',
                 'expectedExitCode' => 1,
-                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-browser-property-is-environment-parameter-assertion.yaml'),
+                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-page-property-is-environment-parameter-assertion.yaml'),
             ],
             'failing browser property is literal assertion' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedBrowserPropertyIsLiteralAssertionTest.php',
