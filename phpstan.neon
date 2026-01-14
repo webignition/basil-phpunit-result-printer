@@ -7,4 +7,3 @@ parameters:
   excludePaths:
     - src/ResultPrinter.php
     - tests/Fixtures/*
-    - tests/Unit/ResultPrinterTest.php
