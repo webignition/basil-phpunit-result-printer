@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 
 use webignition\BasilModels\Model\Action\ActionInterface;
-use webignition\BasilModels\Model\Assertion\AssertionInterface;
+use webignition\BasilModels\Model\Assertion\Assertion;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
@@ -57,49 +57,59 @@ readonly class StepFactory
         ?ExpectationFailure $expectationFailure,
         ?AssertionFailure $assertionFailure,
     ): array {
+        $failedStatement = null;
+
+        if ($assertionFailure instanceof AssertionFailure) {
+            $failedStatement = $assertionFailure->statement;
+        }
+
+        if ($expectationFailure instanceof ExpectationFailure) {
+            $failedStatement = $expectationFailure->assertion;
+        }
+
         /** @var StatementInterface[] $statements */
         $statements = [];
 
-        $passedStatements = $statementCollection->getHandledStatements();
+        $passedStatements = $statementCollection->getHandledStatements($failedStatement);
         foreach ($passedStatements as $passedStatement) {
             $statements[] = $this->statementFactory->create($passedStatement, new Status(Status::STATUS_PASSED));
         }
 
-        $failedStatement = $statementCollection->getFailedStatement();
+        if ($assertionFailure instanceof AssertionFailure) {
+            if ($failedStatement instanceof ActionInterface) {
+                $statement = $this->statementFactory->create($failedStatement, new Status(Status::STATUS_FAILED));
+                $exception = $assertionFailure->exception;
 
-        if ($failedStatement instanceof ActionInterface && $assertionFailure instanceof AssertionFailure) {
-            $statement = $this->statementFactory->create($failedStatement, new Status(Status::STATUS_FAILED));
-            $exception = $assertionFailure->exception;
+                $statement = $statement->withExceptionData(
+                    new UnknownExceptionData($exception->class, $exception->message)
+                );
 
-            $statement = $statement->withExceptionData(
-                new UnknownExceptionData($exception->class, $exception->message)
-            );
+                $statements[] = $statement;
+            }
 
-            $statements[] = $statement;
-        }
+            if ($failedStatement instanceof Assertion) {
+                $statement = $this->statementFactory->createForAssertionFailure($failedStatement);
+                $exception = $assertionFailure->exception;
+                $exceptionData = new UnknownExceptionData($exception->class, $exception->message);
 
-        if ($failedStatement instanceof AssertionInterface && $assertionFailure instanceof AssertionFailure) {
-            $statement = $this->statementFactory->createForAssertionFailure($failedStatement);
-            $exception = $assertionFailure->exception;
-            $exceptionData = new UnknownExceptionData($exception->class, $exception->message);
+                if ('locator-invalid' === $assertionFailure->reason) {
+                    $locator = $assertionFailure->context['locator'] ?? null;
+                    $locator = is_string($locator) ? $locator : null;
 
-            if ('locator-invalid' === $assertionFailure->reason) {
-                $locator = $assertionFailure->context['locator'] ?? null;
-                $locator = is_string($locator) ? $locator : null;
+                    $type = $assertionFailure->context['type'] ?? null;
+                    $type = is_string($type) ? $type : null;
 
-                $type = $assertionFailure->context['type'] ?? null;
-                $type = is_string($type) ? $type : null;
-
-                if (is_string($locator) && is_string($type)) {
-                    $exceptionData = $this->exceptionDataFactory->createForInvalidLocator($locator, $type);
+                    if (is_string($locator) && is_string($type)) {
+                        $exceptionData = $this->exceptionDataFactory->createForInvalidLocator($locator, $type);
+                    }
                 }
-            }
 
-            if ($exceptionData instanceof ExceptionDataInterface) {
-                $statement = $statement->withExceptionData($exceptionData);
-            }
+                if ($exceptionData instanceof ExceptionDataInterface) {
+                    $statement = $statement->withExceptionData($exceptionData);
+                }
 
-            $statements[] = $statement;
+                $statements[] = $statement;
+            }
         }
 
         if ($expectationFailure instanceof ExpectationFailure) {

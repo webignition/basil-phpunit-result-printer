@@ -11,8 +11,6 @@ use webignition\BasilModels\Model\StatementInterface;
  */
 class StatementCollection implements \IteratorAggregate
 {
-    private ?StatementInterface $failedStatement = null;
-
     /**
      * @param StatementInterface[] $statements
      */
@@ -20,22 +18,12 @@ class StatementCollection implements \IteratorAggregate
         private readonly array $statements,
     ) {}
 
-    public function setFailedStatement(StatementInterface $statement): void
-    {
-        $this->failedStatement = $statement;
-    }
-
-    public function getFailedStatement(): ?StatementInterface
-    {
-        return $this->failedStatement;
-    }
-
     /**
      * @return StatementInterface[]
      */
-    public function getHandledStatements(): array
+    public function getHandledStatements(?StatementInterface $failedStatement): array
     {
-        if (null === $this->failedStatement) {
+        if (null === $failedStatement) {
             return $this->statements;
         }
 
@@ -43,7 +31,7 @@ class StatementCollection implements \IteratorAggregate
         $hasFoundFailedStatement = false;
 
         foreach ($this->statements as $statement) {
-            if ($statement->getIndex() === $this->failedStatement->getIndex()) {
+            if ($statement->getIndex() === $failedStatement->getIndex()) {
                 $hasFoundFailedStatement = true;
             }
 

@@ -15,9 +15,12 @@ class StatementCollectionTest extends AbstractBaseTestCase
      * @param StatementInterface[] $expected
      */
     #[DataProvider('getHandledStatementsDataProvider')]
-    public function testGetHandledStatements(StatementCollection $collection, array $expected): void
-    {
-        self::assertEquals($expected, $collection->getHandledStatements());
+    public function testGetHandledStatements(
+        StatementCollection $collection,
+        ?StatementInterface $failedStatement,
+        array $expected
+    ): void {
+        self::assertEquals($expected, $collection->getHandledStatements($failedStatement));
     }
 
     /**
@@ -40,12 +43,14 @@ class StatementCollectionTest extends AbstractBaseTestCase
         return [
             'empty' => [
                 'collection' => new StatementCollection([]),
+                'failedStatement' => null,
                 'expected' => [],
             ],
             'single statement, no failed statement' => [
                 'collection' => new StatementCollection([
                     $statements[0],
                 ]),
+                'failedStatement' => null,
                 'expected' => [
                     $statements[0],
                 ],
@@ -56,6 +61,7 @@ class StatementCollectionTest extends AbstractBaseTestCase
                     $statements[3],
                     $statements[7],
                 ]),
+                'failedStatement' => null,
                 'expected' => [
                     $statements[0],
                     $statements[3],
@@ -63,59 +69,39 @@ class StatementCollectionTest extends AbstractBaseTestCase
                 ],
             ],
             'single statement, is failed' => [
-                'collection' => (function () use ($statements) {
-                    $collection = new StatementCollection([
-                        $statements[0],
-                    ]);
-
-                    $collection->setFailedStatement($statements[0]);
-
-                    return $collection;
-                })(),
+                'collection' => new StatementCollection([
+                    $statements[0],
+                ]),
+                'failedStatement' => $statements[0],
                 'expected' => [],
             ],
             'three statements, first is failed' => [
-                'collection' => (function () use ($statements) {
-                    $collection = new StatementCollection([
-                        $statements[0],
-                        $statements[1],
-                        $statements[2],
-                    ]);
-
-                    $collection->setFailedStatement($statements[0]);
-
-                    return $collection;
-                })(),
+                'collection' => new StatementCollection([
+                    $statements[0],
+                    $statements[1],
+                    $statements[2],
+                ]),
+                'failedStatement' => $statements[0],
                 'expected' => [],
             ],
             'three statements, second is failed' => [
-                'collection' => (function () use ($statements) {
-                    $collection = new StatementCollection([
-                        $statements[0],
-                        $statements[1],
-                        $statements[2],
-                    ]);
-
-                    $collection->setFailedStatement($statements[1]);
-
-                    return $collection;
-                })(),
+                'collection' => new StatementCollection([
+                    $statements[0],
+                    $statements[1],
+                    $statements[2],
+                ]),
+                'failedStatement' => $statements[1],
                 'expected' => [
                     $statements[0],
                 ],
             ],
             'three statements, third is failed' => [
-                'collection' => (function () use ($statements) {
-                    $collection = new StatementCollection([
-                        $statements[0],
-                        $statements[1],
-                        $statements[2],
-                    ]);
-
-                    $collection->setFailedStatement($statements[2]);
-
-                    return $collection;
-                })(),
+                'collection' => new StatementCollection([
+                    $statements[0],
+                    $statements[1],
+                    $statements[2],
+                ]),
+                'failedStatement' => $statements[2],
                 'expected' => [
                     $statements[0],
                     $statements[1],

@@ -8,8 +8,6 @@ use PHPUnit\Event\Code\TestMethod;
 use PHPUnit\Event\Test\Finished;
 use PHPUnit\Event\Test\FinishedSubscriber as FinishedSubscriberInterface;
 use PHPUnit\TextUI\Output\Printer;
-use webignition\BasilPhpUnitResultPrinter\AssertionFailure;
-use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\State;
@@ -34,16 +32,6 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
 
         $testMetaData = $this->testMetaDataExtractor->extract($test);
         $statements = $testMetaData->statements;
-
-        $assertionFailure = $this->state->getAssertionFailure();
-        if ($assertionFailure instanceof AssertionFailure) {
-            $statements->setFailedStatement($assertionFailure->statement);
-        }
-
-        $expectationFailure = $this->state->getExpectationFailure();
-        if ($expectationFailure instanceof ExpectationFailure) {
-            $statements->setFailedStatement($expectationFailure->assertion);
-        }
 
         $testDataSet = null;
         $testData = $test->testData();
