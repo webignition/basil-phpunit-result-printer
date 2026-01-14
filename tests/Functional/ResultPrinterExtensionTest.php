@@ -98,6 +98,11 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-literal-assertion.yaml'),
             ],
+            'failing element is element assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsElementAssertion.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-element-assertion.yaml'),
+            ],
             'failing page property is data parameter assertion' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedPagePropertyIsDataParameterAssertionTest.php',
                 'expectedExitCode' => 1,
