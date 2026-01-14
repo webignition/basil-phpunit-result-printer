@@ -6,8 +6,6 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
-use webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests\BasilTestCase;
-use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class FailedDescendantCssXpathElementExistsAssertion extends BasilTestCase
 {
