@@ -187,15 +187,9 @@ class StepFactoryTest extends AbstractBaseTestCase
 
                     return $state;
                 })(),
-                'statements' => (function () use ($existsAssertion) {
-                    $collection = new StatementCollection([
-                        $existsAssertion,
-                    ]);
-
-                    $collection->setFailedStatement($existsAssertion);
-
-                    return $collection;
-                })(),
+                'statements' => new StatementCollection([
+                    $existsAssertion,
+                ]),
                 'data' => null,
                 'expectedStep' => new Step(
                     'step name',
@@ -230,15 +224,9 @@ class StepFactoryTest extends AbstractBaseTestCase
 
                     return $state;
                 })(),
-                'statements' => (function () use ($existsAssertion) {
-                    $collection = new StatementCollection([
-                        $existsAssertion,
-                    ]);
-
-                    $collection->setFailedStatement($existsAssertion);
-
-                    return $collection;
-                })(),
+                'statements' => new StatementCollection([
+                    $existsAssertion,
+                ]),
                 'data' => null,
                 'expectedStep' => new Step(
                     'step name',
@@ -267,17 +255,11 @@ class StepFactoryTest extends AbstractBaseTestCase
 
                     return $state;
                 })(),
-                'statements' => (function () use ($existsAssertion, $isAssertion, $includesAssertion) {
-                    $collection = new StatementCollection([
-                        $existsAssertion,
-                        $isAssertion,
-                        $includesAssertion,
-                    ]);
-
-                    $collection->setFailedStatement($includesAssertion);
-
-                    return $collection;
-                })(),
+                'statements' => new StatementCollection([
+                    $existsAssertion,
+                    $isAssertion,
+                    $includesAssertion,
+                ]),
                 'data' => null,
                 'expectedStep' => new Step(
                     'step name',
