@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\AssertionFailureSummary;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\ScalarSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\IsRegExp;
@@ -15,9 +16,7 @@ use webignition\ObjectReflector\ObjectReflector;
 
 class IsRegExpTest extends AbstractBaseTestCase
 {
-    /**
-     * @dataProvider createDataProvider
-     */
+    #[DataProvider('createDataProvider')]
     public function testCreate(string $value, SourceInterface $source): void
     {
         $summary = new IsRegExp($value, $source);
@@ -44,10 +43,9 @@ class IsRegExpTest extends AbstractBaseTestCase
     }
 
     /**
-     * @dataProvider getDataDataProvider
-     *
      * @param array<mixed> $expectedData
      */
+    #[DataProvider('getDataDataProvider')]
     public function testGetData(IsRegExp $summary, array $expectedData): void
     {
         self::assertSame($expectedData, $summary->getData());

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\AssertionFailureSummary;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\Existence;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
@@ -12,9 +13,7 @@ use webignition\ObjectReflector\ObjectReflector;
 
 class ExistenceTest extends AbstractBaseTestCase
 {
-    /**
-     * @dataProvider createDataProvider
-     */
+    #[DataProvider('createDataProvider')]
     public function testCreate(string $operator, NodeSource $source): void
     {
         $summary = new Existence($operator, $source);
@@ -37,10 +36,9 @@ class ExistenceTest extends AbstractBaseTestCase
     }
 
     /**
-     * @dataProvider getDataDataProvider
-     *
      * @param array<mixed> $expectedData
      */
+    #[DataProvider('getDataDataProvider')]
     public function testGetData(Existence $summary, array $expectedData): void
     {
         self::assertSame($expectedData, $summary->getData());

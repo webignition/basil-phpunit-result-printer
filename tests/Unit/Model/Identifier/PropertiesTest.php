@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Identifier;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\ObjectReflector\ObjectReflector;
 
 class PropertiesTest extends AbstractBaseTestCase
 {
-    /**
-     * @dataProvider createDataProvider
-     */
+    #[DataProvider('createDataProvider')]
     public function testCreate(string $type, string $locator, int $position): void
     {
         $properties = new Properties($type, $locator, $position);
@@ -54,10 +53,9 @@ class PropertiesTest extends AbstractBaseTestCase
     }
 
     /**
-     * @dataProvider getDataDataProvider
-     *
      * @param array<mixed> $expectedData
      */
+    #[DataProvider('getDataDataProvider')]
     public function testGetData(Properties $properties, array $expectedData): void
     {
         self::assertSame($expectedData, $properties->getData());
@@ -146,9 +144,7 @@ class PropertiesTest extends AbstractBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider hasAttributeDataProvider
-     */
+    #[DataProvider('hasAttributeDataProvider')]
     public function testHasAttribute(Properties $properties, bool $expectedHasAttribute): void
     {
         self::assertSame($expectedHasAttribute, $properties->hasAttribute());

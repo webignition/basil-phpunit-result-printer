@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\SourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ValueFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
@@ -22,9 +23,7 @@ class ValueFactoryTest extends AbstractBaseTestCase
         $this->factory = ValueFactory::createFactory();
     }
 
-    /**
-     * @dataProvider createDataProvider
-     */
+    #[DataProvider('createDataProvider')]
     public function testCreate(string $value, string $sourceString, ?Value $expectedValue): void
     {
         self::assertEquals($expectedValue, $this->factory->create($value, $sourceString));

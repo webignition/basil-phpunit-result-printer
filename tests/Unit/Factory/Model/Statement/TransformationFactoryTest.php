@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Statement;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilModels\Model\Action\Action;
 use webignition\BasilModels\Model\Action\ResolvedAction;
 use webignition\BasilModels\Model\Assertion\Assertion;
@@ -26,10 +27,9 @@ class TransformationFactoryTest extends AbstractBaseTestCase
     }
 
     /**
-     * @dataProvider createTransformationsDataProvider
-     *
      * @param Transformation[] $expectedTransformations
      */
+    #[DataProvider('createTransformationsDataProvider')]
     public function testCreateTransformations(StatementInterface $statement, array $expectedTransformations): void
     {
         self::assertEquals($expectedTransformations, $this->factory->createTransformations($statement));

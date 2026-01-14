@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Source;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\IdentifierFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Identifier;
 use webignition\BasilPhpUnitResultPrinter\Model\Node;
@@ -13,9 +14,7 @@ use webignition\ObjectReflector\ObjectReflector;
 
 class NodeSourceTest extends AbstractBaseTestCase
 {
-    /**
-     * @dataProvider createDataProvider
-     */
+    #[DataProvider('createDataProvider')]
     public function testCreate(Node $body): void
     {
         $node = new NodeSource($body);
@@ -39,10 +38,9 @@ class NodeSourceTest extends AbstractBaseTestCase
     }
 
     /**
-     * @dataProvider getDataDataProvider
-     *
      * @param array<mixed> $expectedData
      */
+    #[DataProvider('getDataDataProvider')]
     public function testGetData(NodeSource $source, array $expectedData): void
     {
         self::assertSame($expectedData, $source->getData());

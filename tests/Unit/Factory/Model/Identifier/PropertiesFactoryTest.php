@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Identifier;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier\PropertiesFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
@@ -19,9 +20,7 @@ class PropertiesFactoryTest extends AbstractBaseTestCase
         $this->factory = PropertiesFactory::createFactory();
     }
 
-    /**
-     * @dataProvider createDataProvider
-     */
+    #[DataProvider('createDataProvider')]
     public function testCreate(string $source, ?Properties $expectedProperties): void
     {
         self::assertEquals($expectedProperties, $this->factory->create($source));
