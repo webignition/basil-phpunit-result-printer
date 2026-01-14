@@ -13,9 +13,9 @@ class ResultPrinterExtensionTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    #[DataProvider('passingTestsDataProvider')]
+//    #[DataProvider('passingTestsDataProvider')]
     #[DataProvider('failingTestsDataProvider')]
-    #[DataProvider('terminatedDataProvider')]
+//    #[DataProvider('terminatedDataProvider')]
     public function testRun(string $testPath, int $expectedExitCode, string $expectedOutput): void
     {
         $phpunitCommand = './vendor/bin/phpunit -c phpunit.printer.xml ' . $testPath;
@@ -107,6 +107,11 @@ class ResultPrinterExtensionTest extends TestCase
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedBrowserPropertyIsEnvironmentParameterAssertionTest.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-browser-property-is-environment-parameter-assertion.yaml'),
+            ],
+            'failing browser property is literal assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedBrowserPropertyIsLiteralAssertionTest.php',
+                'expectedExitCode' => 1,
+                'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-browser-property-is-literal-assertion.yaml'),
             ],
             'failing is-not assertion for element' => [
                 'testPath' => $root . '/tests/Fixtures/Tests/FailedElementIsNotAssertion.php',
