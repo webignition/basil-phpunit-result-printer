@@ -177,26 +177,6 @@ class ResultPrinterTest extends AbstractBaseTestCase
         ];
     }
 
-    /**
-     * @return array<mixed>
-     */
-    public static function failedNoStatementsDataProvider(): array
-    {
-        return [
-            'failed, no statements' => [
-                'tests' => [
-                    BasilTestCaseFactory::create([
-                        'basilTestPath' => 'test.yml',
-                        'basilStepName' => 'step name',
-                        'status' => Status::STATUS_FAILED,
-                        'handledStatements' => [],
-                    ]),
-                ],
-                'expectedOutput' => FixtureLoader::load('/ResultPrinter/failed-no-statements.yaml', 0),
-            ],
-        ];
-    }
-
     private static function createDerivedIsRegExpAssertion(string $assertionSource): DerivedValueOperationAssertion
     {
         $assertion = AssertionParser::create()->parse($assertionSource, 0);
