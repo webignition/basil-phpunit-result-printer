@@ -118,11 +118,11 @@ class ResultPrinterExtensionTest extends TestCase
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load('/ResultPrinterExtension/failed-element-is-not-literal-assertion.yaml'),
             ],
-            'failing element matches assertion' => [
-                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementMatchesAssertion.php',
+            'failing element matches literal assertion' => [
+                'testPath' => $root . '/tests/Fixtures/Tests/FailedElementMatchesLiteralAssertion.php',
                 'expectedExitCode' => 1,
                 'expectedOutput' => FixtureLoader::load(
-                    '/ResultPrinterExtension/failed-element-matches-assertion.yaml'
+                    '/ResultPrinterExtension/failed-element-matches-literal-assertion.yaml'
                 ),
             ],
             'failing with InvalidLocatorException' => [
