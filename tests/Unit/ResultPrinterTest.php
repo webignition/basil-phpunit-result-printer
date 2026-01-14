@@ -174,23 +174,6 @@ class ResultPrinterTest extends AbstractBaseTestCase
                     '/ResultPrinter/failed-is-assertion-scalar-is-node.yaml'
                 ),
             ],
-            'failed, is assertion, node is node' => [
-                'tests' => [
-                    BasilTestCaseFactory::create([
-                        'basilTestPath' => 'test.yml',
-                        'basilStepName' => 'step name',
-                        'status' => Status::STATUS_FAILED,
-                        'handledStatements' => [
-                            $assertionParser->parse('$".actual" is $".expected"', 0),
-                        ],
-                        'expectedValue' => 'expected value',
-                        'examinedValue' => 'actual value',
-                    ]),
-                ],
-                'expectedOutput' => FixtureLoader::load(
-                    '/ResultPrinter/failed-is-assertion-node-is-node.yaml'
-                ),
-            ],
         ];
     }
 
