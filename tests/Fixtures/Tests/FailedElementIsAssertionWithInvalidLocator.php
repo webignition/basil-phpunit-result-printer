@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
 use Facebook\WebDriver\Exception\InvalidSelectorException;
+use SmartAssert\DomIdentifier\ElementIdentifier;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
-use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class FailedElementIsAssertionWithInvalidLocator extends BasilTestCase
