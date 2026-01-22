@@ -44,7 +44,7 @@
         "symfony/yaml": "^6 || ^7 || ^8",
         "webignition/base-basil-test-case": "^14",
         "webignition/basil-identifier-analyser": ">=2.0,<3",
-        "webignition/basil-models": "^12.0",
+        "webignition/basil-models": "^15",
         "webignition/basil-runner-documents": "^3",
         "webignition/basil-value-type-identifier": ">=0.3,<1",
         "webignition/symfony-panther-dom-crawler-navigator": "^3",
