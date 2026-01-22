@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Statement;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use webignition\BasilModels\Model\Action\Action;
-use webignition\BasilModels\Model\Action\ResolvedAction;
-use webignition\BasilModels\Model\Assertion\AssertionInterface;
-use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
-use webignition\BasilModels\Model\StatementInterface as StatementModelInterface;
+use webignition\BasilModels\Model\Statement\Action\Action;
+use webignition\BasilModels\Model\Statement\Action\ResolvedAction;
+use webignition\BasilModels\Model\Statement\Assertion\AssertionInterface;
+use webignition\BasilModels\Model\Statement\Assertion\DerivedValueOperationAssertion;
+use webignition\BasilModels\Model\Statement\StatementInterface as StatementModelInterface;
 use webignition\BasilModels\Parser\ActionParser;
 use webignition\BasilModels\Parser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;

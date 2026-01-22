@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use webignition\BasilModels\Model\Action\ResolvedAction;
-use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
+use webignition\BasilModels\Model\Statement\Action\ResolvedAction;
+use webignition\BasilModels\Model\Statement\Assertion\DerivedValueOperationAssertion;
 use webignition\BasilModels\Parser\ActionParser;
 use webignition\BasilModels\Parser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure;

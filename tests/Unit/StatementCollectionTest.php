@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Unit;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use webignition\BasilModels\Model\StatementInterface;
+use webignition\BasilModels\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\StatementCollection;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 

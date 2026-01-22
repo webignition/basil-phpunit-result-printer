@@ -7,9 +7,9 @@ namespace webignition\BasilPhpUnitResultPrinter;
 use PHPUnit\Event\Code\TestMethod;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
-use webignition\BasilModels\Model\StatementFactory;
-use webignition\BasilModels\Model\StatementInterface;
-use webignition\BasilModels\Model\UnknownEncapsulatedStatementException;
+use webignition\BasilModels\Model\Statement\InvalidStatementDataException;
+use webignition\BasilModels\Model\Statement\StatementFactory;
+use webignition\BasilModels\Model\Statement\UnknownEncapsulatedStatementException;
 
 readonly class TestMetaDataExtractor
 {
@@ -33,12 +33,11 @@ readonly class TestMetaDataExtractor
 
         foreach ($statementsAsStrings as $statementAsString) {
             try {
-                $statement = $this->statementFactory->createFromJson($statementAsString);
-                if ($statement instanceof StatementInterface) {
-                    $statements[] = $statement;
-                }
+                $statements[] = $this->statementFactory->createFromJson($statementAsString);
             } catch (UnknownEncapsulatedStatementException) {
                 // Intentionally ignore UnknownEncapsulatedStatementException
+            } catch (InvalidStatementDataException) {
+                // Intentionally ignore InvalidStatementDataException
             }
         }
 

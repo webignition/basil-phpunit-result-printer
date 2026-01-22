@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter;
 
-use webignition\BasilModels\Model\StatementFactory;
-use webignition\BasilModels\Model\StatementInterface;
-use webignition\BasilModels\Model\UnknownEncapsulatedStatementException;
+use webignition\BasilModels\Model\Statement\StatementFactory;
+use webignition\BasilModels\Model\Statement\StatementInterface;
+use webignition\BasilModels\Model\Statement\UnknownEncapsulatedStatementException;
 
 readonly class AssertionFailureExtractor
 {
