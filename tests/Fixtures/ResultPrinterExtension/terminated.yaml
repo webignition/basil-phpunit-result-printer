@@ -8,5 +8,5 @@ payload:
   trace:
     -
       path: /tests/Fixtures/Tests/ThrowsRuntimeExceptionInSetupBeforeClassTest.php
-      line_number: 16
+      line_number: 13
 ...

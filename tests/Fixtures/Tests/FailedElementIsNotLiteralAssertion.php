@@ -27,24 +27,22 @@ class FailedElementIsNotLiteralAssertion extends BasilTestCase
     ])]
     public function testStep1(): void
     {
-        $expectedValue = 'assert-not-equals-value';
-        $examinedValue = 'assert-not-equals-value';
+        $statement_0 = ' {
+            "statement-type": "assertion",
+            "source": "$\".selector\" is-not \"value\"",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "value": "\"value\"",
+            "operator": "is-not"      
+        }';
+
+        $expected = 'assert-not-equals-value';
+        $examined = 'assert-not-equals-value';
 
         $this->assertNotEquals(
-            $expectedValue,
-            $examinedValue,
-            '{
-                    "statement": {
-                        "statement-type": "assertion",
-                        "source": "$\".selector\" is-not \"value\"",
-                        "index": 0,
-                        "identifier": "$\".selector\"",
-                        "value": "\"value\"",
-                        "operator": "is-not"      
-                    },
-                    "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
-                    "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"
-                }'
+            $expected,
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_0, $expected, $examined),
         );
     }
 }

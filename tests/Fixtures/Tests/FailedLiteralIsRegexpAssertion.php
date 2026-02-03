@@ -27,27 +27,28 @@ class FailedLiteralIsRegexpAssertion extends BasilTestCase
     ])]
     public function testStep1(): void
     {
-        $this->assertFalse(
-            true,
-            '{
-                "statement": {
-                    "container": {
-                        "value": "\"not a regexp\"",
-                        "operator": "is-regexp",
-                        "type": "derived-value-operation-assertion"
-                    },
-                    "statement": {
-                        "statement-type": "assertion",
-                        "source": "$page.title matches \"not a regexp\"",
-                        "index": 0,
-                        "identifier": "$page.title",
-                        "value": "\"not a regexp\"",
-                        "operator": "matches"
-                    }
-                },
-                "expected": true,
-                "examined": "not a regexp"
-            }'
+        $statement_0 = '{
+            "container": {
+                "value": "\"not a regexp\"",
+                "operator": "is-regexp",
+                "type": "derived-value-operation-assertion"
+            },
+            "statement": {
+                "statement-type": "assertion",
+                "source": "$page.title matches \"not a regexp\"",
+                "index": 0,
+                "identifier": "$page.title",
+                "value": "\"not a regexp\"",
+                "operator": "matches"
+            }
+        }';
+
+        $expected = false;
+        $examined = 'not a regexp';
+
+        $this->assertTrue(
+            $expected,
+            (string) self::$messageFactory->createAssertionMessage($statement_0, $expected, $examined),
         );
     }
 }

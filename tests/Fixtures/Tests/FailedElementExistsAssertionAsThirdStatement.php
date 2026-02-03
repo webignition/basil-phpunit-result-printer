@@ -7,7 +7,6 @@ namespace Fixtures\Tests;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 use webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests\BasilTestCase;
-use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class FailedElementExistsAssertionAsThirdStatement extends BasilTestCase
 {
@@ -45,60 +44,11 @@ class FailedElementExistsAssertionAsThirdStatement extends BasilTestCase
     public function testStep1(): void
     {
         // $".selector" exists <- click $".selector"
-        try {
-            // $".selector" exists <- click $".selector"
-        } catch (InvalidLocatorException $exception) {
-            $locator = $exception->getElementIdentifier()->getLocator();
-            $type = $exception->getElementIdentifier()->isCssSelector() ? 'css' : 'xpath';
-            $this->fail('{
-                "statement": {
-                    "container": {
-                        "value": "$\".selector\"",
-                        "operator": "exists",
-                        "type": "derived-value-operation-assertion"
-                    },
-                    "statement": {
-                        "statement-type": "action",
-                        "source": "click $\".selector\"",
-                        "index": 0,
-                        "identifier": "$\".selector\"",
-                        "type": "click",
-                        "arguments": "$\".selector\""
-                    }
-                },
-                "reason": "locator-invalid",
-                "exception": {
-                    "class": "' . addcslashes($exception::class, '"\\') . '",
-                    "code": ' . $exception->getCode() . ',
-                    "message": "' . addcslashes($exception->getMessage(), '"\\') . '"
-                },
-                "context": {
-                    "locator": "' . addcslashes($locator, '"\\') . '",
-                    "type": "' . addcslashes($type, '"\\') . '"
-                }
-            }');
-        }
+        // ...
+
         $this->assertTrue(
             true,
-            '{
-                "statement": {
-                    "container": {
-                        "value": "$\".selector\"",
-                        "operator": "exists",
-                        "type": "derived-value-operation-assertion"
-                    },
-                    "statement": {
-                        "statement-type": "action",
-                        "source": "click $\".selector\"",
-                        "index": 0,
-                        "identifier": "$\".selector\"",
-                        "type": "click",
-                        "arguments": "$\".selector\""
-                    }                
-                },
-                "expected": true' . ',
-                "examined": true' . '
-            }'
+            '...'
         );
 
         // click $".selector"
@@ -123,35 +73,27 @@ class FailedElementExistsAssertionAsThirdStatement extends BasilTestCase
             }');
         }
 
-        self::assertTrue(
-            true,
-            '{
-                "statement": {
-                    "statement-type": "assertion",
-                    "source": "$page.url is \"http:\/\/www.example.com\"",
-                    "identifier": "$page.url",
-                    "value": "\"http:\/\/www.example.com\"",
-                    "operator": "is",
-                    "index": 1               
-                },
-                "expected": true' . ',
-                "examined": true' . '
-            }'
-        );
+        // $page.url is "http://www.example.com"
 
         self::assertTrue(
-            false,
-            '{
-                "statement": {
-                    "statement-type": "assertion",
-                    "source": "$\".selector\" exists",
-                    "index": 2,
-                    "identifier": "$\".selector\"",
-                    "operator": "exists"
-                },
-                "expected": true,
-                "examined": false
-            }'
+            true,
+            '...'
+        );
+
+        $statement_2 = '{
+            "statement-type": "assertion",
+            "source": "$\".selector\" exists",
+            "index": 2,
+            "identifier": "$\".selector\"",
+            "operator": "exists"
+        }';
+
+        $expected = true;
+        $examined = false;
+
+        self::assertTrue(
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_2, $expected, $examined),
         );
     }
 
@@ -170,14 +112,7 @@ class FailedElementExistsAssertionAsThirdStatement extends BasilTestCase
     {
         self::assertTrue(
             true,
-            '{
-                "statement-type": "assertion",
-                "source": "$page.title is \"Foo\"",
-                "identifier": "$page.title",
-                "value": "\"Foo\"",
-                "operator": "is",
-                "index": 0
-            }'
+            '...'
         );
     }
 }

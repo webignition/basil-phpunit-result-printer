@@ -26,19 +26,20 @@ class FailedAttributeExistsAssertion extends BasilTestCase
     ])]
     public function testStep1(): void
     {
+        $statement_0 = '{
+            "statement-type": "assertion",
+            "source": "$\".selector\".attribute_name exists",
+            "index": 0,
+            "identifier": "$\".selector\".attribute_name",
+            "operator": "exists"
+        }';
+
+        $expected = true;
+        $examined = false;
+
         self::assertTrue(
-            false,
-            '{
-                "statement": {
-                    "statement-type": "assertion",
-                    "source": "$\".selector\".attribute_name exists",
-                    "index": 0,
-                    "identifier": "$\".selector\".attribute_name",
-                    "operator": "exists"
-                },
-                "expected": true,
-                "examined": false
-            }'
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_0, $expected, $examined),
         );
     }
 }

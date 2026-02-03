@@ -27,24 +27,22 @@ class FailedElementMatchesLiteralAssertion extends BasilTestCase
     ])]
     public function testStep1(): void
     {
-        $expectedValue = '/pattern/';
-        $examinedValue = 'assert-matches-regular-expression-expected-value';
+        $statement_0 = '{
+            "statement-type": "assertion",
+            "source": "$\".selector\" matches \"\/^value\/\"",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "value": "\"\/^value\/\"",
+            "operator": "matches"               
+        }';
+
+        $expected = '/pattern/';
+        $examined = 'assert-matches-regular-expression-expected-value';
 
         $this->assertMatchesRegularExpression(
-            $expectedValue,
-            $examinedValue,
-            '{
-                "statement": {
-                    "statement-type": "assertion",
-                    "source": "$\".selector\" matches \"\/^value\/\"",
-                    "index": 0,
-                    "identifier": "$\".selector\"",
-                    "value": "\"\/^value\/\"",
-                    "operator": "matches"               
-                },
-                "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
-                "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"
-            }'
+            $expected,
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_0, $expected, $examined),
         );
     }
 }

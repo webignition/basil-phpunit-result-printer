@@ -200,7 +200,6 @@ class StepFactoryTest extends AbstractBaseTestCase
                     $state->setAssertionFailure(
                         new AssertionFailure(
                             $existsAssertion,
-                            'locator-invalid',
                             new AssertionFailureException(
                                 InvalidLocatorException::class,
                                 0,

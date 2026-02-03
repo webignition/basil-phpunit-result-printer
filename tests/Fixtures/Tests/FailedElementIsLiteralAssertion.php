@@ -27,24 +27,22 @@ class FailedElementIsLiteralAssertion extends BasilTestCase
     ])]
     public function testStep1(): void
     {
-        $expectedValue = 'assert-equals-expected-value';
-        $examinedValue = 'assert-equals-actual-value';
+        $statement_0 = '{
+            "statement-type": "assertion",
+            "source": "$\".selector\" is \"value\"",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "value": "\"value\"",
+            "operator": "is"
+        }';
+
+        $expected = 'assert-equals-expected-value';
+        $examined = 'assert-equals-actual-value';
 
         $this->assertEquals(
-            $expectedValue,
-            $examinedValue,
-            '{
-                    "statement": {
-                        "statement-type": "assertion",
-                        "source": "$\".selector\" is \"value\"",
-                        "index": 0,
-                        "identifier": "$\".selector\"",
-                        "value": "\"value\"",
-                        "operator": "is"          
-                    },
-                    "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
-                    "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"
-                }'
+            $expected,
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_0, $expected, $examined),
         );
     }
 }

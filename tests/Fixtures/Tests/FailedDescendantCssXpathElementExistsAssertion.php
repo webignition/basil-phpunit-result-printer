@@ -26,19 +26,20 @@ class FailedDescendantCssXpathElementExistsAssertion extends BasilTestCase
     ])]
     public function testStep1(): void
     {
+        $statement_0 = '{
+            "statement-type": "assertion",
+            "source": "$\"form\" >> $\"/input\" exists",
+            "index": 0,
+            "identifier": "$\"form\" >> $\"/input\"",
+            "operator": "exists"
+        }';
+
+        $expected = true;
+        $examined = false;
+
         self::assertTrue(
-            false,
-            '{
-                "statement": {
-                    "statement-type": "assertion",
-                    "source": "$\"form\" >> $\"/input\" exists",
-                    "index": 0,
-                    "identifier": "$\"form\" >> $\"/input\"",
-                    "operator": "exists"
-                },
-                "expected": true,
-                "examined": false
-            }'
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_0, $expected, $examined),
         );
     }
 }

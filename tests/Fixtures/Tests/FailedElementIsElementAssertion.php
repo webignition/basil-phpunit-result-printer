@@ -27,24 +27,22 @@ class FailedElementIsElementAssertion extends BasilTestCase
     ])]
     public function testStep1(): void
     {
-        $expectedValue = 'expected value';
-        $examinedValue = 'actual value';
+        $statement_0 = '{
+            "statement-type": "assertion",
+            "source": "$\".actual\" is $\".expected\"",
+            "index": 0,
+            "identifier": "$\".actual\"",
+            "value": "$\".expected\"",
+            "operator": "is"         
+        }';
+
+        $expected = 'expected value';
+        $examined = 'actual value';
 
         $this->assertEquals(
-            $expectedValue,
-            $examinedValue,
-            '{
-                    "statement": {
-                        "statement-type": "assertion",
-                        "source": "$\".actual\" is $\".expected\"",
-                        "index": 0,
-                        "identifier": "$\".actual\"",
-                        "value": "$\".expected\"",
-                        "operator": "is"         
-                    },
-                    "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
-                    "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"
-                }'
+            $expected,
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_0, $expected, $examined),
         );
     }
 }

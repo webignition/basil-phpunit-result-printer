@@ -27,27 +27,28 @@ class FailedElementIsRegexpAssertion extends BasilTestCase
     ])]
     public function testStep1(): void
     {
-        $this->assertFalse(
-            true,
-            '{
-                "statement": {
-                    "container": {
-                        "value": "$\".selector\"",
-                        "operator": "is-regexp",
-                        "type": "derived-value-operation-assertion"
-                    },
-                    "statement": {
-                        "statement-type": "assertion",
-                        "source": "$page.title matches $\".selector\"",
-                        "index": 0,
-                        "identifier": "$page.title",
-                        "value": "$\".selector\"",
-                        "operator": "matches"
-                    }
-                },
-                "expected": true,
-                "examined": "element value"
-            }'
+        $statement_0 = '{
+            "container": {
+                "value": "$\".selector\"",
+                "operator": "is-regexp",
+                "type": "derived-value-operation-assertion"
+            },
+            "statement": {
+                "statement-type": "assertion",
+                "source": "$page.title matches $\".selector\"",
+                "index": 0,
+                "identifier": "$page.title",
+                "value": "$\".selector\"",
+                "operator": "matches"
+            }
+        }';
+
+        $expected = false;
+        $examined = 'element value';
+
+        $this->assertTrue(
+            $expected,
+            (string) self::$messageFactory->createAssertionMessage($statement_0, $expected, $examined),
         );
     }
 }
