@@ -42,7 +42,7 @@
         "phpunit/phpunit": "^10",
         "smartassert/dom-identifier": "^0.2.0",
         "symfony/yaml": "^6 || ^7 || ^8",
-        "webignition/base-basil-test-case": "^14",
+        "webignition/base-basil-test-case": "^17.0",
         "webignition/basil-identifier-analyser": ">=2.0,<3",
         "webignition/basil-models": "^15",
         "webignition/basil-runner-documents": "^3",
