@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter;
+namespace webignition\BasilPhpUnitResultPrinter\AssertionFailure;
 
 use webignition\BasilModels\Model\Statement\StatementInterface;
 
@@ -13,7 +13,7 @@ readonly class AssertionFailure
      */
     public function __construct(
         public StatementInterface $statement,
-        public AssertionFailureException $exception,
+        public Exception $exception,
         public array $context = [],
     ) {}
 }

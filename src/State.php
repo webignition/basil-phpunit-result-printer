@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter;
 
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailure;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailure\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 
 class State
