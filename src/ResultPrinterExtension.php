@@ -11,6 +11,8 @@ use PHPUnit\TextUI\Configuration\Configuration;
 use PHPUnit\TextUI\Output\DefaultPrinter;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\Statement\StatementFactory;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailureExceptionExtractor;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailureExtractor;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\BeforeFirstTestMethodErroredSubscriber;

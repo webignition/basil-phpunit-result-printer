@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 
-use webignition\BasilPhpUnitResultPrinter\AssertionFailureException;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailureException;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\InvalidLocatorExceptionData;
