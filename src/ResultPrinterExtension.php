@@ -11,7 +11,7 @@ use PHPUnit\TextUI\Configuration\Configuration;
 use PHPUnit\TextUI\Output\DefaultPrinter;
 use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\Statement\StatementFactory;
-use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailureExtractor;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailureFactory;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure\ExceptionFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
@@ -55,7 +55,7 @@ class ResultPrinterExtension implements Extension
             new FailedSubscriber(
                 $this->state,
                 new StatementMessageParser(),
-                new AssertionFailureExtractor(
+                new AssertionFailureFactory(
                     StatementFactory::createFactory(),
                     new ExceptionFactory(),
                 ),

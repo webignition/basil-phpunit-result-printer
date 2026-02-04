@@ -8,7 +8,7 @@ use PHPUnit\Event\Code\TestMethod;
 use PHPUnit\Event\Test\Failed;
 use PHPUnit\Event\Test\FailedSubscriber as FailedSubscriberInterface;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailure;
-use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailureExtractor;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailureFactory;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailureExtractor;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
@@ -20,7 +20,7 @@ readonly class FailedSubscriber implements FailedSubscriberInterface
     public function __construct(
         private State $state,
         private StatementMessageParser $statementMessageParser,
-        private AssertionFailureExtractor $assertionFailureExtractor,
+        private AssertionFailureFactory $assertionFailureFactory,
         private ExpectationFailureExtractor $expectationFailureExtractor,
     ) {}
 
@@ -33,7 +33,7 @@ readonly class FailedSubscriber implements FailedSubscriberInterface
 
         $parsedStatementMessage = $this->statementMessageParser->parse($event->throwable()->message());
 
-        $assertionFailure = $this->assertionFailureExtractor->extract($parsedStatementMessage['data']);
+        $assertionFailure = $this->assertionFailureFactory->create($parsedStatementMessage['data']);
         if ($assertionFailure instanceof AssertionFailure) {
             $this->state->setAssertionFailure($assertionFailure);
         }
