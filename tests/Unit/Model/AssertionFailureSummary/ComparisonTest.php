@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\AssertionFailureSummary;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\ValueFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\AssertionFailureSummary\Comparison;
 use webignition\BasilPhpUnitResultPrinter\Model\Value;
@@ -12,9 +13,7 @@ use webignition\ObjectReflector\ObjectReflector;
 
 class ComparisonTest extends AbstractBaseTestCase
 {
-    /**
-     * @dataProvider createDataProvider
-     */
+    #[DataProvider('createDataProvider')]
     public function testCreate(string $operator, Value $expected, Value $actual): void
     {
         $summary = new Comparison($operator, $expected, $actual);
@@ -39,10 +38,9 @@ class ComparisonTest extends AbstractBaseTestCase
     }
 
     /**
-     * @dataProvider getDataDataProvider
-     *
      * @param array<mixed> $expectedData
      */
+    #[DataProvider('getDataDataProvider')]
     public function testGetData(Comparison $summary, array $expectedData): void
     {
         self::assertSame($expectedData, $summary->getData());

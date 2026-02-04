@@ -1,0 +1,32 @@
+---
+type: step
+payload:
+  name: 'step one'
+  status: failed
+  statements:
+    -
+      type: assertion
+      source: '$page.title is $".selector"'
+      status: failed
+      summary:
+        operator: is
+        expected:
+          value: 'expected value'
+          source:
+            type: node
+            body:
+              type: element
+              identifier:
+                source: '$".selector"'
+                properties:
+                  type: css
+                  locator: .selector
+                  position: 1
+        actual:
+          value: 'actual value'
+          source:
+            type: scalar
+            body:
+              type: page_property
+              value: $page.title
+...

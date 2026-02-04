@@ -1,8 +1,0 @@
----
-type: exception
-payload:
-  step: step one
-  class: RuntimeException
-  message: 'Exception thrown in first step'
-  code: 123
-...

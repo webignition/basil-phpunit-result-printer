@@ -1,8 +1,0 @@
----
-type: exception
-payload:
-  step: null
-  class: RuntimeException
-  message: 'Exception thrown in setUpBeforeClass'
-  code: 456
-...

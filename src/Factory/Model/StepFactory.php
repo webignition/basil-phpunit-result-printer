@@ -4,108 +4,123 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 
-use webignition\BaseBasilTestCase\BasilTestCaseInterface;
-use webignition\BasilModels\Model\Action\ActionInterface;
-use webignition\BasilModels\Model\Assertion\AssertionInterface;
-use webignition\BasilModels\Model\DataSet\DataSetInterface;
+use webignition\BasilModels\Model\Statement\Action\ActionInterface;
+use webignition\BasilModels\Model\Statement\Assertion\Assertion;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailure;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailure\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
+use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInterface;
+use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\UnknownExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
+use webignition\BasilPhpUnitResultPrinter\State;
+use webignition\BasilPhpUnitResultPrinter\StatementCollection;
 use webignition\BasilRunnerDocuments\Step;
+use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
-class StepFactory
+readonly class StepFactory
 {
     public function __construct(
         private StatementFactory $statementFactory,
-        private ExceptionDataFactory $exceptionDataFactory
+        private ExceptionDataFactory $exceptionDataFactory,
     ) {}
 
     public static function createFactory(): self
     {
         return new StepFactory(
             StatementFactory::createFactory(),
-            ExceptionDataFactory::createFactory()
+            ExceptionDataFactory::createFactory(),
         );
     }
 
-    public function create(BasilTestCaseInterface $testCase): Step
+    /**
+     * @param null|array<mixed> $data
+     */
+    public function create(string $stepName, State $state, StatementCollection $statements, ?array $data): Step
     {
         return new Step(
-            $testCase->getBasilStepName(),
-            (string) new Status($testCase->getStatus()),
-            $this->createStatements($testCase),
-            $this->createData($testCase)
+            $stepName,
+            (string) $state->getStatus(),
+            $this->createStatements(
+                $statements,
+                $state->getExpectationFailure(),
+                $state->getAssertionFailure(),
+            ),
+            $data,
         );
     }
 
     /**
      * @return StatementInterface[]
      */
-    private function createStatements(BasilTestCaseInterface $testCase): array
-    {
+    private function createStatements(
+        StatementCollection $statementCollection,
+        ?ExpectationFailure $expectationFailure,
+        ?AssertionFailure $assertionFailure,
+    ): array {
+        $failedStatement = null;
+
+        if ($assertionFailure instanceof AssertionFailure) {
+            $failedStatement = $assertionFailure->statement;
+        }
+
+        if ($expectationFailure instanceof ExpectationFailure) {
+            $failedStatement = $expectationFailure->assertion;
+        }
+
         /** @var StatementInterface[] $statements */
         $statements = [];
 
-        $failedStatement = null;
-        $handledStatements = $testCase->getHandledStatements();
-
-        if (Status::STATUS_PASSED !== $testCase->getStatus()) {
-            $failedStatement = array_pop($handledStatements);
-        }
-
-        $passedStatements = $handledStatements;
-
+        $passedStatements = $statementCollection->getHandledStatements($failedStatement);
         foreach ($passedStatements as $passedStatement) {
-            if ($passedStatement instanceof ActionInterface) {
-                $statements[] = $this->statementFactory->createForPassedAction($passedStatement);
+            $statements[] = $this->statementFactory->create($passedStatement, new Status(Status::STATUS_PASSED));
+        }
+
+        if ($assertionFailure instanceof AssertionFailure) {
+            if ($failedStatement instanceof ActionInterface) {
+                $statement = $this->statementFactory->create($failedStatement, new Status(Status::STATUS_FAILED));
+                $exception = $assertionFailure->exception;
+
+                $statement = $statement->withExceptionData(
+                    new UnknownExceptionData($exception->class, $exception->message)
+                );
+
+                $statements[] = $statement;
             }
 
-            if ($passedStatement instanceof AssertionInterface) {
-                $statements[] = $this->statementFactory->createForPassedAssertion($passedStatement);
+            if ($failedStatement instanceof Assertion) {
+                $statement = $this->statementFactory->createForAssertionFailure($failedStatement);
+                $exception = $assertionFailure->exception;
+                $exceptionData = new UnknownExceptionData($exception->class, $exception->message);
+
+                if (InvalidLocatorException::class === $exception->class) {
+                    $locator = $assertionFailure->context['locator'] ?? null;
+                    $locator = is_string($locator) ? $locator : null;
+
+                    $type = $assertionFailure->context['type'] ?? null;
+                    $type = is_string($type) ? $type : null;
+
+                    if (is_string($locator) && is_string($type)) {
+                        $exceptionData = $this->exceptionDataFactory->createForInvalidLocator($locator, $type);
+                    }
+                }
+
+                if ($exceptionData instanceof ExceptionDataInterface) {
+                    $statement = $statement->withExceptionData($exceptionData);
+                }
+
+                $statements[] = $statement;
             }
         }
 
-        if ($failedStatement instanceof ActionInterface) {
-            $statements[] = $this->statementFactory->createForFailedAction($failedStatement);
-        }
-
-        if ($failedStatement instanceof AssertionInterface) {
-            $statement = $this->statementFactory->createForFailedAssertion(
-                $failedStatement,
-                (string) $testCase->getExpectedValue(),
-                (string) $testCase->getExaminedValue()
-            );
+        if ($expectationFailure instanceof ExpectationFailure) {
+            $statement = $this->statementFactory->createForExpectationFailure($expectationFailure);
 
             if ($statement instanceof StatementInterface) {
                 $statements[] = $statement;
             }
         }
 
-        $lastException = $testCase->getLastException();
-        if ($lastException instanceof \Throwable) {
-            if (count($statements) > 0) {
-                $finalStatement = array_pop($statements);
-
-                $exceptionData = $this->exceptionDataFactory->create($lastException);
-                $finalStatement = $finalStatement->withExceptionData($exceptionData);
-                $statements[] = $finalStatement;
-            }
-        }
-
         return $statements;
-    }
-
-    /**
-     * @return null|array<mixed>
-     */
-    private function createData(BasilTestCaseInterface $testCase): ?array
-    {
-        $dataSet = $testCase->getCurrentDataSet();
-
-        if ($dataSet instanceof DataSetInterface) {
-            return $dataSet->getData();
-        }
-
-        return null;
     }
 }

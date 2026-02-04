@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\ExceptionData;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
@@ -12,9 +13,7 @@ use webignition\ObjectReflector\ObjectReflector;
 
 class InvalidLocatorExceptionDataTest extends AbstractBaseTestCase
 {
-    /**
-     * @dataProvider createDataProvider
-     */
+    #[DataProvider('createDataProvider')]
     public function testCreate(string $type, string $locator, NodeSource $source): void
     {
         $invalidLocatorExceptionData = new InvalidLocatorExceptionData($type, $locator, $source);
@@ -42,10 +41,9 @@ class InvalidLocatorExceptionDataTest extends AbstractBaseTestCase
     }
 
     /**
-     * @dataProvider getDataDataProvider
-     *
      * @param array<mixed> $expectedData
      */
+    #[DataProvider('getDataDataProvider')]
     public function testGetData(InvalidLocatorExceptionData $invalidLocatorExceptionData, array $expectedData): void
     {
         self::assertSame($expectedData, $invalidLocatorExceptionData->getData());

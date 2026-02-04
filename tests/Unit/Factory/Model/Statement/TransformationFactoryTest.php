@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Factory\Model\Statement;
 
-use webignition\BasilModels\Model\Action\Action;
-use webignition\BasilModels\Model\Action\ResolvedAction;
-use webignition\BasilModels\Model\Assertion\Assertion;
-use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
-use webignition\BasilModels\Model\Assertion\ResolvedAssertion;
-use webignition\BasilModels\Model\StatementInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use webignition\BasilModels\Model\Statement\Action\Action;
+use webignition\BasilModels\Model\Statement\Action\ResolvedAction;
+use webignition\BasilModels\Model\Statement\Assertion\Assertion;
+use webignition\BasilModels\Model\Statement\Assertion\DerivedValueOperationAssertion;
+use webignition\BasilModels\Model\Statement\Assertion\ResolvedAssertion;
+use webignition\BasilModels\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\TransformationFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\Transformation;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
@@ -26,10 +27,9 @@ class TransformationFactoryTest extends AbstractBaseTestCase
     }
 
     /**
-     * @dataProvider createTransformationsDataProvider
-     *
      * @param Transformation[] $expectedTransformations
      */
+    #[DataProvider('createTransformationsDataProvider')]
     public function testCreateTransformations(StatementInterface $statement, array $expectedTransformations): void
     {
         self::assertEquals($expectedTransformations, $this->factory->createTransformations($statement));
@@ -42,18 +42,21 @@ class TransformationFactoryTest extends AbstractBaseTestCase
     {
         $clickAction = new Action(
             'click $".selector"',
+            0,
             'click',
             '$".selector'
         );
 
         $existsAssertion = new Assertion(
             '$".selector" exists',
+            0,
             '$".selector"',
             'exists'
         );
 
         $unresolvedIsAssertion = new Assertion(
             '$page_import_name.elements.selector is "value"',
+            0,
             '$page_import_name.elements.selector',
             'is',
             '"value"'
@@ -61,6 +64,7 @@ class TransformationFactoryTest extends AbstractBaseTestCase
 
         $unresolvedClickAction = new Action(
             'click $page_import_name.elements.selector',
+            0,
             'click',
             '$page_import_name.elements.selector',
             '$page_import_name.elements.selector'

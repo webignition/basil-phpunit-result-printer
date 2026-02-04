@@ -1,0 +1,26 @@
+---
+type: step
+payload:
+  name: 'step one'
+  status: failed
+  statements:
+    -
+      type: assertion
+      source: '$".selector" exists'
+      status: failed
+      exception:
+        type: invalid-locator
+        body:
+          type: css
+          locator: '$".selector"'
+          source:
+            type: node
+            body:
+              type: element
+              identifier:
+                source: '$".selector"'
+                properties:
+                  type: css
+                  locator: .selector
+                  position: 1
+...

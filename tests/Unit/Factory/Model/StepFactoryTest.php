@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Tests\Unit\Model\Factory;
 
-use Facebook\WebDriver\Exception\InvalidSelectorException;
-use webignition\BaseBasilTestCase\BasilTestCaseInterface;
-use webignition\BasilModels\Model\Action\ResolvedAction;
-use webignition\BasilModels\Model\Assertion\DerivedValueOperationAssertion;
-use webignition\BasilModels\Model\DataSet\DataSet;
+use PHPUnit\Framework\Attributes\DataProvider;
+use webignition\BasilModels\Model\Statement\Action\ResolvedAction;
+use webignition\BasilModels\Model\Statement\Assertion\DerivedValueOperationAssertion;
 use webignition\BasilModels\Parser\ActionParser;
 use webignition\BasilModels\Parser\AssertionParser;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailure;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure\Exception;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailure\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
-use webignition\BasilPhpUnitResultPrinter\Model\Statement\FailedAssertionStatement;
 use webignition\BasilPhpUnitResultPrinter\Model\Statement\StatementInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
-use webignition\BasilPhpUnitResultPrinter\Tests\Services\BasilTestCaseFactory;
+use webignition\BasilPhpUnitResultPrinter\State;
+use webignition\BasilPhpUnitResultPrinter\StatementCollection;
 use webignition\BasilPhpUnitResultPrinter\Tests\Unit\AbstractBaseTestCase;
 use webignition\BasilRunnerDocuments\Step;
-use webignition\DomElementIdentifier\ElementIdentifier;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class StepFactoryTest extends AbstractBaseTestCase
@@ -32,16 +32,23 @@ class StepFactoryTest extends AbstractBaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->factory = StepFactory::createFactory();
     }
 
     /**
-     * @dataProvider createDataProvider
+     * @param null|array<mixed> $data
      */
-    public function testCreate(BasilTestCaseInterface $testCase, Step $expectedStep): void
-    {
-        self::assertEquals($expectedStep, $this->factory->create($testCase));
+    #[DataProvider('createDataProvider')]
+    public function testCreate(
+        string $stepName,
+        State $state,
+        StatementCollection $statements,
+        ?array $data,
+        Step $expectedStep,
+    ): void {
+        $step = $this->factory->create($stepName, $state, $statements, $data);
+
+        self::assertEquals($expectedStep, $step);
     }
 
     /**
@@ -54,11 +61,11 @@ class StepFactoryTest extends AbstractBaseTestCase
         $actionParser = ActionParser::create();
         $assertionParser = AssertionParser::create();
 
-        $clickAction = $actionParser->parse('click $".selector"');
-        $unresolvedClickAction = $actionParser->parse('click $page_import_name.elements.selector');
+        $clickAction = $actionParser->parse('click $".selector"', 0);
+        $unresolvedClickAction = $actionParser->parse('click $page_import_name.elements.selector', 0);
         $resolvedClickAction = new ResolvedAction($unresolvedClickAction, '$".selector"');
 
-        $existsAssertion = $assertionParser->parse('$".selector" exists');
+        $existsAssertion = $assertionParser->parse('$".selector" exists', 0);
         $derivedExistsAssertion = new DerivedValueOperationAssertion($clickAction, '$".selector"', 'exists');
         $derivedResolvedExistsAssertion = new DerivedValueOperationAssertion(
             $resolvedClickAction,
@@ -66,124 +73,159 @@ class StepFactoryTest extends AbstractBaseTestCase
             'exists'
         );
 
-        $isAssertion = $assertionParser->parse('$".selector" is "value"');
-        $includesAssertion = $assertionParser->parse('$page.title includes "expected"');
-        $isAssertionWithData = $assertionParser->parse('$".selector" is $data.expected_value');
+        $isAssertion = $assertionParser->parse('$".selector" is "value"', 1);
+        $includesAssertion = $assertionParser->parse('$page.title includes "expected"', 2);
+        $isAssertionWithData = $assertionParser->parse('$".selector" is $data.expected_value', 0);
 
         $statusPassedLabel = (string) new Status(Status::STATUS_PASSED);
         $statusFailedLabel = (string) new Status(Status::STATUS_FAILED);
 
-        $invalidLocatorElementIdentifier = new ElementIdentifier('a[href=https://example.com]');
-
-        $invalidLocatorException = new InvalidLocatorException(
-            $invalidLocatorElementIdentifier,
-            \Mockery::mock(InvalidSelectorException::class)
-        );
-
         $nodeSourceFactory = NodeSourceFactory::createFactory();
         $invalidLocatorNodeSource
-            = $nodeSourceFactory->create('$"a[href=https://example.com]"') ?? \Mockery::mock(NodeSource::class);
+            = $nodeSourceFactory->create('$".selector"') ?? \Mockery::mock(NodeSource::class);
 
         return [
             'no statements, passed' => [
-                'testCase' => BasilTestCaseFactory::create([
-                    'basilStepName' => 'step name',
-                    'status' => Status::STATUS_PASSED,
-                ]),
-                'expectedStep' => new Step('step name', $statusPassedLabel, []),
+                'stepName' => 'step name',
+                'state' => (function () {
+                    $state = new State();
+                    $state->setStatus(new Status(Status::STATUS_PASSED));
+
+                    return $state;
+                })(),
+                'statements' => new StatementCollection([]),
+                'data' => null,
+                'expectedStep' => new Step('step name', $statusPassedLabel, [], null),
             ],
             'no statements, failed' => [
-                'testCase' => BasilTestCaseFactory::create([
-                    'basilStepName' => 'step name',
-                    'status' => Status::STATUS_FAILED,
-                ]),
-                'expectedStep' => new Step('step name', $statusFailedLabel, []),
+                'stepName' => 'step name',
+                'state' => (function () {
+                    $state = new State();
+                    $state->setStatus(new Status(Status::STATUS_FAILED));
+
+                    return $state;
+                })(),
+                'statements' => new StatementCollection([]),
+                'data' => null,
+                'expectedStep' => new Step('step name', $statusFailedLabel, [], null),
             ],
             'single exists assertion, passed' => [
-                'testCase' => BasilTestCaseFactory::create([
-                    'basilStepName' => 'step name',
-                    'status' => Status::STATUS_PASSED,
-                    'handledStatements' => [
-                        $existsAssertion,
-                    ],
+                'stepName' => 'step name',
+                'state' => (function () {
+                    $state = new State();
+                    $state->setStatus(new Status(Status::STATUS_PASSED));
+
+                    return $state;
+                })(),
+                'statements' => new StatementCollection([
+                    $existsAssertion,
                 ]),
+                'data' => null,
                 'expectedStep' => new Step(
                     'step name',
                     $statusPassedLabel,
                     [
-                        $statementFactory->createForPassedAssertion($existsAssertion),
+                        $statementFactory->create($existsAssertion, new Status(Status::STATUS_PASSED)),
                     ]
                 ),
             ],
             'single derived exists assertion, passed' => [
-                'testCase' => BasilTestCaseFactory::create([
-                    'basilStepName' => 'step name',
-                    'status' => Status::STATUS_PASSED,
-                    'handledStatements' => [
-                        $derivedExistsAssertion,
-                    ],
+                'stepName' => 'step name',
+                'state' => (function () {
+                    $state = new State();
+                    $state->setStatus(new Status(Status::STATUS_PASSED));
+
+                    return $state;
+                })(),
+                'statements' => new StatementCollection([
+                    $derivedExistsAssertion,
                 ]),
+                'data' => null,
                 'expectedStep' => new Step(
                     'step name',
                     $statusPassedLabel,
                     [
-                        $statementFactory->createForPassedAssertion($derivedExistsAssertion),
+                        $statementFactory->create($derivedExistsAssertion, new Status(Status::STATUS_PASSED)),
                     ]
                 ),
             ],
             'single derived resolved exists assertion, passed' => [
-                'testCase' => BasilTestCaseFactory::create([
-                    'basilStepName' => 'step name',
-                    'status' => Status::STATUS_PASSED,
-                    'handledStatements' => [
-                        $derivedResolvedExistsAssertion,
-                    ],
+                'stepName' => 'step name',
+                'state' => (function () {
+                    $state = new State();
+                    $state->setStatus(new Status(Status::STATUS_PASSED));
+
+                    return $state;
+                })(),
+                'statements' => new StatementCollection([
+                    $derivedResolvedExistsAssertion,
                 ]),
+                'data' => null,
                 'expectedStep' => new Step(
                     'step name',
                     $statusPassedLabel,
                     [
-                        $statementFactory->createForPassedAssertion($derivedResolvedExistsAssertion),
+                        $statementFactory->create($derivedResolvedExistsAssertion, new Status(Status::STATUS_PASSED)),
                     ]
                 ),
             ],
             'single exists assertion, failed' => [
-                'testCase' => BasilTestCaseFactory::create([
-                    'basilStepName' => 'step name',
-                    'status' => Status::STATUS_FAILED,
-                    'handledStatements' => [
-                        $existsAssertion,
-                    ],
+                'stepName' => 'step name',
+                'state' => (function () use ($existsAssertion) {
+                    $state = new State();
+                    $state->setStatus(new Status(Status::STATUS_FAILED));
+                    $state->setExpectationFailure(new ExpectationFailure($existsAssertion, true, false));
+
+                    return $state;
+                })(),
+                'statements' => new StatementCollection([
+                    $existsAssertion,
                 ]),
+                'data' => null,
                 'expectedStep' => new Step(
                     'step name',
                     $statusFailedLabel,
                     self::filterStatements([
-                        $statementFactory->createForFailedAssertion($existsAssertion, '', ''),
+                        $statementFactory->createForExpectationFailure(
+                            new ExpectationFailure($existsAssertion, true, false),
+                        ),
                     ])
                 ),
             ],
             'single exists assertion, failed with invalid locator exception' => [
-                'testCase' => BasilTestCaseFactory::create([
-                    'basilStepName' => 'step name',
-                    'status' => Status::STATUS_FAILED,
-                    'handledStatements' => [
-                        $existsAssertion,
-                    ],
-                    'lastException' => $invalidLocatorException,
+                'stepName' => 'step name',
+                'state' => (function () use ($existsAssertion) {
+                    $state = new State();
+                    $state->setStatus(new Status(Status::STATUS_FAILED));
+                    $state->setAssertionFailure(
+                        new AssertionFailure(
+                            $existsAssertion,
+                            new Exception(
+                                InvalidLocatorException::class,
+                                0,
+                                'locator-invalid',
+                            ),
+                            [
+                                'locator' => '$".selector"',
+                                'type' => 'css',
+                            ]
+                        )
+                    );
+
+                    return $state;
+                })(),
+                'statements' => new StatementCollection([
+                    $existsAssertion,
                 ]),
+                'data' => null,
                 'expectedStep' => new Step(
                     'step name',
                     $statusFailedLabel,
                     self::filterStatements([
-                        ($statementFactory->createForFailedAssertion(
-                            $existsAssertion,
-                            '',
-                            ''
-                        ) ?? \Mockery::mock(FailedAssertionStatement::class))->withExceptionData(
+                        $statementFactory->createForAssertionFailure($existsAssertion)->withExceptionData(
                             new InvalidLocatorExceptionData(
                                 'css',
-                                'a[href=https://example.com]',
+                                '$".selector"',
                                 $invalidLocatorNodeSource
                             )
                         ),
@@ -191,81 +233,101 @@ class StepFactoryTest extends AbstractBaseTestCase
                 ),
             ],
             'three assertions, third failed' => [
-                'testCase' => BasilTestCaseFactory::create([
-                    'basilStepName' => 'step name',
-                    'status' => Status::STATUS_FAILED,
-                    'handledStatements' => [
-                        $existsAssertion,
-                        $isAssertion,
+                'stepName' => 'step name',
+                'state' => (function () use ($includesAssertion) {
+                    $state = new State();
+                    $state->setStatus(new Status(Status::STATUS_FAILED));
+                    $state->setExpectationFailure(new ExpectationFailure(
                         $includesAssertion,
-                    ],
-                    'expectedValue' => 'expected',
-                    'examinedValue' => 'actual',
+                        true,
+                        false
+                    ));
+
+                    return $state;
+                })(),
+                'statements' => new StatementCollection([
+                    $existsAssertion,
+                    $isAssertion,
+                    $includesAssertion,
                 ]),
+                'data' => null,
                 'expectedStep' => new Step(
                     'step name',
                     $statusFailedLabel,
                     self::filterStatements([
-                        $statementFactory->createForPassedAssertion($existsAssertion),
-                        $statementFactory->createForPassedAssertion($isAssertion),
-                        $statementFactory->createForFailedAssertion(
-                            $includesAssertion,
-                            'expected',
-                            'actual'
+                        $statementFactory->create($existsAssertion, new Status(Status::STATUS_PASSED)),
+                        $statementFactory->create($isAssertion, new Status(Status::STATUS_PASSED)),
+                        $statementFactory->createForExpectationFailure(
+                            new ExpectationFailure(
+                                $includesAssertion,
+                                true,
+                                false
+                            ),
                         ),
                     ])
                 ),
             ],
             'single click action, passed' => [
-                'testCase' => BasilTestCaseFactory::create([
-                    'basilStepName' => 'step name',
-                    'status' => Status::STATUS_PASSED,
-                    'handledStatements' => [
-                        $clickAction,
-                    ],
+                'stepName' => 'step name',
+                'state' => (function () {
+                    $state = new State();
+                    $state->setStatus(new Status(Status::STATUS_PASSED));
+
+                    return $state;
+                })(),
+                'statements' => new StatementCollection([
+                    $clickAction,
                 ]),
+                'data' => null,
                 'expectedStep' => new Step(
                     'step name',
                     $statusPassedLabel,
                     [
-                        $statementFactory->createForPassedAction($clickAction),
+                        $statementFactory->create($clickAction, new Status(Status::STATUS_PASSED)),
                     ]
                 ),
             ],
             'single click action, single exists assertion, passed' => [
-                'testCase' => BasilTestCaseFactory::create([
-                    'basilStepName' => 'step name',
-                    'status' => Status::STATUS_PASSED,
-                    'handledStatements' => [
-                        $clickAction,
-                        $existsAssertion,
-                    ],
+                'stepName' => 'step name',
+                'state' => (function () {
+                    $state = new State();
+                    $state->setStatus(new Status(Status::STATUS_PASSED));
+
+                    return $state;
+                })(),
+                'statements' => new StatementCollection([
+                    $clickAction,
+                    $existsAssertion,
                 ]),
+                'data' => null,
                 'expectedStep' => new Step(
                     'step name',
                     $statusPassedLabel,
                     [
-                        $statementFactory->createForPassedAction($clickAction),
-                        $statementFactory->createForPassedAssertion($existsAssertion),
+                        $statementFactory->create($clickAction, new Status(Status::STATUS_PASSED)),
+                        $statementFactory->create($existsAssertion, new Status(Status::STATUS_PASSED)),
                     ]
                 ),
             ],
             'single is assertion with data, passed' => [
-                'testCase' => BasilTestCaseFactory::create([
-                    'basilStepName' => 'step name',
-                    'status' => Status::STATUS_PASSED,
-                    'handledStatements' => [
-                        $isAssertionWithData,
-                    ],
-                    'currentDataSet' => new DataSet('data set name', [
-                        'expected_value' => 'literal value',
-                    ]),
+                'stepName' => 'step name',
+                'state' => (function () {
+                    $state = new State();
+                    $state->setStatus(new Status(Status::STATUS_PASSED));
+
+                    return $state;
+                })(),
+                'statements' => new StatementCollection([
+                    $isAssertionWithData,
                 ]),
+                'data' => [
+                    'expected_value' => 'literal value',
+                ],
                 'expectedStep' => new Step(
                     'step name',
                     $statusPassedLabel,
                     [
-                        $statementFactory->createForPassedAssertion($isAssertionWithData),
+                        $statementFactory->create($isAssertionWithData, new Status(Status::STATUS_PASSED)),
                     ],
                     [
                         'expected_value' => 'literal value',

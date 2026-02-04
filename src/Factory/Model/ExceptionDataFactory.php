@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure\Exception;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\InvalidLocatorExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\UnknownExceptionData;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
 use webignition\BasilPhpUnitResultPrinter\Model\Source\NodeSource;
-use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
-class ExceptionDataFactory
+readonly class ExceptionDataFactory
 {
     public function __construct(
         private NodeSourceFactory $nodeSourceFactory
@@ -25,21 +25,23 @@ class ExceptionDataFactory
         );
     }
 
-    public function create(\Throwable $exception): ExceptionDataInterface
+    public function create(Exception $exception): ?ExceptionDataInterface
     {
-        if ($exception instanceof InvalidLocatorException) {
-            $identifier = $exception->getElementIdentifier();
-            $nodeSource = $this->nodeSourceFactory->create((string) $identifier);
+        return new UnknownExceptionData($exception->class, $exception->message);
+    }
 
-            if ($nodeSource instanceof NodeSource) {
-                return new InvalidLocatorExceptionData(
-                    $identifier->isCssSelector() ? Properties::TYPE_CSS : Properties::TYPE_XPATH,
-                    $identifier->getLocator(),
-                    $nodeSource
-                );
-            }
+    public function createForInvalidLocator(string $locator, string $type): ?ExceptionDataInterface
+    {
+        $nodeSource = $this->nodeSourceFactory->create($locator);
+
+        if ($nodeSource instanceof NodeSource) {
+            return new InvalidLocatorExceptionData(
+                'css' === $type ? Properties::TYPE_CSS : Properties::TYPE_XPATH,
+                $locator,
+                $nodeSource
+            );
         }
 
-        return new UnknownExceptionData(get_class($exception), $exception->getMessage());
+        return null;
     }
 }

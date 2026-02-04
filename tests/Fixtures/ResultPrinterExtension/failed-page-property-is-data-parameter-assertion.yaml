@@ -1,0 +1,27 @@
+---
+type: step
+payload:
+  name: 'step one'
+  status: failed
+  statements:
+    -
+      type: assertion
+      source: '$page.title is $data.expected_title'
+      status: failed
+      summary:
+        operator: is
+        expected:
+          value: assert-equals-expected-value
+          source:
+            type: scalar
+            body:
+              type: data_parameter
+              value: $data.expected_title
+        actual:
+          value: assert-equals-actual-value
+          source:
+            type: scalar
+            body:
+              type: page_property
+              value: $page.title
+...

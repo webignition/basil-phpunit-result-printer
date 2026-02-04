@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\Factory\Model\Identifier;
 
-use webignition\BasilDomIdentifierFactory\Factory as DomIdentifierFactory;
+use SmartAssert\DomIdentifier\AttributeIdentifierInterface;
+use SmartAssert\DomIdentifier\ElementIdentifierInterface;
+use SmartAssert\DomIdentifier\Factory as DomIdentifierFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Identifier\Properties;
-use webignition\DomElementIdentifier\AttributeIdentifierInterface;
-use webignition\DomElementIdentifier\ElementIdentifierInterface;
 
 class PropertiesFactory
 {

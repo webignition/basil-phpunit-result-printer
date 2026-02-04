@@ -1,8 +1,0 @@
----
-type: exception
-payload:
-  step: step one
-  class: PHPUnit\Framework\ExceptionWrapper
-  message: 'Exception thrown in first step'
-  code: 123
-...
