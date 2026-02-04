@@ -13,7 +13,7 @@ use webignition\BasilModels\Model\Statement\StatementInterface as StatementModel
 use webignition\BasilModels\Parser\ActionParser;
 use webignition\BasilModels\Parser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\Enum\StatementType;
-use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailure\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\AssertionFailureSummaryFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\TransformationFactory;

@@ -13,6 +13,7 @@ use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailureFactory;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure\ExceptionFactory;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailure\ExpectationFailureFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\BeforeFirstTestMethodErroredSubscriber;
@@ -59,7 +60,7 @@ class ResultPrinterExtension implements Extension
                     StatementFactory::createFactory(),
                     new ExceptionFactory(),
                 ),
-                new ExpectationFailureExtractor(
+                new ExpectationFailureFactory(
                     StatementFactory::createFactory(),
                 ),
             ),

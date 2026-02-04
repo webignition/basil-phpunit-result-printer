@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter;
+namespace webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 
 use webignition\BasilModels\Model\Statement\Assertion\AssertionInterface;
 

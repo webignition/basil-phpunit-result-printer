@@ -9,8 +9,8 @@ use PHPUnit\Event\Test\Failed;
 use PHPUnit\Event\Test\FailedSubscriber as FailedSubscriberInterface;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailure;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailureFactory;
-use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
-use webignition\BasilPhpUnitResultPrinter\ExpectationFailureExtractor;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailure\ExpectationFailure;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailure\ExpectationFailureFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\StatementMessageParser;
@@ -21,7 +21,7 @@ readonly class FailedSubscriber implements FailedSubscriberInterface
         private State $state,
         private StatementMessageParser $statementMessageParser,
         private AssertionFailureFactory $assertionFailureFactory,
-        private ExpectationFailureExtractor $expectationFailureExtractor,
+        private ExpectationFailureFactory $expectationFailureFactory,
     ) {}
 
     public function notify(Failed $event): void
@@ -38,7 +38,7 @@ readonly class FailedSubscriber implements FailedSubscriberInterface
             $this->state->setAssertionFailure($assertionFailure);
         }
 
-        $expectationFailure = $this->expectationFailureExtractor->extract($parsedStatementMessage['data']);
+        $expectationFailure = $this->expectationFailureFactory->create($parsedStatementMessage['data']);
         if ($expectationFailure instanceof ExpectationFailure) {
             $this->state->setExpectationFailure($expectationFailure);
         }

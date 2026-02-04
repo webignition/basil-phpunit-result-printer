@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter;
+namespace webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 
 use webignition\BasilModels\Model\Statement\Assertion\AssertionInterface;
 use webignition\BasilModels\Model\Statement\StatementFactory;
 use webignition\BasilModels\Model\Statement\UnknownEncapsulatedStatementException;
 
-readonly class ExpectationFailureExtractor
+readonly class ExpectationFailureFactory
 {
     public function __construct(
         private StatementFactory $statementFactory,
@@ -17,7 +17,7 @@ readonly class ExpectationFailureExtractor
     /**
      * @param array<mixed> $data
      */
-    public function extract(array $data): ?ExpectationFailure
+    public function create(array $data): ?ExpectationFailure
     {
         $statementData = $data['statement'] ?? [];
         $statementData = is_array($statementData) ? $statementData : [];

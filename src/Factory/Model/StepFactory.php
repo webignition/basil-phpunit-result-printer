@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Factory\Model;
 use webignition\BasilModels\Model\Statement\Action\ActionInterface;
 use webignition\BasilModels\Model\Statement\Assertion\Assertion;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailure;
-use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
+use webignition\BasilPhpUnitResultPrinter\ExpectationFailure\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\ExceptionDataInterface;
 use webignition\BasilPhpUnitResultPrinter\Model\ExceptionData\UnknownExceptionData;
