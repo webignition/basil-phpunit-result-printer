@@ -12,7 +12,7 @@ readonly class AssertionFailureExtractor
 {
     public function __construct(
         private StatementFactory $statementFactory,
-        private AssertionFailureExceptionExtractor $exceptionExtractor,
+        private ExceptionFactory $exceptionExtractor,
     ) {}
 
     /**
@@ -36,7 +36,7 @@ readonly class AssertionFailureExtractor
         $exceptionData = $data['exception'] ?? [];
         $exceptionData = is_array($exceptionData) ? $exceptionData : [];
 
-        $exception = $this->exceptionExtractor->extract($exceptionData);
+        $exception = $this->exceptionExtractor->create($exceptionData);
         if (null === $exception) {
             return null;
         }

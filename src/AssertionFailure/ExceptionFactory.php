@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\AssertionFailure;
 
-readonly class AssertionFailureExceptionExtractor
+readonly class ExceptionFactory
 {
     /**
      * @param array<mixed> $data
      */
-    public function extract(array $data): ?Exception
+    public function create(array $data): ?Exception
     {
         $class = $data['class'] ?? '';
         $class = is_string($class) ? $class : '';
