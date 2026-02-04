@@ -5,5 +5,4 @@ parameters:
     - tests
   inferPrivatePropertyTypeFromConstructor: true
   excludePaths:
-    - src/ResultPrinter.php
     - tests/Fixtures/*
