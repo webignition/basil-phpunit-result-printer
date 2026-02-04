@@ -12,20 +12,19 @@ use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\StepNameExtractor;
-use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
-use webignition\BasilPhpUnitResultPrinter\TestMetaDataExtractor;
 use webignition\BasilPhpUnitResultPrinter\StepStatementCollectionExtractor;
+use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
 
 readonly class FinishedSubscriber implements FinishedSubscriberInterface
 {
     public function __construct(
-        private Printer                          $printer,
-        private State                            $state,
-        private StepNameExtractor                $stepNameExtractor,
+        private Printer $printer,
+        private State $state,
+        private StepNameExtractor $stepNameExtractor,
         private StepStatementCollectionExtractor $statementCollectionExtractor,
-        private TestDataExtractor                $testDataExtractor,
-        private StepFactory                      $stepFactory,
-        private GeneratorInterface               $generator,
+        private TestDataExtractor $testDataExtractor,
+        private StepFactory $stepFactory,
+        private GeneratorInterface $generator,
     ) {}
 
     public function notify(Finished $event): void
