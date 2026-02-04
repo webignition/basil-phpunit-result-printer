@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter;
+namespace webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
 
 use PHPUnit\Event\Code\TestMethod;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BasilModels\Model\Statement\InvalidStatementDataException;
 use webignition\BasilModels\Model\Statement\StatementFactory;
 use webignition\BasilModels\Model\Statement\UnknownEncapsulatedStatementException;
+use webignition\BasilPhpUnitResultPrinter\StatementCollection;
 
 readonly class StepStatementCollectionExtractor
 {

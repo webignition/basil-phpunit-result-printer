@@ -11,9 +11,9 @@ use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\State;
-use webignition\BasilPhpUnitResultPrinter\StepNameExtractor;
-use webignition\BasilPhpUnitResultPrinter\StepStatementCollectionExtractor;
 use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
+use webignition\BasilPhpUnitResultPrinter\TestDataExtractor\StepNameExtractor;
+use webignition\BasilPhpUnitResultPrinter\TestDataExtractor\StepStatementCollectionExtractor;
 
 readonly class FinishedSubscriber implements FinishedSubscriberInterface
 {

@@ -21,6 +21,8 @@ use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\ErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FailedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FinishedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\PassedSubscriber;
+use webignition\BasilPhpUnitResultPrinter\TestDataExtractor\StepNameExtractor;
+use webignition\BasilPhpUnitResultPrinter\TestDataExtractor\StepStatementCollectionExtractor;
 
 class ResultPrinterExtension implements Extension
 {
