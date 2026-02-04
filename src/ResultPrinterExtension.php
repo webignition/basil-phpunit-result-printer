@@ -9,7 +9,6 @@ use PHPUnit\Runner\Extension\Facade;
 use PHPUnit\Runner\Extension\ParameterCollection;
 use PHPUnit\TextUI\Configuration\Configuration;
 use PHPUnit\TextUI\Output\DefaultPrinter;
-use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilModels\Model\Statement\StatementFactory;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailureFactory;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure\ExceptionFactory;
@@ -27,15 +26,6 @@ use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\PassedSubscriber;
 
 class ResultPrinterExtension implements Extension
 {
-    private Printer $printer;
-    private State $state;
-
-    public function __construct()
-    {
-        $this->printer = DefaultPrinter::standardOutput();
-        $this->state = new State();
-    }
-
     public function bootstrap(Configuration $configuration, Facade $facade, ParameterCollection $parameters): void
     {
         if ($configuration->noOutput()) {
@@ -44,35 +34,29 @@ class ResultPrinterExtension implements Extension
 
         $facade->replaceOutput();
 
+        $printer = DefaultPrinter::standardOutput();
+        $state = new State();
+        $yamlGenerator = new YamlGenerator();
+        $statementFactory = StatementFactory::createFactory();
+
         $facade->registerSubscribers(
+            new BeforeFirstTestMethodErroredSubscriber($printer, $yamlGenerator, (string) getcwd()),
+            new ErroredSubscriber($state),
+            new FailedSubscriber(
+                $state,
+                new StatementMessageParser(),
+                new AssertionFailureFactory($statementFactory, new ExceptionFactory()),
+                new ExpectationFailureFactory($statementFactory),
+            ),
+            new PassedSubscriber($state),
             new FinishedSubscriber(
-                $this->printer,
-                $this->state,
+                $printer,
+                $state,
                 new NameExtractor(),
-                new StatementCollectionExtractor(
-                    StatementFactory::createFactory(),
-                ),
+                new StatementCollectionExtractor($statementFactory),
                 new DataSetExtractor(),
                 StepFactory::createFactory(),
-                new YamlGenerator(),
-            ),
-            new ErroredSubscriber($this->state),
-            new FailedSubscriber(
-                $this->state,
-                new StatementMessageParser(),
-                new AssertionFailureFactory(
-                    StatementFactory::createFactory(),
-                    new ExceptionFactory(),
-                ),
-                new ExpectationFailureFactory(
-                    StatementFactory::createFactory(),
-                ),
-            ),
-            new PassedSubscriber($this->state),
-            new BeforeFirstTestMethodErroredSubscriber(
-                $this->printer,
-                new YamlGenerator(),
-                (string) getcwd()
+                $yamlGenerator,
             ),
         );
     }
