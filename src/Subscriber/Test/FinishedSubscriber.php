@@ -14,26 +14,24 @@ use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\StepNameExtractor;
 use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
 use webignition\BasilPhpUnitResultPrinter\TestMetaDataExtractor;
+use webignition\BasilPhpUnitResultPrinter\StepStatementCollectionExtractor;
 
 readonly class FinishedSubscriber implements FinishedSubscriberInterface
 {
     public function __construct(
-        private Printer $printer,
-        private State $state,
-        private StepNameExtractor $stepNameExtractor,
-        private TestMetaDataExtractor $testMetaDataExtractor,
-        private TestDataExtractor $testDataExtractor,
-        private StepFactory $stepFactory,
-        private GeneratorInterface $generator,
+        private Printer                          $printer,
+        private State                            $state,
+        private StepNameExtractor                $stepNameExtractor,
+        private StepStatementCollectionExtractor $statementCollectionExtractor,
+        private TestDataExtractor                $testDataExtractor,
+        private StepFactory                      $stepFactory,
+        private GeneratorInterface               $generator,
     ) {}
 
     public function notify(Finished $event): void
     {
         $test = $event->test();
         \assert($test instanceof TestMethod);
-
-        $testMetaData = $this->testMetaDataExtractor->extract($test);
-        $statements = $testMetaData->statements;
 
         $testDataSet = null;
         $testData = $test->testData();
@@ -44,7 +42,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         $step = $this->stepFactory->create(
             $this->stepNameExtractor->extract($test),
             $this->state,
-            $statements,
+            $this->statementCollectionExtractor->extract($test),
             $testDataSet
         );
 

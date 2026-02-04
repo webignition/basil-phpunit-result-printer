@@ -46,7 +46,7 @@ class ResultPrinterExtension implements Extension
                 $this->printer,
                 $this->state,
                 new StepNameExtractor(),
-                new TestMetaDataExtractor(
+                new StepStatementCollectionExtractor(
                     StatementFactory::createFactory(),
                 ),
                 new TestDataExtractor(),
