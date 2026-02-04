@@ -11,16 +11,18 @@ use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\State;
-use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
-use webignition\BasilPhpUnitResultPrinter\TestMetaDataExtractor;
+use webignition\BasilPhpUnitResultPrinter\StepDataExtractor\DataSetExtractor;
+use webignition\BasilPhpUnitResultPrinter\StepDataExtractor\NameExtractor;
+use webignition\BasilPhpUnitResultPrinter\StepDataExtractor\StatementCollectionExtractor;
 
 readonly class FinishedSubscriber implements FinishedSubscriberInterface
 {
     public function __construct(
         private Printer $printer,
         private State $state,
-        private TestMetaDataExtractor $testMetaDataExtractor,
-        private TestDataExtractor $testDataExtractor,
+        private NameExtractor $stepNameExtractor,
+        private StatementCollectionExtractor $stepStatementCollectionExtractor,
+        private DataSetExtractor $stepDataSetExtractor,
         private StepFactory $stepFactory,
         private GeneratorInterface $generator,
     ) {}
@@ -30,16 +32,18 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         $test = $event->test();
         \assert($test instanceof TestMethod);
 
-        $testMetaData = $this->testMetaDataExtractor->extract($test);
-        $statements = $testMetaData->statements;
-
-        $testDataSet = null;
+        $stepDataSet = null;
         $testData = $test->testData();
         if ($testData->hasDataFromDataProvider()) {
-            $testDataSet = $this->testDataExtractor->extract($testData->dataFromDataProvider()->data());
+            $stepDataSet = $this->stepDataSetExtractor->extract($testData->dataFromDataProvider()->data());
         }
 
-        $step = $this->stepFactory->create($testMetaData->stepName, $this->state, $statements, $testDataSet);
+        $step = $this->stepFactory->create(
+            $this->stepNameExtractor->extract($test),
+            $this->state,
+            $this->stepStatementCollectionExtractor->extract($test),
+            $stepDataSet
+        );
 
         $this->printer->print($this->generator->generate($step->getData()));
     }
