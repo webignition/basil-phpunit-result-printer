@@ -27,23 +27,21 @@ class FailedElementExcludesLiteralAssertion extends BasilTestCase
     ])]
     public function testStep1(): void
     {
-        $expectedValue = 'string-not-contains-string';
-        $examinedValue = 'string-not-contains-string-within';
+        $statement_0 = '{
+            "statement-type": "assertion",
+            "source": "$\".selector\" excludes \"value\"",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "value": "\"value\"",
+            "operator": "excludes"               
+        }';
+
+        $expected = 'string-not-contains-string';
+        $examined = 'string-not-contains-string-within';
         $this->assertStringNotContainsString(
-            $expectedValue,
-            $examinedValue,
-            '{
-                    "statement": {
-                        "statement-type": "assertion",
-                        "source": "$\".selector\" excludes \"value\"",
-                        "index": 0,
-                        "identifier": "$\".selector\"",
-                        "value": "\"value\"",
-                        "operator": "excludes"               
-                    },
-                    "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
-                    "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"
-                }'
+            $expected,
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_0, $expected, $examined),
         );
     }
 }

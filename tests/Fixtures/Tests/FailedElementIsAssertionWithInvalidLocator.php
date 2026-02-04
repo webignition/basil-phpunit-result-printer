@@ -8,6 +8,7 @@ use Facebook\WebDriver\Exception\InvalidSelectorException;
 use SmartAssert\DomIdentifier\ElementIdentifier;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
+use webignition\BaseBasilTestCase\Enum\StatementStage;
 use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 class FailedElementIsAssertionWithInvalidLocator extends BasilTestCase
@@ -29,6 +30,14 @@ class FailedElementIsAssertionWithInvalidLocator extends BasilTestCase
     ])]
     public function testStep1(): void
     {
+        $statement_0 = '{
+            "statement-type": "assertion",
+            "source": "$\".selector\" exists",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "operator": "exists"
+        }';
+
         try {
             $elementIdentifier = new ElementIdentifier('$".selector"');
             $invalidSelectorException = new InvalidSelectorException('message', null);
@@ -37,28 +46,14 @@ class FailedElementIsAssertionWithInvalidLocator extends BasilTestCase
                 $elementIdentifier,
                 $invalidSelectorException,
             );
-        } catch (InvalidLocatorException $exception) {
-            $locator = $exception->getElementIdentifier()->getLocator();
-            $type = $exception->getElementIdentifier()->isCssSelector() ? 'css' : 'xpath';
-            $this->fail('{
-                "statement": {
-                    "statement-type": "assertion",
-                    "source": "$\".selector\" exists",
-                    "index": 0,
-                    "identifier": "$\".selector\"",
-                    "operator": "exists"
-                },
-                "reason": "locator-invalid",
-                "exception": {
-                    "class": "' . addcslashes($exception::class, '"\\') . '",
-                    "code": ' . $exception->getCode() . ',
-                    "message": "' . addcslashes($exception->getMessage(), '"\\') . '"
-                },
-                "context": {
-                    "locator": "' . addcslashes($locator, '"\\') . '",
-                    "type": "' . addcslashes($type, '"\\') . '"
-                }
-            }');
+        } catch (\Throwable $exception) {
+            $this->fail(
+                (string) self::$messageFactory->createFailureMessage(
+                    $statement_0,
+                    $exception,
+                    StatementStage::EXECUTE,
+                )
+            );
         }
     }
 }

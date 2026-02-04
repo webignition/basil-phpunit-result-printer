@@ -7,6 +7,7 @@ namespace Fixtures\Tests;
 use PHPUnit\Framework\Attributes\DataProvider;
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
+use webignition\BaseBasilTestCase\Enum\StatementStage;
 use webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests\BasilTestCase;
 
 class PassingWithDataProvider extends BasilTestCase
@@ -38,37 +39,43 @@ class PassingWithDataProvider extends BasilTestCase
     #[DataProvider('StepOneDataProvider')]
     public function testStep1(int $foo, string $bar, bool $fooBar): void
     {
+        $statement_0 = '{
+            "statement-type": "action",
+            "source": "set $\".selector\" to $data.value",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "type": "set",
+            "arguments": "$data.value"
+        }';
+
+        $statement_1 = '{
+            "statement-type": "assertion",
+            "source": "$page.url is \"http:\/\/www.example.com\"",
+            "index": 1,
+            "identifier": "$page.url",
+            "value": "\"http:\/\/www.example.com\"",
+            "operator": "is"            
+        }';
+
         try {
             // set $".selector" to $data.value
         } catch (\Throwable $exception) {
-            self::fail('{
-                "statement": {
-                    "statement-type": "action",
-                    "source": "set $\".selector\" to $data.value",
-                    "index": 0,
-                    "identifier": "$\".selector\"",
-                    "type": "set",
-                    "arguments": "$data.value"
-                },
-                "reason": "action-failed",
-                "exception": {
-                    "class": "' . addcslashes($exception::class, '"\\') . '",
-                    "code": ' . $exception->getCode() . ',
-                    "message": "' . addcslashes($exception->getMessage(), '"\\') . '"
-                }
-            }');
+            self::fail(
+                (string) self::$messageFactory->createFailureMessage(
+                    $statement_0,
+                    $exception,
+                    StatementStage::EXECUTE,
+                )
+            );
         }
 
-        self::assertTrue(
-            true,
-            '{
-                "statement-type": "assertion",
-                "source": "$page.url is \"http:\/\/www.example.com\"",
-                "identifier": "$page.url",
-                "value": "\"http:\/\/www.example.com\"",
-                "operator": "is",
-                "index": 1
-            }'
+        $expected = 'http:/www.example.com';
+        $examined = 'http:/www.example.com';
+
+        self::assertEquals(
+            $expected,
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_1, $expected, $examined),
         );
     }
 

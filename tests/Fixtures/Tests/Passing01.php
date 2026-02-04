@@ -6,6 +6,7 @@ namespace webignition\BasilPhpUnitResultPrinter\Tests\Fixtures\Tests;
 
 use webignition\BaseBasilTestCase\Attribute\Statements;
 use webignition\BaseBasilTestCase\Attribute\StepName;
+use webignition\BaseBasilTestCase\Enum\StatementStage;
 
 class Passing01 extends BasilTestCase
 {
@@ -43,49 +44,62 @@ class Passing01 extends BasilTestCase
     ])]
     public function testStep1(): void
     {
+        $statement_0 = '{
+            "statement-type": "action",
+            "source": "click $\".selector\"",
+            "index": 0,
+            "identifier": "$\".selector\"",
+            "type": "click",
+            "arguments": "$\".selector\""            
+        }';
+
+        $statement_1 = '{
+            "statement-type": "assertion",
+            "source": "$page.url is \"http:\/\/www.example.com\"",
+            "index": 1,
+            "identifier": "$page.url",
+            "value": "\"http:\/\/www.example.com\"",
+            "operator": "is"            
+        }';
+
+        $statement_2 = '{
+            "statement-type": "assertion",
+            "source": "$page.title is \"Foo\"",
+            "index": 2,
+            "identifier": "$page.title",
+            "value": "\"Foo\"",
+            "operator": "is"
+        }';
+
         try {
             // click $".selector"
+            // ...
         } catch (\Throwable $exception) {
-            self::fail('{
-                "statement": {
-                    "statement-type": "action",
-                    "source": "click $\".selector\"",
-                    "identifier": "$\".selector\"",
-                    "type": "click",
-                    "arguments": "$\".selector\"",
-                    "index": 0
-                },
-                "reason": "action-failed",
-                "exception": {
-                    "class": "' . addcslashes($exception::class, '"\\') . '",
-                    "code": ' . $exception->getCode() . ',
-                    "message": "' . addcslashes($exception->getMessage(), '"\\') . '"
-                }
-            }');
+            self::fail(
+                (string) self::$messageFactory->createFailureMessage(
+                    $statement_0,
+                    $exception,
+                    StatementStage::EXECUTE,
+                )
+            );
         }
 
-        self::assertTrue(
-            true,
-            '{
-                "statement-type": "assertion",
-                "source": "$page.url is \"http:\/\/www.example.com\"",
-                "identifier": "$page.url",
-                "value": "\"http:\/\/www.example.com\"",
-                "operator": "is",
-                "index": 1
-            }'
+        $expected = 'http:/www.example.com';
+        $examined = 'http:/www.example.com';
+
+        self::assertEquals(
+            $expected,
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_1, $expected, $examined),
         );
 
-        self::assertTrue(
-            true,
-            '{
-                "statement-type": "assertion",
-                "source": "$page.title is \"Foo\"",
-                "identifier": "$page.title",
-                "value": "\"Foo\"",
-                "operator": "is",
-                "index": 2
-            }'
+        $expected = 'Foo';
+        $examined = 'Foo';
+
+        self::assertEquals(
+            $expected,
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_2, $expected, $examined),
         );
     }
 
@@ -102,16 +116,22 @@ class Passing01 extends BasilTestCase
     ])]
     public function testStep2(): void
     {
-        self::assertTrue(
-            true,
-            '{
-                "statement-type": "assertion",
-                "source": "$page.url is \"http:\/\/www.example.com\"",
-                "identifier": "$page.url",
-                "value": "\"http:\/\/www.example.com\"",
-                "operator": "is",
-                "index": 0
-            }'
+        $statement_0 = '{
+            "statement-type": "assertion",
+            "source": "$page.url is \"http:\/\/www.example.com\"",
+            "identifier": "$page.url",
+            "value": "\"http:\/\/www.example.com\"",
+            "operator": "is",
+            "index": 0
+        }';
+
+        $expected = 'http:/www.example.com';
+        $examined = 'http:/www.example.com';
+
+        self::assertEquals(
+            $expected,
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_0, $expected, $examined),
         );
     }
 }

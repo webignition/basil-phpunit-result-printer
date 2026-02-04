@@ -33,13 +33,6 @@ readonly class AssertionFailureExtractor
             return null;
         }
 
-        $reason = $data['reason'] ?? '';
-        $reason = is_string($reason) ? $reason : '';
-        $reason = trim($reason);
-        if ('' === $reason) {
-            return null;
-        }
-
         $exceptionData = $data['exception'] ?? [];
         $exceptionData = is_array($exceptionData) ? $exceptionData : [];
 
@@ -51,6 +44,6 @@ readonly class AssertionFailureExtractor
         $context = $data['context'] ?? [];
         $context = is_array($context) ? $context : [];
 
-        return new AssertionFailure($statement, $reason, $exception, $context);
+        return new AssertionFailure($statement, $exception, $context);
     }
 }

@@ -27,24 +27,22 @@ class FailedBrowserPropertyIsLiteralAssertionTest extends BasilTestCase
     ])]
     public function testStep1(): void
     {
-        $expectedValue = 'literal value';
-        $examinedValue = '1024x768';
+        $statement_0 = '{
+            "statement-type": "assertion",
+            "source": "$browser.size is \"literal value\"",
+            "index": 0,
+            "identifier": "$browser.size",
+            "value": "\"literal value\"",
+            "operator": "is"    
+        }';
+
+        $expected = 'literal value';
+        $examined = '1024x768';
 
         $this->assertEquals(
-            $expectedValue,
-            $examinedValue,
-            '{
-                    "statement": {
-                        "statement-type": "assertion",
-                        "source": "$browser.size is \"literal value\"",
-                        "index": 0,
-                        "identifier": "$browser.size",
-                        "value": "\"literal value\"",
-                        "operator": "is"    
-                    },
-                    "expected": "' . addcslashes((string) $expectedValue, '"\\') . '",
-                    "examined": "' . addcslashes((string) $examinedValue, '"\\') . '"
-                }'
+            $expected,
+            $examined,
+            (string) self::$messageFactory->createAssertionMessage($statement_0, $expected, $examined),
         );
     }
 }

@@ -16,6 +16,7 @@ use webignition\BasilPhpUnitResultPrinter\Model\Status;
 use webignition\BasilPhpUnitResultPrinter\State;
 use webignition\BasilPhpUnitResultPrinter\StatementCollection;
 use webignition\BasilRunnerDocuments\Step;
+use webignition\SymfonyDomCrawlerNavigator\Exception\InvalidLocatorException;
 
 readonly class StepFactory
 {
@@ -92,7 +93,7 @@ readonly class StepFactory
                 $exception = $assertionFailure->exception;
                 $exceptionData = new UnknownExceptionData($exception->class, $exception->message);
 
-                if ('locator-invalid' === $assertionFailure->reason) {
+                if (InvalidLocatorException::class === $exception->class) {
                     $locator = $assertionFailure->context['locator'] ?? null;
                     $locator = is_string($locator) ? $locator : null;
 
