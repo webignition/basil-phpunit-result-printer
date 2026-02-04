@@ -45,6 +45,7 @@ class ResultPrinterExtension implements Extension
             new FinishedSubscriber(
                 $this->printer,
                 $this->state,
+                new StepNameExtractor(),
                 new TestMetaDataExtractor(
                     StatementFactory::createFactory(),
                 ),

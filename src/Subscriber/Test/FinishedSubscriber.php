@@ -11,6 +11,7 @@ use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\State;
+use webignition\BasilPhpUnitResultPrinter\StepNameExtractor;
 use webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
 use webignition\BasilPhpUnitResultPrinter\TestMetaDataExtractor;
 
@@ -19,6 +20,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
     public function __construct(
         private Printer $printer,
         private State $state,
+        private StepNameExtractor $stepNameExtractor,
         private TestMetaDataExtractor $testMetaDataExtractor,
         private TestDataExtractor $testDataExtractor,
         private StepFactory $stepFactory,
@@ -39,7 +41,12 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
             $testDataSet = $this->testDataExtractor->extract($testData->dataFromDataProvider()->data());
         }
 
-        $step = $this->stepFactory->create($testMetaData->stepName, $this->state, $statements, $testDataSet);
+        $step = $this->stepFactory->create(
+            $this->stepNameExtractor->extract($test),
+            $this->state,
+            $statements,
+            $testDataSet
+        );
 
         $this->printer->print($this->generator->generate($step->getData()));
     }
