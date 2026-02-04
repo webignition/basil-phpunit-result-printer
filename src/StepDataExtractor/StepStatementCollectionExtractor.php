@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter\TestDataExtractor;
+namespace webignition\BasilPhpUnitResultPrinter\StepDataExtractor;
 
 use PHPUnit\Event\Code\TestMethod;
 use webignition\BaseBasilTestCase\Attribute\Statements;

@@ -16,13 +16,13 @@ use webignition\BasilPhpUnitResultPrinter\AssertionFailure\ExceptionFactory;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure\ExpectationFailureFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
+use webignition\BasilPhpUnitResultPrinter\StepDataExtractor\StepNameExtractor;
+use webignition\BasilPhpUnitResultPrinter\StepDataExtractor\StepStatementCollectionExtractor;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\BeforeFirstTestMethodErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\ErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FailedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FinishedSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\PassedSubscriber;
-use webignition\BasilPhpUnitResultPrinter\TestDataExtractor\StepNameExtractor;
-use webignition\BasilPhpUnitResultPrinter\TestDataExtractor\StepStatementCollectionExtractor;
 
 class ResultPrinterExtension implements Extension
 {
