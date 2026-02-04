@@ -7,7 +7,7 @@ namespace webignition\BasilPhpUnitResultPrinter\StepDataExtractor;
 use PHPUnit\Event\Code\TestMethod;
 use webignition\BaseBasilTestCase\Attribute\StepName;
 
-readonly class StepNameExtractor
+readonly class NameExtractor
 {
     public function extract(TestMethod $testMethod): string
     {

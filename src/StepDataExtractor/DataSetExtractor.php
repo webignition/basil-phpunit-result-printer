@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace webignition\BasilPhpUnitResultPrinter;
+namespace webignition\BasilPhpUnitResultPrinter\StepDataExtractor;
 
-readonly class TestDataExtractor
+readonly class DataSetExtractor
 {
     /**
      * @return array<string, bool|int|string>
