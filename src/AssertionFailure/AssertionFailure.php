@@ -13,7 +13,7 @@ readonly class AssertionFailure
      */
     public function __construct(
         public StatementInterface $statement,
-        public AssertionFailureException $exception,
+        public Exception $exception,
         public array $context = [],
     ) {}
 }

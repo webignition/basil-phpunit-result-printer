@@ -9,7 +9,7 @@ readonly class AssertionFailureExceptionExtractor
     /**
      * @param array<mixed> $data
      */
-    public function extract(array $data): ?AssertionFailureException
+    public function extract(array $data): ?Exception
     {
         $class = $data['class'] ?? '';
         $class = is_string($class) ? $class : '';
@@ -30,6 +30,6 @@ readonly class AssertionFailureExceptionExtractor
             return null;
         }
 
-        return new AssertionFailureException($class, $code, $message);
+        return new Exception($class, $code, $message);
     }
 }

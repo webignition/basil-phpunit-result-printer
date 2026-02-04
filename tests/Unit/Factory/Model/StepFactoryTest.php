@@ -10,7 +10,7 @@ use webignition\BasilModels\Model\Statement\Assertion\DerivedValueOperationAsser
 use webignition\BasilModels\Parser\ActionParser;
 use webignition\BasilModels\Parser\AssertionParser;
 use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailure;
-use webignition\BasilPhpUnitResultPrinter\AssertionFailure\AssertionFailureException;
+use webignition\BasilPhpUnitResultPrinter\AssertionFailure\Exception;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Source\NodeSourceFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\Statement\StatementFactory;
@@ -200,7 +200,7 @@ class StepFactoryTest extends AbstractBaseTestCase
                     $state->setAssertionFailure(
                         new AssertionFailure(
                             $existsAssertion,
-                            new AssertionFailureException(
+                            new Exception(
                                 InvalidLocatorException::class,
                                 0,
                                 'locator-invalid',
