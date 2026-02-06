@@ -22,7 +22,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         private State $state,
         private NameExtractor $stepNameExtractor,
         private StatementCollectionExtractor $stepStatementCollectionExtractor,
-        private DataSetExtractor $stepDataSetExtractor,
+        private DataSetExtractor $fooDataSetExtractor,
         private StepFactory $stepFactory,
         private GeneratorInterface $generator,
     ) {}
@@ -34,8 +34,9 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
 
         $stepDataSet = null;
         $testData = $test->testData();
+
         if ($testData->hasDataFromDataProvider()) {
-            $stepDataSet = $this->stepDataSetExtractor->extract($testData->dataFromDataProvider()->data());
+            $stepDataSet = $this->fooDataSetExtractor->extract($test);
         }
 
         $step = $this->stepFactory->create(

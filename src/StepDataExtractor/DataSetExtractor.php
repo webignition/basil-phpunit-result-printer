@@ -4,68 +4,48 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\StepDataExtractor;
 
+use PHPUnit\Event\Code\TestMethod;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 readonly class DataSetExtractor
 {
     /**
-     * @return array<string, bool|int|string>
+     * @return array<mixed>
      */
-    public function extract(string $arrayAsString): array
+    public function extract(TestMethod $testMethod): array
     {
-        $lines = explode("\n", $arrayAsString);
-        array_shift($lines);
-        array_pop($lines);
+        $reflectionClass = new \ReflectionClass($testMethod->className());
+        $reflectionMethod = $reflectionClass->getMethod($testMethod->methodName());
 
-        $extracted = [];
+        $dataProviderAttributes = $reflectionMethod->getAttributes(DataProvider::class);
+        $dataProviderAttribute = $dataProviderAttributes[0];
 
-        foreach ($lines as $line) {
-            $extracted = array_merge($extracted, $this->extractFromLine($line));
+        $dataProviderMethodName = $dataProviderAttribute->newInstance()->methodName();
+
+        $className = $reflectionClass->getName();
+        if (!class_exists($className)) {
+            return [];
         }
 
-        return $extracted;
-    }
-
-    /**
-     * @return array<string, bool|int|string>
-     */
-    private function extractFromLine(string $line): array
-    {
-        $line = trim($line);
-
-        $assignmentOperator = ' => ';
-
-        $assignmentOperatorPosition = (int) strpos($line, $assignmentOperator);
-        $nameComponent = substr($line, 0, $assignmentOperatorPosition);
-        $key = trim($nameComponent, '\' ');
-
-        $valueComponent = substr($line, $assignmentOperatorPosition + strlen($assignmentOperator));
-        $valueComponent = rtrim($valueComponent, ',');
-
-        $value = $this->getValueFromString($valueComponent);
-
-        return [
-            $key => $value,
-        ];
-    }
-
-    private function getValueFromString(string $value): bool|int|string
-    {
-        $singleQuoteTrimmedValue = trim($value, '\'');
-        if ($singleQuoteTrimmedValue !== $value) {
-            return $singleQuoteTrimmedValue;
+        if (!method_exists($className, $dataProviderMethodName)) {
+            return [];
         }
 
-        if (ctype_digit($value)) {
-            return (int) $value;
+        $testData = $className::$dataProviderMethodName();
+        if (!is_array($testData)) {
+            return [];
         }
 
-        if ('true' === $value) {
-            return true;
+        $testMethodTestData = $testMethod->testData();
+
+        if (!$testMethodTestData->hasDataFromDataProvider()) {
+            return [];
         }
 
-        if ('false' === $value) {
-            return false;
-        }
+        $dataSetName = $testMethodTestData->dataFromDataProvider()->dataSetName();
 
-        return $value;
+        $dataSet = $testData[$dataSetName] ?? [];
+
+        return is_array($dataSet) ? $dataSet : [];
     }
 }
