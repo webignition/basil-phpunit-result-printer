@@ -22,7 +22,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         private State $state,
         private NameExtractor $stepNameExtractor,
         private StatementCollectionExtractor $stepStatementCollectionExtractor,
-        private DataSetExtractor $stepDataSetExtractor,
+        private DataSetExtractor $dataSetExtractor,
         private StepFactory $stepFactory,
         private GeneratorInterface $generator,
     ) {}
@@ -32,11 +32,7 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         $test = $event->test();
         \assert($test instanceof TestMethod);
 
-        $stepDataSet = null;
-        $testData = $test->testData();
-        if ($testData->hasDataFromDataProvider()) {
-            $stepDataSet = $this->stepDataSetExtractor->extract($testData->dataFromDataProvider()->data());
-        }
+        $stepDataSet = $this->dataSetExtractor->extract($test);
 
         $step = $this->stepFactory->create(
             $this->stepNameExtractor->extract($test),

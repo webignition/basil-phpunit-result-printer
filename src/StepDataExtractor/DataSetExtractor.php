@@ -4,68 +4,51 @@ declare(strict_types=1);
 
 namespace webignition\BasilPhpUnitResultPrinter\StepDataExtractor;
 
+use PHPUnit\Event\Code\TestMethod;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 readonly class DataSetExtractor
 {
     /**
-     * @return array<string, bool|int|string>
+     * @return null|array<mixed>
      */
-    public function extract(string $arrayAsString): array
+    public function extract(TestMethod $testMethod): ?array
     {
-        $lines = explode("\n", $arrayAsString);
-        array_shift($lines);
-        array_pop($lines);
+        $reflectionClass = new \ReflectionClass($testMethod->className());
+        $reflectionMethod = $reflectionClass->getMethod($testMethod->methodName());
 
-        $extracted = [];
-
-        foreach ($lines as $line) {
-            $extracted = array_merge($extracted, $this->extractFromLine($line));
+        $dataProviderAttributes = $reflectionMethod->getAttributes(DataProvider::class);
+        if ([] === $dataProviderAttributes) {
+            return null;
         }
 
-        return $extracted;
-    }
+        $dataProviderAttribute = $dataProviderAttributes[0];
+        $dataProviderMethodName = $dataProviderAttribute->newInstance()->methodName();
 
-    /**
-     * @return array<string, bool|int|string>
-     */
-    private function extractFromLine(string $line): array
-    {
-        $line = trim($line);
-
-        $assignmentOperator = ' => ';
-
-        $assignmentOperatorPosition = (int) strpos($line, $assignmentOperator);
-        $nameComponent = substr($line, 0, $assignmentOperatorPosition);
-        $key = trim($nameComponent, '\' ');
-
-        $valueComponent = substr($line, $assignmentOperatorPosition + strlen($assignmentOperator));
-        $valueComponent = rtrim($valueComponent, ',');
-
-        $value = $this->getValueFromString($valueComponent);
-
-        return [
-            $key => $value,
-        ];
-    }
-
-    private function getValueFromString(string $value): bool|int|string
-    {
-        $singleQuoteTrimmedValue = trim($value, '\'');
-        if ($singleQuoteTrimmedValue !== $value) {
-            return $singleQuoteTrimmedValue;
+        $className = $reflectionClass->getName();
+        if (!class_exists($className)) {
+            return null;
         }
 
-        if (ctype_digit($value)) {
-            return (int) $value;
+        if (!method_exists($className, $dataProviderMethodName)) {
+            return null;
         }
 
-        if ('true' === $value) {
-            return true;
+        $testData = $className::$dataProviderMethodName();
+        if (!is_array($testData)) {
+            return null;
         }
 
-        if ('false' === $value) {
-            return false;
+        $testMethodTestData = $testMethod->testData();
+
+        if (!$testMethodTestData->hasDataFromDataProvider()) {
+            return null;
         }
 
-        return $value;
+        $dataSetName = $testMethodTestData->dataFromDataProvider()->dataSetName();
+
+        $dataSet = $testData[$dataSetName] ?? null;
+
+        return is_array($dataSet) ? $dataSet : null;
     }
 }
