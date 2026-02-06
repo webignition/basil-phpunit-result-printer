@@ -15,9 +15,6 @@ use webignition\BasilPhpUnitResultPrinter\AssertionFailure\ExceptionFactory;
 use webignition\BasilPhpUnitResultPrinter\ExpectationFailure\ExpectationFailureFactory;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\YamlGenerator;
-use webignition\BasilPhpUnitResultPrinter\StepDataExtractor\DataSetExtractor;
-use webignition\BasilPhpUnitResultPrinter\StepDataExtractor\NameExtractor;
-use webignition\BasilPhpUnitResultPrinter\StepDataExtractor\StatementCollectionExtractor;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\BeforeFirstTestMethodErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\ErroredSubscriber;
 use webignition\BasilPhpUnitResultPrinter\Subscriber\Test\FailedSubscriber;
@@ -52,9 +49,7 @@ class ResultPrinterExtension implements Extension
             new FinishedSubscriber(
                 $printer,
                 $state,
-                new NameExtractor(),
-                new StatementCollectionExtractor($statementFactory),
-                new DataSetExtractor(),
+                new StepInspector($statementFactory),
                 StepFactory::createFactory(),
                 $yamlGenerator,
             ),

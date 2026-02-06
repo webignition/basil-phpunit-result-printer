@@ -11,18 +11,14 @@ use PHPUnit\TextUI\Output\Printer;
 use webignition\BasilPhpUnitResultPrinter\Factory\Model\StepFactory;
 use webignition\BasilPhpUnitResultPrinter\Generator\GeneratorInterface;
 use webignition\BasilPhpUnitResultPrinter\State;
-use webignition\BasilPhpUnitResultPrinter\StepDataExtractor\DataSetExtractor;
-use webignition\BasilPhpUnitResultPrinter\StepDataExtractor\NameExtractor;
-use webignition\BasilPhpUnitResultPrinter\StepDataExtractor\StatementCollectionExtractor;
+use webignition\BasilPhpUnitResultPrinter\StepInspector;
 
 readonly class FinishedSubscriber implements FinishedSubscriberInterface
 {
     public function __construct(
         private Printer $printer,
         private State $state,
-        private NameExtractor $stepNameExtractor,
-        private StatementCollectionExtractor $stepStatementCollectionExtractor,
-        private DataSetExtractor $dataSetExtractor,
+        private StepInspector $stepInspector,
         private StepFactory $stepFactory,
         private GeneratorInterface $generator,
     ) {}
@@ -32,13 +28,13 @@ readonly class FinishedSubscriber implements FinishedSubscriberInterface
         $test = $event->test();
         \assert($test instanceof TestMethod);
 
-        $stepDataSet = $this->dataSetExtractor->extract($test);
+        $this->stepInspector->setTestMethod($test);
 
         $step = $this->stepFactory->create(
-            $this->stepNameExtractor->extract($test),
+            $this->stepInspector->getName(),
             $this->state,
-            $this->stepStatementCollectionExtractor->extract($test),
-            $stepDataSet
+            $this->stepInspector->getStatements(),
+            $this->stepInspector->getDataSet()
         );
 
         $this->printer->print($this->generator->generate($step->getData()));
