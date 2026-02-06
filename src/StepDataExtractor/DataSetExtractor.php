@@ -10,42 +10,45 @@ use PHPUnit\Framework\Attributes\DataProvider;
 readonly class DataSetExtractor
 {
     /**
-     * @return array<mixed>
+     * @return null|array<mixed>
      */
-    public function extract(TestMethod $testMethod): array
+    public function extract(TestMethod $testMethod): ?array
     {
         $reflectionClass = new \ReflectionClass($testMethod->className());
         $reflectionMethod = $reflectionClass->getMethod($testMethod->methodName());
 
         $dataProviderAttributes = $reflectionMethod->getAttributes(DataProvider::class);
-        $dataProviderAttribute = $dataProviderAttributes[0];
+        if ([] === $dataProviderAttributes) {
+            return null;
+        }
 
+        $dataProviderAttribute = $dataProviderAttributes[0];
         $dataProviderMethodName = $dataProviderAttribute->newInstance()->methodName();
 
         $className = $reflectionClass->getName();
         if (!class_exists($className)) {
-            return [];
+            return null;
         }
 
         if (!method_exists($className, $dataProviderMethodName)) {
-            return [];
+            return null;
         }
 
         $testData = $className::$dataProviderMethodName();
         if (!is_array($testData)) {
-            return [];
+            return null;
         }
 
         $testMethodTestData = $testMethod->testData();
 
         if (!$testMethodTestData->hasDataFromDataProvider()) {
-            return [];
+            return null;
         }
 
         $dataSetName = $testMethodTestData->dataFromDataProvider()->dataSetName();
 
-        $dataSet = $testData[$dataSetName] ?? [];
+        $dataSet = $testData[$dataSetName] ?? null;
 
-        return is_array($dataSet) ? $dataSet : [];
+        return is_array($dataSet) ? $dataSet : null;
     }
 }
